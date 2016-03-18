@@ -105,8 +105,8 @@ namespace Colours
 
             brightenToolStripMenuItem.Enabled = (c.Value + 0.05d < 1d);
             darkenToolStripMenuItem.Enabled = (c.Value - 0.05d > 0d);
-            saturateToolStripMenuItem.Enabled = (c.Value + 0.05d < 1d);
-            desaturateToolStripMenuItem.Enabled = (c.Value - 0.05d > 0d);
+            saturateToolStripMenuItem.Enabled = (c.Saturation + 0.05d < 1d);
+            desaturateToolStripMenuItem.Enabled = (c.Saturation - 0.05d > 0d);
         }
 
         private void SchemeColor_Click(object sender, EventArgs e)
