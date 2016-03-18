@@ -64,6 +64,8 @@ namespace Colours
                 tableLayoutPanel1.ColumnStyles[i].Width = 100 / lc.Count;
 
                 ColorButton cb = new ColorButton(next.ToRgb());
+                cb.Text = String.Format("{0}\r\n{1}",
+                    cb.Color.ToHexCode(), cb.Color.ToRgbString());
                 cb.ContextMenuStrip = contextMenuStrip1;
                 cb.Dock = DockStyle.Fill;
                 cb.Click += SchemeColor_Click;
