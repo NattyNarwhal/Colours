@@ -35,9 +35,9 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.copyHexToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyCSSRGBToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyCSSHSLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.randomButton = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.copyCSSHSLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -54,7 +54,7 @@
             "Tetrads",
             "Analogous",
             "Monochromatic"});
-            this.comboBox1.Location = new System.Drawing.Point(12, 14);
+            this.comboBox1.Location = new System.Drawing.Point(12, 13);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(179, 21);
             this.comboBox1.TabIndex = 2;
@@ -89,7 +89,7 @@
             this.copyCSSRGBToolStripMenuItem,
             this.copyCSSHSLToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(159, 92);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(159, 70);
             // 
             // copyHexToolStripMenuItem
             // 
@@ -105,6 +105,13 @@
             this.copyCSSRGBToolStripMenuItem.Text = "Copy &CSS (RGB)";
             this.copyCSSRGBToolStripMenuItem.Click += new System.EventHandler(this.copyCSSRGBToolStripMenuItem_Click);
             // 
+            // copyCSSHSLToolStripMenuItem
+            // 
+            this.copyCSSHSLToolStripMenuItem.Name = "copyCSSHSLToolStripMenuItem";
+            this.copyCSSHSLToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.copyCSSHSLToolStripMenuItem.Text = "Copy CSS (&HSL)";
+            this.copyCSSHSLToolStripMenuItem.Click += new System.EventHandler(this.copyCSSHSLToolStripMenuItem_Click);
+            // 
             // randomButton
             // 
             this.randomButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -115,13 +122,6 @@
             this.randomButton.Text = "Random";
             this.randomButton.UseVisualStyleBackColor = true;
             this.randomButton.Click += new System.EventHandler(this.randomButton_Click);
-            // 
-            // copyCSSHSLToolStripMenuItem
-            // 
-            this.copyCSSHSLToolStripMenuItem.Name = "copyCSSHSLToolStripMenuItem";
-            this.copyCSSHSLToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
-            this.copyCSSHSLToolStripMenuItem.Text = "Copy CSS (&HSL)";
-            this.copyCSSHSLToolStripMenuItem.Click += new System.EventHandler(this.copyCSSHSLToolStripMenuItem_Click);
             // 
             // MainForm
             // 
