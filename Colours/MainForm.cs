@@ -188,5 +188,16 @@ namespace Colours
             }
             UpdateScheme();
         }
+
+        private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try {
+                UpdateScheme(ColorTranslator.FromHtml(Clipboard.GetText()));
+            }
+            catch (Exception)
+            {
+
+            }
+        }
     }
 }
