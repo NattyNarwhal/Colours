@@ -231,5 +231,10 @@ namespace Colours
         {
             Clipboard.SetText(FirstColorButton().HsvColor.ToString());
         }
+
+        private void invertToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UpdateScheme(FirstColorButton().Color.Invert());
+        }
     }
 }
