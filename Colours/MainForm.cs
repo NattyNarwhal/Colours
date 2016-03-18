@@ -65,7 +65,7 @@ namespace Colours
 
                 ColorButton cb = new ColorButton(next.ToRgb());
                 cb.Text = String.Format("{0}\r\n{1}",
-                    cb.Color.ToHexCode(), cb.Color.ToRgbString());
+                    ColorTranslator.ToHtml(cb.Color), cb.Color.ToRgbString());
                 cb.ContextMenuStrip = contextMenuStrip1;
                 cb.Dock = DockStyle.Fill;
                 cb.Click += SchemeColor_Click;
