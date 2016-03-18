@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.Globalization;
 
 namespace Colours
 {
@@ -69,6 +70,16 @@ namespace Colours
                 return Color.FromArgb(255, t, p, v);
             else
                 return Color.FromArgb(255, v, p, q);
+        }
+
+
+        public override string ToString()
+        {
+            CultureInfo cssCulture = new CultureInfo(CultureInfo.InvariantCulture.LCID);
+            cssCulture.NumberFormat.PercentDecimalDigits = 0;
+            cssCulture.NumberFormat.PercentPositivePattern = 1;
+            return String.Format(cssCulture,
+                "hsv({0:F0}, {1:P}, {2:P})", Hue, Saturation, Value);
         }
     }
 }

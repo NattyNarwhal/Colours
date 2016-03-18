@@ -51,6 +51,8 @@
             this.copyHexToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.copyCSSRGBToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.copyCSSHSLToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyCSSHSVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyCSSHSVToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -101,9 +103,10 @@
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.copyHexToolStripMenuItem,
             this.copyCSSRGBToolStripMenuItem,
-            this.copyCSSHSLToolStripMenuItem});
+            this.copyCSSHSLToolStripMenuItem,
+            this.copyCSSHSVToolStripMenuItem1});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(159, 70);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(159, 114);
             // 
             // copyHexToolStripMenuItem
             // 
@@ -192,6 +195,7 @@
             this.copyHexToolStripMenuItem1,
             this.copyCSSRGBToolStripMenuItem1,
             this.copyCSSHSLToolStripMenuItem1,
+            this.copyCSSHSVToolStripMenuItem,
             this.toolStripMenuItem2,
             this.pasteToolStripMenuItem,
             this.randomToolStripMenuItem});
@@ -244,6 +248,20 @@
             this.copyCSSHSLToolStripMenuItem1.Text = "Copy CSS (&HSL)";
             this.copyCSSHSLToolStripMenuItem1.Click += new System.EventHandler(this.copyCSSHSLToolStripMenuItem1_Click);
             // 
+            // copyCSSHSVToolStripMenuItem
+            // 
+            this.copyCSSHSVToolStripMenuItem.Name = "copyCSSHSVToolStripMenuItem";
+            this.copyCSSHSVToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            this.copyCSSHSVToolStripMenuItem.Text = "Copy CSS (HS&V)";
+            this.copyCSSHSVToolStripMenuItem.Click += new System.EventHandler(this.copyCSSHSVToolStripMenuItem_Click);
+            // 
+            // copyCSSHSVToolStripMenuItem1
+            // 
+            this.copyCSSHSVToolStripMenuItem1.Name = "copyCSSHSVToolStripMenuItem1";
+            this.copyCSSHSVToolStripMenuItem1.Size = new System.Drawing.Size(158, 22);
+            this.copyCSSHSVToolStripMenuItem1.Text = "Copy CSS (HS&V)";
+            this.copyCSSHSVToolStripMenuItem1.Click += new System.EventHandler(this.copyCSSHSVToolStripMenuItem1_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -287,6 +305,8 @@
         private System.Windows.Forms.ToolStripMenuItem copyHexToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem copyCSSRGBToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem copyCSSHSLToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem copyCSSHSVToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem copyCSSHSVToolStripMenuItem1;
     }
 }
 

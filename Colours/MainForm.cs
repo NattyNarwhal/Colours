@@ -137,6 +137,12 @@ namespace Colours
             Clipboard.SetText(cb.Color.ToHslString());
         }
 
+        private void copyCSSHSVToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            ColorButton cb = (ColorButton)contextMenuStrip1.SourceControl;
+            Clipboard.SetText(cb.HsvColor.ToString());
+        }
+
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             Properties.Settings.Default.LastColor = FirstColorButton().Color;
@@ -217,6 +223,11 @@ namespace Colours
         private void copyCSSHSLToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             Clipboard.SetText(FirstColorButton().Color.ToHslString());
+        }
+
+        private void copyCSSHSVToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(FirstColorButton().HsvColor.ToString());
         }
     }
 }
