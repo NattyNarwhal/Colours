@@ -64,6 +64,7 @@ namespace Colours
                 tableLayoutPanel1.ColumnStyles[i].Width = 100 / lc.Count;
 
                 ColorButton cb = new ColorButton(next.ToRgb());
+                cb.ContextMenuStrip = contextMenuStrip1;
                 cb.Dock = DockStyle.Fill;
                 cb.Click += SchemeColor_Click;
 
@@ -85,6 +86,18 @@ namespace Colours
         private void comboBox1_SelectionChangeCommitted(object sender, EventArgs e)
         {
             UpdateScheme();
+        }
+
+        private void copyHexToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ColorButton cb = (ColorButton)contextMenuStrip1.SourceControl;
+            Clipboard.SetText(cb.Color.ToHexCode());
+        }
+
+        private void copyCSSRGBToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ColorButton cb = (ColorButton)contextMenuStrip1.SourceControl;
+            Clipboard.SetText(cb.Color.ToRgbString());
         }
     }
 }

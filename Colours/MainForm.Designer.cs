@@ -28,9 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.copyHexToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyCSSRGBToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // comboBox1
@@ -74,6 +79,28 @@
             this.colorDialog1.AnyColor = true;
             this.colorDialog1.FullOpen = true;
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.copyHexToolStripMenuItem,
+            this.copyCSSRGBToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(159, 70);
+            // 
+            // copyHexToolStripMenuItem
+            // 
+            this.copyHexToolStripMenuItem.Name = "copyHexToolStripMenuItem";
+            this.copyHexToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.copyHexToolStripMenuItem.Text = "Copy &Hex";
+            this.copyHexToolStripMenuItem.Click += new System.EventHandler(this.copyHexToolStripMenuItem_Click);
+            // 
+            // copyCSSRGBToolStripMenuItem
+            // 
+            this.copyCSSRGBToolStripMenuItem.Name = "copyCSSRGBToolStripMenuItem";
+            this.copyCSSRGBToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.copyCSSRGBToolStripMenuItem.Text = "Copy &CSS (RGB)";
+            this.copyCSSRGBToolStripMenuItem.Click += new System.EventHandler(this.copyCSSRGBToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -83,6 +110,7 @@
             this.Controls.Add(this.comboBox1);
             this.Name = "MainForm";
             this.Text = "Form1";
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -94,6 +122,9 @@
         private ColorButton colorButton3;
         private ColorButton colorButton4;
         private System.Windows.Forms.ColorDialog colorDialog1;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem copyHexToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem copyCSSRGBToolStripMenuItem;
     }
 }
 
