@@ -5,5 +5,8 @@
     <Setting Name="LastColor" Type="System.Drawing.Color" Scope="User">
       <Value Profile="(Default)">ButtonFace</Value>
     </Setting>
+    <Setting Name="CustomColors" Type="Colours.ColorList" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

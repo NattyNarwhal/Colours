@@ -16,6 +16,11 @@ namespace Colours
         {
             InitializeComponent();
 
+            if (Properties.Settings.Default.CustomColors?.Count == 16)
+            {
+                colorDialog1.CustomColors = Properties.Settings.Default.CustomColors.ToArray();
+            }
+
             comboBox1.SelectedItem = comboBox1.Items[0];
             UpdateScheme();
         }
@@ -145,6 +150,7 @@ namespace Colours
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
+            Properties.Settings.Default.CustomColors = new ColorList(colorDialog1.CustomColors);
             Properties.Settings.Default.LastColor = FirstColorButton().Color;
             Properties.Settings.Default.Save();
         }

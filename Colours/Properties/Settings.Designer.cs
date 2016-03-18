@@ -34,5 +34,16 @@ namespace Colours.Properties {
                 this["LastColor"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::Colours.ColorList CustomColors {
+            get {
+                return ((global::Colours.ColorList)(this["CustomColors"]));
+            }
+            set {
+                this["CustomColors"] = value;
+            }
+        }
     }
 }
