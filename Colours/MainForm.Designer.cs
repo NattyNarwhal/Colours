@@ -30,6 +30,7 @@
         {
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.SuspendLayout();
             // 
             // comboBox1
@@ -69,6 +70,11 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(260, 100);
             this.tableLayoutPanel1.TabIndex = 3;
             // 
+            // colorDialog1
+            // 
+            this.colorDialog1.AnyColor = true;
+            this.colorDialog1.FullOpen = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -88,6 +94,7 @@
         private ColorButton colorButton2;
         private ColorButton colorButton3;
         private ColorButton colorButton4;
+        private System.Windows.Forms.ColorDialog colorDialog1;
     }
 }
 

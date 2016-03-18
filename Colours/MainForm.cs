@@ -20,12 +20,16 @@ namespace Colours
             UpdateScheme();
         }
 
+        public ColorButton FirstColorButton()
+        {
+            return ((ColorButton)tableLayoutPanel1.GetControlFromPosition(0, 0));
+        }
+
         public void UpdateScheme()
         {
             Text = (string)comboBox1.SelectedItem;
 
-            HsvColor c = new HsvColor(
-                ((ColorButton)tableLayoutPanel1.GetControlFromPosition(0, 0))?.Color ?? Color.Red);
+            HsvColor c = new HsvColor(FirstColorButton()?.Color ?? Color.Red);
             List<HsvColor> lc;
             switch ((string)comboBox1.SelectedItem)
             {
@@ -64,7 +68,20 @@ namespace Colours
 
                 ColorButton cb = new ColorButton(next.ToRgb());
                 cb.Dock = DockStyle.Fill;
+                cb.Click += SchemeColor_Click;
+
                 tableLayoutPanel1.Controls.Add(cb, i++, 0);
+            }
+        }
+
+        private void SchemeColor_Click(object sender, EventArgs e)
+        {
+            ColorButton cb = (ColorButton)sender;
+            colorDialog1.Color = cb.Color;
+            if (colorDialog1.ShowDialog(this) == DialogResult.OK)
+            {
+                FirstColorButton().Color = colorDialog1.Color;
+                UpdateScheme();
             }
         }
 
