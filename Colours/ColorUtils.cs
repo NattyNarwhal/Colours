@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.Globalization;
 
 namespace Colours
 {
@@ -32,6 +33,16 @@ namespace Colours
         {
             return String.Format("rgb({0}, {1}, {2})",
                 c.R, c.G, c.B);
+        }
+
+        public static string ToHslString(this Color c)
+        {
+            CultureInfo cssCulture = new CultureInfo(CultureInfo.InvariantCulture.LCID);
+            cssCulture.NumberFormat.PercentDecimalDigits = 0;
+            cssCulture.NumberFormat.PercentPositivePattern = 1;
+            return String.Format(cssCulture,
+                "hsl({0:F0}, {1:P}, {2:P})",
+                c.GetHue(), c.GetSaturation(), c.GetBrightness());
         }
     }
 }

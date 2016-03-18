@@ -71,8 +71,8 @@ namespace Colours
                 ColorButton cb = new ColorButton(next.ToRgb());
                 cb.Text = String.Format("R {0}\r\nG {0}\r\nB {0}",
                     cb.Color.R, cb.Color.G, cb.Color.B);
-                toolTip1.SetToolTip(cb, String.Format("{0}\r\n{1}",
-                    ColorTranslator.ToHtml(cb.Color), cb.Color.ToRgbString()));
+                toolTip1.SetToolTip(cb, String.Format("{0}\r\n{1}\r\n{2}",
+                    ColorTranslator.ToHtml(cb.Color), cb.Color.ToRgbString(), cb.Color.ToHslString()));
                 cb.ContextMenuStrip = contextMenuStrip1;
                 cb.Dock = DockStyle.Fill;
                 cb.Click += SchemeColor_Click;
@@ -106,6 +106,12 @@ namespace Colours
         {
             ColorButton cb = (ColorButton)contextMenuStrip1.SourceControl;
             Clipboard.SetText(cb.Color.ToRgbString());
+        }
+
+        private void copyCSSHSLToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ColorButton cb = (ColorButton)contextMenuStrip1.SourceControl;
+            Clipboard.SetText(cb.Color.ToHslString());
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)

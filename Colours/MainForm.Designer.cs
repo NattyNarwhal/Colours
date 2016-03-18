@@ -37,6 +37,7 @@
             this.copyCSSRGBToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.randomButton = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.copyCSSHSLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -85,9 +86,10 @@
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.copyHexToolStripMenuItem,
-            this.copyCSSRGBToolStripMenuItem});
+            this.copyCSSRGBToolStripMenuItem,
+            this.copyCSSHSLToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(159, 48);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(159, 92);
             // 
             // copyHexToolStripMenuItem
             // 
@@ -114,6 +116,13 @@
             this.randomButton.UseVisualStyleBackColor = true;
             this.randomButton.Click += new System.EventHandler(this.randomButton_Click);
             // 
+            // copyCSSHSLToolStripMenuItem
+            // 
+            this.copyCSSHSLToolStripMenuItem.Name = "copyCSSHSLToolStripMenuItem";
+            this.copyCSSHSLToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.copyCSSHSLToolStripMenuItem.Text = "Copy CSS (&HSL)";
+            this.copyCSSHSLToolStripMenuItem.Click += new System.EventHandler(this.copyCSSHSLToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -139,6 +148,7 @@
         private System.Windows.Forms.ToolStripMenuItem copyCSSRGBToolStripMenuItem;
         private System.Windows.Forms.Button randomButton;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.ToolStripMenuItem copyCSSHSLToolStripMenuItem;
     }
 }
 
