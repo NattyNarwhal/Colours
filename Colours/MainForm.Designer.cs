@@ -119,9 +119,6 @@
         #endregion
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private ColorButton colorButton2;
-        private ColorButton colorButton3;
-        private ColorButton colorButton4;
         private System.Windows.Forms.ColorDialog colorDialog1;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem copyHexToolStripMenuItem;
