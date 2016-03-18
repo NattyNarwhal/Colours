@@ -29,8 +29,9 @@
         private void InitializeComponent()
         {
             this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.colorButton1 = new Colours.ColorButton();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // comboBox1
@@ -47,31 +48,40 @@
             "Tetrads",
             "Analogous",
             "Monochromatic"});
-            this.comboBox1.Location = new System.Drawing.Point(93, 14);
+            this.comboBox1.Location = new System.Drawing.Point(12, 12);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(179, 21);
+            this.comboBox1.Size = new System.Drawing.Size(260, 21);
             this.comboBox1.TabIndex = 2;
             this.comboBox1.SelectionChangeCommitted += new System.EventHandler(this.comboBox1_SelectionChangeCommitted);
             // 
-            // flowLayoutPanel1
+            // tableLayoutPanel1
             // 
-            this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(12, 41);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(260, 208);
-            this.flowLayoutPanel1.TabIndex = 3;
+            this.tableLayoutPanel1.ColumnCount = 4;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.Controls.Add(this.colorButton1, 0, 0);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 41);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(260, 100);
+            this.tableLayoutPanel1.TabIndex = 3;
             // 
             // colorButton1
             // 
             this.colorButton1.BackColor = System.Drawing.Color.Blue;
             this.colorButton1.Color = System.Drawing.Color.Blue;
+            this.colorButton1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.colorButton1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.colorButton1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
-            this.colorButton1.Location = new System.Drawing.Point(12, 12);
+            this.colorButton1.Location = new System.Drawing.Point(3, 3);
             this.colorButton1.Name = "colorButton1";
-            this.colorButton1.Size = new System.Drawing.Size(75, 23);
+            this.colorButton1.Size = new System.Drawing.Size(75, 94);
             this.colorButton1.TabIndex = 0;
             this.colorButton1.UseVisualStyleBackColor = false;
             // 
@@ -79,12 +89,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 261);
-            this.Controls.Add(this.flowLayoutPanel1);
+            this.ClientSize = new System.Drawing.Size(284, 153);
+            this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.colorButton1);
             this.Name = "MainForm";
             this.Text = "Form1";
+            this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -93,7 +103,10 @@
 
         private ColorButton colorButton1;
         private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private ColorButton colorButton2;
+        private ColorButton colorButton3;
+        private ColorButton colorButton4;
     }
 }
 

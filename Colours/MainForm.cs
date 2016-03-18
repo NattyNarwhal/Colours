@@ -15,78 +15,59 @@ namespace Colours
         public MainForm()
         {
             InitializeComponent();
+
+            comboBox1.SelectedItem = comboBox1.Items[0];
+            UpdateScheme();
         }
 
-        private void comboBox1_SelectionChangeCommitted(object sender, EventArgs e)
+        public void UpdateScheme()
         {
-            /*
-            Opposite
-Complement
-Split Complements
-Triads
-Tetrads
-Analogous
-Monochromatic
-            */
             Text = (string)comboBox1.SelectedItem;
-            flowLayoutPanel1.Controls.Clear();
 
-            HsvColor c = new HsvColor(colorButton1.Color);
+            HsvColor c = new HsvColor(((ColorButton)tableLayoutPanel1.GetControlFromPosition(0, 0)).Color);
             List<HsvColor> lc;
-            ColorButton cb;
             switch ((string)comboBox1.SelectedItem)
             {
                 case "Opposite":
-                    cb = new ColorButton(ColorSchemer.Opposite(c).ToRgb());
-                    flowLayoutPanel1.Controls.Add(cb);
+                    lc = ColorSchemer.Opposite(c);
                     break;
                 case "Complement":
-                    cb = new ColorButton(ColorSchemer.Complement(c).ToRgb());
-                    flowLayoutPanel1.Controls.Add(cb);
+                    lc = ColorSchemer.Complement(c);
                     break;
                 case "Split Complements":
                     lc = ColorSchemer.SplitComplement(c);
-                    foreach (HsvColor next in lc)
-                    {
-                        cb = new ColorButton(next.ToRgb());
-                        flowLayoutPanel1.Controls.Add(cb);
-                    }
                     break;
                 case "Triads":
                     lc = ColorSchemer.Triads(c);
-                    foreach (HsvColor next in lc)
-                    {
-                        cb = new ColorButton(next.ToRgb());
-                        flowLayoutPanel1.Controls.Add(cb);
-                    }
                     break;
                 case "Tetrads":
                     lc = ColorSchemer.Tetrads(c);
-                    foreach (HsvColor next in lc)
-                    {
-                        cb = new ColorButton(next.ToRgb());
-                        flowLayoutPanel1.Controls.Add(cb);
-                    }
                     break;
                 case "Analogous":
                     lc = ColorSchemer.Analogous(c);
-                    foreach (HsvColor next in lc)
-                    {
-                        cb = new ColorButton(next.ToRgb());
-                        flowLayoutPanel1.Controls.Add(cb);
-                    }
                     break;
                 case "Monochromatic":
                     lc = ColorSchemer.Monochromatic(c);
-                    foreach (HsvColor next in lc)
-                    {
-                        cb = new ColorButton(next.ToRgb());
-                        flowLayoutPanel1.Controls.Add(cb);
-                    }
                     break;
                 default:
                     throw new ArgumentOutOfRangeException("Not a valid type of scheme.");
             }
+
+            tableLayoutPanel1.Controls.Clear();
+            tableLayoutPanel1.ColumnCount = lc.Count;
+            int i = 0;
+            foreach (HsvColor next in lc)
+            {
+                tableLayoutPanel1.ColumnStyles[i].SizeType = SizeType.AutoSize;
+                ColorButton cb = new ColorButton(next.ToRgb());
+                cb.Dock = DockStyle.Fill;
+                tableLayoutPanel1.Controls.Add(cb, i++, 0);
+            }
+        }
+
+        private void comboBox1_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            UpdateScheme();
         }
     }
 }

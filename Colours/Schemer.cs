@@ -8,14 +8,14 @@ namespace Colours
 {
     public static class ColorSchemer
     {
-        public static HsvColor Opposite(HsvColor c)
+        public static List<HsvColor> Opposite(HsvColor c)
         {
-            return new HsvColor(360 - c.Hue, c.Saturation, c.Value);
+            return new List<HsvColor>() { c, new HsvColor(360 - c.Hue, c.Saturation, c.Value) };
         }
 
-        public static HsvColor Complement(HsvColor c)
+        public static List<HsvColor> Complement(HsvColor c)
         {
-            return new HsvColor(c.Hue + (360 / 2), c.Saturation, c.Value);
+            return new List<HsvColor>() { c, new HsvColor(c.Hue + (360 / 2), c.Saturation, c.Value) };
         }
 
         public static List<HsvColor> SplitComplement(HsvColor c)
@@ -25,7 +25,7 @@ namespace Colours
             HsvColor c1 = new HsvColor(c.Hue + (360 / 2) - offset, c.Saturation, c.Value);
             HsvColor c2 = new HsvColor(c.Hue + (360 / 2) + offset, c.Saturation, c.Value);
 
-            return new List<HsvColor>() { c1, c2 };
+            return new List<HsvColor>() { c, c1, c2 };
         }
 
         public static List<HsvColor> Tetrads(HsvColor c)
@@ -36,7 +36,7 @@ namespace Colours
             HsvColor c2 = new HsvColor(c.Hue + 360 / 2, c.Saturation, c.Value);
             HsvColor c3 = new HsvColor(c.Hue + 360 / 2 + offset, c.Saturation, c.Value);
 
-            return new List<HsvColor>() { c1, c2, c3 };
+            return new List<HsvColor>() { c, c1, c2, c3 };
         }
 
         public static List<HsvColor> Analogous(HsvColor c)
@@ -46,7 +46,7 @@ namespace Colours
             HsvColor c1 = new HsvColor(c.Hue - offset, c.Saturation, c.Value);
             HsvColor c2 = new HsvColor(c.Hue + offset, c.Saturation, c.Value);
 
-            return new List<HsvColor>() { c1, c2 };
+            return new List<HsvColor>() { c, c1, c2 };
         }
 
         public static List<HsvColor> Triads(HsvColor c)
@@ -56,7 +56,7 @@ namespace Colours
             HsvColor c1 = new HsvColor(c.Hue - offset, c.Saturation, c.Value);
             HsvColor c2 = new HsvColor(c.Hue + offset, c.Saturation, c.Value);
 
-            return new List<HsvColor>() { c1, c2 };
+            return new List<HsvColor>() { c, c1, c2 };
         }
 
         public static List<HsvColor> Monochromatic(HsvColor c)
@@ -74,7 +74,7 @@ namespace Colours
                 c2 = new HsvColor(c.Hue, c.Saturation, (c.Value + 0.02d * (1d / 3d)) % 1d);
             }
 
-            return new List<HsvColor>() { c1, c2 };
+            return new List<HsvColor>() { c, c1, c2 };
         }
     }
 }
