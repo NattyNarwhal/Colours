@@ -93,7 +93,7 @@ namespace Colours
         private void copyHexToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ColorButton cb = (ColorButton)contextMenuStrip1.SourceControl;
-            Clipboard.SetText(cb.Color.ToHexCode());
+            Clipboard.SetText(ColorTranslator.ToHtml(cb.Color));
         }
 
         private void copyCSSRGBToolStripMenuItem_Click(object sender, EventArgs e)

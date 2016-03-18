@@ -22,18 +22,7 @@ namespace Colours
                     255 - c.B
                 );
         }
-
-        /// <summary>
-        /// Prints a 6-digit (2 digits in hex per channel) code representing a color. Often found in CSS.
-        /// </summary>
-        /// <param name="c">The color to encode.</param>
-        /// <returns>The hex code representing the color.</returns>
-        public static string ToHexCode(this Color c)
-        {
-            return String.Format("#{0:X2}{1:X2}{2:X2}",
-                c.R, c.G, c.B);
-        }
-
+        
         /// <summary>
         /// Prints a human-readable color triplet for use in things like CSS.
         /// </summary>
