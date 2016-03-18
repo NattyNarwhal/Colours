@@ -22,5 +22,17 @@ namespace Colours.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("ButtonFace")]
+        public global::System.Drawing.Color LastColor {
+            get {
+                return ((global::System.Drawing.Color)(this["LastColor"]));
+            }
+            set {
+                this["LastColor"] = value;
+            }
+        }
     }
 }

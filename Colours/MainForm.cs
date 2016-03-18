@@ -29,7 +29,7 @@ namespace Colours
         {
             Text = (string)comboBox1.SelectedItem;
 
-            HsvColor c = new HsvColor(FirstColorButton()?.Color ?? Color.Red);
+            HsvColor c = new HsvColor(FirstColorButton()?.Color ?? Properties.Settings.Default.LastColor);
             List<HsvColor> lc;
             switch ((string)comboBox1.SelectedItem)
             {
@@ -100,6 +100,12 @@ namespace Colours
         {
             ColorButton cb = (ColorButton)contextMenuStrip1.SourceControl;
             Clipboard.SetText(cb.Color.ToRgbString());
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Properties.Settings.Default.LastColor = FirstColorButton().Color;
+            Properties.Settings.Default.Save();
         }
     }
 }

@@ -85,7 +85,7 @@
             this.copyHexToolStripMenuItem,
             this.copyCSSRGBToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(159, 70);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(159, 48);
             // 
             // copyHexToolStripMenuItem
             // 
@@ -110,6 +110,7 @@
             this.Controls.Add(this.comboBox1);
             this.Name = "MainForm";
             this.Text = "Form1";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
 
