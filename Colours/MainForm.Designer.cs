@@ -95,7 +95,7 @@
             // 
             this.copyHexToolStripMenuItem.Name = "copyHexToolStripMenuItem";
             this.copyHexToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
-            this.copyHexToolStripMenuItem.Text = "Copy &Hex";
+            this.copyHexToolStripMenuItem.Text = "Copy He&x";
             this.copyHexToolStripMenuItem.Click += new System.EventHandler(this.copyHexToolStripMenuItem_Click);
             // 
             // copyCSSRGBToolStripMenuItem
