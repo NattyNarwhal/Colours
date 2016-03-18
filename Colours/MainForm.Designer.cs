@@ -30,8 +30,6 @@
         {
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.colorButton1 = new Colours.ColorButton();
-            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // comboBox1
@@ -64,26 +62,12 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel1.Controls.Add(this.colorButton1, 0, 0);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 41);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.Size = new System.Drawing.Size(260, 100);
             this.tableLayoutPanel1.TabIndex = 3;
-            // 
-            // colorButton1
-            // 
-            this.colorButton1.BackColor = System.Drawing.Color.Blue;
-            this.colorButton1.Color = System.Drawing.Color.Blue;
-            this.colorButton1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.colorButton1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.colorButton1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
-            this.colorButton1.Location = new System.Drawing.Point(3, 3);
-            this.colorButton1.Name = "colorButton1";
-            this.colorButton1.Size = new System.Drawing.Size(75, 94);
-            this.colorButton1.TabIndex = 0;
-            this.colorButton1.UseVisualStyleBackColor = false;
             // 
             // MainForm
             // 
@@ -94,14 +78,11 @@
             this.Controls.Add(this.comboBox1);
             this.Name = "MainForm";
             this.Text = "Form1";
-            this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private ColorButton colorButton1;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private ColorButton colorButton2;

@@ -24,7 +24,8 @@ namespace Colours
         {
             Text = (string)comboBox1.SelectedItem;
 
-            HsvColor c = new HsvColor(((ColorButton)tableLayoutPanel1.GetControlFromPosition(0, 0)).Color);
+            HsvColor c = new HsvColor(
+                ((ColorButton)tableLayoutPanel1.GetControlFromPosition(0, 0))?.Color ?? Color.Red);
             List<HsvColor> lc;
             switch ((string)comboBox1.SelectedItem)
             {
