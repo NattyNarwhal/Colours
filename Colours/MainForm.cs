@@ -79,11 +79,11 @@ namespace Colours
                 {
                     cb.Font = new Font(cb.Font, FontStyle.Bold);
                 }
-                cb.Text = String.Format("R {0} H {3:F0}\r\nG {1} S {4:F0}\r\nB {2} V {5:F0}",
-                    cb.Color.R, cb.Color.G, cb.Color.B,
-                    next.Hue, next.Saturation * 100, next.Value * 100);
-                toolTip1.SetToolTip(cb, String.Format("{0}\r\n{1}\r\n{2}",
-                    ColorTranslator.ToHtml(cb.Color), cb.Color.ToRgbString(), cb.Color.ToHslString()));
+                cb.Text = String.Format("{0}\r\n{1}",
+                    ColorTranslator.ToHtml(cb.Color), next.ToString());
+                toolTip1.SetToolTip(cb, String.Format("{0}\r\n{1}\r\n{2}\r\n{3}",
+                    ColorTranslator.ToHtml(cb.Color), cb.Color.ToRgbString(),
+                    cb.Color.ToHslString(), next.ToString()));
                 cb.ContextMenuStrip = contextMenuStrip1;
                 cb.Dock = DockStyle.Fill;
                 cb.Click += SchemeColor_Click;
