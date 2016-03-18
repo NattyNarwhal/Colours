@@ -74,7 +74,7 @@ namespace Colours
                 tableLayoutPanel1.ColumnStyles[i].SizeType = SizeType.Percent;
                 tableLayoutPanel1.ColumnStyles[i].Width = 100 / lc.Count;
 
-                ColorButton cb = new ColorButton(next.ToRgb(), next);
+                ColorButton cb = new ColorButton(next);
                 cb.Text = String.Format("R {0} H {3:F0}\r\nG {1} S {4:F0}\r\nB {2} V {5:F0}",
                     cb.Color.R, cb.Color.G, cb.Color.B,
                     next.Hue, next.Saturation * 100, next.Value * 100);
@@ -152,7 +152,6 @@ namespace Colours
             {
                 c.Value += 0.05d;
                 FirstColorButton().HsvColor = c;
-                FirstColorButton().Color = c.ToRgb();
             }
             UpdateScheme();
         }
@@ -164,7 +163,6 @@ namespace Colours
             {
                 c.Value -= 0.05d;
                 FirstColorButton().HsvColor = c;
-                FirstColorButton().Color = c.ToRgb();
             }
             UpdateScheme();
         }
@@ -176,7 +174,6 @@ namespace Colours
             {
                 c.Saturation += 0.05d;
                 FirstColorButton().HsvColor = c;
-                FirstColorButton().Color = c.ToRgb();
             }
             UpdateScheme();
         }
@@ -188,7 +185,6 @@ namespace Colours
             {
                 c.Saturation -= 0.05d;
                 FirstColorButton().HsvColor = c;
-                FirstColorButton().Color = c.ToRgb();
             }
             UpdateScheme();
         }

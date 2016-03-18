@@ -15,6 +15,7 @@ namespace Colours
     {
         // TODO: perhaps use BackColor as the backing instead
         private Color _color;
+        private HsvColor _hsv;
 
         public Color Color
         {
@@ -30,7 +31,17 @@ namespace Colours
         /// <summary>
         /// A tag value for the HSV colour variant. Set this as you do Color.
         /// </summary>
-        public HsvColor HsvColor { get; set; }
+        public HsvColor HsvColor {
+            get
+            {
+                return _hsv;
+            }
+            set
+            {
+                _hsv = value;
+                Color = _hsv.ToRgb();
+            }
+        }
 
         public ColorButton() : base()
         {
@@ -41,6 +52,11 @@ namespace Colours
         public ColorButton(Color c) : this()
         {
             Color = c;
+        }
+
+        public ColorButton(HsvColor c) : this()
+        {
+            HsvColor = c;
         }
 
         public ColorButton(Color c, HsvColor h) : this(c)
