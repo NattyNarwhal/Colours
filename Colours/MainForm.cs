@@ -75,6 +75,10 @@ namespace Colours
                 tableLayoutPanel1.ColumnStyles[i].Width = 100 / lc.Count;
 
                 ColorButton cb = new ColorButton(next);
+                if (i == 0)
+                {
+                    cb.Font = new Font(cb.Font, FontStyle.Bold);
+                }
                 cb.Text = String.Format("R {0} H {3:F0}\r\nG {1} S {4:F0}\r\nB {2} V {5:F0}",
                     cb.Color.R, cb.Color.G, cb.Color.B,
                     next.Hue, next.Saturation * 100, next.Value * 100);
