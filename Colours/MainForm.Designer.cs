@@ -36,6 +36,7 @@
             this.copyHexToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyCSSRGBToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.randomButton = new System.Windows.Forms.Button();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -137,6 +138,7 @@
         private System.Windows.Forms.ToolStripMenuItem copyHexToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem copyCSSRGBToolStripMenuItem;
         private System.Windows.Forms.Button randomButton;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
 

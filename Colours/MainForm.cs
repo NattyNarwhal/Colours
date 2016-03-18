@@ -69,8 +69,10 @@ namespace Colours
                 tableLayoutPanel1.ColumnStyles[i].Width = 100 / lc.Count;
 
                 ColorButton cb = new ColorButton(next.ToRgb());
-                cb.Text = String.Format("{0}\r\n{1}",
-                    ColorTranslator.ToHtml(cb.Color), cb.Color.ToRgbString());
+                cb.Text = String.Format("R {0}\r\nG {0}\r\nB {0}",
+                    cb.Color.R, cb.Color.G, cb.Color.B);
+                toolTip1.SetToolTip(cb, String.Format("{0}\r\n{1}",
+                    ColorTranslator.ToHtml(cb.Color), cb.Color.ToRgbString()));
                 cb.ContextMenuStrip = contextMenuStrip1;
                 cb.Dock = DockStyle.Fill;
                 cb.Click += SchemeColor_Click;
