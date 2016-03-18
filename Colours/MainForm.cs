@@ -167,9 +167,8 @@ namespace Colours
             if (c.Value < 0.95d)
             {
                 c.Value += 0.05d;
-                FirstColorButton().HsvColor = c;
+                UpdateScheme(c);
             }
-            UpdateScheme();
         }
 
         private void darkenToolStripMenuItem_Click(object sender, EventArgs e)
@@ -178,9 +177,8 @@ namespace Colours
             if (c.Value > 0.05d)
             {
                 c.Value -= 0.05d;
-                FirstColorButton().HsvColor = c;
+                UpdateScheme(c);
             }
-            UpdateScheme();
         }
 
         private void saturateToolStripMenuItem_Click(object sender, EventArgs e)
@@ -189,9 +187,8 @@ namespace Colours
             if (c.Saturation < 0.95d)
             {
                 c.Saturation += 0.05d;
-                FirstColorButton().HsvColor = c;
+                UpdateScheme(c);
             }
-            UpdateScheme();
         }
 
         private void desaturateToolStripMenuItem_Click(object sender, EventArgs e)
@@ -200,9 +197,8 @@ namespace Colours
             if (c.Saturation > 0.05d)
             {
                 c.Saturation -= 0.05d;
-                FirstColorButton().HsvColor = c;
+                UpdateScheme(c);
             }
-            UpdateScheme();
         }
 
         private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
