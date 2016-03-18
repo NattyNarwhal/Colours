@@ -48,6 +48,9 @@
             this.randomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyHexToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyCSSRGBToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyCSSHSLToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -186,9 +189,12 @@
             // colorToolStripMenuItem
             // 
             this.colorToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.randomToolStripMenuItem,
+            this.copyHexToolStripMenuItem1,
+            this.copyCSSRGBToolStripMenuItem1,
+            this.copyCSSHSLToolStripMenuItem1,
             this.toolStripMenuItem2,
-            this.pasteToolStripMenuItem});
+            this.pasteToolStripMenuItem,
+            this.randomToolStripMenuItem});
             this.colorToolStripMenuItem.Name = "colorToolStripMenuItem";
             this.colorToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.colorToolStripMenuItem.Text = "&Color";
@@ -213,6 +219,30 @@
             this.pasteToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.pasteToolStripMenuItem.Text = "&Paste";
             this.pasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
+            // 
+            // copyHexToolStripMenuItem1
+            // 
+            this.copyHexToolStripMenuItem1.Name = "copyHexToolStripMenuItem1";
+            this.copyHexToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+            this.copyHexToolStripMenuItem1.Size = new System.Drawing.Size(232, 22);
+            this.copyHexToolStripMenuItem1.Text = "Copy He&x";
+            this.copyHexToolStripMenuItem1.Click += new System.EventHandler(this.copyHexToolStripMenuItem1_Click);
+            // 
+            // copyCSSRGBToolStripMenuItem1
+            // 
+            this.copyCSSRGBToolStripMenuItem1.Name = "copyCSSRGBToolStripMenuItem1";
+            this.copyCSSRGBToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.C)));
+            this.copyCSSRGBToolStripMenuItem1.Size = new System.Drawing.Size(232, 22);
+            this.copyCSSRGBToolStripMenuItem1.Text = "Copy CSS (&RGB)";
+            this.copyCSSRGBToolStripMenuItem1.Click += new System.EventHandler(this.copyCSSRGBToolStripMenuItem1_Click);
+            // 
+            // copyCSSHSLToolStripMenuItem1
+            // 
+            this.copyCSSHSLToolStripMenuItem1.Name = "copyCSSHSLToolStripMenuItem1";
+            this.copyCSSHSLToolStripMenuItem1.Size = new System.Drawing.Size(232, 22);
+            this.copyCSSHSLToolStripMenuItem1.Text = "Copy CSS (&HSL)";
+            this.copyCSSHSLToolStripMenuItem1.Click += new System.EventHandler(this.copyCSSHSLToolStripMenuItem1_Click);
             // 
             // MainForm
             // 
@@ -254,6 +284,9 @@
         private System.Windows.Forms.ToolStripMenuItem randomToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem copyHexToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem copyCSSRGBToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem copyCSSHSLToolStripMenuItem1;
     }
 }
 

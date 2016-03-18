@@ -199,5 +199,20 @@ namespace Colours
 
             }
         }
+
+        private void copyHexToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(ColorTranslator.ToHtml(FirstColorButton().Color));
+        }
+
+        private void copyCSSRGBToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(FirstColorButton().Color.ToRgbString());
+        }
+
+        private void copyCSSHSLToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(FirstColorButton().Color.ToHslString());
+        }
     }
 }
