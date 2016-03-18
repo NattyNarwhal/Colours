@@ -23,7 +23,7 @@ namespace Colours
             {
                 _color = value;
                 BackColor = _color;
-                ForeColor = _color.Invert();
+                ForeColor = _color.GetBrightness() > 0.5 ? Color.Black : Color.White;
             }
         }
 
