@@ -33,9 +33,6 @@ namespace Colours
             List<HsvColor> lc;
             switch ((string)comboBox1.SelectedItem)
             {
-                case "Opposite":
-                    lc = ColorSchemer.Opposite(c);
-                    break;
                 case "Complement":
                     lc = ColorSchemer.Complement(c);
                     break;

@@ -8,11 +8,6 @@ namespace Colours
 {
     public static class ColorSchemer
     {
-        public static List<HsvColor> Opposite(HsvColor c)
-        {
-            return new List<HsvColor>() { c, new HsvColor(360 - c.Hue, c.Saturation, c.Value) };
-        }
-
         public static List<HsvColor> Complement(HsvColor c)
         {
             return new List<HsvColor>() { c, new HsvColor(c.Hue + (360 / 2), c.Saturation, c.Value) };
