@@ -38,7 +38,15 @@
             this.copyCSSHSLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.randomButton = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.intensityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.brightenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.darkenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.saturateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.desaturateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // comboBox1
@@ -54,7 +62,7 @@
             "Tetrads",
             "Analogous",
             "Monochromatic"});
-            this.comboBox1.Location = new System.Drawing.Point(12, 13);
+            this.comboBox1.Location = new System.Drawing.Point(12, 28);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(179, 21);
             this.comboBox1.TabIndex = 2;
@@ -70,11 +78,11 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 41);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 56);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(260, 100);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(260, 85);
             this.tableLayoutPanel1.TabIndex = 3;
             // 
             // colorDialog1
@@ -115,7 +123,7 @@
             // randomButton
             // 
             this.randomButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.randomButton.Location = new System.Drawing.Point(197, 12);
+            this.randomButton.Location = new System.Drawing.Point(197, 27);
             this.randomButton.Name = "randomButton";
             this.randomButton.Size = new System.Drawing.Size(75, 23);
             this.randomButton.TabIndex = 4;
@@ -123,19 +131,83 @@
             this.randomButton.UseVisualStyleBackColor = true;
             this.randomButton.Click += new System.EventHandler(this.randomButton_Click);
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.intensityToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(284, 24);
+            this.menuStrip1.TabIndex = 5;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // intensityToolStripMenuItem
+            // 
+            this.intensityToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.brightenToolStripMenuItem,
+            this.darkenToolStripMenuItem,
+            this.toolStripMenuItem1,
+            this.saturateToolStripMenuItem,
+            this.desaturateToolStripMenuItem});
+            this.intensityToolStripMenuItem.Name = "intensityToolStripMenuItem";
+            this.intensityToolStripMenuItem.Size = new System.Drawing.Size(64, 20);
+            this.intensityToolStripMenuItem.Text = "&Intensity";
+            // 
+            // brightenToolStripMenuItem
+            // 
+            this.brightenToolStripMenuItem.Name = "brightenToolStripMenuItem";
+            this.brightenToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.K)));
+            this.brightenToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.brightenToolStripMenuItem.Text = "&Brighten";
+            this.brightenToolStripMenuItem.Click += new System.EventHandler(this.brightenToolStripMenuItem_Click);
+            // 
+            // darkenToolStripMenuItem
+            // 
+            this.darkenToolStripMenuItem.Name = "darkenToolStripMenuItem";
+            this.darkenToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.J)));
+            this.darkenToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.darkenToolStripMenuItem.Text = "&Darken";
+            this.darkenToolStripMenuItem.Click += new System.EventHandler(this.darkenToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(149, 6);
+            // 
+            // saturateToolStripMenuItem
+            // 
+            this.saturateToolStripMenuItem.Name = "saturateToolStripMenuItem";
+            this.saturateToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
+            this.saturateToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.saturateToolStripMenuItem.Text = "&Saturate";
+            this.saturateToolStripMenuItem.Click += new System.EventHandler(this.saturateToolStripMenuItem_Click);
+            // 
+            // desaturateToolStripMenuItem
+            // 
+            this.desaturateToolStripMenuItem.Name = "desaturateToolStripMenuItem";
+            this.desaturateToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H)));
+            this.desaturateToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.desaturateToolStripMenuItem.Text = "&Desaturate";
+            this.desaturateToolStripMenuItem.Click += new System.EventHandler(this.desaturateToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 153);
+            this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.randomButton);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.comboBox1);
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
             this.Text = "Form1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.contextMenuStrip1.ResumeLayout(false);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -149,6 +221,13 @@
         private System.Windows.Forms.Button randomButton;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.ToolStripMenuItem copyCSSHSLToolStripMenuItem;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem intensityToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem brightenToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem darkenToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem saturateToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem desaturateToolStripMenuItem;
     }
 }
 

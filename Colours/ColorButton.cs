@@ -27,6 +27,11 @@ namespace Colours
             }
         }
 
+        /// <summary>
+        /// A tag value for the HSV colour variant. Set this as you do Color.
+        /// </summary>
+        public HsvColor HsvColor { get; set; }
+
         public ColorButton() : base()
         {
             FlatStyle = FlatStyle.Popup;
@@ -36,6 +41,11 @@ namespace Colours
         public ColorButton(Color c) : this()
         {
             Color = c;
+        }
+
+        public ColorButton(Color c, HsvColor h) : this(c)
+        {
+            HsvColor = h;
         }
     }
 }
