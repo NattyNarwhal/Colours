@@ -27,9 +27,14 @@ namespace Colours
 
         public void UpdateScheme()
         {
+            UpdateScheme(FirstColorButton()?.Color ?? Properties.Settings.Default.LastColor);
+        }
+
+        public void UpdateScheme(Color color)
+        {
             Text = (string)comboBox1.SelectedItem;
 
-            HsvColor c = new HsvColor(FirstColorButton()?.Color ?? Properties.Settings.Default.LastColor);
+            HsvColor c = new HsvColor(color);
             List<HsvColor> lc;
             switch ((string)comboBox1.SelectedItem)
             {
@@ -80,8 +85,7 @@ namespace Colours
             colorDialog1.Color = cb.Color;
             if (colorDialog1.ShowDialog(this) == DialogResult.OK)
             {
-                FirstColorButton().Color = colorDialog1.Color;
-                UpdateScheme();
+                UpdateScheme(colorDialog1.Color);
             }
         }
 
@@ -111,8 +115,7 @@ namespace Colours
         private void randomButton_Click(object sender, EventArgs e)
         {
             Random r = new Random();
-            FirstColorButton().Color = Color.FromArgb(r.Next(255), r.Next(255), r.Next(255));
-            UpdateScheme();
+            UpdateScheme(Color.FromArgb(r.Next(255), r.Next(255), r.Next(255)));
         }
     }
 }
