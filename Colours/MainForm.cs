@@ -58,7 +58,9 @@ namespace Colours
             int i = 0;
             foreach (HsvColor next in lc)
             {
-                tableLayoutPanel1.ColumnStyles[i].SizeType = SizeType.AutoSize;
+                tableLayoutPanel1.ColumnStyles[i].SizeType = SizeType.Percent;
+                tableLayoutPanel1.ColumnStyles[i].Width = 100 / lc.Count;
+
                 ColorButton cb = new ColorButton(next.ToRgb());
                 cb.Dock = DockStyle.Fill;
                 tableLayoutPanel1.Controls.Add(cb, i++, 0);
