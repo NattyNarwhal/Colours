@@ -35,6 +35,7 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.copyHexToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyCSSRGBToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.randomButton = new System.Windows.Forms.Button();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -51,9 +52,9 @@
             "Tetrads",
             "Analogous",
             "Monochromatic"});
-            this.comboBox1.Location = new System.Drawing.Point(12, 12);
+            this.comboBox1.Location = new System.Drawing.Point(12, 14);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(260, 21);
+            this.comboBox1.Size = new System.Drawing.Size(179, 21);
             this.comboBox1.TabIndex = 2;
             this.comboBox1.SelectionChangeCommitted += new System.EventHandler(this.comboBox1_SelectionChangeCommitted);
             // 
@@ -101,11 +102,23 @@
             this.copyCSSRGBToolStripMenuItem.Text = "Copy &CSS (RGB)";
             this.copyCSSRGBToolStripMenuItem.Click += new System.EventHandler(this.copyCSSRGBToolStripMenuItem_Click);
             // 
+            // randomButton
+            // 
+            this.randomButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.randomButton.Location = new System.Drawing.Point(197, 12);
+            this.randomButton.Name = "randomButton";
+            this.randomButton.Size = new System.Drawing.Size(75, 23);
+            this.randomButton.TabIndex = 4;
+            this.randomButton.Text = "Random";
+            this.randomButton.UseVisualStyleBackColor = true;
+            this.randomButton.Click += new System.EventHandler(this.randomButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 153);
+            this.Controls.Add(this.randomButton);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.comboBox1);
             this.Name = "MainForm";
@@ -123,6 +136,7 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem copyHexToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem copyCSSRGBToolStripMenuItem;
+        private System.Windows.Forms.Button randomButton;
     }
 }
 

@@ -107,5 +107,12 @@ namespace Colours
             Properties.Settings.Default.LastColor = FirstColorButton().Color;
             Properties.Settings.Default.Save();
         }
+
+        private void randomButton_Click(object sender, EventArgs e)
+        {
+            Random r = new Random();
+            FirstColorButton().Color = Color.FromArgb(r.Next(255), r.Next(255), r.Next(255));
+            UpdateScheme();
+        }
     }
 }
