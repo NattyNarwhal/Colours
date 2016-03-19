@@ -12,87 +12,42 @@ namespace Colours
 {
     public partial class MainForm : Form
     {
-        public Stack<HsvColor> undo = new Stack<HsvColor>();
-        public Stack<HsvColor> redo = new Stack<HsvColor>();
+        public AppController app;
 
         public MainForm()
         {
             InitializeComponent();
+            comboBox1.SelectedItem = comboBox1.Items[0];
+            HsvColor initial = new HsvColor(Properties.Settings.Default.LastColor);
+            app = new AppController(initial, (string)comboBox1.SelectedItem);
+            chooserButton.HsvColor = initial;
 
             if (Properties.Settings.Default.CustomColors?.Count == 16)
             {
                 colorDialog1.CustomColors = Properties.Settings.Default.CustomColors.ToArray();
             }
 
-            comboBox1.SelectedItem = comboBox1.Items[0];
-            UpdateScheme(false);
+            SyncAppViewState();
         }
 
-        public ColorButton FirstColorButton()
+        public void SyncAppViewState()
         {
-            return ((ColorButton)tableLayoutPanel1.GetControlFromPosition(0, 0));
-        }
+            Text = app.SchemeType;
 
-        public void UpdateScheme(bool keepHistory)
-        {
-            UpdateScheme(FirstColorButton()?.HsvColor ??
-                new HsvColor(Properties.Settings.Default.LastColor), keepHistory);
-        }
-
-        public void UpdateScheme(Color color, bool keepHistory)
-        {
-            UpdateScheme(new HsvColor(color), keepHistory);
-        }
-
-        public void UpdateScheme(HsvColor color, bool keepHistory)
-        {
-            Text = (string)comboBox1.SelectedItem;
-
-            if (keepHistory && color.ToString() != FirstColorButton().HsvColor.ToString())
-            {
-                undo.Push(FirstColorButton().HsvColor);
-                redo.Clear();
-            }
-
-            HsvColor c = color;
-            List<HsvColor> lc;
-            switch ((string)comboBox1.SelectedItem)
-            {
-                case "Complement":
-                    lc = ColorSchemer.Complement(c);
-                    break;
-                case "Split Complements":
-                    lc = ColorSchemer.SplitComplement(c);
-                    break;
-                case "Triads":
-                    lc = ColorSchemer.Triads(c);
-                    break;
-                case "Tetrads":
-                    lc = ColorSchemer.Tetrads(c);
-                    break;
-                case "Analogous":
-                    lc = ColorSchemer.Analogous(c);
-                    break;
-                case "Monochromatic":
-                    lc = ColorSchemer.Monochromatic(c);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException("Not a valid type of scheme.");
-            }
+            chooserButton.HsvColor = app.HsvColor;
+            toolTip1.SetToolTip(chooserButton, String.Format("{0}\r\n{1}\r\n{2}\r\n{3}",
+                    ColorTranslator.ToHtml(app.Color), app.Color.ToRgbString(),
+                    app.Color.ToHslString(), app.HsvColor.ToString()));
 
             tableLayoutPanel1.Controls.Clear();
-            tableLayoutPanel1.ColumnCount = lc.Count;
+            tableLayoutPanel1.ColumnCount = app.Results.Count;
             int i = 0;
-            foreach (HsvColor next in lc)
+            foreach (HsvColor next in app.Results)
             {
                 tableLayoutPanel1.ColumnStyles[i].SizeType = SizeType.Percent;
-                tableLayoutPanel1.ColumnStyles[i].Width = 100 / lc.Count;
+                tableLayoutPanel1.ColumnStyles[i].Width = 100 / app.Results.Count;
 
                 ColorButton cb = new ColorButton(next);
-                if (i == 0)
-                {
-                    cb.Font = new Font(cb.Font, FontStyle.Bold);
-                }
                 cb.Text = String.Format("{0}\r\n{1}",
                     ColorTranslator.ToHtml(cb.Color), next.ToString());
                 toolTip1.SetToolTip(cb, String.Format("{0}\r\n{1}\r\n{2}\r\n{3}",
@@ -110,30 +65,30 @@ namespace Colours
 
         public void EnableItems()
         {
-            HsvColor c = FirstColorButton().HsvColor;
+            undoToolStripMenuItem.Enabled = app.CanUndo();
+            redoToolStripMenuItem.Enabled = app.CanRedo();
 
-            undoToolStripMenuItem.Enabled = undo.Count > 0;
-            redoToolStripMenuItem.Enabled = redo.Count > 0;
-
-            brightenToolStripMenuItem.Enabled = (c.Value + 0.05d < 1d);
-            darkenToolStripMenuItem.Enabled = (c.Value - 0.05d > 0d);
-            saturateToolStripMenuItem.Enabled = (c.Saturation + 0.05d < 1d);
-            desaturateToolStripMenuItem.Enabled = (c.Saturation - 0.05d > 0d);
+            brightenToolStripMenuItem.Enabled = app.CanBrighten();
+            darkenToolStripMenuItem.Enabled = app.CanDarken();
+            saturateToolStripMenuItem.Enabled = app.CanSaturate();
+            desaturateToolStripMenuItem.Enabled = app.CanDesaturate();
         }
-
+        
         private void SchemeColor_Click(object sender, EventArgs e)
         {
-            ColorButton cb = (ColorButton)sender;
-            colorDialog1.Color = cb.Color;
+            colorDialog1.Color = ((ColorButton)sender).Color;
             if (colorDialog1.ShowDialog(this) == DialogResult.OK)
             {
-                UpdateScheme(colorDialog1.Color, true);
+                app.SetColor(colorDialog1.Color, true);
+                SyncAppViewState();
             }
         }
 
         private void comboBox1_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            UpdateScheme(false);
+            app.SchemeType = (string)comboBox1.SelectedItem;
+            app.GetSchemeResults();
+            SyncAppViewState();
         }
 
         private void copyHexToolStripMenuItem_Click(object sender, EventArgs e)
@@ -163,60 +118,46 @@ namespace Colours
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             Properties.Settings.Default.CustomColors = new ColorList(colorDialog1.CustomColors);
-            Properties.Settings.Default.LastColor = FirstColorButton().Color;
+            Properties.Settings.Default.LastColor = app.Color;
             Properties.Settings.Default.Save();
         }
 
         private void randomButton_Click(object sender, EventArgs e)
         {
             Random r = new Random();
-            UpdateScheme(Color.FromArgb(r.Next(255), r.Next(255), r.Next(255)), true);
+            app.SetColor(Color.FromArgb(r.Next(255), r.Next(255), r.Next(255)), true);
+            SyncAppViewState();
         }
 
         private void brightenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            HsvColor c = FirstColorButton().HsvColor;
-            if (c.Value < 0.95d)
-            {
-                c.Value += 0.05d;
-                UpdateScheme(c, true);
-            }
+            app.Brighten();
+            SyncAppViewState();
         }
 
         private void darkenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            HsvColor c = FirstColorButton().HsvColor;
-            if (c.Value > 0.05d)
-            {
-                c.Value -= 0.05d;
-                UpdateScheme(c, true);
-            }
+            app.Darken();
+            SyncAppViewState();
         }
 
         private void saturateToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            HsvColor c = FirstColorButton().HsvColor;
-            if (c.Saturation < 0.95d)
-            {
-                c.Saturation += 0.05d;
-                UpdateScheme(c, true);
-            }
+            app.Saturate();
+            SyncAppViewState();
         }
 
         private void desaturateToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            HsvColor c = FirstColorButton().HsvColor;
-            if (c.Saturation > 0.05d)
-            {
-                c.Saturation -= 0.05d;
-                UpdateScheme(c, true);
-            }
+            app.Desaturate();
+            SyncAppViewState();
         }
 
         private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try {
-                UpdateScheme(ColorTranslator.FromHtml(Clipboard.GetText()), true);
+                app.SetColor(ColorTranslator.FromHtml(Clipboard.GetText()), true);
+                SyncAppViewState();
             }
             catch (Exception)
             {
@@ -226,41 +167,40 @@ namespace Colours
 
         private void copyHexToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText(ColorTranslator.ToHtml(FirstColorButton().Color));
+            Clipboard.SetText(ColorTranslator.ToHtml(app.Color));
         }
 
         private void copyCSSRGBToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText(FirstColorButton().Color.ToRgbString());
+            Clipboard.SetText(app.Color.ToRgbString());
         }
 
         private void copyCSSHSLToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText(FirstColorButton().Color.ToHslString());
+            Clipboard.SetText(app.Color.ToHslString());
         }
 
         private void copyCSSHSVToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText(FirstColorButton().HsvColor.ToString());
+            Clipboard.SetText(app.HsvColor.ToString());
         }
 
         private void invertToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            UpdateScheme(FirstColorButton().Color.Invert(), true);
+            app.SetColor(app.Color.Invert(), true);
+            SyncAppViewState();
         }
 
         private void undoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            HsvColor c = undo.Pop();
-            redo.Push(FirstColorButton().HsvColor);
-            UpdateScheme(c, false);
+            app.Undo();
+            SyncAppViewState();
         }
 
         private void redoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            HsvColor c = redo.Pop();
-            undo.Push(FirstColorButton().HsvColor);
-            UpdateScheme(c, false);
+            app.Redo();
+            SyncAppViewState();
         }
     }
 }

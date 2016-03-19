@@ -39,7 +39,8 @@ namespace Colours
             set
             {
                 _hsv = value;
-                Color = _hsv.ToRgb();
+                if (value != null)
+                    Color = _hsv.ToRgb();
             }
         }
 
