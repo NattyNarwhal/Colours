@@ -8,20 +8,6 @@ using System.Globalization;
 
 namespace Colours
 {
-    [Serializable]
-    public class ColorList : List<int>
-    {
-        public ColorList()
-        {
-
-        }
-
-        public ColorList(int[] win32colors)
-        {
-            AddRange(win32colors);
-        }
-    }
-
     public static class ColorUtils
     {
         /// <summary>
