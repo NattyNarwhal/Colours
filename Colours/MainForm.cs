@@ -252,14 +252,14 @@ namespace Colours
         private void undoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             HsvColor c = undo.Pop();
-            redo.Push(c);
+            redo.Push(FirstColorButton().HsvColor);
             UpdateScheme(c, false);
         }
 
         private void redoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             HsvColor c = redo.Pop();
-            undo.Push(c);
+            undo.Push(FirstColorButton().HsvColor);
             UpdateScheme(c, false);
         }
     }
