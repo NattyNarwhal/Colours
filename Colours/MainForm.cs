@@ -12,6 +12,9 @@ namespace Colours
 {
     public partial class MainForm : Form
     {
+        public Stack<HsvColor> undo = new Stack<HsvColor>();
+        public Stack<HsvColor> redo = new Stack<HsvColor>();
+
         public MainForm()
         {
             InitializeComponent();
@@ -22,7 +25,7 @@ namespace Colours
             }
 
             comboBox1.SelectedItem = comboBox1.Items[0];
-            UpdateScheme();
+            UpdateScheme(false);
         }
 
         public ColorButton FirstColorButton()
@@ -30,20 +33,26 @@ namespace Colours
             return ((ColorButton)tableLayoutPanel1.GetControlFromPosition(0, 0));
         }
 
-        public void UpdateScheme()
+        public void UpdateScheme(bool keepHistory)
         {
             UpdateScheme(FirstColorButton()?.HsvColor ??
-                new HsvColor(Properties.Settings.Default.LastColor));
+                new HsvColor(Properties.Settings.Default.LastColor), keepHistory);
         }
 
-        public void UpdateScheme(Color color)
+        public void UpdateScheme(Color color, bool keepHistory)
         {
-            UpdateScheme(new HsvColor(color));
+            UpdateScheme(new HsvColor(color), keepHistory);
         }
 
-        public void UpdateScheme(HsvColor color)
+        public void UpdateScheme(HsvColor color, bool keepHistory)
         {
             Text = (string)comboBox1.SelectedItem;
+
+            if (keepHistory/* && undo.Peek() != FirstColorButton().HsvColor*/)
+            {
+                undo.Push(FirstColorButton().HsvColor);
+                redo.Clear();
+            }
 
             HsvColor c = color;
             List<HsvColor> lc;
@@ -103,6 +112,9 @@ namespace Colours
         {
             HsvColor c = FirstColorButton().HsvColor;
 
+            undoToolStripMenuItem.Enabled = undo.Count > 0;
+            redoToolStripMenuItem.Enabled = redo.Count > 0;
+
             brightenToolStripMenuItem.Enabled = (c.Value + 0.05d < 1d);
             darkenToolStripMenuItem.Enabled = (c.Value - 0.05d > 0d);
             saturateToolStripMenuItem.Enabled = (c.Saturation + 0.05d < 1d);
@@ -115,13 +127,13 @@ namespace Colours
             colorDialog1.Color = cb.Color;
             if (colorDialog1.ShowDialog(this) == DialogResult.OK)
             {
-                UpdateScheme(colorDialog1.Color);
+                UpdateScheme(colorDialog1.Color, true);
             }
         }
 
         private void comboBox1_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            UpdateScheme();
+            UpdateScheme(false);
         }
 
         private void copyHexToolStripMenuItem_Click(object sender, EventArgs e)
@@ -158,7 +170,7 @@ namespace Colours
         private void randomButton_Click(object sender, EventArgs e)
         {
             Random r = new Random();
-            UpdateScheme(Color.FromArgb(r.Next(255), r.Next(255), r.Next(255)));
+            UpdateScheme(Color.FromArgb(r.Next(255), r.Next(255), r.Next(255)), true);
         }
 
         private void brightenToolStripMenuItem_Click(object sender, EventArgs e)
@@ -167,7 +179,7 @@ namespace Colours
             if (c.Value < 0.95d)
             {
                 c.Value += 0.05d;
-                UpdateScheme(c);
+                UpdateScheme(c, true);
             }
         }
 
@@ -177,7 +189,7 @@ namespace Colours
             if (c.Value > 0.05d)
             {
                 c.Value -= 0.05d;
-                UpdateScheme(c);
+                UpdateScheme(c, true);
             }
         }
 
@@ -187,7 +199,7 @@ namespace Colours
             if (c.Saturation < 0.95d)
             {
                 c.Saturation += 0.05d;
-                UpdateScheme(c);
+                UpdateScheme(c, true);
             }
         }
 
@@ -197,14 +209,14 @@ namespace Colours
             if (c.Saturation > 0.05d)
             {
                 c.Saturation -= 0.05d;
-                UpdateScheme(c);
+                UpdateScheme(c, true);
             }
         }
 
         private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try {
-                UpdateScheme(ColorTranslator.FromHtml(Clipboard.GetText()));
+                UpdateScheme(ColorTranslator.FromHtml(Clipboard.GetText()), true);
             }
             catch (Exception)
             {
@@ -234,7 +246,21 @@ namespace Colours
 
         private void invertToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            UpdateScheme(FirstColorButton().Color.Invert());
+            UpdateScheme(FirstColorButton().Color.Invert(), true);
+        }
+
+        private void undoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            HsvColor c = undo.Pop();
+            redo.Push(c);
+            UpdateScheme(c, false);
+        }
+
+        private void redoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            HsvColor c = redo.Pop();
+            undo.Push(c);
+            UpdateScheme(c, false);
         }
     }
 }
