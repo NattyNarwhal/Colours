@@ -45,5 +45,17 @@ namespace Colours.Properties {
                 this["CustomColors"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Complement")]
+        public string SchemeType {
+            get {
+                return ((string)(this["SchemeType"]));
+            }
+            set {
+                this["SchemeType"] = value;
+            }
+        }
     }
 }
