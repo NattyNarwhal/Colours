@@ -66,7 +66,7 @@ namespace Colours
             else
             {
                 c1 = new HsvColor(c.Hue, c.Saturation, (c.Value + (1d / 3d)) % 1d);
-                c2 = new HsvColor(c.Hue, c.Saturation, (c.Value + 0.02d * (1d / 3d)) % 1d);
+                c2 = new HsvColor(c.Hue, c.Saturation, (c.Value + 2d * (1d / 3d)) % 1d);
             }
 
             return new List<HsvColor>() { c, c1, c2 };
