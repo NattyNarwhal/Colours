@@ -12,12 +12,29 @@ namespace Colours
     /// Represents a color in the Hue/Saturation/Value form.
     /// </summary>
     /// <seealso cref="System.Drawing.Color"/>
-    public struct HsvColor
+    public class HsvColor
     {
+        private double _hue;
+
         /// <summary>
         /// The hue of the colour, on a wheel from 0 to 360 degrees.
         /// </summary>
-        public double Hue { get; set; }
+        public double Hue
+        {
+            get
+            {
+                return _hue;
+            }
+            set
+            {
+                if (value > 360)
+                    _hue = value - 360;
+                else if (value < 0)
+                    _hue = value + 360;
+                else
+                    _hue = value;
+            }
+        }
         /// <summary>
         /// The saturation of the colour, from 0 to 1.
         /// </summary>
