@@ -58,7 +58,6 @@
             this.desaturateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.invertToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.chooserButton = new Colours.ColorButton();
             this.contextMenuStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -76,9 +75,9 @@
             "Tetrads",
             "Analogous",
             "Monochromatic"});
-            this.comboBox1.Location = new System.Drawing.Point(40, 27);
+            this.comboBox1.Location = new System.Drawing.Point(12, 27);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(232, 21);
+            this.comboBox1.Size = new System.Drawing.Size(260, 21);
             this.comboBox1.TabIndex = 2;
             this.comboBox1.SelectionChangeCommitted += new System.EventHandler(this.comboBox1_SelectionChangeCommitted);
             // 
@@ -306,27 +305,11 @@
             this.invertToolStripMenuItem.Text = "&Invert";
             this.invertToolStripMenuItem.Click += new System.EventHandler(this.invertToolStripMenuItem_Click);
             // 
-            // chooserButton
-            // 
-            this.chooserButton.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.chooserButton.Color = System.Drawing.SystemColors.ButtonFace;
-            this.chooserButton.ContextMenuStrip = this.contextMenuStrip1;
-            this.chooserButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.chooserButton.ForeColor = System.Drawing.Color.Black;
-            this.chooserButton.HsvColor = null;
-            this.chooserButton.Location = new System.Drawing.Point(13, 27);
-            this.chooserButton.Name = "chooserButton";
-            this.chooserButton.Size = new System.Drawing.Size(21, 21);
-            this.chooserButton.TabIndex = 6;
-            this.chooserButton.UseVisualStyleBackColor = false;
-            this.chooserButton.Click += new System.EventHandler(this.SchemeColor_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 153);
-            this.Controls.Add(this.chooserButton);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.comboBox1);
@@ -372,7 +355,6 @@
         private System.Windows.Forms.ToolStripMenuItem undoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem redoToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem4;
-        private ColorButton chooserButton;
     }
 }
 

@@ -20,7 +20,6 @@ namespace Colours
             comboBox1.SelectedItem = comboBox1.Items[0];
             HsvColor initial = new HsvColor(Properties.Settings.Default.LastColor);
             app = new AppController(initial, (string)comboBox1.SelectedItem);
-            chooserButton.HsvColor = initial;
 
             if (Properties.Settings.Default.CustomColors?.Count == 16)
             {
@@ -34,11 +33,6 @@ namespace Colours
         {
             Text = app.SchemeType;
 
-            chooserButton.HsvColor = app.HsvColor;
-            toolTip1.SetToolTip(chooserButton, String.Format("{0}\r\n{1}\r\n{2}\r\n{3}",
-                    ColorTranslator.ToHtml(app.Color), app.Color.ToRgbString(),
-                    app.Color.ToHslString(), app.HsvColor.ToString()));
-
             tableLayoutPanel1.Controls.Clear();
             tableLayoutPanel1.ColumnCount = app.Results.Count;
             int i = 0;
@@ -48,6 +42,8 @@ namespace Colours
                 tableLayoutPanel1.ColumnStyles[i].Width = 100 / app.Results.Count;
 
                 ColorButton cb = new ColorButton(next);
+                if (i == 0)
+                    cb.Font = new Font(cb.Font, FontStyle.Bold);
                 cb.Text = String.Format("{0}\r\n{1}",
                     ColorTranslator.ToHtml(cb.Color), next.ToString());
                 toolTip1.SetToolTip(cb, String.Format("{0}\r\n{1}\r\n{2}\r\n{3}",
