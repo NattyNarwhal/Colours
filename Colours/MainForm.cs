@@ -48,7 +48,7 @@ namespace Colours
         {
             Text = (string)comboBox1.SelectedItem;
 
-            if (keepHistory/* && undo.Peek() != FirstColorButton().HsvColor*/)
+            if (keepHistory && color.ToString() != FirstColorButton().HsvColor.ToString())
             {
                 undo.Push(FirstColorButton().HsvColor);
                 redo.Clear();
