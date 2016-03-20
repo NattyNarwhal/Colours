@@ -6,6 +6,9 @@ using Colours;
 public partial class MainWindow: Gtk.Window
 {
 	public AppController app;
+
+	private static Gdk.Atom clipAtom = Gdk.Atom.Intern("CLIPBOARD", false);
+	Clipboard clipboard = Clipboard.Get (clipAtom);
 	HBox newBox;
 
 	public MainWindow () : base (Gtk.WindowType.Toplevel)
@@ -115,27 +118,33 @@ public partial class MainWindow: Gtk.Window
 
 	protected void OnPasteActionActivated (object sender, EventArgs e)
 	{
-		throw new NotImplementedException ();
+		clipboard.RequestText ((c, s) => {
+			try {
+				app.SetColor (ColorTranslator.FromHtml (s), true);
+			}
+			catch (Exception) {} // it doesn't matter
+		});
+		SyncAppViewState ();
 	}
 
 	protected void OnCopyHSVActionActivated (object sender, EventArgs e)
 	{
-		throw new NotImplementedException ();
+		clipboard.Text = app.HsvColor.ToString ();
 	}	
 
 	protected void OnCopyHSLActionActivated (object sender, EventArgs e)
 	{
-		throw new NotImplementedException ();
+		clipboard.Text = app.Color.ToHslString ();
 	}
 
 	protected void OnCopyRGBActionActivated (object sender, EventArgs e)
 	{
-		throw new NotImplementedException ();
+		clipboard.Text = app.Color.ToRgbString ();
 	}
 
 	protected void OnCopyHexActionActivated (object sender, EventArgs e)
 	{
-		throw new NotImplementedException ();
+		clipboard.Text = ColorTranslator.ToHtml (app.Color);
 	}
 
 	protected void OnRedoActionActivated (object sender, EventArgs e)
