@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
+# Visual Studio 2012
 VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Colours.Windows", "Colours\Colours.Windows.csproj", "{6BAA5820-7C8C-46F3-A485-176AE7AD804A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Colours.Core", "Colours.Core\Colours.Core.csproj", "{E096D095-264E-4DD8-9081-B6B564591C49}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Colours.Gtk", "Colours.Gtk\Colours.Gtk.csproj", "{5128F749-086F-4740-AA6A-0CCBE79556ED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,6 +15,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5128F749-086F-4740-AA6A-0CCBE79556ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5128F749-086F-4740-AA6A-0CCBE79556ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5128F749-086F-4740-AA6A-0CCBE79556ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5128F749-086F-4740-AA6A-0CCBE79556ED}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6BAA5820-7C8C-46F3-A485-176AE7AD804A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6BAA5820-7C8C-46F3-A485-176AE7AD804A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6BAA5820-7C8C-46F3-A485-176AE7AD804A}.Release|Any CPU.ActiveCfg = Release|Any CPU
