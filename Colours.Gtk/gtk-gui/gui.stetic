@@ -7,7 +7,7 @@
     <widget-library name="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <widget-library name="../bin/Debug/Colours.Gtk.exe" internal="true" />
   </import>
-  <widget class="Gtk.Window" id="MainWindow" design-size="644 315">
+  <widget class="Gtk.Window" id="MainWindow" design-size="308 164">
     <action-group name="Default">
       <action id="EditAction">
         <property name="Type">Action</property>
@@ -19,24 +19,27 @@
         <property name="Label" translatable="yes">_Color</property>
         <property name="ShortLabel" translatable="yes">_Color</property>
       </action>
-      <action id="undoAction">
+      <action id="goBackAction">
         <property name="Type">Action</property>
-        <property name="Label" translatable="yes">_Undo</property>
+        <property name="Accelerator">&lt;Primary&gt;z</property>
+        <property name="Label" translatable="yes">_Back</property>
         <property name="ShortLabel" translatable="yes">_Undo</property>
-        <property name="StockId">gtk-undo</property>
+        <property name="StockId">gtk-go-back</property>
         <signal name="Activated" handler="OnUndoActionActivated" />
       </action>
-      <action id="redoAction">
+      <action id="goForwardAction">
         <property name="Type">Action</property>
-        <property name="Label" translatable="yes">_Redo</property>
+        <property name="Accelerator">&lt;Primary&gt;y</property>
+        <property name="Label" translatable="yes">_Forward</property>
         <property name="ShortLabel" translatable="yes">_Redo</property>
-        <property name="StockId">gtk-redo</property>
+        <property name="StockId">gtk-go-forward</property>
         <signal name="Activated" handler="OnRedoActionActivated" />
       </action>
-      <action id="CopyHexAction">
+      <action id="copyAction">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">Copy He_x</property>
         <property name="ShortLabel" translatable="yes">Copy He_x</property>
+        <property name="StockId">gtk-copy</property>
         <signal name="Activated" handler="OnCopyHexActionActivated" />
       </action>
       <action id="CopyRGBAction">
@@ -64,32 +67,38 @@
         <property name="StockId">gtk-paste</property>
         <signal name="Activated" handler="OnPasteActionActivated" />
       </action>
-      <action id="RandomAction">
+      <action id="refreshAction">
         <property name="Type">Action</property>
-        <property name="Label" translatable="yes">Rando_m</property>
+        <property name="Accelerator">&lt;Primary&gt;r</property>
+        <property name="Label" translatable="yes">_Random</property>
         <property name="ShortLabel" translatable="yes">Rando_m</property>
+        <property name="StockId">gtk-refresh</property>
         <signal name="Activated" handler="OnRandomActionActivated" />
       </action>
       <action id="BrightenAction">
         <property name="Type">Action</property>
+        <property name="Accelerator">&lt;Primary&gt;k</property>
         <property name="Label" translatable="yes">_Brighten</property>
         <property name="ShortLabel" translatable="yes">_Brighten</property>
         <signal name="Activated" handler="OnBrightenActionActivated" />
       </action>
       <action id="DarkenAction">
         <property name="Type">Action</property>
+        <property name="Accelerator">&lt;Primary&gt;j</property>
         <property name="Label" translatable="yes">Dar_ken</property>
         <property name="ShortLabel" translatable="yes">Dar_ken</property>
         <signal name="Activated" handler="OnDarkenActionActivated" />
       </action>
       <action id="SaturateAction">
         <property name="Type">Action</property>
+        <property name="Accelerator">&lt;Primary&gt;l</property>
         <property name="Label" translatable="yes">_Saturate</property>
         <property name="ShortLabel" translatable="yes">_Saturate</property>
         <signal name="Activated" handler="OnSaturateActionActivated" />
       </action>
       <action id="DesaturateAction">
         <property name="Type">Action</property>
+        <property name="Accelerator">&lt;Primary&gt;h</property>
         <property name="Label" translatable="yes">_Desaturate</property>
         <property name="ShortLabel" translatable="yes">_Desaturate</property>
         <signal name="Activated" handler="OnDesaturateActionActivated" />
@@ -114,16 +123,16 @@
             <property name="MemberName" />
             <node name="menubar1" type="Menubar">
               <node type="Menu" action="EditAction">
-                <node type="Menuitem" action="undoAction" />
-                <node type="Menuitem" action="redoAction" />
+                <node type="Menuitem" action="goBackAction" />
+                <node type="Menuitem" action="goForwardAction" />
                 <node type="Separator" />
-                <node type="Menuitem" action="CopyHexAction" />
+                <node type="Menuitem" action="copyAction" />
                 <node type="Menuitem" action="CopyRGBAction" />
                 <node type="Menuitem" action="CopyHSLAction" />
                 <node type="Menuitem" action="CopyHSVAction" />
                 <node type="Separator" />
                 <node type="Menuitem" action="pasteAction" />
-                <node type="Menuitem" action="RandomAction" />
+                <node type="Menuitem" action="refreshAction" />
               </node>
               <node type="Menu" action="ColorAction">
                 <node type="Menuitem" action="BrightenAction" />

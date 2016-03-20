@@ -31,6 +31,8 @@ public partial class MainWindow: Gtk.Window
 
 	public void SyncAppViewState()
 	{
+		Title = app.SchemeType;
+
 		mainVbox.Remove (newBox);
 
 		newBox = new HBox (true, 6);
@@ -45,8 +47,8 @@ public partial class MainWindow: Gtk.Window
 			newBox.PackStart(cb, true, true, 0);
 		}
 
-		undoAction.Sensitive = app.CanUndo ();
-		redoAction.Sensitive = app.CanRedo ();
+		goBackAction.Sensitive = app.CanUndo ();
+		goForwardAction.Sensitive = app.CanRedo ();
 		BrightenAction.Sensitive = app.CanBrighten ();
 		DarkenAction.Sensitive = app.CanDarken ();
 		SaturateAction.Sensitive = app.CanSaturate ();
