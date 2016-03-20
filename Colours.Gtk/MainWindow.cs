@@ -45,6 +45,10 @@ public partial class MainWindow: Gtk.Window
 				c.ToRgb().ToRgbString(),
 				c.ToRgb().ToHslString(),
 				c.ToString());
+
+			// bind the menu too
+			cb.ButtonPressEvent += HandleButtonPopupMenu;
+
 			newBox.PackStart(cb, true, true, 0);
 		}
 
@@ -63,6 +67,38 @@ public partial class MainWindow: Gtk.Window
 	{
 		Application.Quit ();
 		a.RetVal = true;
+	}
+
+	[GLib.ConnectBeforeAttribute]
+	protected void HandleButtonPopupMenu (object sender, ButtonPressEventArgs e)
+	{
+		if (e.Event.Button == 3) { // right mouse button
+			ColorButton cb = (ColorButton)sender;
+
+			Menu m = new Menu();
+			MenuItem hexPopupItem = new MenuItem ("Copy He_x");
+			MenuItem rgbPopupItem = new MenuItem ("Copy _RGB");
+			MenuItem hslPopupItem = new MenuItem ("Copy HS_L");
+			MenuItem hsvPopupItem = new MenuItem ("Copy HS_V");
+			hexPopupItem.Activated += (o, a) => {
+				clipboard.Text = ColorTranslator.ToHtml(cb.Color.ToGDIColor());
+			};
+			rgbPopupItem.Activated += (o, a) => {
+				clipboard.Text = cb.Color.ToGDIColor().ToRgbString();
+			};
+			hslPopupItem.Activated += (o, a) => {
+				clipboard.Text = cb.Color.ToGDIColor().ToHslString();
+			};
+			hsvPopupItem.Activated += (o, a) => {
+				clipboard.Text = cb.Color.ToHsvColor().ToString();
+			};
+			m.Add (hexPopupItem);
+			m.Add (rgbPopupItem);
+			m.Add (hslPopupItem);
+			m.Add (hsvPopupItem);
+			m.ShowAll ();
+			m.Popup();
+		}
 	}
 
 	protected void OnColorChooserColorChanged (object sender, EventArgs e)
