@@ -153,27 +153,38 @@
           </packing>
         </child>
         <child>
-          <widget class="Gtk.ComboBox" id="schemeBox">
+          <widget class="Gtk.VBox" id="paddedBox">
             <property name="MemberName" />
-            <property name="IsTextCombo">True</property>
-            <property name="Items">Complement
+            <property name="Spacing">6</property>
+            <property name="BorderWidth">6</property>
+            <child>
+              <widget class="Gtk.ComboBox" id="schemeBox">
+                <property name="MemberName" />
+                <property name="IsTextCombo">True</property>
+                <property name="Items">Complement
 Split Complements
 Triads
 Tetrads
 Analogous
 Monochromatic</property>
-            <property name="Active">0</property>
-            <signal name="Changed" handler="OnSchemeBoxChanged" />
+                <property name="Active">0</property>
+                <signal name="Changed" handler="OnSchemeBoxChanged" />
+              </widget>
+              <packing>
+                <property name="Position">0</property>
+                <property name="AutoSize">True</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <placeholder />
+            </child>
           </widget>
           <packing>
             <property name="Position">1</property>
             <property name="AutoSize">True</property>
-            <property name="Expand">False</property>
-            <property name="Fill">False</property>
           </packing>
-        </child>
-        <child>
-          <placeholder />
         </child>
       </widget>
     </child>

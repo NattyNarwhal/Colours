@@ -33,7 +33,7 @@ public partial class MainWindow: Gtk.Window
 	{
 		Title = app.SchemeType;
 
-		mainVbox.Remove (newBox);
+		paddedBox.Remove (newBox);
 
 		newBox = new HBox (true, 6);
 		foreach (HsvColor c in app.Results) {
@@ -55,7 +55,7 @@ public partial class MainWindow: Gtk.Window
 		SaturateAction.Sensitive = app.CanSaturate ();
 		DesaturateAction.Sensitive = app.CanDesaturate ();
 
-		mainVbox.Add (newBox);
+		paddedBox.Add (newBox);
 		this.ShowAll ();
 	}
 

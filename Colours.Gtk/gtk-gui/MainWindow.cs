@@ -39,6 +39,8 @@ public partial class MainWindow
 	
 	private global::Gtk.MenuBar menubar1;
 	
+	private global::Gtk.VBox paddedBox;
+	
 	private global::Gtk.ComboBox schemeBox;
 
 	protected virtual void Build ()
@@ -111,6 +113,11 @@ public partial class MainWindow
 		w2.Expand = false;
 		w2.Fill = false;
 		// Container child mainVbox.Gtk.Box+BoxChild
+		this.paddedBox = new global::Gtk.VBox ();
+		this.paddedBox.Name = "paddedBox";
+		this.paddedBox.Spacing = 6;
+		this.paddedBox.BorderWidth = ((uint)(6));
+		// Container child paddedBox.Gtk.Box+BoxChild
 		this.schemeBox = global::Gtk.ComboBox.NewText ();
 		this.schemeBox.AppendText (global::Mono.Unix.Catalog.GetString ("Complement"));
 		this.schemeBox.AppendText (global::Mono.Unix.Catalog.GetString ("Split Complements"));
@@ -120,11 +127,14 @@ public partial class MainWindow
 		this.schemeBox.AppendText (global::Mono.Unix.Catalog.GetString ("Monochromatic"));
 		this.schemeBox.Name = "schemeBox";
 		this.schemeBox.Active = 0;
-		this.mainVbox.Add (this.schemeBox);
-		global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.mainVbox [this.schemeBox]));
-		w3.Position = 1;
+		this.paddedBox.Add (this.schemeBox);
+		global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.paddedBox [this.schemeBox]));
+		w3.Position = 0;
 		w3.Expand = false;
 		w3.Fill = false;
+		this.mainVbox.Add (this.paddedBox);
+		global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.mainVbox [this.paddedBox]));
+		w4.Position = 1;
 		this.Add (this.mainVbox);
 		if ((this.Child != null)) {
 			this.Child.ShowAll ();
