@@ -38,6 +38,7 @@ public partial class MainWindow: Gtk.Window
 		newBox = new HBox (true, 6);
 		foreach (HsvColor c in app.Results) {
 			ColorButton cb = new ColorButton (c.ToGdkColor ());
+			cb.UseAlpha = false;
 			cb.ColorSet += OnColorChooserColorChanged;
 			cb.TooltipText = String.Format("{0}\r\n{1}\r\n{2}\r\n{3}",
 				System.Drawing.ColorTranslator.ToHtml(c.ToRgb()),
