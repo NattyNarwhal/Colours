@@ -20,7 +20,7 @@ public partial class MainWindow: Gtk.Window
 	{
 		Build ();
 		LoadConfig ();
-		app = new AppController (new HsvColor (initialColor), GetComboBoxSelection());
+		app = new AppController (new HsvColor (initialColor), schemeBox.ActiveText);
 		SyncAppViewState ();
 	}
 
@@ -62,16 +62,6 @@ public partial class MainWindow: Gtk.Window
 		} catch (Exception) {
 
 		}
-	}
-
-	public string GetComboBoxSelection()
-	{
-		TreeIter iter;
-
-		if (schemeBox.GetActiveIter (out iter))
-			return (string)schemeBox.Model.GetValue (iter, 0);
-		else
-			throw new Exception ();
 	}
 
 	public void SyncAppViewState()
@@ -159,7 +149,7 @@ public partial class MainWindow: Gtk.Window
 		// we can set the combobox from config while the app
 		// isn't initialized yet
 		if (app != null) {
-			app.SchemeType = GetComboBoxSelection ();
+			app.SchemeType = schemeBox.ActiveText;
 			app.GetSchemeResults ();
 			SyncAppViewState ();
 		}
