@@ -231,4 +231,30 @@ public partial class MainWindow: Gtk.Window
 		app.Redo ();
 		SyncAppViewState ();
 	}
+
+	protected void OnSaveActionActivated (object sender, EventArgs e)
+	{
+		FileChooserDialog fd = new FileChooserDialog ("Save as HTML", this,
+			FileChooserAction.Save, "Cancel", ResponseType.Cancel, "OK", ResponseType.Ok);
+		FileFilter ff = new FileFilter ();
+		ff.Name = "HTML";
+		ff.AddMimeType ("text/html");
+		ff.AddPattern ("*.html");
+		fd.AddFilter (ff);
+		if (fd.Run () == (int)ResponseType.Ok) {
+			File.WriteAllText(fd.Filename,
+				HtmlProofGenerator.GeneratePage(
+					String.Format("{0} for {1}", app.SchemeType,
+						ColorTranslator.ToHtml(app.Color)),
+					HtmlProofGenerator.GenerateTable(app.Results)
+				)
+			);
+		}
+		fd.Destroy ();
+	}
+
+	protected void OnQuitActionActivated (object sender, EventArgs e)
+	{
+		Application.Quit ();
+	}
 }

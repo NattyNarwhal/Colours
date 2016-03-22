@@ -35,6 +35,12 @@ public partial class MainWindow
 	
 	private global::Gtk.Action InvertAction;
 	
+	private global::Gtk.Action FileAction;
+	
+	private global::Gtk.Action saveAction;
+	
+	private global::Gtk.Action quitAction;
+	
 	private global::Gtk.VBox mainVbox;
 	
 	private global::Gtk.MenuBar menubar1;
@@ -94,6 +100,15 @@ public partial class MainWindow
 		this.InvertAction = new global::Gtk.Action ("InvertAction", global::Mono.Unix.Catalog.GetString ("_Invert"), null, null);
 		this.InvertAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("_Invert");
 		w1.Add (this.InvertAction, null);
+		this.FileAction = new global::Gtk.Action ("FileAction", global::Mono.Unix.Catalog.GetString ("_File"), null, null);
+		this.FileAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("_File");
+		w1.Add (this.FileAction, null);
+		this.saveAction = new global::Gtk.Action ("saveAction", global::Mono.Unix.Catalog.GetString ("_Save as HTML"), null, "gtk-save");
+		this.saveAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("_Save as HTML");
+		w1.Add (this.saveAction, null);
+		this.quitAction = new global::Gtk.Action ("quitAction", global::Mono.Unix.Catalog.GetString ("_Quit"), null, "gtk-quit");
+		this.quitAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("_Quit");
+		w1.Add (this.quitAction, null);
 		this.UIManager.InsertActionGroup (w1, 0);
 		this.AddAccelGroup (this.UIManager.AccelGroup);
 		this.Name = "MainWindow";
@@ -104,7 +119,7 @@ public partial class MainWindow
 		this.mainVbox.Name = "mainVbox";
 		this.mainVbox.Spacing = 6;
 		// Container child mainVbox.Gtk.Box+BoxChild
-		this.UIManager.AddUiFromString (@"<ui><menubar name='menubar1'><menu name='EditAction' action='EditAction'><menuitem name='goBackAction' action='goBackAction'/><menuitem name='goForwardAction' action='goForwardAction'/><separator/><menuitem name='copyAction' action='copyAction'/><menuitem name='CopyRGBAction' action='CopyRGBAction'/><menuitem name='CopyHSLAction' action='CopyHSLAction'/><menuitem name='CopyHSVAction' action='CopyHSVAction'/><separator/><menuitem name='pasteAction' action='pasteAction'/><menuitem name='refreshAction' action='refreshAction'/></menu><menu name='ColorAction' action='ColorAction'><menuitem name='BrightenAction' action='BrightenAction'/><menuitem name='DarkenAction' action='DarkenAction'/><separator/><menuitem name='SaturateAction' action='SaturateAction'/><menuitem name='DesaturateAction' action='DesaturateAction'/><separator/><menuitem name='InvertAction' action='InvertAction'/></menu></menubar></ui>");
+		this.UIManager.AddUiFromString (@"<ui><menubar name='menubar1'><menu name='FileAction' action='FileAction'><menuitem name='saveAction' action='saveAction'/><separator/><menuitem name='quitAction' action='quitAction'/></menu><menu name='EditAction' action='EditAction'><menuitem name='goBackAction' action='goBackAction'/><menuitem name='goForwardAction' action='goForwardAction'/><separator/><menuitem name='copyAction' action='copyAction'/><menuitem name='CopyRGBAction' action='CopyRGBAction'/><menuitem name='CopyHSLAction' action='CopyHSLAction'/><menuitem name='CopyHSVAction' action='CopyHSVAction'/><separator/><menuitem name='pasteAction' action='pasteAction'/><menuitem name='refreshAction' action='refreshAction'/></menu><menu name='ColorAction' action='ColorAction'><menuitem name='BrightenAction' action='BrightenAction'/><menuitem name='DarkenAction' action='DarkenAction'/><separator/><menuitem name='SaturateAction' action='SaturateAction'/><menuitem name='DesaturateAction' action='DesaturateAction'/><separator/><menuitem name='InvertAction' action='InvertAction'/></menu></menubar></ui>");
 		this.menubar1 = ((global::Gtk.MenuBar)(this.UIManager.GetWidget ("/menubar1")));
 		this.menubar1.Name = "menubar1";
 		this.mainVbox.Add (this.menubar1);
@@ -139,7 +154,7 @@ public partial class MainWindow
 		if ((this.Child != null)) {
 			this.Child.ShowAll ();
 		}
-		this.DefaultWidth = 308;
+		this.DefaultWidth = 390;
 		this.DefaultHeight = 164;
 		this.Show ();
 		this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
@@ -156,6 +171,8 @@ public partial class MainWindow
 		this.SaturateAction.Activated += new global::System.EventHandler (this.OnSaturateActionActivated);
 		this.DesaturateAction.Activated += new global::System.EventHandler (this.OnDesaturateActionActivated);
 		this.InvertAction.Activated += new global::System.EventHandler (this.OnInvertActionActivated);
+		this.saveAction.Activated += new global::System.EventHandler (this.OnSaveActionActivated);
+		this.quitAction.Activated += new global::System.EventHandler (this.OnQuitActionActivated);
 		this.schemeBox.Changed += new global::System.EventHandler (this.OnSchemeBoxChanged);
 	}
 }

@@ -7,7 +7,7 @@
     <widget-library name="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <widget-library name="../bin/Debug/Colours.Gtk.exe" internal="true" />
   </import>
-  <widget class="Gtk.Window" id="MainWindow" design-size="308 164">
+  <widget class="Gtk.Window" id="MainWindow" design-size="390 164">
     <action-group name="Default">
       <action id="EditAction">
         <property name="Type">Action</property>
@@ -109,6 +109,25 @@
         <property name="ShortLabel" translatable="yes">_Invert</property>
         <signal name="Activated" handler="OnInvertActionActivated" />
       </action>
+      <action id="FileAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_File</property>
+        <property name="ShortLabel" translatable="yes">_File</property>
+      </action>
+      <action id="saveAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Save as HTML</property>
+        <property name="ShortLabel" translatable="yes">_Save as HTML</property>
+        <property name="StockId">gtk-save</property>
+        <signal name="Activated" handler="OnSaveActionActivated" />
+      </action>
+      <action id="quitAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Quit</property>
+        <property name="ShortLabel" translatable="yes">_Quit</property>
+        <property name="StockId">gtk-quit</property>
+        <signal name="Activated" handler="OnQuitActionActivated" />
+      </action>
     </action-group>
     <property name="MemberName" />
     <property name="Title" translatable="yes">MainWindow</property>
@@ -122,6 +141,11 @@
           <widget class="Gtk.MenuBar" id="menubar1">
             <property name="MemberName" />
             <node name="menubar1" type="Menubar">
+              <node type="Menu" action="FileAction">
+                <node type="Menuitem" action="saveAction" />
+                <node type="Separator" />
+                <node type="Menuitem" action="quitAction" />
+              </node>
               <node type="Menu" action="EditAction">
                 <node type="Menuitem" action="goBackAction" />
                 <node type="Menuitem" action="goForwardAction" />
