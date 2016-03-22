@@ -66,7 +66,8 @@ public partial class MainWindow: Gtk.Window
 
 	public void SyncAppViewState()
 	{
-		Title = app.SchemeType;
+		Title = String.Format ("{0} for {1}", app.SchemeType,
+			ColorTranslator.ToHtml (app.Color));
 
 		paddedBox.Remove (newBox);
 

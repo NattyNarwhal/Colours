@@ -33,7 +33,8 @@ namespace Colours
 
         public void SyncAppViewState()
         {
-            Text = app.SchemeType;
+            Text = String.Format("{0} for {1}", app.SchemeType,
+                ColorTranslator.ToHtml(app.Color));
 
             tableLayoutPanel1.Controls.Clear();
             tableLayoutPanel1.ColumnCount = app.Results.Count;
