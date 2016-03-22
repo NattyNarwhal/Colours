@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -200,6 +201,25 @@ namespace Colours
         {
             app.Redo();
             SyncAppViewState();
+        }
+
+        private void saveAsHTMLToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (saveAsHtmlDialog.ShowDialog(this) == DialogResult.OK)
+            {
+                File.WriteAllText(saveAsHtmlDialog.FileName,
+                    HtmlProofGenerator.GeneratePage(
+                        String.Format("{0} for {1}", app.SchemeType,
+                            ColorTranslator.ToHtml(app.Color)),
+                        HtmlProofGenerator.GenerateTable(app.Results)
+                    )
+                );
+            }
+        }
+
+        private void quitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }
