@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Colours
 {
+    [Serializable]
     public enum SchemeType
     {
         Complement, SplitComplements, Triads, Tetrads, Analogous, Monochromatic
