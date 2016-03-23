@@ -48,10 +48,10 @@ namespace Colours.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Complement")]
-        public string SchemeType {
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int SchemeType {
             get {
-                return ((string)(this["SchemeType"]));
+                return ((int)(this["SchemeType"]));
             }
             set {
                 this["SchemeType"] = value;

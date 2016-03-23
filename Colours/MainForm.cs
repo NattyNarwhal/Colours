@@ -18,8 +18,7 @@ namespace Colours
         public MainForm()
         {
             InitializeComponent();
-            comboBox1.SelectedItem = Properties.Settings.Default.SchemeType
-                ?? (string)comboBox1.Items[0];
+            comboBox1.SelectedIndex = Properties.Settings.Default.SchemeType;
             HsvColor initial = new HsvColor(Properties.Settings.Default.LastColor);
             app = new AppController(initial, (SchemeType)comboBox1.SelectedIndex);
 
@@ -117,7 +116,7 @@ namespace Colours
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             // save settings
-            Properties.Settings.Default.SchemeType = (string)comboBox1.SelectedItem;
+            Properties.Settings.Default.SchemeType = comboBox1.SelectedIndex;
             Properties.Settings.Default.CustomColors = new ColorList(colorDialog1.CustomColors);
             Properties.Settings.Default.LastColor = app.Color;
             Properties.Settings.Default.Save();
