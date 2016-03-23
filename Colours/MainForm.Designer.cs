@@ -116,7 +116,7 @@
             this.copyCSSHSLToolStripMenuItem,
             this.copyCSSHSVToolStripMenuItem1});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(159, 92);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(159, 114);
             // 
             // copyHexToolStripMenuItem
             // 
@@ -136,7 +136,7 @@
             // 
             this.copyCSSHSLToolStripMenuItem.Name = "copyCSSHSLToolStripMenuItem";
             this.copyCSSHSLToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
-            this.copyCSSHSLToolStripMenuItem.Text = "Copy CSS (&HSL)";
+            this.copyCSSHSLToolStripMenuItem.Text = "Copy CSS (HS&L)";
             this.copyCSSHSLToolStripMenuItem.Click += new System.EventHandler(this.copyCSSHSLToolStripMenuItem_Click);
             // 
             // copyCSSHSVToolStripMenuItem1
