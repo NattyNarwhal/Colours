@@ -33,7 +33,7 @@ namespace Colours
 
         public void SyncAppViewState()
         {
-            Text = String.Format("{0} for {1}", app.SchemeType,
+            Text = String.Format("{0} for {1}", (string)comboBox1.SelectedItem,
                 ColorTranslator.ToHtml(app.Color));
 
             tableLayoutPanel1.Controls.Clear();
