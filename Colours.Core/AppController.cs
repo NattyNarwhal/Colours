@@ -11,14 +11,14 @@ namespace Colours
         public HsvColor HsvColor { get; private set; }
         public Color Color { get; private set; }
 
-        public string SchemeType { get; set; }
+        public SchemeType SchemeType { get; set; }
 
         public Stack<HsvColor> UndoHistory { get; private set; }
         public Stack<HsvColor> RedoHistory { get; private set; }
 
         public List<HsvColor> Results { get; private set; }
 
-        public AppController(HsvColor c, string scheme)
+        public AppController(HsvColor c, SchemeType scheme)
         {
             UndoHistory = new Stack<HsvColor>();
             RedoHistory = new Stack<HsvColor>();
@@ -108,32 +108,26 @@ namespace Colours
             return HsvColor.Saturation - 0.05d > 0d;
         }
 
-        /// <summary>
-        /// Gets the colour scheme results for the current color. Note
-        /// that you only need to call this if you change the scheme,
-        /// as SetColor and the other color changing methods will do
-        /// this for you.
-        /// </summary>
         public void GetSchemeResults()
         {
             switch (SchemeType)
             {
-                case "Complement":
+                case SchemeType.Complement:
                     Results = ColorSchemer.Complement(HsvColor);
                     break;
-                case "Split Complements":
+                case SchemeType.SplitComplements:
                     Results = ColorSchemer.SplitComplement(HsvColor);
                     break;
-                case "Triads":
+                case SchemeType.Triads:
                     Results = ColorSchemer.Triads(HsvColor);
                     break;
-                case "Tetrads":
+                case SchemeType.Tetrads:
                     Results = ColorSchemer.Tetrads(HsvColor);
                     break;
-                case "Analogous":
+                case SchemeType.Analogous:
                     Results = ColorSchemer.Analogous(HsvColor);
                     break;
-                case "Monochromatic":
+                case SchemeType.Monochromatic:
                     Results = ColorSchemer.Monochromatic(HsvColor);
                     break;
                 default:

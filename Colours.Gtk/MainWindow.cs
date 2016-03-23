@@ -20,7 +20,7 @@ public partial class MainWindow: Gtk.Window
 	{
 		Build ();
 		LoadConfig ();
-		app = new AppController (new HsvColor (initialColor), schemeBox.ActiveText);
+		app = new AppController (new HsvColor (initialColor), (SchemeType)schemeBox.Active);
 		SyncAppViewState ();
 	}
 
@@ -150,7 +150,7 @@ public partial class MainWindow: Gtk.Window
 		// we can set the combobox from config while the app
 		// isn't initialized yet
 		if (app != null) {
-			app.SchemeType = schemeBox.ActiveText;
+			app.SchemeType = (SchemeType)schemeBox.Active;
 			app.GetSchemeResults ();
 			SyncAppViewState ();
 		}

@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace Colours
 {
+    public enum SchemeType
+    {
+        Complement, SplitComplements, Triads, Tetrads, Analogous, Monochromatic
+    }
+
     public static class ColorSchemer
     {
         public static List<HsvColor> Complement(HsvColor c)

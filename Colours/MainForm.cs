@@ -21,7 +21,7 @@ namespace Colours
             comboBox1.SelectedItem = Properties.Settings.Default.SchemeType
                 ?? (string)comboBox1.Items[0];
             HsvColor initial = new HsvColor(Properties.Settings.Default.LastColor);
-            app = new AppController(initial, (string)comboBox1.SelectedItem);
+            app = new AppController(initial, (SchemeType)comboBox1.SelectedIndex);
 
             if (Properties.Settings.Default.CustomColors?.Count == 16)
             {
@@ -85,7 +85,7 @@ namespace Colours
 
         private void comboBox1_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            app.SchemeType = (string)comboBox1.SelectedItem;
+            app.SchemeType = (SchemeType)comboBox1.SelectedIndex;
             app.GetSchemeResults();
             SyncAppViewState();
         }
