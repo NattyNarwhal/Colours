@@ -6,25 +6,57 @@ using System.Text;
 
 namespace Colours
 {
+    /// <summary>
+    /// Represents application state for an undo.
+    /// </summary>
+    public class UndoState
+    {
+        public HsvColor Color { get; set; }
+        public SchemeType SchemeType { get; set; }
+
+        public UndoState(HsvColor c, SchemeType t)
+        {
+            Color = c;
+            SchemeType = t;
+        }
+
+        public override string ToString()
+        {
+            return String.Format("{0} of {1}", SchemeType.ToString(),
+                ColorTranslator.ToHtml(Color.ToRgb()));
+        }
+    }
+
     public class AppController
     {
         public HsvColor HsvColor { get; private set; }
         public Color Color { get; private set; }
 
-        public SchemeType SchemeType { get; set; }
+        public SchemeType SchemeType { get; private set; }
 
-        public Stack<HsvColor> UndoHistory { get; private set; }
-        public Stack<HsvColor> RedoHistory { get; private set; }
+        public Stack<UndoState> UndoHistory { get; private set; }
+        public Stack<UndoState> RedoHistory { get; private set; }
 
         public List<HsvColor> Results { get; private set; }
 
         public AppController(HsvColor c, SchemeType scheme)
         {
-            UndoHistory = new Stack<HsvColor>();
-            RedoHistory = new Stack<HsvColor>();
+            UndoHistory = new Stack<UndoState>();
+            RedoHistory = new Stack<UndoState>();
 
             SchemeType = scheme;
             SetColor(c, false);
+            GetSchemeResults();
+        }
+
+        public void SetSchemeType(SchemeType t, bool keepHistory)
+        {
+            if (keepHistory && SchemeType != t)
+            {
+                UndoHistory.Push(new UndoState(HsvColor, SchemeType));
+                RedoHistory.Clear();
+            }
+            SchemeType = t;
             GetSchemeResults();
         }
 
@@ -32,7 +64,7 @@ namespace Colours
         {
             if (keepHistory && c.ToString() != HsvColor.ToString())
             {
-                UndoHistory.Push(HsvColor);
+                UndoHistory.Push(new UndoState(HsvColor, SchemeType));
                 RedoHistory.Clear();
             }
             HsvColor = c;
@@ -44,7 +76,7 @@ namespace Colours
         {
             if (keepHistory && c.ToString() != Color.ToString())
             {
-                UndoHistory.Push(HsvColor);
+                UndoHistory.Push(new UndoState(HsvColor, SchemeType));
                 RedoHistory.Clear();
             }
             Color = c;
@@ -139,8 +171,10 @@ namespace Colours
         {
             if (CanUndo())
             {
-                RedoHistory.Push(HsvColor);
-                SetColor(UndoHistory.Pop(), false);
+                RedoHistory.Push(new UndoState(HsvColor, SchemeType));
+                UndoState s = UndoHistory.Pop();
+                SetColor(s.Color, false);
+                SetSchemeType(s.SchemeType, false);
             }
         }
 
@@ -148,8 +182,10 @@ namespace Colours
         {
             if (CanRedo())
             {
-                UndoHistory.Push(HsvColor);
-                SetColor(RedoHistory.Pop(), false);
+                UndoHistory.Push(new UndoState(HsvColor, SchemeType));
+                UndoState s = RedoHistory.Pop();
+                SetColor(s.Color, false);
+                SetSchemeType(s.SchemeType, false);
             }
         }
 

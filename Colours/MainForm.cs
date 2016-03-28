@@ -85,8 +85,7 @@ namespace Colours
 
         private void comboBox1_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            app.SchemeType = (SchemeType)comboBox1.SelectedIndex;
-            app.GetSchemeResults();
+            app.SetSchemeType((SchemeType)comboBox1.SelectedIndex, true);
             SyncAppViewState();
         }
 
