@@ -66,6 +66,7 @@ public partial class MainWindow: Gtk.Window
 
 	public void SyncAppViewState()
 	{
+		schemeBox.Active = (int)app.SchemeType;
 		Title = String.Format ("{0} for {1}", schemeBox.ActiveText,
 			ColorTranslator.ToHtml (app.Color));
 
@@ -150,8 +151,7 @@ public partial class MainWindow: Gtk.Window
 		// we can set the combobox from config while the app
 		// isn't initialized yet
 		if (app != null) {
-			app.SchemeType = (SchemeType)schemeBox.Active;
-			app.GetSchemeResults ();
+			app.SetSchemeType ((SchemeType)schemeBox.Active, true);
 			SyncAppViewState ();
 		}
 	}
