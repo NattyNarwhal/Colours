@@ -33,6 +33,7 @@ namespace Colours
 
         public void SyncAppViewState()
         {
+            comboBox1.SelectedIndex = (int)app.SchemeType;
             Text = String.Format("{0} for {1}", (string)comboBox1.SelectedItem,
                 ColorTranslator.ToHtml(app.Color));
 
