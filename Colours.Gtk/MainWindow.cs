@@ -12,56 +12,16 @@ public partial class MainWindow: Gtk.Window
 	Clipboard clipboard = Clipboard.Get (clipAtom);
 	HBox newBox;
 
-	string configrc = System.IO.Path.Combine(Environment.GetFolderPath
-		(Environment.SpecialFolder.ApplicationData), ".colorsrc");
-	Color initialColor; // only used for init
-
 	public MainWindow () : base (Gtk.WindowType.Toplevel)
 	{
 		Build ();
-		LoadConfig ();
-		app = new AppController (new HsvColor (initialColor), (SchemeType)schemeBox.Active);
+		// don't use this for app init, only for base init
+	}
+
+	public MainWindow(AppState state) : this()
+	{
+		app = new AppController (state.Color, state.SchemeType);
 		SyncAppViewState ();
-	}
-
-	public void LoadConfig()
-	{
-		int comboPos = 0;
-		initialColor = Color.Red;
-		try {
-			// TODO: a real config mechanism? the .NET one is poor in mono
-			string[] lines = File.ReadAllLines(configrc);
-			foreach (string l in lines) {
-				string[] components = l.Split("=".ToCharArray(), 2);
-				switch (components[0]) {
-				case "color":
-					initialColor = ColorTranslator.FromHtml(components[1].Trim());
-					break;
-				case "scheme":
-					int.TryParse(components[1], out comboPos);
-					break;
-				default: break;
-				}
-			}
-		} catch (Exception) { // just load some defaults in finally
-
-		} finally {
-			schemeBox.Active = comboPos;
-			// we've already inited initialColor
-		}
-	}
-
-	public void SaveConfig()
-	{
-		try {
-			File.WriteAllLines (configrc, new string[] {
-				"color=" + ColorTranslator.ToHtml(app.Color),
-				"scheme=" + schemeBox.Active.ToString
-					(System.Globalization.CultureInfo.InvariantCulture)
-			});
-		} catch (Exception) {
-
-		}
 	}
 
 	public void SyncAppViewState()
@@ -102,7 +62,7 @@ public partial class MainWindow: Gtk.Window
 
 	protected void OnDeleteEvent (object sender, DeleteEventArgs a)
 	{
-		SaveConfig ();
+		ConfigParser.SaveConfig (app.Color, app.SchemeType);
 		Application.Quit ();
 		a.RetVal = true;
 	}

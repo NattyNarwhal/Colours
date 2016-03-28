@@ -7,8 +7,12 @@ namespace Colours.Gtk
 	{
 		public static void Main (string[] args)
 		{
+			AppState initialState = ConfigParser.LoadConfig ();
+			AppState parsed = AppArgParser.ParseArgs (args,
+				initialState.Color, initialState.SchemeType);
+
 			Application.Init ();
-			MainWindow win = new MainWindow ();
+			MainWindow win = new MainWindow (parsed);
 			win.Show ();
 			Application.Run ();
 		}
