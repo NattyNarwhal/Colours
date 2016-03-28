@@ -208,7 +208,7 @@ namespace Colours
 
         /// <summary>
         /// Get the results of the colour and scheme combination.
-        /// This will be called by the varioous set properties in the function.
+        /// This will be called by the varioous setters in the object.
         /// </summary>
         private void GetSchemeResults()
         {
