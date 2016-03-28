@@ -12,11 +12,14 @@ namespace Colours
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
+            AppState state = AppArgParser.ParseArgs(args,
+                new HsvColor(Properties.Settings.Default.LastColor),
+                Properties.Settings.Default.SchemeType);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+            Application.Run(new MainForm(state));
         }
     }
 }

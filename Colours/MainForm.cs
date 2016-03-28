@@ -21,7 +21,20 @@ namespace Colours
             
             HsvColor initial = new HsvColor(Properties.Settings.Default.LastColor);
             app = new AppController(initial, Properties.Settings.Default.SchemeType);
-            comboBox1.SelectedIndex = (int)app.SchemeType;
+
+            if (Properties.Settings.Default.CustomColors?.Count == 16)
+            {
+                colorDialog1.CustomColors = Properties.Settings.Default.CustomColors.ToArray();
+            }
+
+            SyncAppViewState();
+        }
+
+        public MainForm(AppState state)
+        {
+            InitializeComponent();
+
+            app = new AppController(state.Color, state.SchemeType);
 
             if (Properties.Settings.Default.CustomColors?.Count == 16)
             {

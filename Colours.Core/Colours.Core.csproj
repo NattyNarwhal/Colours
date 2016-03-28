@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppArgParser.cs" />
     <Compile Include="AppController.cs" />
     <Compile Include="ColorUtils.cs" />
     <Compile Include="HsvColor.cs" />
