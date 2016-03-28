@@ -34,7 +34,7 @@ namespace Colours
         {
             InitializeComponent();
 
-            app = new AppController(state.Color, state.SchemeType);
+            app = new AppController(state);
 
             if (Properties.Settings.Default.CustomColors?.Count == 16)
             {

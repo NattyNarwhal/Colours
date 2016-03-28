@@ -83,6 +83,14 @@ namespace Colours
         }
 
         /// <summary>
+        /// Creates a new application controller.
+        /// </summary>
+        /// <param name="state">The object holding the application's state.</param>
+        public AppController(AppState state)
+            : this(state.Color, state.SchemeType)
+        { }
+
+        /// <summary>
         /// Pushes the current state of the application to the undo stack.
         /// </summary>
         private void PushUndo()
