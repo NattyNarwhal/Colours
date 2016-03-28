@@ -20,7 +20,7 @@ public partial class MainWindow: Gtk.Window
 
 	public MainWindow(AppState state) : this()
 	{
-		app = new AppController (state.Color, state.SchemeType);
+		app = new AppController (state);
 		SyncAppViewState ();
 	}
 
