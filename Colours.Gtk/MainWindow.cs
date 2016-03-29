@@ -21,10 +21,11 @@ public partial class MainWindow: Gtk.Window
 	public MainWindow(AppState state) : this()
 	{
 		app = new AppController (state);
-		SyncAppViewState ();
+		app.ResultChanged += SyncAppViewState;
+		SyncAppViewState (this, new EventArgs());
 	}
 
-	public void SyncAppViewState()
+	public void SyncAppViewState(object sender, EventArgs e)
 	{
 		schemeBox.Active = (int)app.SchemeType;
 		Title = String.Format ("{0} for {1}", schemeBox.ActiveText,
@@ -103,57 +104,44 @@ public partial class MainWindow: Gtk.Window
 	{
 		ColorButton cb = (ColorButton)sender;
 		app.SetColor (cb.Color.ToGDIColor (), true);
-		SyncAppViewState ();
 	}
 
 	protected void OnSchemeBoxChanged (object sender, EventArgs e)
 	{
-		// we can set the combobox from config while the app
-		// isn't initialized yet
-		if (app != null) {
-			app.SetSchemeType ((SchemeType)schemeBox.Active, true);
-			SyncAppViewState ();
-		}
+		app.SetSchemeType ((SchemeType)schemeBox.Active, true);
 	}
 
 	protected void OnUndoActionActivated (object sender, EventArgs e)
 	{
 		app.Undo();
-		SyncAppViewState();
 	}	protected void OnInvertActionActivated (object sender, EventArgs e)
 	{
 		app.SetColor (app.Color.Invert (), true);
-		SyncAppViewState ();
 	}
 
 	protected void OnDesaturateActionActivated (object sender, EventArgs e)
 	{
 		app.Desaturate ();
-		SyncAppViewState ();
 	}
 
 	protected void OnSaturateActionActivated (object sender, EventArgs e)
 	{
 		app.Saturate ();
-		SyncAppViewState ();
 	}
 	protected void OnDarkenActionActivated (object sender, EventArgs e)
 	{
 		app.Darken ();
-		SyncAppViewState ();
 	}
 
 	protected void OnBrightenActionActivated (object sender, EventArgs e)
 	{
 		app.Brighten ();
-		SyncAppViewState ();
 	}
 
 	protected void OnRandomActionActivated (object sender, EventArgs e)
 	{
 		Random r = new Random ();
 		app.SetColor (Color.FromArgb (r.Next (255), r.Next (255), r.Next (255)), true);
-		SyncAppViewState ();
 	}
 
 	protected void OnPasteActionActivated (object sender, EventArgs e)
@@ -164,7 +152,6 @@ public partial class MainWindow: Gtk.Window
 			}
 			catch (Exception) {} // it doesn't matter
 		});
-		SyncAppViewState ();
 	}
 
 	protected void OnCopyHSVActionActivated (object sender, EventArgs e)
@@ -190,7 +177,6 @@ public partial class MainWindow: Gtk.Window
 	protected void OnRedoActionActivated (object sender, EventArgs e)
 	{
 		app.Redo ();
-		SyncAppViewState ();
 	}
 
 	protected void OnSaveActionActivated (object sender, EventArgs e)
