@@ -148,7 +148,7 @@ public partial class MainWindow: Gtk.Window
 	{
 		clipboard.RequestText ((c, s) => {
 			try {
-				app.SetColor (ColorTranslator.FromHtml (s), true);
+				app.SetColor (ColorUtils.FromString (s), true);
 			}
 			catch (Exception) {} // it doesn't matter
 		});

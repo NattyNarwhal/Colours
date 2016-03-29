@@ -160,9 +160,9 @@ namespace Colours
         private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try {
-                app.SetColor(ColorTranslator.FromHtml(Clipboard.GetText()), true);
+                app.SetColor(ColorUtils.FromString(Clipboard.GetText()), true);
             }
-            catch (Exception)
+            catch (ArgumentException) // these are harmless
             {
 
             }
