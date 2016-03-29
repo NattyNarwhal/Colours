@@ -32,6 +32,7 @@ namespace Colours
     /// </summary>
     public class AppController
     {
+        #region properties
         /// <summary>
         /// The current color, in HSV form. Use
         /// <see cref="Colours.AppController.SetColor(Color, bool)"/>
@@ -67,7 +68,22 @@ namespace Colours
         /// the colour or scheme is set.
         /// </summary>
         public List<HsvColor> Results { get; private set; }
+        #endregion
 
+        #region events
+        public event EventHandler<EventArgs> ResultChanged;
+
+        protected virtual void OnResultChanged(EventArgs e)
+        {
+            // make temp in case of race condition
+            EventHandler<EventArgs> handler = ResultChanged;
+
+            if (handler != null)
+                handler(this, e);
+        }
+        #endregion
+
+        #region ctors
         /// <summary>
         /// Creates a new application controller.
         /// </summary>
@@ -78,6 +94,7 @@ namespace Colours
             UndoHistory = new Stack<AppState>();
             RedoHistory = new Stack<AppState>();
 
+            // set this directly because SetColor will do the dirty work for us
             SchemeType = scheme;
             SetColor(c, false); // this will set Results
         }
@@ -89,16 +106,9 @@ namespace Colours
         public AppController(AppState state)
             : this(state.Color, state.SchemeType)
         { }
+        #endregion
 
-        /// <summary>
-        /// Pushes the current state of the application to the undo stack.
-        /// </summary>
-        private void PushUndo()
-        {
-            UndoHistory.Push(new AppState(HsvColor, SchemeType));
-            RedoHistory.Clear();
-        }
-
+        #region setters
         /// <summary>
         /// Set the current scheme type and generate the Results in the
         /// Results property.
@@ -108,7 +118,10 @@ namespace Colours
         /// If you want to update the undo stack. Note that it will only update it if
         /// the current scheme and new scheme are different.
         /// </param>
-        public void SetSchemeType(SchemeType t, bool keepHistory)
+        /// <param name="fireEvent">
+        /// If you want to fire the event.
+        /// </param>
+        public void SetSchemeType(SchemeType t, bool keepHistory, bool fireEvent)
         {
             if (keepHistory && SchemeType != t)
             {
@@ -116,6 +129,36 @@ namespace Colours
             }
             SchemeType = t;
             GetSchemeResults();
+            if (fireEvent)
+                OnResultChanged(new EventArgs());
+        }
+
+        /// <summary>
+        /// Set the current scheme type and generate the Results in the
+        /// Results property, and fire an event.
+        /// </summary>
+        /// <param name="t">The new scheme type.</param>
+        /// <param name="keepHistory">
+        /// If you want to update the undo stack. Note that it will only update it if
+        /// the current scheme and new scheme are different.
+        /// </param>
+        public void SetSchemeType(SchemeType t, bool keepHistory)
+        {
+            SetSchemeType(t, keepHistory, true);
+        }
+
+        /// <summary>
+        /// Set the current colour (in HSV form) and generate the Results in the
+        /// Results property, and fire an event.
+        /// </summary>
+        /// <param name="c">The new colour.</param>
+        /// <param name="keepHistory">
+        /// If you want to update the undo stack. Note that it will only update it if
+        /// the current colour and new colour are different.
+        /// </param>
+        public void SetColor(HsvColor c, bool keepHistory)
+        {
+            SetColor(c, keepHistory, true);
         }
 
         /// <summary>
@@ -127,7 +170,10 @@ namespace Colours
         /// If you want to update the undo stack. Note that it will only update it if
         /// the current colour and new colour are different.
         /// </param>
-        public void SetColor(HsvColor c, bool keepHistory)
+        /// <param name="fireEvent">
+        /// If you want to fire the event.
+        /// </param>
+        public void SetColor(HsvColor c, bool keepHistory, bool fireEvent)
         {
             if (keepHistory && c.ToString() != HsvColor.ToString())
             {
@@ -136,6 +182,22 @@ namespace Colours
             HsvColor = c;
             Color = c.ToRgb();
             GetSchemeResults();
+            if (fireEvent)
+                OnResultChanged(new EventArgs());
+        }
+
+        /// <summary>
+        /// Set the current colour (in GDI form) and generate the Results in the
+        /// Results property, and fire an event.
+        /// </summary>
+        /// <param name="c">The new colour.</param>
+        /// <param name="keepHistory">
+        /// If you want to update the undo stack. Note that it will only update it if
+        /// the current colour and new colour are different.
+        /// </param>
+        public void SetColor(Color c, bool keepHistory)
+        {
+            SetColor(c, keepHistory, true);
         }
 
         /// <summary>
@@ -147,7 +209,10 @@ namespace Colours
         /// If you want to update the undo stack. Note that it will only update it if
         /// the current colour and new colour are different.
         /// </param>
-        public void SetColor(Color c, bool keepHistory)
+        /// <param name="fireEvent">
+        /// If you want to fire the event.
+        /// </param>
+        public void SetColor(Color c, bool keepHistory, bool fireEvent)
         {
             if (keepHistory && c.ToString() != Color.ToString())
             {
@@ -156,8 +221,12 @@ namespace Colours
             Color = c;
             HsvColor = new HsvColor(c);
             GetSchemeResults();
+            if (fireEvent)
+                OnResultChanged(new EventArgs());
         }
+        #endregion
 
+        #region adjustment functions
         public void Brighten()
         {
             if (CanBrighten())
@@ -213,6 +282,7 @@ namespace Colours
         {
             return HsvColor.Saturation - 0.05d > 0d;
         }
+        #endregion
 
         /// <summary>
         /// Get the results of the colour and scheme combination.
@@ -245,14 +315,28 @@ namespace Colours
             }
         }
 
+        #region undo functions
+        /// <summary>
+        /// Pushes the current state of the application to the undo stack, and purges the redo stack.
+        /// </summary>
+        private void PushUndo()
+        {
+            UndoHistory.Push(new AppState(HsvColor, SchemeType));
+            RedoHistory.Clear();
+        }
+
         public void Undo()
         {
             if (CanUndo())
             {
                 RedoHistory.Push(new AppState(HsvColor, SchemeType));
                 AppState s = UndoHistory.Pop();
-                SetColor(s.Color, false);
+                SetColor(s.Color, false, false);
                 SetSchemeType(s.SchemeType, false);
+
+                // because we didn't use the setters to fire events
+                // because we'd be wastefully firing two otherwise
+                OnResultChanged(new EventArgs());
             }
         }
 
@@ -262,8 +346,12 @@ namespace Colours
             {
                 UndoHistory.Push(new AppState(HsvColor, SchemeType));
                 AppState s = RedoHistory.Pop();
-                SetColor(s.Color, false);
-                SetSchemeType(s.SchemeType, false);
+                SetColor(s.Color, false, false);
+                SetSchemeType(s.SchemeType, false, false);
+
+                // because we didn't use the setters to fire events
+                // because we'd be wastefully firing two otherwise
+                OnResultChanged(new EventArgs());
             }
         }
 
@@ -276,5 +364,6 @@ namespace Colours
         {
             return RedoHistory.Count > 0;
         }
+        #endregion
     }
 }
