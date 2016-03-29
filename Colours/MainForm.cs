@@ -18,33 +18,30 @@ namespace Colours
         public MainForm()
         {
             InitializeComponent();
-            
-            HsvColor initial = new HsvColor(Properties.Settings.Default.LastColor);
-            app = new AppController(initial, Properties.Settings.Default.SchemeType);
-
             if (Properties.Settings.Default.CustomColors?.Count == 16)
             {
                 colorDialog1.CustomColors = Properties.Settings.Default.CustomColors.ToArray();
             }
-
-            SyncAppViewState();
+            // don't init the app with this func; init with AppState
+            // this is just a base ctor
         }
 
-        public MainForm(AppState state)
+        public MainForm(AppState state) : this()
         {
-            InitializeComponent();
-
             app = new AppController(state);
-
-            if (Properties.Settings.Default.CustomColors?.Count == 16)
-            {
-                colorDialog1.CustomColors = Properties.Settings.Default.CustomColors.ToArray();
-            }
-
-            SyncAppViewState();
+            app.ResultChanged += SyncAppViewState;
+            // send an initial event manually, because the event has
+            // already been fired when it was initialized,
+            // but without our handler
+            SyncAppViewState(this, new EventArgs());
         }
 
-        public void SyncAppViewState()
+        /// <summary>
+        /// Handle the controller's state updates and sync them to the view.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void SyncAppViewState(object sender, EventArgs e)
         {
             comboBox1.SelectedIndex = (int)app.SchemeType;
             Text = String.Format("{0} for {1}", (string)comboBox1.SelectedItem,
@@ -93,14 +90,12 @@ namespace Colours
             if (colorDialog1.ShowDialog(this) == DialogResult.OK)
             {
                 app.SetColor(colorDialog1.Color, true);
-                SyncAppViewState();
             }
         }
 
         private void comboBox1_SelectionChangeCommitted(object sender, EventArgs e)
         {
             app.SetSchemeType((SchemeType)comboBox1.SelectedIndex, true);
-            SyncAppViewState();
         }
 
         private void copyHexToolStripMenuItem_Click(object sender, EventArgs e)
@@ -140,38 +135,32 @@ namespace Colours
         {
             Random r = new Random();
             app.SetColor(Color.FromArgb(r.Next(255), r.Next(255), r.Next(255)), true);
-            SyncAppViewState();
         }
 
         private void brightenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             app.Brighten();
-            SyncAppViewState();
         }
 
         private void darkenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             app.Darken();
-            SyncAppViewState();
         }
 
         private void saturateToolStripMenuItem_Click(object sender, EventArgs e)
         {
             app.Saturate();
-            SyncAppViewState();
         }
 
         private void desaturateToolStripMenuItem_Click(object sender, EventArgs e)
         {
             app.Desaturate();
-            SyncAppViewState();
         }
 
         private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try {
                 app.SetColor(ColorTranslator.FromHtml(Clipboard.GetText()), true);
-                SyncAppViewState();
             }
             catch (Exception)
             {
@@ -202,19 +191,16 @@ namespace Colours
         private void invertToolStripMenuItem_Click(object sender, EventArgs e)
         {
             app.SetColor(app.Color.Invert(), true);
-            SyncAppViewState();
         }
 
         private void undoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             app.Undo();
-            SyncAppViewState();
         }
 
         private void redoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             app.Redo();
-            SyncAppViewState();
         }
 
         private void saveAsHTMLToolStripMenuItem_Click(object sender, EventArgs e)
