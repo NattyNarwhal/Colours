@@ -31,6 +31,7 @@ This is a small program to create colour schemes. There's a `System.Windows.Form
 ## Goals
 
 * Android/iOS/UWP ports: Do I need to convert the Core to a "portable class library?" Does this affect the desktop versions? Is a port feasible? `System.Drawing` would be nearly mandatory without major surgery - and even then, you need a wrapper (if you lack `System.Drawing` - the wrapper would be like `GdkWrapper` in the GTK version) you need to implement one for each new platform. Do I need to implement a colour picker for each platform too?
+ * A Mac version using MonoMac or `Xamarin.Mac` should be very feasible, but my only Mac is a MacMini1,1 running SL.
 * Eyedropper in SWF version. The GTK version naturally has this because the native colour picker does. Portability might have been a concern, but the GTK version exists now.
 * Colour pallettes - both either readymades or custom "bookmark" like ones.
 * Rebrand? - Colours is a generic name.
