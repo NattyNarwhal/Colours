@@ -5,28 +5,29 @@ This is a small program to create colour schemes. There's a `System.Windows.Form
 ## Structure
 
 * `Colours.Core` - The shared backend for any frontend.
- * `AppArgParser.cs` - A primitive getopt-like parser, used to pass parameters for init on platforms that support passing arguments to Main.
- * `AppController.cs`
-  * *AppController* - The application's logic, the "C" in MVC. A frontend will have this.
-  * *AppState* - Encapsulates the app's state, mostly for undo/redo and init.
- * `ColorUtils.cs` - Shared functions useful for converting colours.
- * `HsvColor.cs` - Represents a colour in Hue/Saturation/Value forms.
- * `HtmlProofGenerator.cs` - Makes an HTML page with a colour listing on it.
-  * This has room for improvement - maybe multiple listings? 
- * `Schemer.cs`
-  * *Schemer* - Generates colour schemes.
-  * *SchemeType* - An enum to correspond with `Schemer`. Note that applications depend on the ordering of it, at least for now.
+	* `AppArgParser.cs` - A primitive getopt-like parser, used to pass parameters for init on platforms that support passing arguments to Main.
+	* `AppController.cs`
+		* *AppController* - The application's logic, the "C" in MVC. A frontend will have this.
+			* Events are fired whenever the result changes. However, for your initializing in your view, initialize the object, hook up the event, and fire your handler manually, as the first event was fired before could handle it.
+		* *AppState* - Encapsulates the app's state, mostly for undo/redo and init.
+	* `ColorUtils.cs` - Shared functions useful for converting colours.
+	* `HsvColor.cs` - Represents a colour in Hue/Saturation/Value forms.
+	* `HtmlProofGenerator.cs` - Makes an HTML page with a colour listing on it.
+		* This has room for improvement - maybe multiple listings? 
+	* `Schemer.cs`
+		* *Schemer* - Generates colour schemes.
+		* *SchemeType* - An enum to correspond with `Schemer`. Note that applications depend on the ordering of it, at least for now.
 * `Colours.Gtk` - A Unix/Linux frontend using GTK#.
- * `ConfigParser.cs` - Parses a config file. Extremely basic.
- * `GdkWrapper.cs` - Converts to and from GDI+, GDK, and HsvColor objects.
- * `MainWindow.cs` - The view itself.
- * `Program.cs` - Init.
+	* `ConfigParser.cs` - Parses a config file. Extremely basic.
+	* `GdkWrapper.cs` - Converts to and from GDI+, GDK, and HsvColor objects.
+	* `MainWindow.cs` - The view itself.
+	* `Program.cs` - Init.
 * `Colours.Windows` - A Windows frontend using `System.Windows.Forms`.
- * `ColorButton.cs` - A button that takes on a Color/HsvColor.
-  * There's room for improvement on this. It really depends on how much logic you want to move from the Controller-View sync, and if you want to use a button as the primary colour picker.
- * `ColorList.cs` - A hack of a class for serializing a ColorDialog's custom pallette for settings.
- * `MainForm.cs` - The view itself.
- * `Program.cs` - Init.
+	* `ColorButton.cs` - A button that takes on a Color/HsvColor.
+		* There's room for improvement on this. It really depends on how much logic you want to move from the Controller-View sync, and if you want to use a button as the primary colour picker.
+	* `ColorList.cs` - A hack of a class for serializing a ColorDialog's custom pallette for settings.
+	* `MainForm.cs` - The view itself.
+	* `Program.cs` - Init.
 
 ## Goals
 
