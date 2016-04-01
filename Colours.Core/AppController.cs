@@ -44,7 +44,13 @@ namespace Colours
         /// <see cref="Colours.AppController.SetColor(HsvColor, bool)"/>
         /// to change the color.
         /// </summary>
-        public Color Color { get; private set; }
+        public Color Color
+        {
+            get
+            {
+                return HsvColor.ToRgb();
+            }
+        }
 
         /// <summary>
         /// The current colour scheme. Use
@@ -180,7 +186,6 @@ namespace Colours
                 PushUndo();
             }
             HsvColor = c;
-            Color = c.ToRgb();
             GetSchemeResults();
             if (fireEvent)
                 OnResultChanged(new EventArgs());
@@ -214,15 +219,7 @@ namespace Colours
         /// </param>
         public void SetColor(Color c, bool keepHistory, bool fireEvent)
         {
-            if (keepHistory && c.ToString() != Color.ToString())
-            {
-                PushUndo();
-            }
-            Color = c;
-            HsvColor = new HsvColor(c);
-            GetSchemeResults();
-            if (fireEvent)
-                OnResultChanged(new EventArgs());
+            SetColor(new HsvColor(c), keepHistory, fireEvent);
         }
         #endregion
 
