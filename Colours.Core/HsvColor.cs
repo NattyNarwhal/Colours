@@ -87,7 +87,7 @@ namespace Colours
 
         public override string ToString()
         {
-            CultureInfo cssCulture = CultureInfo.InvariantCulture;
+            CultureInfo cssCulture = new CultureInfo(CultureInfo.InvariantCulture.Name);
             cssCulture.NumberFormat.PercentDecimalDigits = 0;
             cssCulture.NumberFormat.PercentPositivePattern = 1;
             return String.Format(cssCulture,

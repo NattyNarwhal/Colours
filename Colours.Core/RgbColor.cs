@@ -131,7 +131,7 @@ namespace Colours
         /// <returns>The string, in an "rgb(0, 0, 0)" format.</returns>
         public string ToHslString()
         {
-            CultureInfo cssCulture = CultureInfo.InvariantCulture;
+            CultureInfo cssCulture = new CultureInfo(CultureInfo.InvariantCulture.Name);
             cssCulture.NumberFormat.PercentDecimalDigits = 0;
             cssCulture.NumberFormat.PercentPositivePattern = 1;
             return String.Format(cssCulture,
