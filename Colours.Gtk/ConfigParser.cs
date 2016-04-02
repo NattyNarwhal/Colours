@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Drawing;
 using System.Globalization;
 
 namespace Colours
@@ -14,7 +13,7 @@ namespace Colours
 		{
 			// set some initial options in case 
 			SchemeType t = SchemeType.Complement;
-			Color c = Color.Red;
+			RgbColor c = new RgbColor();
 			try {
 				// TODO: a real config mechanism? the .NET one is poor in mono
 				string[] lines = File.ReadAllLines(configrc);
@@ -22,7 +21,7 @@ namespace Colours
 					string[] components = l.Split("=".ToCharArray(), 2);
 					switch (components[0]) {
 					case "color":
-						c = ColorTranslator.FromHtml(components[1].Trim());
+						c = ColorUtils.FromHtml(components[1].Trim());
 						break;
 					case "scheme":
 						Enum.TryParse(components[1], out t);
@@ -36,11 +35,11 @@ namespace Colours
 			return new AppState (new HsvColor(c), t);
 		}
 
-		public static void SaveConfig(Color c, SchemeType t)
+		public static void SaveConfig(RgbColor c, SchemeType t)
 		{
 			try {
 				File.WriteAllLines (configrc, new string[] {
-					"color=" + ColorTranslator.ToHtml(c),
+					"color=" + c.ToHtml(),
 					"scheme=" + t.ToString()
 				});
 			} catch (Exception) {
