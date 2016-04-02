@@ -31,10 +31,15 @@ This is a small program to create colour schemes. There's a `System.Windows.Form
 
 ## Goals
 
-* Android/iOS/UWP ports: Do I need to convert the Core to a "portable class library?" Does this affect the desktop versions? Is a port feasible? `System.Drawing` would be nearly mandatory without major surgery - and even then, you need a wrapper (if you lack `System.Drawing` - the wrapper would be like `GdkWrapper` in the GTK version) you need to implement one for each new platform. Do I need to implement a colour picker for each platform too?
- * A Mac version using MonoMac or `Xamarin.Mac` should be very feasible, but my only Mac is a MacMini1,1 running SL.
-* Eyedropper in SWF version. The GTK version naturally has this because the native colour picker does. Portability might have been a concern, but the GTK version exists now.
-* Colour pallettes - both either readymades or custom "bookmark" like ones.
-* Rebrand? - Colours is a generic name.
- * To go with this, maybe an icon.
-* Icons for actions. There are generic sets, and the GTK version uses stock icons, but SWF could use, say, the VS image library for well-known functions like save. We still need a icons for commands like saturate though.
+* [ ]Android/iOS/UWP ports: The Core library has been converted to a PCL. This means you need to wrap RgbColor to your framework's native color type like `NSColor`, `System.Drawing.Color`, `Gdk.Color`, etc.
+ * [ ] Android version: Should be possible. What likely needs to be implemented is a color picker, color well, and any glue.
+ * [ ] Mac version: A port using MonoMac or `Xamarin.Mac` should be very feasible, due to the system having robust color GUI controls, but my only Mac is a MacMini1,1 running SL. I've taken a look in VMware and Xcode makes me want to puke.
+ * [ ] iOS version: An iOS port for the same reasons as the Mac.
+ * [ ] UWP/WinRT version: A Windows 10 version IMHO is of limited usefulness, as desktop Windows 10 runs the SWF version fine, and I lack a WM10 device. On the other hand, I do have a Lumia 520 and Surface RT running and stuck on 8.1.
+* [ ] Eyedropper in SWF version. The GTK version naturally has this because the native colour picker does. Portability might have been a concern, but the GTK version exists now.
+* [ ] Colour pallettes - both either readymades and/or custom "bookmark" like ones.
+ * [ ] Perhaps parse GIMP or Photoshop pallettes if we do go with this.
+ * Should favourites be implemented the same way as a pallette? This is flexible, though not as simple to implement UI or code wise.
+* [ ] Rebrand? - Colours is a generic name.
+ * [ ] To go with this, maybe an icon.
+* [ ] Icons for actions. There are generic sets, and the GTK version uses stock icons, but SWF could use, say, the VS image library for well-known functions like save. We still need a icons for commands like saturate though.
