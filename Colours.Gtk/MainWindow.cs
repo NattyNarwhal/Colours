@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using System.IO;
 using Gtk;
 using Colours;
@@ -29,7 +28,7 @@ public partial class MainWindow: Gtk.Window
 	{
 		schemeBox.Active = (int)app.SchemeType;
 		Title = String.Format ("{0} for {1}", schemeBox.ActiveText,
-			ColorTranslator.ToHtml (app.Color));
+			app.Color.ToHtml());
 
 		paddedBox.Remove (newBox);
 
@@ -39,7 +38,7 @@ public partial class MainWindow: Gtk.Window
 			cb.UseAlpha = false;
 			cb.ColorSet += OnColorChooserColorChanged;
 			cb.TooltipText = String.Format("{0}\r\n{1}\r\n{2}\r\n{3}",
-				System.Drawing.ColorTranslator.ToHtml(c.ToRgb()),
+				c.ToRgb().ToHtml(),
 				c.ToRgb().ToRgbString(),
 				c.ToRgb().ToHslString(),
 				c.ToString());
@@ -80,13 +79,13 @@ public partial class MainWindow: Gtk.Window
 			MenuItem hslPopupItem = new MenuItem ("Copy HS_L");
 			MenuItem hsvPopupItem = new MenuItem ("Copy HS_V");
 			hexPopupItem.Activated += (o, a) => {
-				clipboard.Text = ColorTranslator.ToHtml(cb.Color.ToGDIColor());
+				clipboard.Text = cb.Color.ToRgbColor().ToHtml();
 			};
 			rgbPopupItem.Activated += (o, a) => {
-				clipboard.Text = cb.Color.ToGDIColor().ToRgbString();
+				clipboard.Text = cb.Color.ToRgbColor().ToRgbString();
 			};
 			hslPopupItem.Activated += (o, a) => {
-				clipboard.Text = cb.Color.ToGDIColor().ToHslString();
+				clipboard.Text = cb.Color.ToRgbColor().ToHslString();
 			};
 			hsvPopupItem.Activated += (o, a) => {
 				clipboard.Text = cb.Color.ToHsvColor().ToString();
@@ -103,13 +102,13 @@ public partial class MainWindow: Gtk.Window
 	protected void OnColorChooserColorChanged (object sender, EventArgs e)
 	{
 		ColorButton cb = (ColorButton)sender;
-		app.SetColor (cb.Color.ToGDIColor (), true);
+		app.SetColor (cb.Color.ToRgbColor (), true);
 	}
 
 	protected void OnSchemeBoxChanged (object sender, EventArgs e)
 	{
 		app.SetSchemeType ((SchemeType)schemeBox.Active, true);
-	}
+	}
 
 	protected void OnUndoActionActivated (object sender, EventArgs e)
 	{
@@ -141,7 +140,7 @@ public partial class MainWindow: Gtk.Window
 	protected void OnRandomActionActivated (object sender, EventArgs e)
 	{
 		Random r = new Random ();
-		app.SetColor (Color.FromArgb (r.Next (255), r.Next (255), r.Next (255)), true);
+		app.SetColor (new RgbColor (r.Next (255), r.Next (255), r.Next (255)), true);
 	}
 
 	protected void OnPasteActionActivated (object sender, EventArgs e)
@@ -171,7 +170,7 @@ public partial class MainWindow: Gtk.Window
 
 	protected void OnCopyHexActionActivated (object sender, EventArgs e)
 	{
-		clipboard.Text = ColorTranslator.ToHtml (app.Color);
+		clipboard.Text = app.Color.ToHtml();
 	}
 
 	protected void OnRedoActionActivated (object sender, EventArgs e)
@@ -192,7 +191,7 @@ public partial class MainWindow: Gtk.Window
 			File.WriteAllText(fd.Filename,
 				HtmlProofGenerator.GeneratePage(
 					String.Format("{0} for {1}", app.SchemeType,
-						ColorTranslator.ToHtml(app.Color)),
+						app.Color.ToHtml()),
 					HtmlProofGenerator.GenerateTable(app.Results)
 				)
 			);

@@ -44,7 +44,7 @@ namespace Colours
         {
             comboBox1.SelectedIndex = (int)app.SchemeType;
             Text = String.Format("{0} for {1}", (string)comboBox1.SelectedItem,
-                ColorTranslator.ToHtml(app.Color));
+                app.Color.ToHtml());
 
             tableLayoutPanel1.Controls.Clear();
             tableLayoutPanel1.ColumnCount = app.Results.Count;
@@ -58,10 +58,10 @@ namespace Colours
                 if (i == 0)
                     cb.Font = new Font(cb.Font, FontStyle.Bold);
                 cb.Text = String.Format("{0}\r\n{1}",
-                    ColorTranslator.ToHtml(cb.Color), next.ToString());
+                    next.ToRgb().ToHtml(), next.ToString());
                 toolTip1.SetToolTip(cb, String.Format("{0}\r\n{1}\r\n{2}\r\n{3}",
-                    ColorTranslator.ToHtml(cb.Color), cb.Color.ToRgbString(),
-                    cb.Color.ToHslString(), next.ToString()));
+                    next.ToRgb().ToHtml(), next.ToRgb().ToRgbString(),
+                    next.ToRgb().ToHslString(), next.ToString()));
                 cb.ContextMenuStrip = contextMenuStrip1;
                 cb.Dock = DockStyle.Fill;
                 cb.Click += SchemeColor_Click;
@@ -88,7 +88,7 @@ namespace Colours
             colorDialog1.Color = ((ColorButton)sender).Color;
             if (colorDialog1.ShowDialog(this) == DialogResult.OK)
             {
-                app.SetColor(colorDialog1.Color, true);
+                app.SetColor(colorDialog1.Color.ToRgbColor(), true);
             }
         }
 
@@ -106,13 +106,13 @@ namespace Colours
         private void copyCSSRGBToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ColorButton cb = (ColorButton)contextMenuStrip1.SourceControl;
-            Clipboard.SetText(cb.Color.ToRgbString());
+            Clipboard.SetText(cb.Color.ToRgbColor().ToRgbString());
         }
 
         private void copyCSSHSLToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ColorButton cb = (ColorButton)contextMenuStrip1.SourceControl;
-            Clipboard.SetText(cb.Color.ToHslString());
+            Clipboard.SetText(cb.Color.ToRgbColor().ToHslString());
         }
 
         private void copyCSSHSVToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -126,14 +126,14 @@ namespace Colours
             // save settings
             Properties.Settings.Default.SchemeType = app.SchemeType;
             Properties.Settings.Default.CustomColors = new ColorList(colorDialog1.CustomColors);
-            Properties.Settings.Default.LastColor = app.Color;
+            Properties.Settings.Default.LastColor = app.Color.ToGdiColor();
             Properties.Settings.Default.Save();
         }
 
         private void randomButton_Click(object sender, EventArgs e)
         {
             Random r = new Random();
-            app.SetColor(Color.FromArgb(r.Next(255), r.Next(255), r.Next(255)), true);
+            app.SetColor(new RgbColor(r.Next(255), r.Next(255), r.Next(255)), true);
         }
 
         private void brightenToolStripMenuItem_Click(object sender, EventArgs e)
@@ -169,7 +169,7 @@ namespace Colours
 
         private void copyHexToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText(ColorTranslator.ToHtml(app.Color));
+            Clipboard.SetText(app.Color.ToHtml());
         }
 
         private void copyCSSRGBToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -209,7 +209,7 @@ namespace Colours
                 File.WriteAllText(saveAsHtmlDialog.FileName,
                     HtmlProofGenerator.GeneratePage(
                         String.Format("{0} for {1}", app.SchemeType,
-                            ColorTranslator.ToHtml(app.Color)),
+                            app.Color.ToHtml()),
                         HtmlProofGenerator.GenerateTable(app.Results)
                     )
                 );

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 
 namespace Colours
@@ -22,7 +21,7 @@ namespace Colours
         {
             return String.Join("", colors.Select(c =>
                 String.Format(table,
-                    ColorTranslator.ToHtml(c.ToRgb()),
+                    c.ToRgb().ToHtml(),
                     c.ToRgb().ToRgbString(),
                     c.ToRgb().ToHslString(),
                     c.ToString()

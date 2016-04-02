@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 
 namespace Colours
 {
@@ -8,7 +7,6 @@ namespace Colours
     /// Represents the minimum amount of application state.
     /// This is also used for undo/redo.
     /// </summary>
-    [Serializable]
     public class AppState
     {
         public HsvColor Color { get; set; }
@@ -23,7 +21,7 @@ namespace Colours
         public override string ToString()
         {
             return String.Format("{0} of {1}", SchemeType.ToString(),
-                ColorTranslator.ToHtml(Color.ToRgb()));
+                Color.ToRgb().ToHtml());
         }
     }
 
@@ -35,16 +33,16 @@ namespace Colours
         #region properties
         /// <summary>
         /// The current color, in HSV form. Use
-        /// <see cref="Colours.AppController.SetColor(Color, bool)"/>
+        /// <see cref="Colours.AppController.SetColor(HsvColor, bool)"/>
         /// to change the color.
         /// </summary>
         public HsvColor HsvColor { get; private set; }
         /// <summary>
-        /// The current color, in GDI form. Use
-        /// <see cref="Colours.AppController.SetColor(HsvColor, bool)"/>
+        /// The current color, in RGB form. Use
+        /// <see cref="Colours.AppController.SetColor(RgbColor, bool)"/>
         /// to change the color.
         /// </summary>
-        public Color Color
+        public RgbColor Color
         {
             get
             {
@@ -154,6 +152,37 @@ namespace Colours
         }
 
         /// <summary>
+        /// Set the current colour (in RGB form) and generate the Results in the
+        /// Results property, and fire an event.
+        /// </summary>
+        /// <param name="c">The new colour.</param>
+        /// <param name="keepHistory">
+        /// If you want to update the undo stack. Note that it will only update it if
+        /// the current colour and new colour are different.
+        /// </param>
+        public void SetColor(RgbColor c, bool keepHistory)
+        {
+            SetColor(new HsvColor(c), keepHistory, true);
+        }
+
+        /// <summary>
+        /// Set the current colour (in RGB form) and generate the Results in the
+        /// Results property, and fire an event.
+        /// </summary>
+        /// <param name="c">The new colour.</param>
+        /// <param name="keepHistory">
+        /// If you want to update the undo stack. Note that it will only update it if
+        /// the current colour and new colour are different.
+        /// </param>
+        /// <param name="fireEvent">
+        /// If you want to fire the event.
+        /// </param>
+        public void SetColor(RgbColor c, bool keepHistory, bool fireEvent)
+        {
+            SetColor(new HsvColor(c), keepHistory, fireEvent);
+        }
+
+        /// <summary>
         /// Set the current colour (in HSV form) and generate the Results in the
         /// Results property, and fire an event.
         /// </summary>
@@ -189,37 +218,6 @@ namespace Colours
             GetSchemeResults();
             if (fireEvent)
                 OnResultChanged(new EventArgs());
-        }
-
-        /// <summary>
-        /// Set the current colour (in GDI form) and generate the Results in the
-        /// Results property, and fire an event.
-        /// </summary>
-        /// <param name="c">The new colour.</param>
-        /// <param name="keepHistory">
-        /// If you want to update the undo stack. Note that it will only update it if
-        /// the current colour and new colour are different.
-        /// </param>
-        public void SetColor(Color c, bool keepHistory)
-        {
-            SetColor(c, keepHistory, true);
-        }
-
-        /// <summary>
-        /// Set the current colour (in GDI form) and generate the Results in the
-        /// Results property.
-        /// </summary>
-        /// <param name="c">The new colour.</param>
-        /// <param name="keepHistory">
-        /// If you want to update the undo stack. Note that it will only update it if
-        /// the current colour and new colour are different.
-        /// </param>
-        /// <param name="fireEvent">
-        /// If you want to fire the event.
-        /// </param>
-        public void SetColor(Color c, bool keepHistory, bool fireEvent)
-        {
-            SetColor(new HsvColor(c), keepHistory, fireEvent);
         }
         #endregion
 

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 
 namespace Colours
 {
@@ -24,7 +20,7 @@ namespace Colours
                 switch (p)
                 {
                     case ParsingMode.Color:
-                        c = new HsvColor(ColorTranslator.FromHtml(a));
+                        c = ColorUtils.FromString(a);
                         p = ParsingMode.Normal;
                         break;
                     case ParsingMode.Scheme:

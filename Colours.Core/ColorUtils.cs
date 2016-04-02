@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Collections.Generic;
-using System.Drawing;
 using System.Globalization;
 using System.Text.RegularExpressions;
 
@@ -9,44 +7,20 @@ namespace Colours
 {
     public static class ColorUtils
     {
-        /// <summary>
-        /// Gets the inverse of an RGB color.
-        /// </summary>
-        /// <param name="c">The color to invert.</param>
-        /// <returns>The inverted color.</returns>
-        public static Color Invert(this Color c)
+        public static RgbColor FromHtml(string c)
         {
-            return Color.FromArgb(
-                    255 - c.R,
-                    255 - c.G,
-                    255 - c.B
-                );
-        }
-        
-        /// <summary>
-        /// Prints a human-readable color triplet for use in things like CSS.
-        /// </summary>
-        /// <param name="c">The color to encode.</param>
-        /// <returns>The string, in an "rgb(0, 0, 0)" format.</returns>
-        public static string ToRgbString(this Color c)
-        {
-            return String.Format("rgb({0}, {1}, {2})",
-                c.R, c.G, c.B);
-        }
+            if (string.IsNullOrWhiteSpace(c) || c[0] != '#')
+                throw new ArgumentException("The color is empty or invalid.");
+            if (c[0] == '#' && c.Length == 4)
+            {
+                char r = c[1], g = c[2], b = c[3];
+                c = new string(new char[] { '#', r, r, g, g, b, b });
+            }
 
-        /// <summary>
-        /// Prints a human-readable color triplet for use in things like CSS.
-        /// </summary>
-        /// <param name="c">The color to encode.</param>
-        /// <returns>The string, in an "hsl(0, 0%, 0%)" format.</returns>
-        public static string ToHslString(this Color c)
-        {
-            CultureInfo cssCulture = new CultureInfo(CultureInfo.InvariantCulture.LCID);
-            cssCulture.NumberFormat.PercentDecimalDigits = 0;
-            cssCulture.NumberFormat.PercentPositivePattern = 1;
-            return String.Format(cssCulture,
-                "hsl({0:F0}, {1:P}, {2:P})",
-                c.GetHue(), c.GetSaturation(), c.GetBrightness());
+            byte R = byte.Parse(c.Substring(1, 2), NumberStyles.AllowHexSpecifier);
+            byte G = byte.Parse(c.Substring(3, 2), NumberStyles.AllowHexSpecifier);
+            byte B = byte.Parse(c.Substring(5, 2), NumberStyles.AllowHexSpecifier);
+            return new RgbColor(R, G, B);
         }
 
         /// <summary>
@@ -63,7 +37,7 @@ namespace Colours
 
             try
             {
-                return new HsvColor(ColorTranslator.FromHtml(colorString));
+                return new HsvColor(FromHtml(colorString));
             }
             catch (Exception) // we tried to do HTML, which does a good job normally
             {
@@ -74,7 +48,7 @@ namespace Colours
                     var ints = m.Groups.Cast<Group>().Skip(1)
                         .Select(g => int.Parse(g.Value)).ToList();
                     if (ints.Count() == 3)
-                        return new HsvColor(Color.FromArgb
+                        return new HsvColor(new RgbColor
                             (ints[0], ints[1], ints[2]));
                 }
                 // TODO: hsl
