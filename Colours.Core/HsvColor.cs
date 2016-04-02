@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using System.Globalization;
 
 namespace Colours
@@ -43,7 +42,7 @@ namespace Colours
         // Functions adapted from:
         // http://stackoverflow.com/questions/359612/how-to-change-rgb-color-to-hsv/1626175#1626175
 
-        public HsvColor(Color c)
+        public HsvColor(RgbColor c)
         {
             int max = Math.Max(c.R, Math.Max(c.G, c.B));
             int min = Math.Min(c.R, Math.Min(c.G, c.B));
@@ -60,7 +59,7 @@ namespace Colours
             Value = v;
         }
 
-        public Color ToRgb()
+        public RgbColor ToRgb()
         {
             int hi = Convert.ToInt32(Math.Floor(Hue / 60)) % 6;
             double f = Hue / 60 - Math.Floor(Hue / 60);
@@ -72,23 +71,23 @@ namespace Colours
             int t = Convert.ToInt32(tempValue * (1 - (1 - f) * Saturation));
 
             if (hi == 0)
-                return Color.FromArgb(v, t, p);
+                return new RgbColor(v, t, p);
             else if (hi == 1)
-                return Color.FromArgb(q, v, p);
+                return new RgbColor(q, v, p);
             else if (hi == 2)
-                return Color.FromArgb(p, v, t);
+                return new RgbColor(p, v, t);
             else if (hi == 3)
-                return Color.FromArgb(p, q, v);
+                return new RgbColor(p, q, v);
             else if (hi == 4)
-                return Color.FromArgb(t, p, v);
+                return new RgbColor(t, p, v);
             else
-                return Color.FromArgb(v, p, q);
+                return new RgbColor(v, p, q);
         }
 
 
         public override string ToString()
         {
-            CultureInfo cssCulture = new CultureInfo(CultureInfo.InvariantCulture.LCID);
+            CultureInfo cssCulture = CultureInfo.InvariantCulture;
             cssCulture.NumberFormat.PercentDecimalDigits = 0;
             cssCulture.NumberFormat.PercentPositivePattern = 1;
             return String.Format(cssCulture,

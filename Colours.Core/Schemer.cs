@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 namespace Colours
 {
-    [Serializable]
     public enum SchemeType
     {
         Complement, SplitComplements, Triads, Tetrads, Analogous, Monochromatic
