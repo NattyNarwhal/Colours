@@ -31,7 +31,7 @@ This is a small program to create colour schemes. There's a `System.Windows.Form
 
 ## Goals
 
-* [ ]Android/iOS/UWP ports: The Core library has been converted to a PCL. This means you need to wrap RgbColor to your framework's native color type like `NSColor`, `System.Drawing.Color`, `Gdk.Color`, etc.
+* [ ] Android/iOS/UWP ports: The Core library has been converted to a PCL. This means you need to wrap RgbColor to your framework's native color type like `NSColor`, `System.Drawing.Color`, `Gdk.Color`, etc.
  * [ ] Android version: Should be possible. What likely needs to be implemented is a color picker, color well, and any glue.
  * [ ] Mac version: A port using MonoMac or `Xamarin.Mac` should be very feasible, due to the system having robust color GUI controls, but my only Mac is a MacMini1,1 running SL. I've taken a look in VMware and Xcode makes me want to puke.
  * [ ] iOS version: An iOS port for the same reasons as the Mac.
