@@ -40,7 +40,7 @@ namespace Colours
             {
                 _hsv = value;
                 if (value != null)
-                    Color = _hsv.ToRgb();
+                    Color = _hsv.ToRgb().ToGdiColor();
             }
         }
 

@@ -42,7 +42,7 @@ namespace Colours
         /// <see cref="Colours.AppController.SetColor(RgbColor, bool)"/>
         /// to change the color.
         /// </summary>
-        public RgbColor RgbColor
+        public RgbColor Color
         {
             get
             {

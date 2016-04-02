@@ -15,7 +15,7 @@ namespace Colours
         static void Main(string[] args)
         {
             AppState state = AppArgParser.ParseArgs(args,
-                new HsvColor(Properties.Settings.Default.LastColor),
+                new HsvColor(Properties.Settings.Default.LastColor.ToRgbColor()),
                 Properties.Settings.Default.SchemeType);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
