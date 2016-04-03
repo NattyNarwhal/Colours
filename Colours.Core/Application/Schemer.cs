@@ -8,7 +8,30 @@ namespace Colours
     /// </summary>
     public enum SchemeType
     {
-        Complement, SplitComplements, Triads, Tetrads, Analogous, Monochromatic
+        /// <summary>
+        /// The color on the other side of the color wheel.
+        /// </summary>
+        Complement,
+        /// <summary>
+        /// The colors adjacent to the other side of the color wheel.
+        /// </summary>
+        SplitComplements,
+        /// <summary>
+        /// Two colors equally distant from each other.
+        /// </summary>
+        Triads,
+        /// <summary>
+        /// Three colors equally distant from each other.
+        /// </summary>
+        Tetrads,
+        /// <summary>
+        /// Two colors adjcanent.
+        /// </summary>
+        Analogous,
+        /// <summary>
+        /// Two colors, darker and lighter.
+        /// </summary>
+        Monochromatic
     }
 
     /// <summary>
@@ -45,7 +68,7 @@ namespace Colours
         }
 
         /// <summary>
-        /// Gets 3 colors equally distant to each other on the color wheel.
+        /// Gets 3 colors equally distant from each other on the color wheel.
         /// </summary>
         /// <param name="c">The colour to generate the scheme from.</param>
         /// <returns>The results of the scheme, including the previous color.</returns>
@@ -91,7 +114,8 @@ namespace Colours
         }
 
         /// <summary>
-        /// Gets 2 colors with offset saturation or values, rather than offset hues.
+        /// Gets 2 colors with offset saturation or values, rather than
+        /// offset hues, and then sorts them by their luminance.
         /// </summary>
         /// <param name="c">The colour to generate the scheme from.</param>
         /// <returns>The results of the scheme, including the previous color.</returns>
