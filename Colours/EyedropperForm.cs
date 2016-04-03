@@ -84,16 +84,30 @@ namespace Colours
             }
         }
 
-        private void dropButton_Click(object sender, EventArgs e)
+        public void BeginCapture()
         {
             capture = true;
             stateLabel.Text = pickingText;
+        }
+
+        private void dropButton_Click(object sender, EventArgs e)
+        {
+            BeginCapture();
         }
 
         private void okButton_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.OK;
             Close();
+        }
+
+        private void EyedropperForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.E && e.Control)
+            {
+                BeginCapture();
+                e.Handled = true;
+            }
         }
     }
 }
