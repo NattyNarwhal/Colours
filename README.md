@@ -41,7 +41,7 @@ This is a small program to create colour schemes. There's a `System.Windows.Form
  * [ ] Mac version: A port using MonoMac or `Xamarin.Mac` should be very feasible, due to the system having robust color GUI controls, but my only Mac is a MacMini1,1 running SL. I've taken a look in VMware and Xcode makes me want to puke.
  * [ ] iOS version: An iOS port for the same reasons as the Mac.
  * [ ] UWP/WinRT version: A Windows 10 version IMHO is of limited usefulness, as desktop Windows 10 runs the SWF version fine, and I lack a WM10 device. On the other hand, I do have a Lumia 520 and Surface RT running and stuck on 8.1.
-* [ ] Eyedropper in SWF version. The GTK version naturally has this because the native colour picker does. Portability might have been a concern, but the GTK version exists now.
+* [X] Eyedropper in SWF version. The GTK version naturally has this because the native colour picker does. Portability might have been a concern, but the GTK version exists now.
 * [ ] Colour pallettes - both either readymades and/or custom "bookmark" like ones.
  * [ ] Perhaps parse GIMP or Photoshop pallettes if we do go with this.
  * Should favourites be implemented the same way as a pallette? This is flexible, though not as simple to implement UI or code wise.

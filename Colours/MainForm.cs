@@ -220,5 +220,14 @@ namespace Colours
         {
             Application.Exit();
         }
+
+        private void eyedropperToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            EyedropperForm ef = new EyedropperForm();
+            if (ef.ShowDialog(this) == DialogResult.OK)
+            {
+                app.SetColor(ef.Color.ToRgbColor(), true);
+            }
+        }
     }
 }
