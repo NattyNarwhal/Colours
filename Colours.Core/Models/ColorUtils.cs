@@ -11,6 +11,9 @@ namespace Colours
     /// </summary>
     public static class ColorUtils
     {
+        const string rgbRegex = @"rgb\(\s*(\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3})\s*\)";
+        const string hsvRegex = @"hsv\(\s*(\d{1,3}),\s*(\d{1,3})%,\s*(\d{1,3})%\s*\)";
+
         /// <summary>
         /// Creates an RGB color from a 3 or 6 hex digit number prefixed with an #.
         /// </summary>
@@ -36,6 +39,54 @@ namespace Colours
         }
 
         /// <summary>
+        /// Creates an RGB color from a CSS RGB triplet.
+        /// </summary>
+        /// <param name="c">The string, such as "rgb(0, 0, 0)".</param>
+        /// <returns>The new color.</returns>
+        /// <exception cref="ArgumentException">
+        /// Thrown if the string could not be parsed.
+        /// </exception>
+        public static RgbColor FromCssRgb(string c)
+        {
+            if (c.StartsWith("rgb("))
+            {
+                Match m = Regex.Match(c, rgbRegex);
+                if (!m.Success) goto fail;
+                var ints = m.Groups.Cast<Group>().Skip(1)
+                    .Select(g => int.Parse(g.Value)).ToList();
+                if (ints.Count() == 3)
+                    return new RgbColor
+                        (ints[0], ints[1], ints[2]);
+            }
+            fail:
+            throw new ArgumentException("The color is invalid.");
+        }
+
+        /// <summary>
+        /// Creates an HSV color from a HSV triplet.
+        /// </summary>
+        /// <param name="c">The string, such as "hsv(0, 0%, 0%)".</param>
+        /// <returns>The new color.</returns>
+        /// <exception cref="ArgumentException">
+        /// Thrown if the string could not be parsed.
+        /// </exception>
+        public static HsvColor FromCssHsv(string c)
+        {
+            if (c.StartsWith("hsv("))
+            {
+                Match m = Regex.Match(c, hsvRegex);
+                if (!m.Success) goto fail;
+                var dubs = m.Groups.Cast<Group>().Skip(1)
+                    .Select(g => double.Parse(g.Value)).ToList();
+                if (dubs.Count() == 3)
+                    return new HsvColor(
+                        dubs[0], dubs[1] / 100d, dubs[2] / 100d);
+            }
+            fail:
+            throw new ArgumentException("The string could not be converted.");
+        }
+
+        /// <summary>
         /// Attempt to create a color from a string, in a variety of formats.
         /// </summary>
         /// <param name="colorString">
@@ -47,9 +98,6 @@ namespace Colours
         /// </exception>
         public static HsvColor FromString(string colorString)
         {
-            const string rgbRegex = @"rgb\(\s*(\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3})\s*\)";
-            const string hsvRegex = @"hsv\(\s*(\d{1,3}),\s*(\d{1,3})%,\s*(\d{1,3})%\s*\)";
-
             colorString.Trim();
 
             try
@@ -60,26 +108,13 @@ namespace Colours
             {
                 if (colorString.StartsWith("rgb("))
                 {
-                    Match m = Regex.Match(colorString, rgbRegex);
-                    if (!m.Success) goto fail;
-                    var ints = m.Groups.Cast<Group>().Skip(1)
-                        .Select(g => int.Parse(g.Value)).ToList();
-                    if (ints.Count() == 3)
-                        return new HsvColor(new RgbColor
-                            (ints[0], ints[1], ints[2]));
+                    return new HsvColor(FromCssRgb(colorString));
                 }
                 // TODO: hsl
                 else if (colorString.StartsWith("hsv("))
                 {
-                    Match m = Regex.Match(colorString, hsvRegex);
-                    if (!m.Success) goto fail;
-                    var dubs = m.Groups.Cast<Group>().Skip(1)
-                        .Select(g => double.Parse(g.Value)).ToList();
-                    if (dubs.Count() == 3)
-                        return new HsvColor(
-                            dubs[0], dubs[1] / 100d, dubs[2] / 100d);
+                    return FromCssHsv(colorString);
                 }
-                fail:
                 throw new ArgumentException("The string could not be converted.");
             }
         }
