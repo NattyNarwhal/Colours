@@ -341,8 +341,8 @@
             // 
             this.eyedropperToolStripMenuItem.Name = "eyedropperToolStripMenuItem";
             this.eyedropperToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
-            this.eyedropperToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
-            this.eyedropperToolStripMenuItem.Text = "Open from Scr&een...";
+            this.eyedropperToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.eyedropperToolStripMenuItem.Text = "&Eyedropper...";
             this.eyedropperToolStripMenuItem.Click += new System.EventHandler(this.eyedropperToolStripMenuItem_Click);
             // 
             // randomToolStripMenuItem
