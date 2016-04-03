@@ -13,10 +13,22 @@ namespace Colours
     /// </summary>
     public class RgbColor
     {
+        /// <summary>
+        /// The red channel of the color. Values from 0-255.
+        /// </summary>
         public byte R { get; set; }
+        /// <summary>
+        /// The green channel of the color. Values from 0-255.
+        /// </summary>
         public byte G { get; set; }
+        /// <summary>
+        /// The blue channel of the color. Values from 0-255.
+        /// </summary>
         public byte B { get; set; }
 
+        /// <summary>
+        /// Creates a new RgbColor as the color black.
+        /// </summary>
         public RgbColor()
         {
             R = 0;
@@ -24,6 +36,12 @@ namespace Colours
             B = 0;
         }
 
+        /// <summary>
+        /// Creates a new color from the numbered values.
+        /// </summary>
+        /// <param name="r">The red channel of the color.</param>
+        /// <param name="g">The green channel of the color.</param>
+        /// <param name="b">The blue channel of the color.</param>
         public RgbColor(byte r, byte g, byte b)
         {
             R = r;
@@ -31,6 +49,12 @@ namespace Colours
             B = b;
         }
 
+        /// <summary>
+        /// Creates a new color from the numbered values.
+        /// </summary>
+        /// <param name="r">The red channel of the color.</param>
+        /// <param name="g">The green channel of the color.</param>
+        /// <param name="b">The blue channel of the color.</param>
         public RgbColor(int r, int g, int b)
         {
             R = (byte)r;
@@ -139,6 +163,11 @@ namespace Colours
                 GetHue(), GetSaturation(), GetBrightness());
         }
 
+        /// <summary>
+        /// Prints the color in a 6 hex digit form prefixed with a #,
+        /// used to represent the color in things such as CSS.
+        /// </summary>
+        /// <returns>The string, in a "#123456" format.</returns>
         public string ToHtml()
         {
             return String.Format("#{0:X2}{1:X2}{2:X2}", R, G, B);

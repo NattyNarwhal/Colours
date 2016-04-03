@@ -7,6 +7,14 @@ namespace Colours
 {
     public static class ColorUtils
     {
+        /// <summary>
+        /// Creates an RGB color from a 3 or 6 hex digit number prefixed with an #.
+        /// </summary>
+        /// <param name="c">The string, such as "#123456".</param>
+        /// <returns>The new color.</returns>
+        /// <exception cref="ArgumentException">
+        /// Thrown if the string could not be parsed.
+        /// </exception>
         public static RgbColor FromHtml(string c)
         {
             if (string.IsNullOrWhiteSpace(c) || c[0] != '#')
@@ -26,8 +34,13 @@ namespace Colours
         /// <summary>
         /// Attempt to create a color from a string, in a variety of formats.
         /// </summary>
-        /// <param name="colorString"></param>
-        /// <returns></returns>
+        /// <param name="colorString">
+        /// The string, such as "#123456" or "hsv(180, 50%, 50%)"
+        /// </param>
+        /// <returns>An HsvColor from the string.</returns>
+        /// <exception cref="ArgumentException">
+        /// Thrown if the string could not be parsed.
+        /// </exception>
         public static HsvColor FromString(string colorString)
         {
             const string rgbRegex = @"rgb\(\s*(\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3})\s*\)";

@@ -42,6 +42,10 @@ namespace Colours
         // Functions adapted from:
         // http://stackoverflow.com/questions/359612/how-to-change-rgb-color-to-hsv/1626175#1626175
 
+        /// <summary>
+        /// Creates a new HsvColor from an existing RgbColor.
+        /// </summary>
+        /// <param name="c">The RgbColor to create from.</param>
         public HsvColor(RgbColor c)
         {
             int max = Math.Max(c.R, Math.Max(c.G, c.B));
@@ -52,6 +56,12 @@ namespace Colours
             Value = max / 255d;
         }
 
+        /// <summary>
+        /// Creates a new HsvColor from the numbered values.
+        /// </summary>
+        /// <param name="h">The hue of the color.</param>
+        /// <param name="s">The saturation of the color.</param>
+        /// <param name="v">The value of the color.</param>
         public HsvColor(double h, double s, double v)
         {
             Hue = h;
@@ -59,6 +69,10 @@ namespace Colours
             Value = v;
         }
 
+        /// <summary>
+        /// Creates a new RgbColor from the existing HsvColor.
+        /// </summary>
+        /// <returns>The new RgbColor.</returns>
         public RgbColor ToRgb()
         {
             int hi = Convert.ToInt32(Math.Floor(Hue / 60)) % 6;
@@ -84,7 +98,10 @@ namespace Colours
                 return new RgbColor(v, p, q);
         }
 
-
+        /// <summary>
+        /// Outputs a string representation of the color.
+        /// </summary>
+        /// <returns>A string in "hsv(0, 0%, 0%)" format.</returns>
         public override string ToString()
         {
             CultureInfo cssCulture = new CultureInfo(CultureInfo.InvariantCulture.Name);
