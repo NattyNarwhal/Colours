@@ -391,7 +391,7 @@ namespace Colours
                 RedoHistory.Push(new AppState(HsvColor, SchemeType));
                 AppState s = UndoHistory.Pop();
                 SetColor(s.Color, false, false);
-                SetSchemeType(s.SchemeType, false);
+                SetSchemeType(s.SchemeType, false, false);
 
                 // because we didn't use the setters to fire events
                 // because we'd be wastefully firing two otherwise
