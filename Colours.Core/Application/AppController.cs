@@ -9,15 +9,30 @@ namespace Colours
     /// </summary>
     public class AppState
     {
+        /// <summary>
+        /// The colour of the state.
+        /// </summary>
         public HsvColor Color { get; set; }
+        /// <summary>
+        /// The scheme of the state.
+        /// </summary>
         public SchemeType SchemeType { get; set; }
 
+        /// <summary>
+        /// Creates a new application state representation.
+        /// </summary>
+        /// <param name="c">The color to use.</param>
+        /// <param name="t">The scheme to use.</param>
         public AppState(HsvColor c, SchemeType t)
         {
             Color = c;
             SchemeType = t;
         }
 
+        /// <summary>
+        /// Gets a string representation of the current state.
+        /// </summary>
+        /// <returns>The stringified state, for example, "Tetrads of #123456."</returns>
         public override string ToString()
         {
             return String.Format("{0} of {1}", SchemeType.ToString(),
@@ -75,8 +90,17 @@ namespace Colours
         #endregion
 
         #region events
+        /// <summary>
+        /// This event is fired whenever the result is changed as a
+        /// result of a SetColor/SetScheme/Undo/Redo call that allows
+        /// event firing.
+        /// </summary>
         public event EventHandler<EventArgs> ResultChanged;
 
+        /// <summary>
+        /// This is a wrapper for the event <see cref="ResultChanged"/>.
+        /// </summary>
+        /// <param name="e">The event arguments.</param>
         protected virtual void OnResultChanged(EventArgs e)
         {
             // make temp in case of race condition
@@ -222,6 +246,9 @@ namespace Colours
         #endregion
 
         #region adjustment functions
+        /// <summary>
+        /// Increases the value of the color, if possible.
+        /// </summary>
         public void Brighten()
         {
             if (CanBrighten())
@@ -231,6 +258,9 @@ namespace Colours
             }
         }
 
+        /// <summary>
+        /// Decreases the value of the color, if possible.
+        /// </summary>
         public void Darken()
         {
             if (CanDarken())
@@ -240,6 +270,9 @@ namespace Colours
             }
         }
 
+        /// <summary>
+        /// Increases the saturation of the color, if possible.
+        /// </summary>
         public void Saturate()
         {
             if (CanSaturate())
@@ -249,6 +282,9 @@ namespace Colours
             }
         }
 
+        /// <summary>
+        /// Decreases the saturation of the color, if possible.
+        /// </summary>
         public void Desaturate()
         {
             if (CanDesaturate())
@@ -258,21 +294,45 @@ namespace Colours
             }
         }
 
+        /// <summary>
+        /// Checks to see if the color can be brightened. Note that
+        /// the function will call this itself - this is primarily
+        /// useful for toggling this in your frontend.
+        /// </summary>
+        /// <returns>If the color can be brightened.</returns>
         public bool CanBrighten()
         {
             return HsvColor.Value + 0.05d < 1d;
         }
 
+        /// <summary>
+        /// Checks to see if the color can be darkened. Note that
+        /// the function will call this itself - this is primarily
+        /// useful for toggling this in your frontend.
+        /// </summary>
+        /// <returns>If the color can be darkened.</returns>
         public bool CanDarken()
         {
             return HsvColor.Value - 0.05d > 0d;
         }
 
+        /// <summary>
+        /// Checks to see if the color can be saturated. Note that
+        /// the function will call this itself - this is primarily
+        /// useful for toggling this in your frontend.
+        /// </summary>
+        /// <returns>If the color can be desaturated.</returns>
         public bool CanSaturate()
         {
             return HsvColor.Saturation + 0.05d < 1d;
         }
 
+        /// <summary>
+        /// Checks to see if the color can be desaturated. Note that
+        /// the function will call this itself - this is primarily
+        /// useful for toggling this in your frontend.
+        /// </summary>
+        /// <returns>If the color can be desaturated.</returns>
         public bool CanDesaturate()
         {
             return HsvColor.Saturation - 0.05d > 0d;
@@ -320,6 +380,10 @@ namespace Colours
             RedoHistory.Clear();
         }
 
+        /// <summary>
+        /// Undoes the last change made and pushes it to the redo stack,
+        /// if possible.
+        /// </summary>
         public void Undo()
         {
             if (CanUndo())
@@ -335,6 +399,10 @@ namespace Colours
             }
         }
 
+        /// <summary>
+        /// Redos the last change made and pushes it to the undo stack,
+        /// if possible.
+        /// </summary>
         public void Redo()
         {
             if (CanRedo())
@@ -350,11 +418,19 @@ namespace Colours
             }
         }
 
+        /// <summary>
+        /// Checks to see if there are changes able to be undone.
+        /// </summary>
+        /// <returns>If changes can be undone.</returns>
         public bool CanUndo()
         {
             return UndoHistory.Count > 0;
         }
 
+        /// <summary>
+        /// Checks to see if there are changes able to be redone.
+        /// </summary>
+        /// <returns>If changes can be redone.</returns>
         public bool CanRedo()
         {
             return RedoHistory.Count > 0;

@@ -5,6 +5,10 @@ using System.Text.RegularExpressions;
 
 namespace Colours
 {
+    /// <summary>
+    /// Contains utility functions for <see cref="RgbColor"/> and
+    /// <see cref="HsvColor"/>.
+    /// </summary>
     public static class ColorUtils
     {
         /// <summary>

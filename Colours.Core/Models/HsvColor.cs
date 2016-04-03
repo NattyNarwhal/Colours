@@ -6,7 +6,6 @@ namespace Colours
     /// <summary>
     /// Represents a color in the Hue/Saturation/Value form.
     /// </summary>
-    /// <seealso cref="System.Drawing.Color"/>
     public class HsvColor
     {
         private double _hue;
