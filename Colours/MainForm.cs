@@ -53,9 +53,9 @@ namespace Colours
             {
                 tableLayoutPanel1.ColumnStyles[i].SizeType = SizeType.Percent;
                 tableLayoutPanel1.ColumnStyles[i].Width = 100 / app.Results.Count;
-
+                
                 ColorButton cb = new ColorButton(next);
-                if (i == 0)
+                if (app.HsvColor == next)
                     cb.Font = new Font(cb.Font, FontStyle.Bold);
                 cb.Text = String.Format("{0}\r\n{1}",
                     next.ToRgb().ToHtml(), next.ToString());
