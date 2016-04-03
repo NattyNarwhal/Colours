@@ -98,6 +98,7 @@ namespace Colours
         public static List<HsvColor> Monochromatic(HsvColor c)
         {
             HsvColor c1, c2;
+            List<HsvColor> l;
 
             if (c.Saturation < 0.1d)
             {
@@ -110,7 +111,10 @@ namespace Colours
                 c2 = new HsvColor(c.Hue, c.Saturation, (c.Value + 2d * (1d / 3d)) % 1d);
             }
 
-            return new List<HsvColor>() { c, c1, c2 };
+            l = new List<HsvColor>() { c, c1, c2 };
+            l.Sort((x, y) => x.Value == y.Value ? 0 :
+                (x.Value < y.Value ? 1 : -1));
+            return l;
         }
     }
 }
