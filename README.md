@@ -1,6 +1,6 @@
 # Colours
 
-This is a small program to create colour schemes. There's a `System.Windows.Forms` version as well as a GTK version, intended for Linux/BSD systems. Theoretically, the backend is portable enough to run on anything that has `System.Drawing`.
+This is a small program to create colour schemes. There's a `System.Windows.Forms` version as well as a GTK version, intended for Linux/BSD systems. The backend is portable to create a frontend on any .NET platform.
 
 ## Structure
 
@@ -20,7 +20,6 @@ This is a small program to create colour schemes. There's a `System.Windows.Form
 	    * `ColorUtils.cs` - Shared functions useful for converting colours.
 	    * `HsvColor.cs` - Represents a colour in Hue/Saturation/Value forms.
         * `RgbColor.cs` - Represents a color in Red/Green/Blue forms. This object intended for wrapping into your framework's native color type.
-
 * `Colours.Gtk` - A Unix/Linux frontend using GTK#.
 	* `ConfigParser.cs` - Parses a config file. Extremely basic.
 	* `GdkWrapper.cs` - Converts to and from GDK and Core abstract objects.
