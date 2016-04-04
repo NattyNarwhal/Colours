@@ -62,12 +62,12 @@ namespace Colours
         {
             if (capture)
             {
+                e.Handled = true;
+                capture = false;
                 if (e.Button == MouseButtons.Left)
                 {
                     Color = GetPixel(MousePosition);
-                    e.Handled = true;
                 }
-                capture = false;
                 stateLabel.Text = waitingText;
             }
         }
