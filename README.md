@@ -42,6 +42,8 @@ This is a small program to create colour schemes. There's a `System.Windows.Form
  * [ ] iOS version: An iOS port for the same reasons as the Mac.
  * [ ] UWP/WinRT version: A Windows 10 version IMHO is of limited usefulness, as desktop Windows 10 runs the SWF version fine, and I lack a WM10 device. On the other hand, I do have a Lumia 520 and Surface RT running and stuck on 8.1.
 * [X] Eyedropper in SWF version. The GTK version naturally has this because the native colour picker does. Portability might have been a concern, but the GTK version exists now.
+ * [ ] I'm not entirely happy with the UI though.
+* [ ] DPI awareness in SWF version: Does this even work?
 * [ ] Colour pallettes - both either readymades and/or custom "bookmark" like ones.
  * [ ] Perhaps parse GIMP or Photoshop pallettes if we do go with this.
  * Should favourites be implemented the same way as a pallette? This is flexible, though not as simple to implement UI or code wise.
