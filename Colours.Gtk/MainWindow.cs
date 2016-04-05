@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Reflection;
 using Gtk;
 using Colours;
 
@@ -191,5 +192,19 @@ public partial class MainWindow: Gtk.Window
 	protected void OnQuitActionActivated (object sender, EventArgs e)
 	{
 		Application.Quit ();
+	}
+	protected void OnAboutActionActivated (object sender, EventArgs e)
+	{
+		AboutDialog ad = new AboutDialog (){
+			Website = "https://github.com/NattyNarwhal/Colours",
+			Version = Assembly.GetExecutingAssembly().GetName().Version.ToString(),
+			ProgramName = "Colours",
+			License = "This software is licensed under the MIT License." +
+				" Portions of this code were borrowed from the Mono Project" +
+				", under the MIT license.",
+			WrapLicense = true
+		};
+		ad.Run ();
+		ad.Destroy ();
 	}
 }

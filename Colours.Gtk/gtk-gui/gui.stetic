@@ -7,7 +7,7 @@
     <widget-library name="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <widget-library name="../bin/Debug/Colours.Gtk.exe" internal="true" />
   </import>
-  <widget class="Gtk.Window" id="MainWindow" design-size="390 164">
+  <widget class="Gtk.Window" id="MainWindow" design-size="467 164">
     <action-group name="Default">
       <action id="EditAction">
         <property name="Type">Action</property>
@@ -41,12 +41,6 @@
         <property name="ShortLabel" translatable="yes">Copy He_x</property>
         <property name="StockId">gtk-copy</property>
         <signal name="Activated" handler="OnCopyHexActionActivated" />
-      </action>
-      <action id="CopyRGBAction">
-        <property name="Type">Action</property>
-        <property name="Label" translatable="yes">Copy _RGB</property>
-        <property name="ShortLabel" translatable="yes">Copy _RGB</property>
-        <signal name="Activated" handler="OnCopyRGBActionActivated" />
       </action>
       <action id="CopyHSLAction">
         <property name="Type">Action</property>
@@ -128,6 +122,24 @@
         <property name="StockId">gtk-quit</property>
         <signal name="Activated" handler="OnQuitActionActivated" />
       </action>
+      <action id="HelpAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Help</property>
+        <property name="ShortLabel" translatable="yes">_Help</property>
+      </action>
+      <action id="executeAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Execute</property>
+        <property name="ShortLabel" translatable="yes">_Execute</property>
+        <property name="StockId">gtk-execute</property>
+      </action>
+      <action id="aboutAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_About</property>
+        <property name="ShortLabel" translatable="yes">_About</property>
+        <property name="StockId">gtk-about</property>
+        <signal name="Activated" handler="OnAboutActionActivated" />
+      </action>
     </action-group>
     <property name="MemberName" />
     <property name="Title" translatable="yes">MainWindow</property>
@@ -165,6 +177,9 @@
                 <node type="Menuitem" action="DesaturateAction" />
                 <node type="Separator" />
                 <node type="Menuitem" action="InvertAction" />
+              </node>
+              <node type="Menu" action="HelpAction">
+                <node type="Menuitem" action="aboutAction" />
               </node>
             </node>
           </widget>
