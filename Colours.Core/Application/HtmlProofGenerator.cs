@@ -20,8 +20,7 @@ namespace Colours
         const string table = "<table><tr>"
             + "<td rowspan=\"4\" style=\"width: 1em; background-color: {0}\"><td>{0}</td></tr>"
             + "<tr><td>{1}</td></tr>"
-            + "<tr><td>{2}</td></tr>"
-            + "<tr><td>{3}</td></tr></table>";
+            + "<tr><td>{2}</td></tr></table>";
         
         /// <summary>
         /// Creates tables from a list of colours, including the
@@ -34,7 +33,6 @@ namespace Colours
             return String.Join("", colors.Select(c =>
                 String.Format(table,
                     c.ToRgb().ToHtml(),
-                    c.ToRgb().ToRgbString(),
                     c.ToRgb().ToHslString(),
                     c.ToString()
                     )

@@ -161,7 +161,6 @@ public partial class MainWindow
 		this.goBackAction.Activated += new global::System.EventHandler (this.OnUndoActionActivated);
 		this.goForwardAction.Activated += new global::System.EventHandler (this.OnRedoActionActivated);
 		this.copyAction.Activated += new global::System.EventHandler (this.OnCopyHexActionActivated);
-		this.CopyRGBAction.Activated += new global::System.EventHandler (this.OnCopyRGBActionActivated);
 		this.CopyHSLAction.Activated += new global::System.EventHandler (this.OnCopyHSLActionActivated);
 		this.CopyHSVAction.Activated += new global::System.EventHandler (this.OnCopyHSVActionActivated);
 		this.pasteAction.Activated += new global::System.EventHandler (this.OnPasteActionActivated);

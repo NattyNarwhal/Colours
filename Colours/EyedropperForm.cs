@@ -28,9 +28,8 @@ namespace Colours
                 previewLabel.BackColor = _color;
                 previewLabel.ForeColor = _color.GetBrightness() > 0.5
                     ? Color.Black : Color.White;
-                previewLabel.Text = String.Format("{0}\r\n{1}\r\n{2}\r\n{3}",
+                previewLabel.Text = String.Format("{0}\r\n{1}\r\n{2}",
                     value.ToRgbColor().ToHtml(),
-                    value.ToRgbColor().ToRgbString(),
                     value.ToRgbColor().ToHslString(),
                     new HsvColor(value.ToRgbColor()).ToString());
             }

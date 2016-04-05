@@ -144,15 +144,6 @@ namespace Colours
         /// Prints a human-readable color triplet for use in things like CSS.
         /// </summary>
         /// <returns>The string, in an "rgb(0, 0, 0)" format.</returns>
-        public string ToRgbString()
-        {
-            return String.Format("rgb({0}, {1}, {2})", R, G, B);
-        }
-
-        /// <summary>
-        /// Prints a human-readable color triplet for use in things like CSS.
-        /// </summary>
-        /// <returns>The string, in an "rgb(0, 0, 0)" format.</returns>
         public string ToHslString()
         {
             CultureInfo cssCulture = new CultureInfo(CultureInfo.InvariantCulture.Name);
