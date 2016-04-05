@@ -151,7 +151,6 @@
                 <node type="Menuitem" action="goForwardAction" />
                 <node type="Separator" />
                 <node type="Menuitem" action="copyAction" />
-                <node type="Menuitem" action="CopyRGBAction" />
                 <node type="Menuitem" action="CopyHSLAction" />
                 <node type="Menuitem" action="CopyHSVAction" />
                 <node type="Separator" />

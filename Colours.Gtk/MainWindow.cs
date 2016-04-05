@@ -37,9 +37,8 @@ public partial class MainWindow: Gtk.Window
 			ColorButton cb = new ColorButton (c.ToGdkColor ());
 			cb.UseAlpha = false;
 			cb.ColorSet += OnColorChooserColorChanged;
-			cb.TooltipText = String.Format("{0}\r\n{1}\r\n{2}\r\n{3}",
+			cb.TooltipText = String.Format("{0}\r\n{1}\r\n{2}",
 				c.ToRgb().ToHtml(),
-				c.ToRgb().ToRgbString(),
 				c.ToRgb().ToHslString(),
 				c.ToString());
 
@@ -75,14 +74,10 @@ public partial class MainWindow: Gtk.Window
 
 			Menu m = new Menu();
 			MenuItem hexPopupItem = new MenuItem ("Copy He_x");
-			MenuItem rgbPopupItem = new MenuItem ("Copy _RGB");
 			MenuItem hslPopupItem = new MenuItem ("Copy HS_L");
 			MenuItem hsvPopupItem = new MenuItem ("Copy HS_V");
 			hexPopupItem.Activated += (o, a) => {
 				clipboard.Text = cb.Color.ToRgbColor().ToHtml();
-			};
-			rgbPopupItem.Activated += (o, a) => {
-				clipboard.Text = cb.Color.ToRgbColor().ToRgbString();
 			};
 			hslPopupItem.Activated += (o, a) => {
 				clipboard.Text = cb.Color.ToRgbColor().ToHslString();
@@ -91,7 +86,6 @@ public partial class MainWindow: Gtk.Window
 				clipboard.Text = cb.Color.ToHsvColor().ToString();
 			};
 			m.Add (hexPopupItem);
-			m.Add (rgbPopupItem);
 			m.Add (hslPopupItem);
 			m.Add (hsvPopupItem);
 			m.ShowAll ();
@@ -161,11 +155,6 @@ public partial class MainWindow: Gtk.Window
 	protected void OnCopyHSLActionActivated (object sender, EventArgs e)
 	{
 		clipboard.Text = app.Color.ToHslString ();
-	}
-
-	protected void OnCopyRGBActionActivated (object sender, EventArgs e)
-	{
-		clipboard.Text = app.Color.ToRgbString ();
 	}
 
 	protected void OnCopyHexActionActivated (object sender, EventArgs e)
