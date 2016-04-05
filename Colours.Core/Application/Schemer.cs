@@ -126,7 +126,7 @@ namespace Colours
             if (c.Saturation < 0.1d)
             {
                 c1 = new HsvColor(c.Hue, (c.Saturation + (1d / 3d)) % 1d, c.Value);
-                c2 = new HsvColor(c.Hue, (c.Saturation + 0.02d * (1d / 3d)) % 1d, c.Value);
+                c2 = new HsvColor(c.Hue, (c.Saturation + 2d * (1d / 3d)) % 1d, c.Value);
             }
             else
             {
