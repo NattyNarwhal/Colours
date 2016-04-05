@@ -217,5 +217,10 @@ namespace Colours
                 app.SetColor(ef.Color.ToRgbColor(), true);
             }
         }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new AboutForm().ShowDialog(this);
+        }
     }
 }
