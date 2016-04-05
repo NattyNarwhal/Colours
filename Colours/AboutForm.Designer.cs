@@ -39,7 +39,7 @@
             // 
             this.closeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.closeButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.closeButton.Location = new System.Drawing.Point(197, 226);
+            this.closeButton.Location = new System.Drawing.Point(297, 226);
             this.closeButton.Name = "closeButton";
             this.closeButton.Size = new System.Drawing.Size(75, 23);
             this.closeButton.TabIndex = 0;
@@ -53,7 +53,7 @@
             this.titleLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.titleLabel.Location = new System.Drawing.Point(12, 9);
             this.titleLabel.Name = "titleLabel";
-            this.titleLabel.Size = new System.Drawing.Size(260, 23);
+            this.titleLabel.Size = new System.Drawing.Size(360, 23);
             this.titleLabel.TabIndex = 1;
             this.titleLabel.Text = "Version info";
             this.titleLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -64,7 +64,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.linkLabel.Location = new System.Drawing.Point(12, 32);
             this.linkLabel.Name = "linkLabel";
-            this.linkLabel.Size = new System.Drawing.Size(260, 23);
+            this.linkLabel.Size = new System.Drawing.Size(360, 23);
             this.linkLabel.TabIndex = 2;
             this.linkLabel.TabStop = true;
             this.linkLabel.Text = "http://github.com/NattyNarwhal/Colours";
@@ -80,7 +80,8 @@
             this.licensesBox.Multiline = true;
             this.licensesBox.Name = "licensesBox";
             this.licensesBox.ReadOnly = true;
-            this.licensesBox.Size = new System.Drawing.Size(260, 162);
+            this.licensesBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.licensesBox.Size = new System.Drawing.Size(360, 162);
             this.licensesBox.TabIndex = 3;
             this.licensesBox.Text = resources.GetString("licensesBox.Text");
             // 
@@ -89,7 +90,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.closeButton;
-            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.ClientSize = new System.Drawing.Size(384, 261);
             this.Controls.Add(this.licensesBox);
             this.Controls.Add(this.linkLabel);
             this.Controls.Add(this.titleLabel);
