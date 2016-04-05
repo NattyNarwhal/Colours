@@ -29,15 +29,15 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.schemeBox = new System.Windows.Forms.ComboBox();
+            this.resultsTable = new System.Windows.Forms.TableLayoutPanel();
+            this.colorDialog = new System.Windows.Forms.ColorDialog();
+            this.colorContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.copyHexContextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyHslContextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyHsvContextToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.eyedropperToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.randomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,8 +51,8 @@
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copySubmenuHexToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.copySubmenuHsvToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copySubmenuHslToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copySubmenuHsvToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.brightenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -62,71 +62,71 @@
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.invertToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsHtmlDialog = new System.Windows.Forms.SaveFileDialog();
-            this.contextMenuStrip1.SuspendLayout();
-            this.menuStrip1.SuspendLayout();
+            this.colorContextMenu.SuspendLayout();
+            this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
-            // comboBox1
+            // schemeBox
             // 
-            this.comboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.schemeBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
+            this.schemeBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.schemeBox.FormattingEnabled = true;
+            this.schemeBox.Items.AddRange(new object[] {
             "Complement",
             "Split Complements",
             "Triads",
             "Tetrads",
             "Analogous",
             "Monochromatic"});
-            this.comboBox1.Location = new System.Drawing.Point(12, 27);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(260, 21);
-            this.comboBox1.TabIndex = 2;
-            this.comboBox1.SelectionChangeCommitted += new System.EventHandler(this.comboBox1_SelectionChangeCommitted);
+            this.schemeBox.Location = new System.Drawing.Point(12, 27);
+            this.schemeBox.Name = "schemeBox";
+            this.schemeBox.Size = new System.Drawing.Size(260, 21);
+            this.schemeBox.TabIndex = 2;
+            this.schemeBox.SelectionChangeCommitted += new System.EventHandler(this.schemeBox_SelectionChangeCommitted);
             // 
-            // tableLayoutPanel1
+            // resultsTable
             // 
-            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.resultsTable.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel1.ColumnCount = 4;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 54);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(260, 87);
-            this.tableLayoutPanel1.TabIndex = 3;
+            this.resultsTable.ColumnCount = 4;
+            this.resultsTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.resultsTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.resultsTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.resultsTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.resultsTable.Location = new System.Drawing.Point(12, 54);
+            this.resultsTable.Name = "resultsTable";
+            this.resultsTable.RowCount = 1;
+            this.resultsTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.resultsTable.Size = new System.Drawing.Size(260, 87);
+            this.resultsTable.TabIndex = 3;
             // 
-            // colorDialog1
+            // colorDialog
             // 
-            this.colorDialog1.AnyColor = true;
-            this.colorDialog1.FullOpen = true;
+            this.colorDialog.AnyColor = true;
+            this.colorDialog.FullOpen = true;
             // 
-            // contextMenuStrip1
+            // colorContextMenu
             // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.colorContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.copyHexContextToolStripMenuItem,
             this.copyHslContextToolStripMenuItem,
             this.copyHsvContextToolStripMenuItem1});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(128, 70);
+            this.colorContextMenu.Name = "contextMenuStrip1";
+            this.colorContextMenu.Size = new System.Drawing.Size(128, 70);
             // 
             // copyHexContextToolStripMenuItem
             // 
             this.copyHexContextToolStripMenuItem.Name = "copyHexContextToolStripMenuItem";
-            this.copyHexContextToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.copyHexContextToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.copyHexContextToolStripMenuItem.Text = "Copy He&x";
             this.copyHexContextToolStripMenuItem.Click += new System.EventHandler(this.copyHexContextToolStripMenuItem_Click);
             // 
             // copyHslContextToolStripMenuItem
             // 
             this.copyHslContextToolStripMenuItem.Name = "copyHslContextToolStripMenuItem";
-            this.copyHslContextToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.copyHslContextToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.copyHslContextToolStripMenuItem.Text = "Copy HS&L";
             this.copyHslContextToolStripMenuItem.Click += new System.EventHandler(this.copyHslContextToolStripMenuItem_Click);
             // 
@@ -137,16 +137,16 @@
             this.copyHsvContextToolStripMenuItem1.Text = "Copy HS&V";
             this.copyHsvContextToolStripMenuItem1.Click += new System.EventHandler(this.copyHsvContextToolStripMenuItem_Click);
             // 
-            // menuStrip1
+            // menuStrip
             // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.editToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(284, 24);
-            this.menuStrip1.TabIndex = 5;
-            this.menuStrip1.Text = "menuStrip1";
+            this.menuStrip.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip.Name = "menuStrip";
+            this.menuStrip.Size = new System.Drawing.Size(284, 24);
+            this.menuStrip.TabIndex = 5;
+            this.menuStrip.Text = "menuStrip1";
             // 
             // fileToolStripMenuItem
             // 
@@ -261,19 +261,19 @@
             this.copySubmenuHexToolStripMenuItem.Text = "Copy He&x";
             this.copySubmenuHexToolStripMenuItem.Click += new System.EventHandler(this.copySubmenuHexToolStripMenuItem_Click);
             // 
-            // copySubmenuHsvToolStripMenuItem
-            // 
-            this.copySubmenuHsvToolStripMenuItem.Name = "copySubmenuHsvToolStripMenuItem";
-            this.copySubmenuHsvToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
-            this.copySubmenuHsvToolStripMenuItem.Text = "Copy HS&V";
-            this.copySubmenuHsvToolStripMenuItem.Click += new System.EventHandler(this.copySubmenuHslToolStripMenuItem_Click);
-            // 
             // copySubmenuHslToolStripMenuItem
             // 
             this.copySubmenuHslToolStripMenuItem.Name = "copySubmenuHslToolStripMenuItem";
             this.copySubmenuHslToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
             this.copySubmenuHslToolStripMenuItem.Text = "Copy HS&L";
             this.copySubmenuHslToolStripMenuItem.Click += new System.EventHandler(this.copySubmenuHsvToolStripMenuItem_Click);
+            // 
+            // copySubmenuHsvToolStripMenuItem
+            // 
+            this.copySubmenuHsvToolStripMenuItem.Name = "copySubmenuHsvToolStripMenuItem";
+            this.copySubmenuHsvToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.copySubmenuHsvToolStripMenuItem.Text = "Copy HS&V";
+            this.copySubmenuHsvToolStripMenuItem.Click += new System.EventHandler(this.copySubmenuHslToolStripMenuItem_Click);
             // 
             // pasteToolStripMenuItem
             // 
@@ -343,30 +343,30 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 153);
-            this.Controls.Add(this.menuStrip1);
-            this.Controls.Add(this.tableLayoutPanel1);
-            this.Controls.Add(this.comboBox1);
-            this.MainMenuStrip = this.menuStrip1;
+            this.Controls.Add(this.menuStrip);
+            this.Controls.Add(this.resultsTable);
+            this.Controls.Add(this.schemeBox);
+            this.MainMenuStrip = this.menuStrip;
             this.Name = "MainForm";
-            this.Text = "Form1";
+            this.Text = "Colours";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
-            this.contextMenuStrip1.ResumeLayout(false);
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
+            this.colorContextMenu.ResumeLayout(false);
+            this.menuStrip.ResumeLayout(false);
+            this.menuStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.ColorDialog colorDialog1;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ComboBox schemeBox;
+        private System.Windows.Forms.TableLayoutPanel resultsTable;
+        private System.Windows.Forms.ColorDialog colorDialog;
+        private System.Windows.Forms.ContextMenuStrip colorContextMenu;
         private System.Windows.Forms.ToolStripMenuItem copyHexContextToolStripMenuItem;
-        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.ToolStripMenuItem copyHslContextToolStripMenuItem;
-        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem copyHsvContextToolStripMenuItem1;

@@ -19,7 +19,7 @@ namespace Colours
             InitializeComponent();
             if (Properties.Settings.Default.CustomColors?.Count == 16)
             {
-                colorDialog1.CustomColors = Properties.Settings.Default.CustomColors.ToArray();
+                colorDialog.CustomColors = Properties.Settings.Default.CustomColors.ToArray();
             }
             // don't init the app with this func; init with AppState
             // this is just a base ctor
@@ -42,30 +42,30 @@ namespace Colours
         /// <param name="e"></param>
         public void SyncAppViewState(object sender, EventArgs e)
         {
-            comboBox1.SelectedIndex = (int)app.SchemeType;
-            Text = String.Format("{0} for {1}", (string)comboBox1.SelectedItem,
+            schemeBox.SelectedIndex = (int)app.SchemeType;
+            Text = String.Format("{0} for {1}", (string)schemeBox.SelectedItem,
                 app.Color.ToHtml());
 
-            tableLayoutPanel1.Controls.Clear();
-            tableLayoutPanel1.ColumnCount = app.Results.Count;
+            resultsTable.Controls.Clear();
+            resultsTable.ColumnCount = app.Results.Count;
             int i = 0;
             foreach (HsvColor next in app.Results)
             {
-                tableLayoutPanel1.ColumnStyles[i].SizeType = SizeType.Percent;
-                tableLayoutPanel1.ColumnStyles[i].Width = 100 / app.Results.Count;
+                resultsTable.ColumnStyles[i].SizeType = SizeType.Percent;
+                resultsTable.ColumnStyles[i].Width = 100 / app.Results.Count;
                 
                 ColorButton cb = new ColorButton(next);
                 if (app.HsvColor == next)
                     cb.Font = new Font(cb.Font, FontStyle.Bold);
                 cb.Text = String.Format("{0}\r\n{1}",
                     next.ToRgb().ToHtml(), next.ToString());
-                toolTip1.SetToolTip(cb, String.Format("{0}\r\n{1}\r\n{2}",
+                toolTip.SetToolTip(cb, String.Format("{0}\r\n{1}\r\n{2}",
                     next.ToRgb().ToHtml(), next.ToRgb().ToHslString(), next.ToString()));
-                cb.ContextMenuStrip = contextMenuStrip1;
+                cb.ContextMenuStrip = colorContextMenu;
                 cb.Dock = DockStyle.Fill;
                 cb.Click += SchemeColor_Click;
 
-                tableLayoutPanel1.Controls.Add(cb, i++, 0);
+                resultsTable.Controls.Add(cb, i++, 0);
             }
 
             EnableItems();
@@ -84,33 +84,33 @@ namespace Colours
         
         private void SchemeColor_Click(object sender, EventArgs e)
         {
-            colorDialog1.Color = ((ColorButton)sender).Color;
-            if (colorDialog1.ShowDialog(this) == DialogResult.OK)
+            colorDialog.Color = ((ColorButton)sender).Color;
+            if (colorDialog.ShowDialog(this) == DialogResult.OK)
             {
-                app.SetColor(colorDialog1.Color.ToRgbColor(), true);
+                app.SetColor(colorDialog.Color.ToRgbColor(), true);
             }
         }
 
-        private void comboBox1_SelectionChangeCommitted(object sender, EventArgs e)
+        private void schemeBox_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            app.SetSchemeType((SchemeType)comboBox1.SelectedIndex, true);
+            app.SetSchemeType((SchemeType)schemeBox.SelectedIndex, true);
         }
 
         private void copyHexContextToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ColorButton cb = (ColorButton)contextMenuStrip1.SourceControl;
+            ColorButton cb = (ColorButton)colorContextMenu.SourceControl;
             Clipboard.SetText(ColorTranslator.ToHtml(cb.Color));
         }
 
         private void copyHslContextToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ColorButton cb = (ColorButton)contextMenuStrip1.SourceControl;
+            ColorButton cb = (ColorButton)colorContextMenu.SourceControl;
             Clipboard.SetText(cb.Color.ToRgbColor().ToHslString());
         }
 
         private void copyHsvContextToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ColorButton cb = (ColorButton)contextMenuStrip1.SourceControl;
+            ColorButton cb = (ColorButton)colorContextMenu.SourceControl;
             Clipboard.SetText(cb.HsvColor.ToString());
         }
 
@@ -118,7 +118,7 @@ namespace Colours
         {
             // save settings
             Properties.Settings.Default.SchemeType = app.SchemeType;
-            Properties.Settings.Default.CustomColors = new ColorList(colorDialog1.CustomColors);
+            Properties.Settings.Default.CustomColors = new ColorList(colorDialog.CustomColors);
             Properties.Settings.Default.LastColor = app.Color.ToGdiColor();
             Properties.Settings.Default.Save();
         }
