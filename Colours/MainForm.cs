@@ -102,12 +102,6 @@ namespace Colours
             Clipboard.SetText(ColorTranslator.ToHtml(cb.Color));
         }
 
-        private void copyCSSRGBToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ColorButton cb = (ColorButton)contextMenuStrip1.SourceControl;
-            Clipboard.SetText(cb.Color.ToRgbColor().ToRgbString());
-        }
-
         private void copyCSSHSLToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ColorButton cb = (ColorButton)contextMenuStrip1.SourceControl;
@@ -169,11 +163,6 @@ namespace Colours
         private void copyHexToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             Clipboard.SetText(app.Color.ToHtml());
-        }
-
-        private void copyCSSRGBToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            Clipboard.SetText(app.Color.ToRgbString());
         }
 
         private void copyCSSHSLToolStripMenuItem1_Click(object sender, EventArgs e)
