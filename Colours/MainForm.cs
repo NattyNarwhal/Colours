@@ -96,19 +96,19 @@ namespace Colours
             app.SetSchemeType((SchemeType)comboBox1.SelectedIndex, true);
         }
 
-        private void copyHexToolStripMenuItem_Click(object sender, EventArgs e)
+        private void copyHexContextToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ColorButton cb = (ColorButton)contextMenuStrip1.SourceControl;
             Clipboard.SetText(ColorTranslator.ToHtml(cb.Color));
         }
 
-        private void copyCSSHSLToolStripMenuItem_Click(object sender, EventArgs e)
+        private void copyHslContextToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ColorButton cb = (ColorButton)contextMenuStrip1.SourceControl;
             Clipboard.SetText(cb.Color.ToRgbColor().ToHslString());
         }
 
-        private void copyCSSHSVToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void copyHsvContextToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ColorButton cb = (ColorButton)contextMenuStrip1.SourceControl;
             Clipboard.SetText(cb.HsvColor.ToString());
@@ -160,17 +160,17 @@ namespace Colours
             }
         }
 
-        private void copyHexToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void copySubmenuHexToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Clipboard.SetText(app.Color.ToHtml());
         }
 
-        private void copyCSSHSLToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void copySubmenuHslToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Clipboard.SetText(app.Color.ToHslString());
         }
 
-        private void copyCSSHSVToolStripMenuItem_Click(object sender, EventArgs e)
+        private void copySubmenuHsvToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Clipboard.SetText(app.HsvColor.ToString());
         }
