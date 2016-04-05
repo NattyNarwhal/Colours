@@ -59,9 +59,8 @@ namespace Colours
                     cb.Font = new Font(cb.Font, FontStyle.Bold);
                 cb.Text = String.Format("{0}\r\n{1}",
                     next.ToRgb().ToHtml(), next.ToString());
-                toolTip1.SetToolTip(cb, String.Format("{0}\r\n{1}\r\n{2}\r\n{3}",
-                    next.ToRgb().ToHtml(), next.ToRgb().ToRgbString(),
-                    next.ToRgb().ToHslString(), next.ToString()));
+                toolTip1.SetToolTip(cb, String.Format("{0}\r\n{1}\r\n{2}",
+                    next.ToRgb().ToHtml(), next.ToRgb().ToHslString(), next.ToString()));
                 cb.ContextMenuStrip = contextMenuStrip1;
                 cb.Dock = DockStyle.Fill;
                 cb.Click += SchemeColor_Click;
