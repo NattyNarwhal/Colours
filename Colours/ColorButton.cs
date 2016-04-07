@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using GdiColor = System.Drawing.Color;
+
 namespace Colours
 {
     /// <summary>
@@ -13,44 +15,42 @@ namespace Colours
     /// </summary>
     public class ColorButton : Button
     {
-        // TODO: perhaps use BackColor as the backing instead
-        private Color _color;
-        private HsvColor _hsv;
+        private RgbColor _color;
 
-        public Color Color
+        /// <summary>
+        /// Represents the 
+        /// </summary>
+        public RgbColor Color
         {
             get { return _color; }
             set
             {
                 _color = value;
-                BackColor = _color;
-                ForeColor = _color.GetBrightness() > 0.5 ? Color.Black : Color.White;
+                BackColor = _color.ToGdiColor();
+                ForeColor = _color.GetBrightness() > 0.5
+                    ? GdiColor.Black : GdiColor.White;
             }
         }
 
-        /// <summary>
-        /// A tag value for the HSV colour variant. Set this as you do Color.
-        /// </summary>
-        public HsvColor HsvColor {
+        public HsvColor HsvColor
+        {
             get
             {
-                return _hsv;
+                return new HsvColor(Color);
             }
             set
             {
-                _hsv = value;
-                if (value != null)
-                    Color = _hsv.ToRgb().ToGdiColor();
+                Color = value.ToRgb();
             }
         }
 
         public ColorButton() : base()
         {
             FlatStyle = FlatStyle.Popup;
-            Color = SystemColors.ButtonFace;
+            Color = SystemColors.ButtonFace.ToRgbColor();
         }
 
-        public ColorButton(Color c) : this()
+        public ColorButton(RgbColor c) : this()
         {
             Color = c;
         }
@@ -58,11 +58,6 @@ namespace Colours
         public ColorButton(HsvColor c) : this()
         {
             HsvColor = c;
-        }
-
-        public ColorButton(Color c, HsvColor h) : this(c)
-        {
-            HsvColor = h;
         }
     }
 }

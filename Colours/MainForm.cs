@@ -84,7 +84,7 @@ namespace Colours
         
         private void SchemeColor_Click(object sender, EventArgs e)
         {
-            colorDialog.Color = ((ColorButton)sender).Color;
+            colorDialog.Color = ((ColorButton)sender).Color.ToGdiColor();
             if (colorDialog.ShowDialog(this) == DialogResult.OK)
             {
                 app.SetColor(colorDialog.Color.ToRgbColor(), true);
@@ -99,13 +99,13 @@ namespace Colours
         private void copyHexContextToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ColorButton cb = (ColorButton)colorContextMenu.SourceControl;
-            Clipboard.SetText(ColorTranslator.ToHtml(cb.Color));
+            Clipboard.SetText(cb.Color.ToHtml());
         }
 
         private void copyHslContextToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ColorButton cb = (ColorButton)colorContextMenu.SourceControl;
-            Clipboard.SetText(cb.Color.ToRgbColor().ToHslString());
+            Clipboard.SetText(cb.Color.ToHslString());
         }
 
         private void copyHsvContextToolStripMenuItem_Click(object sender, EventArgs e)
