@@ -18,7 +18,7 @@ namespace Colours
         private RgbColor _color;
 
         /// <summary>
-        /// Represents the 
+        /// Represents the color of the ColorButton.
         /// </summary>
         public RgbColor Color
         {
@@ -32,6 +32,9 @@ namespace Colours
             }
         }
 
+        /// <summary>
+        /// Represents the color of the ColorButton, in HSV form.
+        /// </summary>
         public HsvColor HsvColor
         {
             get
