@@ -121,8 +121,8 @@ namespace Colours
 
             float diff = (float)(maxval - minval);
             float rnorm = (maxval - R) / diff;
-            float gnorm = (maxval - R) / diff;
-            float bnorm = (maxval - R) / diff;
+            float gnorm = (maxval - G) / diff;
+            float bnorm = (maxval - B) / diff;
 
             float hue = 0.0f;
             if (R == maxval)
