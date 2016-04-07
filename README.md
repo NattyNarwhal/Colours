@@ -44,7 +44,7 @@ This is a small program to create colour schemes. There's a `System.Windows.Form
  * [ ] I'm not entirely happy with the UI though.
 * [ ] DPI awareness in SWF version: Does this even work?
 * [ ] Colour pallettes - both either readymades and/or custom "bookmark" like ones.
- * [ ] Perhaps parse GIMP or Photoshop pallettes if we do go with this.
+ * [X] Perhaps parse GIMP or Photoshop pallettes if we do go with this.
  * Should favourites be implemented the same way as a pallette? This is flexible, though not as simple to implement UI or code wise.
 * [ ] Rebrand? - Colours is a generic name.
  * [ ] To go with this, maybe an icon.
