@@ -94,8 +94,8 @@ namespace Colours
         /// <returns>A number from 0 to 1.</returns>
         public float GetSaturation()
         {
-            byte minval = (byte)Math.Min(R, Math.Min(G, B));
-            byte maxval = (byte)Math.Max(R, Math.Max(G, B));
+            byte minval = Math.Min(R, Math.Min(G, B));
+            byte maxval = Math.Max(R, Math.Max(G, B));
 
             if (maxval == minval)
                 return 0.0f;
@@ -113,26 +113,23 @@ namespace Colours
         /// <returns>A number from 0-360.</returns>
         public float GetHue()
         {
-            int r = R;
-            int g = G;
-            int b = B;
-            byte minval = (byte)Math.Min(r, Math.Min(g, b));
-            byte maxval = (byte)Math.Max(r, Math.Max(g, b));
+            byte minval = Math.Min(R, Math.Min(G, B));
+            byte maxval = Math.Max(R, Math.Max(G, B));
 
             if (maxval == minval)
                 return 0.0f;
 
             float diff = (float)(maxval - minval);
-            float rnorm = (maxval - r) / diff;
-            float gnorm = (maxval - g) / diff;
-            float bnorm = (maxval - b) / diff;
+            float rnorm = (maxval - R) / diff;
+            float gnorm = (maxval - R) / diff;
+            float bnorm = (maxval - R) / diff;
 
             float hue = 0.0f;
-            if (r == maxval)
+            if (R == maxval)
                 hue = 60.0f * (6.0f + bnorm - gnorm);
-            if (g == maxval)
+            if (G == maxval)
                 hue = 60.0f * (2.0f + rnorm - bnorm);
-            if (b == maxval)
+            if (B == maxval)
                 hue = 60.0f * (4.0f + gnorm - rnorm);
             if (hue > 360.0f)
                 hue = hue - 360.0f;

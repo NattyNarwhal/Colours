@@ -103,11 +103,7 @@ namespace Colours
         /// <param name="e">The event arguments.</param>
         protected virtual void OnResultChanged(EventArgs e)
         {
-            // make temp in case of race condition
-            EventHandler<EventArgs> handler = ResultChanged;
-
-            if (handler != null)
-                handler(this, e);
+            ResultChanged?.Invoke(this, e);
         }
         #endregion
 
