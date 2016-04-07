@@ -13,6 +13,7 @@ namespace Colours
     {
         const string rgbRegex = @"rgb\(\s*(\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3})\s*\)";
         const string hsvRegex = @"hsv\(\s*(\d{1,3}),\s*(\d{1,3})%,\s*(\d{1,3})%\s*\)";
+        const string gdiRegex = @"[RGB]=(\d{0,3})";
 
         /// <summary>
         /// Creates an RGB color from a 3 or 6 hex digit number prefixed with an #.
@@ -54,6 +55,35 @@ namespace Colours
                 if (!m.Success) goto fail;
                 var ints = m.Groups.Cast<Group>().Skip(1)
                     .Select(g => int.Parse(g.Value)).ToList();
+                if (ints.Count() == 3)
+                    return new RgbColor
+                        (ints[0], ints[1], ints[2]);
+            }
+            fail:
+            throw new ArgumentException("The color is invalid.");
+        }
+
+        /// <summary>
+        /// Creates an RGB color from the output of ToString on a
+        /// System.Drawing.Color or <see cref="RgbColor"/>.
+        /// </summary>
+        /// <param name="c">
+        /// The string, such as "Color [A=255, R=210, G=180, B=140]".
+        /// </param>
+        /// <returns>The new color.</returns>
+        /// <exception cref="ArgumentException">
+        /// Thrown if the string could not be parsed.
+        /// </exception>
+        public static RgbColor FromGdiColorString(string c)
+        {
+            if (c.StartsWith("Color [")
+                || c.StartsWith("RgbColor ["))
+            {
+                Match m = Regex.Match(c, gdiRegex);
+                if (!m.Success) goto fail;
+                var ints = m.Groups.Cast<Group>().Skip(1)
+                    .Select(g => int.Parse(g.Value)).ToList();
+                // TODO: should handle out-of-order ones if existant
                 if (ints.Count() == 3)
                     return new RgbColor
                         (ints[0], ints[1], ints[2]);
@@ -114,6 +144,11 @@ namespace Colours
                 else if (colorString.StartsWith("hsv("))
                 {
                     return FromCssHsv(colorString);
+                }
+                else if (colorString.StartsWith("Color [")
+                    || colorString.StartsWith("RgbColor ["))
+                {
+                    return new HsvColor(FromGdiColorString(colorString));
                 }
                 throw new ArgumentException("The string could not be converted.");
             }

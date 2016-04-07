@@ -163,5 +163,14 @@ namespace Colours
         {
             return String.Format("#{0:X2}{1:X2}{2:X2}", R, G, B);
         }
+
+        /// <summary>
+        /// Prints a representation of the color.
+        /// </summary>
+        /// <returns>The color, in a "RgbColor [R=0, G=0, B=0]" format."</returns>
+        public override string ToString()
+        {
+            return String.Format("RgbColor [R={0}, G={1}, B={2}]", R, G, B);
+        }
     }
 }
