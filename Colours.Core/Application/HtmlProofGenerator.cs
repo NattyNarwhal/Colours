@@ -21,7 +21,24 @@ namespace Colours
             + "<td rowspan=\"4\" style=\"width: 1em; background-color: {0}\"><td>{0}</td></tr>"
             + "<tr><td>{1}</td></tr>"
             + "<tr><td>{2}</td></tr></table>";
-        
+
+        /// <summary>
+        /// Creates tables from a color in a palette, including the
+        /// various string-based forms.
+        /// </summary>
+        /// <param name="pc">The color.</param>
+        /// <returns>The HTML tables.</returns>
+        public static string GenerateTable(PaletteColor pc)
+        {
+            return String.Format("<h1>{0}</h1>{1}", pc.Name,
+                String.Format(table,
+                    pc.Color.ToHtml(),
+                    pc.Color.ToHslString(),
+                    new HsvColor(pc.Color).ToString()
+                )
+            );
+        }
+
         /// <summary>
         /// Creates tables from a list of colours, including the
         /// various string-based forms.
