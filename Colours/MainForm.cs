@@ -377,5 +377,13 @@ namespace Colours
             p.Colors.Add(new PaletteColor(cb.Color));
             appPal.SetPalette(p);
         }
+
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var p = appPal.Palette;
+            foreach (ListViewItem i in paletteList.SelectedItems)
+                p.Colors.Remove((PaletteColor)i.Tag);
+            appPal.SetPalette(p);
+        }
     }
 }

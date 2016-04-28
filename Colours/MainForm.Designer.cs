@@ -81,12 +81,15 @@
             this.openPaletteDialog = new System.Windows.Forms.OpenFileDialog();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
             this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.paletteContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.colorContextMenu.SuspendLayout();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.paletteContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // schemeBox
@@ -139,7 +142,7 @@
             this.toolStripMenuItem4,
             this.addToolStripMenuItem});
             this.colorContextMenu.Name = "contextMenuStrip1";
-            this.colorContextMenu.Size = new System.Drawing.Size(153, 120);
+            this.colorContextMenu.Size = new System.Drawing.Size(128, 98);
             // 
             // copyHexContextToolStripMenuItem
             // 
@@ -432,6 +435,7 @@
             this.paletteList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.nameHeader,
             this.colorHeader});
+            this.paletteList.ContextMenuStrip = this.paletteContextMenu;
             this.paletteList.LabelEdit = true;
             this.paletteList.Location = new System.Drawing.Point(12, 3);
             this.paletteList.Name = "paletteList";
@@ -523,14 +527,28 @@
             // toolStripMenuItem4
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(149, 6);
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(124, 6);
             // 
             // addToolStripMenuItem
             // 
             this.addToolStripMenuItem.Name = "addToolStripMenuItem";
-            this.addToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.addToolStripMenuItem.Text = "&Add";
             this.addToolStripMenuItem.Click += new System.EventHandler(this.addToolStripMenuItem_Click);
+            // 
+            // paletteContextMenu
+            // 
+            this.paletteContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.deleteToolStripMenuItem});
+            this.paletteContextMenu.Name = "paletteContextMenu";
+            this.paletteContextMenu.Size = new System.Drawing.Size(153, 48);
+            // 
+            // deleteToolStripMenuItem
+            // 
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.deleteToolStripMenuItem.Text = "&Delete";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -550,6 +568,7 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.paletteContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -608,6 +627,8 @@
         private System.Windows.Forms.OpenFileDialog openPaletteDialog;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem4;
         private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip paletteContextMenu;
+        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
     }
 }
 
