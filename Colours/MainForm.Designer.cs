@@ -78,6 +78,7 @@
             this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.savePaletteDialog = new System.Windows.Forms.SaveFileDialog();
+            this.openPaletteDialog = new System.Windows.Forms.OpenFileDialog();
             this.colorContextMenu.SuspendLayout();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -460,6 +461,7 @@
             this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
             this.openToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
             this.openToolStripMenuItem.Text = "&Open";
+            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
@@ -502,6 +504,12 @@
             this.savePaletteDialog.DefaultExt = "gpl";
             this.savePaletteDialog.Filter = "GIMP Palette|*.gpl|All files|*.*";
             this.savePaletteDialog.Title = "Save";
+            // 
+            // openPaletteDialog
+            // 
+            this.openPaletteDialog.DefaultExt = "gpl";
+            this.openPaletteDialog.Filter = "GIMP Palette|*.gpl|All files|*.*";
+            this.openPaletteDialog.Title = "Open";
             // 
             // MainForm
             // 
@@ -576,6 +584,7 @@
         private System.Windows.Forms.ToolStripMenuItem redoToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
         private System.Windows.Forms.SaveFileDialog savePaletteDialog;
+        private System.Windows.Forms.OpenFileDialog openPaletteDialog;
     }
 }
 

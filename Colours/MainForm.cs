@@ -46,8 +46,6 @@ namespace Colours
         public void SyncAppViewState(object sender, EventArgs e)
         {
             schemeBox.SelectedIndex = (int)app.SchemeType;
-            Text = String.Format("{0} for {1}", (string)schemeBox.SelectedItem,
-                app.Color.ToHtml());
 
             resultsTable.Controls.Clear();
             resultsTable.ColumnCount = app.Results.Count;
@@ -102,6 +100,9 @@ namespace Colours
 
         public void EnableItems()
         {
+            Text = String.Format("{0} ({1} for {2})", appPal.Palette.Name,
+                (string)schemeBox.SelectedItem, app.Color.ToHtml());
+
             undoToolStripMenuItem.Enabled = appPal.CanUndo();
             redoToolStripMenuItem.Enabled = appPal.CanRedo();
             backToolStripMenuItem.Enabled = app.CanUndo();
@@ -296,6 +297,15 @@ namespace Colours
             {
                 appPal.FileName = savePaletteDialog.FileName;
                 SavePalette();
+            }
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (openPaletteDialog.ShowDialog(this) == DialogResult.OK)
+            {
+                var p = new Palette(File.ReadAllLines(openPaletteDialog.FileName));
+                appPal.NewFromPalette(p, openPaletteDialog.FileName);
             }
         }
     }
