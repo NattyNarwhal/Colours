@@ -76,6 +76,16 @@ namespace Colours
         }
 
         /// <summary>
+        /// Creates an empty palette.
+        /// </summary>
+        public Palette()
+        {
+            Colors = new List<PaletteColor>();
+            Name = "Untitled";
+            Columns = 0;
+        }
+
+        /// <summary>
         /// Creates a new color palette from a GIMP palette file.
         /// </summary>
         /// <param name="file">The file itself.</param>

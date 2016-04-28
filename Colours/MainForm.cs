@@ -13,6 +13,7 @@ namespace Colours
     public partial class MainForm : Form
     {
         public AppController app;
+        public AppPaletteController appPal;
 
         public MainForm()
         {
@@ -28,7 +29,9 @@ namespace Colours
         public MainForm(AppState state) : this()
         {
             app = new AppController(state);
+            appPal = new AppPaletteController();
             app.ResultChanged += SyncAppViewState;
+            appPal.PaletteChanged += SyncAppPalState;
             // send an initial event manually, because the event has
             // already been fired when it was initialized,
             // but without our handler
@@ -71,10 +74,36 @@ namespace Colours
             EnableItems();
         }
 
+        public void SyncAppPalState(object sender, EventArgs e)
+        {
+            paletteList.Items.Clear();
+            paletteListImages.Images.Clear();
+            var i = 0;
+            foreach (PaletteColor pc in appPal.Palette.Colors)
+            {
+                var lvi = new ListViewItem(pc.Name);
+                using (var b = new Bitmap(16, 16))
+                {
+                    using (var g = Graphics.FromImage(b))
+                    {
+                        g.FillRectangle(new SolidBrush(pc.Color.ToGdiColor()), 0, 0, 16, 16);
+                        g.DrawRectangle(Pens.Black, 0, 0, 15, 15);
+                    }
+                    paletteListImages.Images.Add(b);
+                }
+                lvi.Tag = pc;
+                lvi.ImageIndex = i++;
+                lvi.SubItems.Add(pc.Color.ToHtml());
+                paletteList.Items.Add(lvi);
+            }
+
+            EnableItems();
+        }
+
         public void EnableItems()
         {
-            undoToolStripMenuItem.Enabled = app.CanUndo();
-            redoToolStripMenuItem.Enabled = app.CanRedo();
+            backToolStripMenuItem.Enabled = app.CanUndo();
+            forwardToolStripMenuItem.Enabled = app.CanRedo();
 
             brightenToolStripMenuItem.Enabled = app.CanBrighten();
             darkenToolStripMenuItem.Enabled = app.CanDarken();
@@ -149,7 +178,7 @@ namespace Colours
             app.Desaturate();
         }
 
-        private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
+        private void pasteAcquireToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try {
                 app.SetColor(ColorUtils.FromString(Clipboard.GetText()), true);
@@ -180,12 +209,12 @@ namespace Colours
             app.SetColor(app.Color.Invert(), true);
         }
 
-        private void undoToolStripMenuItem_Click(object sender, EventArgs e)
+        private void backToolStripMenuItem_Click(object sender, EventArgs e)
         {
             app.Undo();
         }
 
-        private void redoToolStripMenuItem_Click(object sender, EventArgs e)
+        private void forwardToolStripMenuItem_Click(object sender, EventArgs e)
         {
             app.Redo();
         }
@@ -221,6 +250,11 @@ namespace Colours
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new AboutForm().ShowDialog(this);
+        }
+
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            appPal.New();
         }
     }
 }

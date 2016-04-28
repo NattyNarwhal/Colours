@@ -38,6 +38,7 @@
   <ItemGroup>
     <Compile Include="Application\AppArgParser.cs" />
     <Compile Include="Application\AppController.cs" />
+    <Compile Include="Application\AppPaletteController.cs" />
     <Compile Include="Models\ColorUtils.cs" />
     <Compile Include="Models\HsvColor.cs" />
     <Compile Include="Application\HtmlProofGenerator.cs" />
