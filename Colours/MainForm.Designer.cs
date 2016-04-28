@@ -107,7 +107,7 @@
             "Monochromatic"});
             this.schemeBox.Location = new System.Drawing.Point(12, 3);
             this.schemeBox.Name = "schemeBox";
-            this.schemeBox.Size = new System.Drawing.Size(260, 21);
+            this.schemeBox.Size = new System.Drawing.Size(324, 21);
             this.schemeBox.TabIndex = 2;
             this.schemeBox.SelectionChangeCommitted += new System.EventHandler(this.schemeBox_SelectionChangeCommitted);
             // 
@@ -125,7 +125,7 @@
             this.resultsTable.Name = "resultsTable";
             this.resultsTable.RowCount = 1;
             this.resultsTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.resultsTable.Size = new System.Drawing.Size(260, 108);
+            this.resultsTable.Size = new System.Drawing.Size(324, 108);
             this.resultsTable.TabIndex = 3;
             // 
             // colorDialog
@@ -175,7 +175,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(284, 24);
+            this.menuStrip.Size = new System.Drawing.Size(348, 24);
             this.menuStrip.TabIndex = 5;
             this.menuStrip.Text = "menuStrip1";
             // 
@@ -416,7 +416,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.paletteList);
-            this.splitContainer1.Size = new System.Drawing.Size(284, 283);
+            this.splitContainer1.Size = new System.Drawing.Size(348, 283);
             this.splitContainer1.SplitterDistance = 141;
             this.splitContainer1.TabIndex = 6;
             // 
@@ -439,7 +439,7 @@
             this.paletteList.LabelEdit = true;
             this.paletteList.Location = new System.Drawing.Point(12, 3);
             this.paletteList.Name = "paletteList";
-            this.paletteList.Size = new System.Drawing.Size(260, 123);
+            this.paletteList.Size = new System.Drawing.Size(324, 123);
             this.paletteList.SmallImageList = this.paletteListImages;
             this.paletteList.TabIndex = 0;
             this.paletteList.UseCompatibleStateImageBehavior = false;
@@ -541,7 +541,7 @@
             this.paletteContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.deleteToolStripMenuItem});
             this.paletteContextMenu.Name = "paletteContextMenu";
-            this.paletteContextMenu.Size = new System.Drawing.Size(153, 48);
+            this.paletteContextMenu.Size = new System.Drawing.Size(108, 26);
             // 
             // deleteToolStripMenuItem
             // 
@@ -554,7 +554,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 307);
+            this.ClientSize = new System.Drawing.Size(348, 307);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.menuStrip);
             this.MainMenuStrip = this.menuStrip;

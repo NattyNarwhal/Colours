@@ -306,6 +306,7 @@ namespace Colours
             {
                 var p = new Palette(File.ReadAllLines(openPaletteDialog.FileName));
                 appPal.NewFromPalette(p, openPaletteDialog.FileName);
+                savePaletteDialog.FileName = openPaletteDialog.FileName;
             }
         }
 
