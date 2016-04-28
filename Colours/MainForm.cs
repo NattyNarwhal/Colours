@@ -369,5 +369,13 @@ namespace Colours
             }
 
         }
+
+        private void addToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var cb = (ColorButton)colorContextMenu.SourceControl;
+            var p = appPal.Palette;
+            p.Colors.Add(new PaletteColor(cb.Color));
+            appPal.SetPalette(p);
+        }
     }
 }

@@ -79,6 +79,8 @@
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.savePaletteDialog = new System.Windows.Forms.SaveFileDialog();
             this.openPaletteDialog = new System.Windows.Forms.OpenFileDialog();
+            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
+            this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.colorContextMenu.SuspendLayout();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -133,9 +135,11 @@
             this.colorContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.copyHexContextToolStripMenuItem,
             this.copyHslContextToolStripMenuItem,
-            this.copyHsvContextToolStripMenuItem1});
+            this.copyHsvContextToolStripMenuItem1,
+            this.toolStripMenuItem4,
+            this.addToolStripMenuItem});
             this.colorContextMenu.Name = "contextMenuStrip1";
-            this.colorContextMenu.Size = new System.Drawing.Size(128, 70);
+            this.colorContextMenu.Size = new System.Drawing.Size(153, 120);
             // 
             // copyHexContextToolStripMenuItem
             // 
@@ -516,6 +520,18 @@
             this.openPaletteDialog.Filter = "GIMP Palette|*.gpl|All files|*.*";
             this.openPaletteDialog.Title = "Open";
             // 
+            // toolStripMenuItem4
+            // 
+            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(149, 6);
+            // 
+            // addToolStripMenuItem
+            // 
+            this.addToolStripMenuItem.Name = "addToolStripMenuItem";
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.addToolStripMenuItem.Text = "&Add";
+            this.addToolStripMenuItem.Click += new System.EventHandler(this.addToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -590,6 +606,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
         private System.Windows.Forms.SaveFileDialog savePaletteDialog;
         private System.Windows.Forms.OpenFileDialog openPaletteDialog;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem4;
+        private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
     }
 }
 
