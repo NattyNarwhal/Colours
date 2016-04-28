@@ -436,6 +436,11 @@
             this.paletteList.TabIndex = 0;
             this.paletteList.UseCompatibleStateImageBehavior = false;
             this.paletteList.View = System.Windows.Forms.View.Details;
+            this.paletteList.AfterLabelEdit += new System.Windows.Forms.LabelEditEventHandler(this.paletteList_AfterLabelEdit);
+            this.paletteList.ItemActivate += new System.EventHandler(this.paletteList_ItemActivate);
+            this.paletteList.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.paletteList_ItemDrag);
+            this.paletteList.DragDrop += new System.Windows.Forms.DragEventHandler(this.paletteList_DragDrop);
+            this.paletteList.DragEnter += new System.Windows.Forms.DragEventHandler(this.paletteList_DragEnter);
             // 
             // nameHeader
             // 
