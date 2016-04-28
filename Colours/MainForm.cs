@@ -102,6 +102,8 @@ namespace Colours
 
         public void EnableItems()
         {
+            undoToolStripMenuItem.Enabled = appPal.CanUndo();
+            redoToolStripMenuItem.Enabled = appPal.CanRedo();
             backToolStripMenuItem.Enabled = app.CanUndo();
             forwardToolStripMenuItem.Enabled = app.CanRedo();
 
@@ -255,6 +257,46 @@ namespace Colours
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
             appPal.New();
+        }
+
+        private void undoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (appPal.CanUndo())
+                appPal.Undo();
+        }
+
+        private void redoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (appPal.CanRedo())
+                appPal.Redo();
+        }
+
+        public void SavePalette()
+        {
+            File.WriteAllText(appPal.FileName, appPal.Palette.ToString());
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (appPal.FileName == null)
+            {
+                if (savePaletteDialog.ShowDialog(this) == DialogResult.OK)
+                {
+                    appPal.FileName = savePaletteDialog.FileName;
+                    SavePalette();
+                }
+            }
+            else
+                SavePalette();
+        }
+
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (savePaletteDialog.ShowDialog(this) == DialogResult.OK)
+            {
+                appPal.FileName = savePaletteDialog.FileName;
+                SavePalette();
+            }
         }
     }
 }

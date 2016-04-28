@@ -25,6 +25,10 @@ namespace Colours
         /// </summary>
         public Stack<Palette> RedoHistory { get; private set; }
         /// <summary>
+        /// Gets the file name of the loaded file
+        /// </summary>
+        public string FileName { get; set; }
+        /// <summary>
         /// Gets if the file should be saved.
         /// </summary>
         public bool Dirty { get; set; }
@@ -66,6 +70,7 @@ namespace Colours
         {
             Palette = new Palette();
             ResetState();
+            FileName = null;
             Dirty = true;
             OnPaletteChanged(new EventArgs());
         }
@@ -74,9 +79,10 @@ namespace Colours
         /// Creates a new application state with an existing palette.
         /// </summary>
         /// <param name="p"></param>
-        public void NewFromPalette(Palette p)
+        public void NewFromPalette(Palette p, string fileName = null)
         {
             Palette = p;
+            FileName = fileName;
             ResetState();
             Dirty = false;
             OnPaletteChanged(new EventArgs());
