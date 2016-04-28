@@ -373,9 +373,7 @@ namespace Colours
         private void addToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var cb = (ColorButton)colorContextMenu.SourceControl;
-            var p = appPal.Palette;
-            p.Colors.Add(new PaletteColor(cb.Color));
-            appPal.SetPalette(p);
+            appPal.AppendColor(new PaletteColor(cb.Color));
         }
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
@@ -384,6 +382,18 @@ namespace Colours
             foreach (ListViewItem i in paletteList.SelectedItems)
                 p.Colors.Remove((PaletteColor)i.Tag);
             appPal.SetPalette(p);
+        }
+
+        private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                appPal.AppendColor(ColorUtils.FromString(Clipboard.GetText()).ToRgb());
+            }
+            catch (ArgumentException) // these are harmless
+            {
+
+            }
         }
     }
 }

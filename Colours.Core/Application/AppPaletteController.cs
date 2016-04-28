@@ -105,6 +105,25 @@ namespace Colours
         }
 
         /// <summary>
+        /// Adds a color to the palette.
+        /// </summary>
+        /// <param name="c">The color to append.</param>
+        public void AppendColor(RgbColor c)
+        {
+            AppendColor(new PaletteColor(c));
+        }
+
+        /// <summary>
+        /// Adds a color to the palette.
+        /// </summary>
+        /// <param name="pc">The color to append.</param>
+        public void AppendColor(PaletteColor pc)
+        {
+            Palette.Colors.Add(pc);
+            OnPaletteChanged(new EventArgs());
+        }
+
+        /// <summary>
         /// Pushes the current state of the application to the undo stack, and purges the redo stack.
         /// </summary>
         private void PushUndo()
