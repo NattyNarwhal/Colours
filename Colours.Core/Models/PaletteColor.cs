@@ -56,37 +56,18 @@ namespace Colours
         /// </param>
         public PaletteColor(string l)
         {
-            // TODO: use matchRegex
+            var groups = Regex.Match(l, matchRegex).Groups;
 
-            // sometimes, tabs seperate the color from its name
-            if (l.Contains("\t"))
-            {
-                var split = l.Split("\t".ToCharArray());
-                var colorSplit = split[0].Split(" ".ToCharArray(),
-                    StringSplitOptions.RemoveEmptyEntries);
+            if (groups.Count < 4)
+                throw new Exception("The string was invalid.");
 
-                Color = ParseColorStringSplit(colorSplit);
-                Name = split[1];
+            var r = byte.Parse(groups[1].Value);
+            var g = byte.Parse(groups[2].Value);
+            var b = byte.Parse(groups[3].Value);
+            Color = new RgbColor(r, g, b);
 
-            }
-            // then we'll split from spaces
-            else
-            {
-                var split = l.Split(" ".ToCharArray(), 4,
-                    StringSplitOptions.RemoveEmptyEntries);
-                if (split.Length == 4) // we have a name
-                {
-                    Color = ParseColorStringSplit(split.Take(3).ToArray());
-                    Name = split[3];
-                }
-                if (split.Length == 3) // we don't have a name
-                {
-                    Color = ParseColorStringSplit(split.Take(3).ToArray());
-                    Name = "Untitled";
-                }
-                else
-                    throw new Exception("Palette is not in a valid format.");
-            }
+            Name = String.IsNullOrEmpty(groups[5]?.Value) ?
+                "Untitled" : groups[5].Value;
         }
 
         /// <summary>
