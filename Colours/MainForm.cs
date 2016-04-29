@@ -33,7 +33,7 @@ namespace Colours
             appPal = new AppPaletteController();
             if (state.PaletteFileName != null)
             {
-                OpenPalette(state.PaletteFileName);
+                appPal.FileName = state.PaletteFileName;
             }
 
             app.ResultChanged += SyncAppViewState;
@@ -43,6 +43,12 @@ namespace Colours
             // but without our handler
             SyncAppViewState(this, new EventArgs());
             SyncAppPalState(this, new EventArgs());
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            if (appPal.FileName != null)
+                OpenPalette(appPal.FileName);
         }
 
         /// <summary>
