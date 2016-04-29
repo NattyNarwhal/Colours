@@ -387,7 +387,7 @@ namespace Colours
 
         }
 
-        private void addToolStripMenuItem_Click(object sender, EventArgs e)
+        private void addSubmenuToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var cb = (ColorButton)colorContextMenu.SourceControl;
             appPal.AppendColor(new PaletteColor(cb.Color));
@@ -454,6 +454,11 @@ namespace Colours
         {
             CopyPaletteColor();
             DeletePaletteItems();
+        }
+
+        private void addToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            appPal.AppendColor(app.Color);
         }
     }
 }
