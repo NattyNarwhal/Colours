@@ -586,7 +586,7 @@
             // nameHeader
             // 
             this.nameHeader.Text = "Name";
-            this.nameHeader.Width = 100;
+            this.nameHeader.Width = 180;
             // 
             // colorHeader
             // 
