@@ -78,7 +78,8 @@ namespace Colours
         /// <summary>
         /// Creates a new application state with an existing palette.
         /// </summary>
-        /// <param name="p"></param>
+        /// <param name="p">The existing palette to use.</param>
+        /// <param name="fileName">The name of the file.</param>
         public void NewFromPalette(Palette p, string fileName = null)
         {
             Palette = p;
