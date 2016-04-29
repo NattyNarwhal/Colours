@@ -126,6 +126,7 @@ namespace Colours
         {
             if (keepHistory)
                 PushUndo();
+            Palette = Palette.DeepClone();
             Palette.Colors.Add(pc);
             Dirty = true;
             if (fireEvent)

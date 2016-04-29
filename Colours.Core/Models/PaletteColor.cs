@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
 
 namespace Colours
@@ -8,6 +9,7 @@ namespace Colours
     /// <summary>
     /// Represents a color in a color palette.
     /// </summary>
+    [DataContract]
     public class PaletteColor
     {
         // TODO: this seems to have trouble if you don't have a name on the end
@@ -16,10 +18,12 @@ namespace Colours
         /// <summary>
         /// Gets or sets the color itself.
         /// </summary>
+        [DataMember]
         public RgbColor Color { get; set; }
         /// <summary>
         /// Gets or sets the name of the color.
         /// </summary>
+        [DataMember]
         public string Name { get; set; }
 
         /// <summary>

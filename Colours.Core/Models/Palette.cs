@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 
 namespace Colours
 {
     /// <summary>
     /// Represents a color palette, using the GIMP's format as the backend.
     /// </summary>
+    [DataContract]
     public class Palette
     {
         const string magic = "GIMP Palette";
@@ -14,16 +16,19 @@ namespace Colours
         /// <summary>
         /// Gets or sets the name of the palette.
         /// </summary>
+        [DataMember]
         public string Name { get; set; }
         /// <summary>
         /// Gets or sets how many columns will the palette have if it is
         /// being displayed in a grid. If the amount of columns are 0, then
         /// the grid's logic will choose how many columns it wants.
         /// </summary>
+        [DataMember]
         public int Columns { get; set; }
         /// <summary>
         /// Gets or sets a list of colors.
         /// </summary>
+        [DataMember]
         public List<PaletteColor> Colors { get; set; }
 
         /// <summary>
