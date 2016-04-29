@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace Colours
@@ -11,19 +12,23 @@ namespace Colours
     /// it is expected to convert your platform's native color format
     /// (like Gdk.Color, NSColor, etc.) to an RgbColor/HsvColor.
     /// </summary>
+    [DataContract]
     public class RgbColor
     {
         /// <summary>
         /// The red channel of the color. Values from 0-255.
         /// </summary>
+        [DataMember]
         public byte R { get; set; }
         /// <summary>
         /// The green channel of the color. Values from 0-255.
         /// </summary>
+        [DataMember]
         public byte G { get; set; }
         /// <summary>
         /// The blue channel of the color. Values from 0-255.
         /// </summary>
+        [DataMember]
         public byte B { get; set; }
 
         /// <summary>
