@@ -12,6 +12,8 @@ namespace Colours
 {
     public partial class MainForm : Form
     {
+        const string pcClipDataMagic = "ColoursPaletteColor";
+
         public AppController app;
         public AppPaletteController appPal;
 
@@ -184,7 +186,13 @@ namespace Colours
         private void pasteAcquireToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try {
-                app.SetColor(ColorUtils.FromString(Clipboard.GetText()), true);
+                if (Clipboard.ContainsText())
+                    app.SetColor(ColorUtils.FromString(Clipboard.GetText()), true);
+                else if (Clipboard.ContainsData(pcClipDataMagic))
+                {
+                    var pc = (PaletteColor)Clipboard.GetData(pcClipDataMagic);
+                    app.SetColor(pc.Color, true);
+                }
             }
             catch (ArgumentException) // these are harmless
             {
@@ -388,12 +396,38 @@ namespace Colours
         {
             try
             {
-                appPal.AppendColor(ColorUtils.FromString(Clipboard.GetText()).ToRgb());
+                if (Clipboard.ContainsText())
+                    appPal.AppendColor(ColorUtils.FromString(Clipboard.GetText()).ToRgb());
+                else if (Clipboard.ContainsData(pcClipDataMagic))
+                {
+                    var pc = (PaletteColor)Clipboard.GetData(pcClipDataMagic);
+                    appPal.AppendColor(pc);
+                }
             }
             catch (ArgumentException) // these are harmless
             {
 
             }
+        }
+
+        public void CopyPaletteColor()
+        {
+            if (paletteList.SelectedIndices.Count > 0)
+                Clipboard.SetData(pcClipDataMagic,
+                    appPal.Palette.Colors[paletteList.SelectedIndices[0]]);
+        }
+
+        private void copyPCToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CopyPaletteColor();
+        }
+
+        private void cutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CopyPaletteColor();
+            var p = appPal.Palette;
+            p.Colors.Remove(appPal.Palette.Colors[paletteList.SelectedIndices[0]]);
+            appPal.SetPalette(p);
         }
     }
 }
