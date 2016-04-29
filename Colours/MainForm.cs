@@ -308,7 +308,7 @@ namespace Colours
 
         public void OpenPalette(string fileName)
         {
-            appPal.NewFromPalette(new Palette(File.ReadAllLines(fileName)));
+            appPal.NewFromPalette(new Palette(File.ReadAllLines(fileName)), fileName);
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
