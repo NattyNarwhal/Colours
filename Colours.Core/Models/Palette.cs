@@ -30,6 +30,11 @@ namespace Colours
         /// </summary>
         [DataMember]
         public List<PaletteColor> Colors { get; set; }
+        /// <summary>
+        /// Gets or sets comments in a palette.
+        /// </summary>
+        [DataMember]
+        public List<string> Comments { get; set; }
 
         /// <summary>
         /// Creates an empty palette.
@@ -38,6 +43,7 @@ namespace Colours
         {
             Colors = new List<PaletteColor>();
             Name = "Untitled";
+            Comments = new List<string>();
             Columns = 0;
         }
 
@@ -50,8 +56,13 @@ namespace Colours
             Name = p.Name;
             Columns = p.Columns;
             Colors = new List<PaletteColor>();
+            Comments = new List<string>();
+            // simply copying the list doesn't make it deep but a fill
+            // deep copy would make the colors different; not desirable
             foreach (var pc in p.Colors)
                 Colors.Add(pc);
+            foreach (var c in p.Comments)
+                Comments.Add(c);
         }
 
         /// <summary>
@@ -75,7 +86,12 @@ namespace Colours
 
             foreach (string l in file)
             {
-                if (l == magic || l.StartsWith("#")) continue;
+                if (l == magic || l == "#") continue;
+                if (l.StartsWith("# "))
+                {
+                    // TODO: handle comments without space
+                    Comments.Add(l.Remove(0, 2));
+                }
                 else if (l.StartsWith("Columns: "))
                 {
                     int i = 0; // a default
@@ -107,6 +123,19 @@ namespace Colours
             Colors = colors
                         .Select(c => new PaletteColor(c, "Untitled"))
                         .ToList();
+        }
+
+        /// <summary>
+        /// Creates a new color palette from scratch.
+        /// </summary>
+        /// <param name="name">The name of the palette.</param>
+        /// <param name="columns">The amount of columns.</param>
+        /// <param name="comments">The list of comments.</param>
+        /// <param name="colors">The list of colors.</param>
+        public Palette(string name, int columns, IEnumerable<string> comments, IEnumerable<RgbColor> colors)
+            : this(name, columns, colors)
+        {
+            Comments = comments.ToList();
         }
 
         /// <summary>
