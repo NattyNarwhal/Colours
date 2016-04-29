@@ -185,6 +185,17 @@ namespace Colours
                 OnPaletteChanged(new EventArgs());
         }
 
+        public void MoveColor(PaletteColor pc, int newIndex, bool keepHistory = true, bool fireEvent = true)
+        {
+            if (keepHistory)
+                PushUndo();
+            Palette = new Palette(Palette);
+            Palette.Colors.Remove(pc);
+            Palette.Colors.Insert(newIndex, pc);
+            if (fireEvent)
+                OnPaletteChanged(new EventArgs());
+        }
+
         /// <summary>
         /// Pushes the current state of the application to the undo stack, and purges the redo stack.
         /// </summary>

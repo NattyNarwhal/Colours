@@ -348,10 +348,6 @@ namespace Colours
             {
                 e.Effect = DragDropEffects.Move;
             }
-            else if (e.AllowedEffect == DragDropEffects.Copy)
-            {
-                e.Effect = DragDropEffects.Copy;
-            }
         }
 
         private void paletteList_DragDrop(object sender, DragEventArgs e)
@@ -364,25 +360,9 @@ namespace Colours
                 ListViewItem dragToItem = paletteList.GetItemAt(cp.X, cp.Y);
                 int dropIndex = dragToItem.Index;
 
-                var pal = appPal.Palette;
-
-                pal.Colors.Remove((PaletteColor)selected.Tag);
-                pal.Colors.Insert(dropIndex, (PaletteColor)selected.Tag);
-
-                appPal.SetPalette(pal);
+                var pc = (PaletteColor)selected.Tag;
+                appPal.MoveColor(pc, dropIndex);
             }
-            else if (e.Effect == DragDropEffects.Copy
-                && e.Data.GetDataPresent(typeof(Color)))
-            {
-                Color c = (Color)e.Data.GetData(typeof(Color));
-
-                var pal = appPal.Palette;
-
-                pal.Colors.Add(new PaletteColor(c.ToRgbColor()));
-
-                appPal.SetPalette(pal);
-            }
-
         }
 
         private void addSubmenuToolStripMenuItem_Click(object sender, EventArgs e)
