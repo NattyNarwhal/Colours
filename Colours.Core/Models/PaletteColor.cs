@@ -12,8 +12,9 @@ namespace Colours
     [DataContract]
     public class PaletteColor
     {
-        // TODO: this seems to have trouble if you don't have a name on the end
-        const string matchRegex = @"(\d{1,3})\s+(\d{1,3})\s+(\d{1,3})\s+(.*)";
+        // note that this has difficulties without a name on the end,
+        // but only in multiline scenarios
+        const string matchRegex = @"\s*(\d{1,3})\s+(\d{1,3})\s+(\d{1,3})\s*(.*)?";
 
         /// <summary>
         /// Gets or sets the color itself.

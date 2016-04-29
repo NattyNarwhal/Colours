@@ -109,7 +109,7 @@ namespace Colours
                 {
                     Name = Regex.Match(l, nameRegex).Groups[1].Value;
                 }
-                else
+                else if (PaletteColor.IsPaletteColorString(l))
                 {
                     // i guess we'll try to coax some colours out of it
                     Colors.Add(new PaletteColor(l));
