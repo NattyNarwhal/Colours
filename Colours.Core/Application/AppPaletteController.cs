@@ -185,6 +185,13 @@ namespace Colours
                 OnPaletteChanged(new EventArgs());
         }
 
+        /// <summary>
+        /// Moves a color's position.
+        /// </summary>
+        /// <param name="pc">The color to move.</param>
+        /// <param name="newIndex">The new location of the color.</param>
+        /// <param name="keepHistory">If undo should have been added.</param>
+        /// <param name="fireEvent">If the event should fire.</param>
         public void MoveColor(PaletteColor pc, int newIndex, bool keepHistory = true, bool fireEvent = true)
         {
             if (keepHistory)
