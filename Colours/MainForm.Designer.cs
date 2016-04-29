@@ -414,6 +414,7 @@
             | System.Windows.Forms.Keys.Y)));
             this.forwardToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
             this.forwardToolStripMenuItem.Text = "&Forward";
+            this.forwardToolStripMenuItem.Click += new System.EventHandler(this.forwardToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
