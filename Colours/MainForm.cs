@@ -476,5 +476,25 @@ namespace Colours
                 );
             }
         }
+
+        private void propertiesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var pd = new PalettePropertiesForm()
+            {
+                PaletteTitle = appPal.Palette.Name,
+                PaletteColumns = appPal.Palette.Columns,
+                PaletteComments = appPal.Palette.Comments
+            };
+            if (pd.ShowDialog(this) == DialogResult.OK)
+            {
+                var p = new Palette(appPal.Palette)
+                {
+                    Name = pd.PaletteTitle,
+                    Columns = pd.PaletteColumns,
+                    Comments = pd.PaletteComments
+                };
+                appPal.SetPalette(p);
+            }
+        }
     }
 }

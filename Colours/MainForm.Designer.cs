@@ -96,6 +96,8 @@
             this.openPaletteDialog = new System.Windows.Forms.OpenFileDialog();
             this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsHTMLProofToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.propertiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem9 = new System.Windows.Forms.ToolStripSeparator();
             this.colorContextMenu.SuspendLayout();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -212,6 +214,8 @@
             this.saveToolStripMenuItem,
             this.saveAsToolStripMenuItem,
             this.toolStripMenuItem1,
+            this.propertiesToolStripMenuItem,
+            this.toolStripMenuItem9,
             this.saveAsHTMLToolStripMenuItem,
             this.toolStripMenuItem5,
             this.quitToolStripMenuItem});
@@ -670,6 +674,18 @@
             this.saveAsHTMLProofToolStripMenuItem.Text = "&Export to HTML...";
             this.saveAsHTMLProofToolStripMenuItem.Click += new System.EventHandler(this.saveAsHTMLProofToolStripMenuItem_Click);
             // 
+            // propertiesToolStripMenuItem
+            // 
+            this.propertiesToolStripMenuItem.Name = "propertiesToolStripMenuItem";
+            this.propertiesToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.propertiesToolStripMenuItem.Text = "P&roperties";
+            this.propertiesToolStripMenuItem.Click += new System.EventHandler(this.propertiesToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem9
+            // 
+            this.toolStripMenuItem9.Name = "toolStripMenuItem9";
+            this.toolStripMenuItem9.Size = new System.Drawing.Size(226, 6);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -763,6 +779,8 @@
         private System.Windows.Forms.ToolStripMenuItem copyPCSubmenuToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveAsHTMLProofToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem propertiesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem9;
     }
 }
 
