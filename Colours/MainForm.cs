@@ -304,6 +304,7 @@ namespace Colours
         public void SavePalette()
         {
             File.WriteAllText(appPal.FileName, appPal.Palette.ToString());
+            appPal.Dirty = false;
         }
 
         public void OpenPalette(string fileName)
