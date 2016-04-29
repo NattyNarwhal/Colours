@@ -7,10 +7,8 @@ This is a small program to create colour schemes. There's a `System.Windows.Form
 * `Colours.Core` - The shared backend for any frontend.
     * Application objects - classes only really useful for building a frontend.
     	* `AppArgParser.cs` - A primitive getopt-like parser, used to pass parameters for init on platforms that support passing arguments to Main.
-    	* `AppController.cs`
-		    * *AppController* - The application's logic, the "C" in MVC. A frontend will have this.
-    			* Events are fired whenever the result changes. However, for your initializing in your view, initialize the object, hook up the event, and fire your handler manually, as the first event was fired before could handle it.
-		    * *AppState* - Encapsulates the app's state, mostly for undo/redo and init
+    	* `AppController.cs`  - The application's logic, the "C" in MVC. A frontend will have this.
+    		* Events are fired whenever the result changes. However, for your initializing in your view, initialize the object, hook up the event, and fire your handler manually, as the first event was fired before could handle it.
         * `AppPaletteController.cs` - An application controller for the palette management half.
     	* `HtmlProofGenerator.cs` - Makes an HTML page with a colour listing on it.
     		* This has room for improvement - maybe multiple listings? 
@@ -18,6 +16,9 @@ This is a small program to create colour schemes. There's a `System.Windows.Form
 		    * *Schemer* - Generates colour schemes.
 		    * *SchemeType* - An enum to correspond with `Schemer`. Note that applications depend on the ordering of it, at least for now.
     * Model objects - classes that handle the core data types and utility libraries for them. These are usable even if you aren't interested in developing a frontend.
+        * `AppState.cs`
+		    * *AppState* - Encapsulates the app's state, mostly for undo/redo.
+            * *InitialAppState* - AppState, but with extra info for palette file names to initialize a more fully-featured frontend.
 	    * `ColorUtils.cs` - Shared functions useful for converting colours.
 	    * `HsvColor.cs` - Represents a colour in Hue/Saturation/Value forms.
         * `Palette.cs` - Represents a colour palette, using the GIMP format.
@@ -36,6 +37,7 @@ This is a small program to create colour schemes. There's a `System.Windows.Form
     * `EyedropperForm.cs` - Picks colours from off the screen.
     * `GdiWrapper.cs` - Converts to and from GDI+ and Core abstract objects.
 	* `MainForm.cs` - The view itself.
+    * `PalettePropertiesForm.cs` - A form to manipulate the metadata of palettes.
 	* `Program.cs` - Init.
 
 ## Goals
@@ -50,8 +52,8 @@ This is a small program to create colour schemes. There's a `System.Windows.Form
 * [ ] DPI awareness in SWF version: Does this even work?
 * [X] Colour pallettes - both either readymades and/or custom "bookmark" like ones.
  * [X] Perhaps parse GIMP or Photoshop pallettes if we do go with this.
+  * GIMP format is done. Photoshop format would be a weekend project, due to the complexity of the format.
  * Should favourites be implemented the same way as a pallette? This is flexible, though not as simple to implement UI or code wise.
- * [ ] Undo is wacky due to reference vallues.
 * [ ] Rebrand? - Colours is a generic name.
  * [ ] To go with this, maybe an icon.
 * [ ] Icons for actions. There are generic sets, and the GTK version uses stock icons, but SWF could use, say, the VS image library for well-known functions like save. We still need a icons for commands like saturate though.
