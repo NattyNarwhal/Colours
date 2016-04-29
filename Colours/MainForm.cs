@@ -464,5 +464,17 @@ namespace Colours
             if (paletteList.SelectedItems.Count > 0)
                 paletteList.SelectedItems[0].BeginEdit();
         }
+
+        private void saveAsHTMLProofToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (saveAsHtmlDialog.ShowDialog(this) == DialogResult.OK)
+            {
+                File.WriteAllText(saveAsHtmlDialog.FileName,
+                    HtmlProofGenerator.GeneratePage(String.Format("{0} of {1}",
+                        app.SchemeType, app.Color.ToHtml()),
+                        HtmlProofGenerator.GenerateTable(app.Results))
+                );
+            }
+        }
     }
 }
