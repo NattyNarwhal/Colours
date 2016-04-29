@@ -42,6 +42,19 @@ namespace Colours
         }
 
         /// <summary>
+        /// Creates a new palette from an existing one.
+        /// </summary>
+        /// <param name="p">The palette to use.</param>
+        public Palette(Palette p)
+        {
+            Name = p.Name;
+            Columns = p.Columns;
+            Colors = new List<PaletteColor>();
+            foreach (var pc in p.Colors)
+                Colors.Add(pc);
+        }
+
+        /// <summary>
         /// Creates a new color palette from a GIMP palette file.
         /// </summary>
         /// <param name="file">The file itself.</param>

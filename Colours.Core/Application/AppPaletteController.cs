@@ -126,7 +126,7 @@ namespace Colours
         {
             if (keepHistory)
                 PushUndo();
-            Palette = Palette.DeepClone();
+            Palette = new Palette(Palette);
             Palette.Colors.Add(pc);
             Dirty = true;
             if (fireEvent)
@@ -143,7 +143,7 @@ namespace Colours
         {
             if (keepHistory)
                 PushUndo();
-            Palette = Palette.DeepClone();
+            Palette = new Palette(Palette);
             Palette.Colors.Remove(pc);
             Dirty = true;
             if (fireEvent)
