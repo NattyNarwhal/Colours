@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace Colours
 {
@@ -11,6 +10,9 @@ namespace Colours
     /// </summary>
     public class PaletteColor
     {
+        // TODO: this seems to have trouble if you don't have a name on the end
+        const string matchRegex = @"(\d{1,3})\s+(\d{1,3})\s+(\d{1,3})\s+(.*)";
+
         /// <summary>
         /// Gets or sets the color itself.
         /// </summary>
@@ -49,6 +51,8 @@ namespace Colours
         /// </param>
         public PaletteColor(string l)
         {
+            // TODO: use matchRegex
+
             // sometimes, tabs seperate the color from its name
             if (l.Contains("\t"))
             {
@@ -87,6 +91,17 @@ namespace Colours
         public override string ToString()
         {
             return String.Format("{0} {1} {2}\t{3}", Color.R, Color.G, Color.B, Name);
+        }
+
+        /// <summary>
+        /// Gets if a string meets the format requirement to be
+        /// convertable to a PaletteColor.
+        /// </summary>
+        /// <param name="pc">The string to check.</param>
+        /// <returns>If the string can be converted over.</returns>
+        public static bool IsPaletteColorString(string pc)
+        {
+            return Regex.IsMatch(pc, matchRegex);
         }
 
         /// <summary>
