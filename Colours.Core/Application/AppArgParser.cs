@@ -10,7 +10,7 @@ namespace Colours
     {
         private enum ParsingMode
         {
-            Normal, Scheme, Color
+            Normal, Scheme, Color, PaletteFile
         }
 
         /// <summary>
@@ -28,34 +28,45 @@ namespace Colours
         /// The scheme to use if none was found in the arguments. Note that
         /// this can be one you saved in a configuration file, for example.
         /// </param>
+        /// <param name="initialPaletteFile">
+        /// The palette file to use if none was found in the arguments. If
+        /// the frontend doesn't support this, it will be ignored anyways.
+        /// </param>
         /// <returns>The application state the frontend will load.</returns>
-        public static AppState ParseArgs(string[] args, HsvColor defaultColor, SchemeType defaultScheme)
+        public static InitialAppState ParseArgs(string[] args,
+            HsvColor defaultColor, SchemeType defaultScheme, string initialPaletteFile = null)
         {
             HsvColor c = defaultColor;
             SchemeType t = defaultScheme;
+            string p = initialPaletteFile;
 
-            ParsingMode p = ParsingMode.Normal;
+            ParsingMode m = ParsingMode.Normal;
             foreach (string a in args)
             {
-                switch (p)
+                switch (m)
                 {
                     case ParsingMode.Color:
                         c = ColorUtils.FromString(a);
-                        p = ParsingMode.Normal;
+                        m = ParsingMode.Normal;
                         break;
                     case ParsingMode.Scheme:
                         Enum.TryParse(a, out t);
-                        p = ParsingMode.Normal;
+                        m = ParsingMode.Normal;
+                        break;
+                    case ParsingMode.PaletteFile:
+                        p = a;
+                        m = ParsingMode.Normal;
                         break;
                     default:
                         // find flags
-                        if (a == "-t") p = ParsingMode.Scheme;
-                        if (a == "-c") p = ParsingMode.Color;
+                        if (a == "-t") m = ParsingMode.Scheme;
+                        if (a == "-c") m = ParsingMode.Color;
+                        if (a == "-p") m = ParsingMode.PaletteFile;
                         break;
                 }
             }
 
-            return new AppState(c, t);
+            return new InitialAppState(c, t, p);
         }
     }
 }

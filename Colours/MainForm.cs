@@ -27,16 +27,22 @@ namespace Colours
             // this is just a base ctor
         }
 
-        public MainForm(AppState state) : this()
+        public MainForm(InitialAppState state) : this()
         {
             app = new AppController(state);
             appPal = new AppPaletteController();
+            if (state.PaletteFileName != null)
+            {
+                OpenPalette(state.PaletteFileName);
+            }
+
             app.ResultChanged += SyncAppViewState;
             appPal.PaletteChanged += SyncAppPalState;
             // send an initial event manually, because the event has
             // already been fired when it was initialized,
             // but without our handler
             SyncAppViewState(this, new EventArgs());
+            SyncAppPalState(this, new EventArgs());
         }
 
         /// <summary>
@@ -294,6 +300,11 @@ namespace Colours
             File.WriteAllText(appPal.FileName, appPal.Palette.ToString());
         }
 
+        public void OpenPalette(string fileName)
+        {
+            appPal.NewFromPalette(new Palette(File.ReadAllLines(fileName)));
+        }
+
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (appPal.FileName == null)
@@ -321,8 +332,7 @@ namespace Colours
         {
             if (openPaletteDialog.ShowDialog(this) == DialogResult.OK)
             {
-                var p = new Palette(File.ReadAllLines(openPaletteDialog.FileName));
-                appPal.NewFromPalette(p, openPaletteDialog.FileName);
+                OpenPalette(openPaletteDialog.FileName);
                 savePaletteDialog.FileName = openPaletteDialog.FileName;
             }
         }
