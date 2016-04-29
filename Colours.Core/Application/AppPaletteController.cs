@@ -181,6 +181,7 @@ namespace Colours
             Palette = new Palette(Palette);
             Palette.Colors[index] =
                 new PaletteColor(Palette.Colors[index].Color, newName);
+            Dirty = true;
             if (fireEvent)
                 OnPaletteChanged(new EventArgs());
         }
@@ -199,6 +200,7 @@ namespace Colours
             Palette = new Palette(Palette);
             Palette.Colors.Remove(pc);
             Palette.Colors.Insert(newIndex, pc);
+            Dirty = true;
             if (fireEvent)
                 OnPaletteChanged(new EventArgs());
         }

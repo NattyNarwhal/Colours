@@ -101,7 +101,8 @@ namespace Colours
 
         public void EnableItems()
         {
-            Text = String.Format("{0} ({1} for {2})", appPal.Palette.Name,
+            Text = String.Format("{0}{1} ({2} for {3})",
+                appPal.Palette.Name, appPal.Dirty ? "*" : "",
                 (string)schemeBox.SelectedItem, app.Color.ToHtml());
 
             undoToolStripMenuItem.Enabled = appPal.CanUndo();
@@ -437,6 +438,12 @@ namespace Colours
         private void addToolStripMenuItem_Click(object sender, EventArgs e)
         {
             appPal.AppendColor(app.Color);
+        }
+
+        private void renameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (paletteList.SelectedItems.Count > 0)
+                paletteList.SelectedItems[0].BeginEdit();
         }
     }
 }
