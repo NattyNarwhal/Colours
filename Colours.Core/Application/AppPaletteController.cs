@@ -92,8 +92,8 @@ namespace Colours
         /// Sets the color palette, with the following parameters.
         /// </summary>
         /// <param name="p"></param>
-        /// <param name="keepHistory"></param>
-        /// <param name="fireEvent"></param>
+        /// <param name="keepHistory">If undo should have been added.</param>
+        /// <param name="fireEvent">If the event should fire.</param>
         public void SetPalette(Palette p, bool keepHistory = true, bool fireEvent = true)
         {
             if (keepHistory && Palette != p)
@@ -108,19 +108,27 @@ namespace Colours
         /// Adds a color to the palette.
         /// </summary>
         /// <param name="c">The color to append.</param>
-        public void AppendColor(RgbColor c)
+        /// <param name="keepHistory">If undo should have been added.</param>
+        /// <param name="fireEvent">If the event should fire.</param>
+        public void AppendColor(RgbColor c, bool keepHistory = true, bool fireEvent = true)
         {
-            AppendColor(new PaletteColor(c));
+            AppendColor(new PaletteColor(c), keepHistory, fireEvent);
         }
 
         /// <summary>
         /// Adds a color to the palette.
         /// </summary>
         /// <param name="pc">The color to append.</param>
-        public void AppendColor(PaletteColor pc)
+        /// <param name="keepHistory">If undo should have been added.</param>
+        /// <param name="fireEvent">If the event should fire.</param>
+        public void AppendColor(PaletteColor pc, bool keepHistory = true, bool fireEvent = true)
         {
+            if (keepHistory)
+                PushUndo();
             Palette.Colors.Add(pc);
-            OnPaletteChanged(new EventArgs());
+            Dirty = true;
+            if (fireEvent)
+                OnPaletteChanged(new EventArgs());
         }
 
         /// <summary>

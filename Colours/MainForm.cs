@@ -5,6 +5,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -12,8 +13,6 @@ namespace Colours
 {
     public partial class MainForm : Form
     {
-        const string pcClipDataMagic = "ColoursPaletteColor";
-
         public AppController app;
         public AppPaletteController appPal;
 
@@ -187,11 +186,21 @@ namespace Colours
         {
             try {
                 if (Clipboard.ContainsText())
-                    app.SetColor(ColorUtils.FromString(Clipboard.GetText()), true);
-                else if (Clipboard.ContainsData(pcClipDataMagic))
                 {
-                    var pc = (PaletteColor)Clipboard.GetData(pcClipDataMagic);
-                    app.SetColor(pc.Color, true);
+                    var clip = Clipboard.GetText();
+                    if (clip.StartsWith("pc"))
+                    {
+                        foreach (var pc in Regex.Split(clip, Environment.NewLine))
+                        {
+                            if (pc == "pc" || String.IsNullOrWhiteSpace(pc))
+                                continue;
+                            app.SetColor(new PaletteColor(pc).Color, true);
+                            break;
+                        }
+                        SyncAppPalState(this, new EventArgs());
+                    }
+                    else
+                        app.SetColor(ColorUtils.FromString(Clipboard.GetText()), true);
                 }
             }
             catch (ArgumentException) // these are harmless
@@ -402,11 +411,20 @@ namespace Colours
             try
             {
                 if (Clipboard.ContainsText())
-                    appPal.AppendColor(ColorUtils.FromString(Clipboard.GetText()).ToRgb());
-                else if (Clipboard.ContainsData(pcClipDataMagic))
                 {
-                    var pc = (PaletteColor)Clipboard.GetData(pcClipDataMagic);
-                    appPal.AppendColor(pc);
+                    var clip = Clipboard.GetText();
+                    if (clip.StartsWith("pc"))
+                    {
+                        foreach (var pc in Regex.Split(clip, Environment.NewLine))
+                        {
+                            if (pc == "pc" || String.IsNullOrWhiteSpace(pc))
+                                continue;
+                            appPal.AppendColor(new PaletteColor(pc), fireEvent: false);
+                        }
+                        SyncAppPalState(this, new EventArgs());
+                    }
+                    else
+                        appPal.AppendColor(ColorUtils.FromString(clip).ToRgb());
                 }
             }
             catch (ArgumentException) // these are harmless
@@ -417,12 +435,16 @@ namespace Colours
 
         public void CopyPaletteColor()
         {
+            // HACK: ideally, we'd just send a PaletteColor or List of
+            // those, except that won't work. ContainsData(type) says
+            // true, GetData(type) says null.
+            var sb = new StringBuilder("pc" + Environment.NewLine);
             if (paletteList.SelectedIndices.Count > 0)
-                Clipboard.SetData(pcClipDataMagic,
-                    appPal.Palette.Colors[paletteList.SelectedIndices[0]]);
-#if DEBUG
-            System.Diagnostics.Debug.Assert(Clipboard.GetData(pcClipDataMagic) != null);
-#endif
+            {
+                foreach (ListViewItem i in paletteList.SelectedItems)
+                    sb.AppendLine(((PaletteColor)i.Tag).ToString());
+                Clipboard.SetText(sb.ToString());
+            }
         }
 
         private void copyPCToolStripMenuItem_Click(object sender, EventArgs e)
