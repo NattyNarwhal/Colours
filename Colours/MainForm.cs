@@ -334,9 +334,7 @@ namespace Colours
 
         private void paletteList_AfterLabelEdit(object sender, LabelEditEventArgs e)
         {
-            var p = appPal.Palette;
-            p.Colors[e.Item].Name = e.Label;
-            appPal.SetPalette(p);
+            appPal.RenameColor(e.Item, e.Label);
         }
 
         private void paletteList_ItemDrag(object sender, ItemDragEventArgs e)

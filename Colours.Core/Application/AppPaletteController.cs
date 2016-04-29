@@ -168,6 +168,24 @@ namespace Colours
         }
 
         /// <summary>
+        /// Renames a color.
+        /// </summary>
+        /// <param name="index">The location of the color.</param>
+        /// <param name="newName">The new name of the color.</param>
+        /// <param name="keepHistory">If undo should have been added.</param>
+        /// <param name="fireEvent">If the event should fire.</param>
+        public void RenameColor(int index, string newName, bool keepHistory = true, bool fireEvent = true)
+        {
+            if (keepHistory)
+                PushUndo();
+            Palette = new Palette(Palette);
+            Palette.Colors[index] =
+                new PaletteColor(Palette.Colors[index].Color, newName);
+            if (fireEvent)
+                OnPaletteChanged(new EventArgs());
+        }
+
+        /// <summary>
         /// Pushes the current state of the application to the undo stack, and purges the redo stack.
         /// </summary>
         private void PushUndo()
