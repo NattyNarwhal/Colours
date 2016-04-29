@@ -82,7 +82,7 @@ namespace Colours
                 resultsTable.Controls.Add(cb, i++, 0);
             }
 
-            EnableItems();
+            UpdateUI();
         }
 
         public void SyncAppPalState(object sender, EventArgs e)
@@ -108,10 +108,10 @@ namespace Colours
                 paletteList.Items.Add(lvi);
             }
 
-            EnableItems();
+            UpdateUI();
         }
 
-        public void EnableItems()
+        public void UpdateUI()
         {
             Text = String.Format("{0}{1} ({2} for {3})",
                 appPal.Palette.Name, appPal.Dirty ? "*" : "",
@@ -305,6 +305,8 @@ namespace Colours
         {
             File.WriteAllText(appPal.FileName, appPal.Palette.ToString());
             appPal.Dirty = false;
+            // update the titlebar's dirtiness
+            UpdateUI();
         }
 
         public void OpenPalette(string fileName)
