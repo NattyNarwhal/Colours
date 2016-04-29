@@ -90,6 +90,10 @@
             this.openPaletteDialog = new System.Windows.Forms.OpenFileDialog();
             this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripSeparator();
             this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem8 = new System.Windows.Forms.ToolStripSeparator();
+            this.cutSubmenuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyPCSubmenuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.useToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.colorContextMenu.SuspendLayout();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -154,28 +158,28 @@
             // copyHexContextToolStripMenuItem
             // 
             this.copyHexContextToolStripMenuItem.Name = "copyHexContextToolStripMenuItem";
-            this.copyHexContextToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.copyHexContextToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.copyHexContextToolStripMenuItem.Text = "Copy He&x";
             this.copyHexContextToolStripMenuItem.Click += new System.EventHandler(this.copyHexContextToolStripMenuItem_Click);
             // 
             // copyHslContextToolStripMenuItem
             // 
             this.copyHslContextToolStripMenuItem.Name = "copyHslContextToolStripMenuItem";
-            this.copyHslContextToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.copyHslContextToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.copyHslContextToolStripMenuItem.Text = "Copy HS&L";
             this.copyHslContextToolStripMenuItem.Click += new System.EventHandler(this.copyHslContextToolStripMenuItem_Click);
             // 
             // copyHsvContextToolStripMenuItem1
             // 
             this.copyHsvContextToolStripMenuItem1.Name = "copyHsvContextToolStripMenuItem1";
-            this.copyHsvContextToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.copyHsvContextToolStripMenuItem1.Size = new System.Drawing.Size(127, 22);
             this.copyHsvContextToolStripMenuItem1.Text = "Copy HS&V";
             this.copyHsvContextToolStripMenuItem1.Click += new System.EventHandler(this.copyHsvContextToolStripMenuItem_Click);
             // 
             // toolStripMenuItem4
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(149, 6);
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(124, 6);
             // 
             // addSubmenuToolStripMenuItem
             // 
@@ -575,14 +579,18 @@
             // paletteContextMenu
             // 
             this.paletteContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.useToolStripMenuItem,
+            this.toolStripMenuItem8,
+            this.cutSubmenuToolStripMenuItem,
+            this.copyPCSubmenuToolStripMenuItem,
             this.deleteSubmenuToolStripMenuItem});
             this.paletteContextMenu.Name = "paletteContextMenu";
-            this.paletteContextMenu.Size = new System.Drawing.Size(108, 26);
+            this.paletteContextMenu.Size = new System.Drawing.Size(108, 98);
             // 
             // deleteSubmenuToolStripMenuItem
             // 
             this.deleteSubmenuToolStripMenuItem.Name = "deleteSubmenuToolStripMenuItem";
-            this.deleteSubmenuToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.deleteSubmenuToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.deleteSubmenuToolStripMenuItem.Text = "&Delete";
             this.deleteSubmenuToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
@@ -616,6 +624,32 @@
             this.addToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.addToolStripMenuItem.Text = "&Add";
             this.addToolStripMenuItem.Click += new System.EventHandler(this.addToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem8
+            // 
+            this.toolStripMenuItem8.Name = "toolStripMenuItem8";
+            this.toolStripMenuItem8.Size = new System.Drawing.Size(149, 6);
+            // 
+            // cutSubmenuToolStripMenuItem
+            // 
+            this.cutSubmenuToolStripMenuItem.Name = "cutSubmenuToolStripMenuItem";
+            this.cutSubmenuToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.cutSubmenuToolStripMenuItem.Text = "Cu&t";
+            this.cutSubmenuToolStripMenuItem.Click += new System.EventHandler(this.cutToolStripMenuItem_Click);
+            // 
+            // copyPCSubmenuToolStripMenuItem
+            // 
+            this.copyPCSubmenuToolStripMenuItem.Name = "copyPCSubmenuToolStripMenuItem";
+            this.copyPCSubmenuToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.copyPCSubmenuToolStripMenuItem.Text = "&Copy";
+            this.copyPCSubmenuToolStripMenuItem.Click += new System.EventHandler(this.copyPCToolStripMenuItem_Click);
+            // 
+            // useToolStripMenuItem
+            // 
+            this.useToolStripMenuItem.Name = "useToolStripMenuItem";
+            this.useToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.useToolStripMenuItem.Text = "&Use";
+            this.useToolStripMenuItem.Click += new System.EventHandler(this.paletteList_ItemActivate);
             // 
             // MainForm
             // 
@@ -703,6 +737,10 @@
         private System.Windows.Forms.ToolStripMenuItem copyPCToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem7;
         private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem useToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem8;
+        private System.Windows.Forms.ToolStripMenuItem cutSubmenuToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem copyPCSubmenuToolStripMenuItem;
     }
 }
 
