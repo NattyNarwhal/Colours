@@ -58,3 +58,4 @@ This is a small program to create colour schemes. There's a `System.Windows.Form
  * [ ] To go with this, maybe an icon.
 * [ ] Icons for actions. There are generic sets, and the GTK version uses stock icons, but SWF could use, say, the VS image library for well-known functions like save. We still need a icons for commands like saturate though.
 * [ ] A colour wheel would be impressive. Kuler does this.
+* [ ] Picking colors from images would be neat.
