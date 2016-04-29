@@ -42,12 +42,62 @@ namespace Colours
         }
 
         /// <summary>
+        /// Creates a new color for use in a palette.
+        /// </summary>
+        /// <param name="l">
+        /// The color in a text based form, such as "0 0 0[tab]Untitled".
+        /// </param>
+        public PaletteColor(string l)
+        {
+            // sometimes, tabs seperate the color from its name
+            if (l.Contains("\t"))
+            {
+                var split = l.Split("\t".ToCharArray());
+                var colorSplit = split[0].Split(" ".ToCharArray(),
+                    StringSplitOptions.RemoveEmptyEntries);
+
+                Color = ParseColorStringSplit(colorSplit);
+                Name = split[1];
+
+            }
+            // then we'll split from spaces
+            else
+            {
+                var split = l.Split(" ".ToCharArray(), 4,
+                    StringSplitOptions.RemoveEmptyEntries);
+                if (split.Length == 4) // we have a name
+                {
+                    Color = ParseColorStringSplit(split.Take(3).ToArray());
+                    Name = split[3];
+                }
+                if (split.Length == 3) // we don't have a name
+                {
+                    Color = ParseColorStringSplit(split.Take(3).ToArray());
+                    Name = "Untitled";
+                }
+                else
+                    throw new Exception("Palette is not in a valid format.");
+            }
+        }
+
+        /// <summary>
         /// Returns the color in the form it would be in a file.
         /// </summary>
         /// <returns>The color in a "R G B[tab]Name" form.</returns>
         public override string ToString()
         {
-            return String.Format("{0}\t{1}\t{2}\t{3}", Color.R, Color.G, Color.B, Name);
+            return String.Format("{0} {1} {2}\t{3}", Color.R, Color.G, Color.B, Name);
+        }
+
+        /// <summary>
+        /// Turns a string array into a color.
+        /// </summary>
+        /// <param name="channels">The channels of the color, as strings.</param>
+        /// <returns>The color from string array.</returns>
+        protected static RgbColor ParseColorStringSplit(string[] channels)
+        {
+            return new RgbColor(byte.Parse(channels[0]),
+                byte.Parse(channels[1]), byte.Parse(channels[2]));
         }
     }
 
@@ -72,17 +122,6 @@ namespace Colours
         /// Gets or sets a list of colors.
         /// </summary>
         public List<PaletteColor> Colors { get; set; }
-
-        /// <summary>
-        /// Turns a string array into a color.
-        /// </summary>
-        /// <param name="channels">The channels of the color, as strings.</param>
-        /// <returns>The color from string array.</returns>
-        protected static RgbColor ParseColorStringSplit(string[] channels)
-        {
-            return new RgbColor(byte.Parse(channels[0]),
-                byte.Parse(channels[1]), byte.Parse(channels[2]));
-        }
 
         /// <summary>
         /// Creates an empty palette.
@@ -129,33 +168,7 @@ namespace Colours
                 else
                 {
                     // i guess we'll try to coax some colours out of it
-
-                    // sometimes, tabs seperate the color from its name
-                    if (l.Contains("\t"))
-                    {
-                        var split = l.Split("\t".ToCharArray());
-                        var colorSplit = split[0].Split(" ".ToCharArray(),
-                            StringSplitOptions.RemoveEmptyEntries);
-                        Colors.Add(new PaletteColor(
-                            ParseColorStringSplit(colorSplit), split[1]));
-
-                    }
-                    // then we'll split from spaces
-                    else
-                    {
-                        var split = l.Split(" ".ToCharArray(), 4,
-                            StringSplitOptions.RemoveEmptyEntries);
-                        if (split.Length == 4) // we have a name
-                            Colors.Add(new PaletteColor(
-                                ParseColorStringSplit(split.Take(3).ToArray()),
-                                split[3]));
-                        if (split.Length == 3) // we don't have a name
-                            Colors.Add(new PaletteColor(
-                                ParseColorStringSplit(split.Take(3).ToArray()),
-                                "Untitled"));
-                        else
-                            throw new Exception("Palette is not in a valid format.");
-                    }
+                    Colors.Add(new PaletteColor(l));
                 }
             }
         }
