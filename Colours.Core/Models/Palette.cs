@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.Text;
 
 namespace Colours
 {
@@ -83,6 +84,7 @@ namespace Colours
                 throw new Exception("Palette is not in a valid format.");
 
             Colors = new List<PaletteColor>();
+            Comments = new List<string>();
 
             foreach (string l in file)
             {
@@ -144,16 +146,23 @@ namespace Colours
         /// <returns>The contents of the file.</returns>
         public override string ToString()
         {
+            var sb = new StringBuilder();
             // make the header
-            string result = String.Format("{0}{3}Name: {1}{3}Columns: {2}{3}#{3}",
-                magic, Name, Columns, Environment.NewLine);
-            foreach (PaletteColor c in Colors)
-            {
-                result += String.Format("{0}{1}",
-                    c.ToString(), Environment.NewLine);
-            }
+            sb.AppendLine(magic);
+            sb.AppendLine(String.Format("Name: {0}", Name));
+            sb.AppendLine(String.Format("Columns: {0}", Columns));
 
-            return result;
+            if (Comments.Count > 0)
+            {
+                foreach (var c in Comments)
+                    sb.AppendLine(String.Format("# {0}", c));
+            }
+            else sb.AppendLine("#"); // is this needed?
+
+            foreach (PaletteColor c in Colors)
+                sb.AppendLine(c.ToString());
+
+            return sb.ToString();
         }
     }
 }
