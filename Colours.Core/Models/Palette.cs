@@ -40,6 +40,15 @@ namespace Colours
             Color = color;
             Name = "Untitled";
         }
+
+        /// <summary>
+        /// Returns the color in the form it would be in a file.
+        /// </summary>
+        /// <returns>The color in a "R G B[tab]Name" form.</returns>
+        public override string ToString()
+        {
+            return String.Format("{0}\t{1}\t{2}\t{3}", Color.R, Color.G, Color.B, Name);
+        }
     }
 
     /// <summary>
@@ -177,8 +186,8 @@ namespace Colours
                 magic, Name, Columns, Environment.NewLine);
             foreach (PaletteColor c in Colors)
             {
-                result += String.Format("{0} {1} {2}\t{3}{4}",
-                    c.Color.R, c.Color.G, c.Color.B, c.Name, Environment.NewLine);
+                result += String.Format("{0}{1}",
+                    c.ToString(), Environment.NewLine);
             }
 
             return result;
