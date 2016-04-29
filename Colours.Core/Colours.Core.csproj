@@ -43,6 +43,7 @@
     <Compile Include="Models\HsvColor.cs" />
     <Compile Include="Application\HtmlProofGenerator.cs" />
     <Compile Include="Models\Palette.cs" />
+    <Compile Include="Models\PaletteColor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\RgbColor.cs" />
     <Compile Include="Application\Schemer.cs" />
