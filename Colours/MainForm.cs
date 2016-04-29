@@ -384,12 +384,17 @@ namespace Colours
             appPal.AppendColor(new PaletteColor(cb.Color));
         }
 
-        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        public void DeletePaletteItems()
         {
             var p = appPal.Palette;
             foreach (ListViewItem i in paletteList.SelectedItems)
                 p.Colors.Remove((PaletteColor)i.Tag);
             appPal.SetPalette(p);
+        }
+
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DeletePaletteItems();
         }
 
         private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
@@ -415,6 +420,9 @@ namespace Colours
             if (paletteList.SelectedIndices.Count > 0)
                 Clipboard.SetData(pcClipDataMagic,
                     appPal.Palette.Colors[paletteList.SelectedIndices[0]]);
+#if DEBUG
+            System.Diagnostics.Debug.Assert(Clipboard.GetData(pcClipDataMagic) != null);
+#endif
         }
 
         private void copyPCToolStripMenuItem_Click(object sender, EventArgs e)
@@ -425,9 +433,7 @@ namespace Colours
         private void cutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CopyPaletteColor();
-            var p = appPal.Palette;
-            p.Colors.Remove(appPal.Palette.Colors[paletteList.SelectedIndices[0]]);
-            appPal.SetPalette(p);
+            DeletePaletteItems();
         }
     }
 }
