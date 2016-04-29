@@ -395,10 +395,8 @@ namespace Colours
 
         public void DeletePaletteItems()
         {
-            var p = appPal.Palette;
-            foreach (ListViewItem i in paletteList.SelectedItems)
-                p.Colors.Remove((PaletteColor)i.Tag);
-            appPal.SetPalette(p);
+            appPal.DeleteColors(paletteList.SelectedItems
+                .Cast<ListViewItem>().Select(x => (PaletteColor)x.Tag));
         }
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)

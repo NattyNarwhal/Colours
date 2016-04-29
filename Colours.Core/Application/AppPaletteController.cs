@@ -134,6 +134,40 @@ namespace Colours
         }
 
         /// <summary>
+        /// Deletes a color from the palette.
+        /// </summary>
+        /// <param name="pc">The color to remove.</param>
+        /// <param name="keepHistory">If undo should have been added.</param>
+        /// <param name="fireEvent">If the event should fire.</param>
+        public void DeleteColor(PaletteColor pc, bool keepHistory = true, bool fireEvent = true)
+        {
+            if (keepHistory)
+                PushUndo();
+            Palette = Palette.DeepClone();
+            Palette.Colors.Remove(pc);
+            Dirty = true;
+            if (fireEvent)
+                OnPaletteChanged(new EventArgs());
+        }
+
+
+        /// <summary>
+        /// Deletes a number of colors.
+        /// </summary>
+        /// <param name="l"></param>
+        /// <param name="keepHistory">If undo should have been added.</param>
+        /// <param name="fireEvent">If the event should fire.</param>
+        public void DeleteColors(IEnumerable<PaletteColor> l, bool keepHistory = true, bool fireEvent = true)
+        {
+            if (keepHistory)
+                PushUndo();
+            foreach (var pc in l)
+                DeleteColor(pc, false, false);
+            if (fireEvent)
+                OnPaletteChanged(new EventArgs());
+        }
+
+        /// <summary>
         /// Pushes the current state of the application to the undo stack, and purges the redo stack.
         /// </summary>
         private void PushUndo()
