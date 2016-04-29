@@ -375,10 +375,13 @@ namespace Colours
 
                 Point cp = paletteList.PointToClient(new Point(e.X, e.Y));
                 ListViewItem dragToItem = paletteList.GetItemAt(cp.X, cp.Y);
-                int dropIndex = dragToItem.Index;
+                if (dragToItem != null)
+                {
+                    int dropIndex = dragToItem.Index;
 
-                var pc = (PaletteColor)selected.Tag;
-                appPal.MoveColor(pc, dropIndex);
+                    var pc = (PaletteColor)selected.Tag;
+                    appPal.MoveColor(pc, dropIndex);
+                }
             }
         }
 
