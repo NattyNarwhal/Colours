@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace Colours
 {
@@ -69,6 +70,45 @@ namespace Colours
         public static string GeneratePage(string title, string body)
         {
             return String.Format(page, title, body);
+        }
+
+        /// <summary>
+        /// Generates the page the frontend can export from a palette.
+        /// </summary>
+        /// <param name="pal">
+        /// The palette to use as a body.
+        /// </param>
+        /// <returns>The HTML page.</returns>
+        public static string GeneratePage(Palette pal)
+        {
+            var comments = String.Format("<pre>{0}</pre>",
+                String.Join(Environment.NewLine, pal.Comments));
+
+            var tables = new StringBuilder();
+            if (pal.Columns == 0)
+                foreach (var pc in pal.Colors)
+                    tables.Append(GenerateTable(pc));
+            else
+            {
+                var pos = 0;
+                tables.AppendLine("<table>");
+                while (pal.Colors.Count > pos)
+                {
+                    tables.AppendLine("<tr>");
+                    var row = pal.Colors.Skip(pos).Take(pal.Columns);
+                    pos += row.Count();
+                    foreach (var pc in row)
+                    {
+                        tables.AppendLine("<td>");
+                        tables.Append(GenerateTable(pc));
+                        tables.AppendLine("</td>");
+                    }
+                    tables.AppendLine("</tr>");
+                }
+                tables.AppendLine("</table>");
+            }
+
+            return String.Format(page, pal.Name, comments + tables);
         }
     }
 }

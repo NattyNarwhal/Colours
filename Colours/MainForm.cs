@@ -292,10 +292,7 @@ namespace Colours
             if (saveAsHtmlDialog.ShowDialog(this) == DialogResult.OK)
             {
                 File.WriteAllText(saveAsHtmlDialog.FileName,
-                    HtmlProofGenerator.GeneratePage(appPal.Palette.Name,
-                        String.Join("", appPal.Palette.Colors.Select
-                            (x => HtmlProofGenerator.GenerateTable(x)))
-                    )
+                    HtmlProofGenerator.GeneratePage(appPal.Palette)
                 );
             }
         }
