@@ -117,6 +117,10 @@ namespace Colours
                 appPal.Palette.Name, appPal.Dirty ? "*" : "",
                 (string)schemeBox.SelectedItem, app.Color.ToHtml());
 
+            saveToolStripMenuItem.Enabled = appPal.Dirty;
+            saveAsToolStripMenuItem.Enabled = appPal.Dirty;
+            saveAsHTMLToolStripMenuItem.Enabled = appPal.Palette.Colors.Count > 0;
+
             undoToolStripMenuItem.Enabled = appPal.CanUndo();
             redoToolStripMenuItem.Enabled = appPal.CanRedo();
             backToolStripMenuItem.Enabled = app.CanUndo();
