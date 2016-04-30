@@ -66,8 +66,8 @@ namespace Colours
             var b = byte.Parse(groups[3].Value);
             Color = new RgbColor(r, g, b);
 
-            Name = String.IsNullOrEmpty(groups[5]?.Value) ?
-                "Untitled" : groups[5].Value;
+            Name = String.IsNullOrEmpty(groups[4]?.Value) ?
+                "Untitled" : groups[4].Value;
         }
 
         /// <summary>
