@@ -170,7 +170,7 @@ namespace Colours
             {
                 var r = MessageBox.Show(this,
                     "There are unsaved changes to the palette. Do you want to save?",
-                    "Colours", MessageBoxButtons.YesNo, MessageBoxIcon.Question,
+                    "Colours", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question,
                     MessageBoxDefaultButton.Button1);
                 switch (r)
                 {
@@ -375,7 +375,8 @@ namespace Colours
 
         private void paletteList_AfterLabelEdit(object sender, LabelEditEventArgs e)
         {
-            appPal.RenameColor(e.Item, e.Label);
+            if (appPal.Palette.Colors.Count > e.Item)
+                appPal.RenameColor(e.Item, e.Label);
         }
 
         private void paletteList_ItemDrag(object sender, ItemDragEventArgs e)
