@@ -130,6 +130,17 @@ namespace Colours
             darkenToolStripMenuItem.Enabled = app.CanDarken();
             saturateToolStripMenuItem.Enabled = app.CanSaturate();
             desaturateToolStripMenuItem.Enabled = app.CanDesaturate();
+
+            var selected = paletteList.SelectedIndices.Count > 0;
+
+            cutSubmenuToolStripMenuItem.Enabled = selected;
+            cutToolStripMenuItem.Enabled = selected;
+            copyPCSubmenuToolStripMenuItem.Enabled = selected;
+            copyPCToolStripMenuItem.Enabled = selected;
+            deleteSubmenuToolStripMenuItem.Enabled = selected;
+            deleteToolStripMenuItem.Enabled = selected;
+            renameToolStripMenuItem.Enabled = selected;
+            useToolStripMenuItem.Enabled = selected;
         }
         
         private void SchemeColor_Click(object sender, EventArgs e)
@@ -520,6 +531,12 @@ namespace Colours
                 };
                 appPal.SetPalette(p);
             }
+        }
+
+        private void paletteList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // update cut/copy/paste, etc.
+            UpdateUI();
         }
     }
 }

@@ -611,6 +611,7 @@
             this.paletteList.AfterLabelEdit += new System.Windows.Forms.LabelEditEventHandler(this.paletteList_AfterLabelEdit);
             this.paletteList.ItemActivate += new System.EventHandler(this.paletteList_ItemActivate);
             this.paletteList.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.paletteList_ItemDrag);
+            this.paletteList.SelectedIndexChanged += new System.EventHandler(this.paletteList_SelectedIndexChanged);
             this.paletteList.DragDrop += new System.Windows.Forms.DragEventHandler(this.paletteList_DragDrop);
             this.paletteList.DragEnter += new System.Windows.Forms.DragEventHandler(this.paletteList_DragEnter);
             // 
