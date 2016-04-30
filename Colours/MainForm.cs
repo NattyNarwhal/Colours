@@ -162,6 +162,26 @@ namespace Colours
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
+            if (appPal.Dirty)
+            {
+                var r = MessageBox.Show(this,
+                    "There are unsaved changes to the palette. Do you want to save?",
+                    "Colours", MessageBoxButtons.YesNo, MessageBoxIcon.Question,
+                    MessageBoxDefaultButton.Button1);
+                switch (r)
+                {
+                    case DialogResult.Yes:
+                        SavePalette(false);
+                        break;
+                    case DialogResult.Cancel:
+                        e.Cancel = true;
+                        return;
+                    case DialogResult.No:
+                    default:
+                        break;
+                }
+            }
+
             // save settings
             Properties.Settings.Default.SchemeType = app.SchemeType;
             Properties.Settings.Default.CustomColors = new ColorList(colorDialog.CustomColors);
@@ -301,12 +321,22 @@ namespace Colours
                 appPal.Redo();
         }
 
-        public void SavePalette()
+        public bool SavePalette(bool forceDialog)
         {
+            if (forceDialog || appPal.FileName == null)
+            {
+                if (savePaletteDialog.ShowDialog(this) == DialogResult.OK)
+                {
+                    appPal.FileName = savePaletteDialog.FileName;
+                }
+                else return false;
+            }
+
             File.WriteAllText(appPal.FileName, appPal.Palette.ToString());
             appPal.Dirty = false;
             // update the titlebar's dirtiness
             UpdateUI();
+            return true;
         }
 
         public void OpenPalette(string fileName)
@@ -316,25 +346,12 @@ namespace Colours
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (appPal.FileName == null)
-            {
-                if (savePaletteDialog.ShowDialog(this) == DialogResult.OK)
-                {
-                    appPal.FileName = savePaletteDialog.FileName;
-                    SavePalette();
-                }
-            }
-            else
-                SavePalette();
+            SavePalette(false);
         }
 
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (savePaletteDialog.ShowDialog(this) == DialogResult.OK)
-            {
-                appPal.FileName = savePaletteDialog.FileName;
-                SavePalette();
-            }
+            SavePalette(true);
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)

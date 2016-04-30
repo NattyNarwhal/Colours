@@ -71,7 +71,7 @@ namespace Colours
             Palette = new Palette();
             ResetState();
             FileName = null;
-            Dirty = true;
+            Dirty = false;
             OnPaletteChanged(new EventArgs());
         }
 
