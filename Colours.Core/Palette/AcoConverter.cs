@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -186,8 +187,80 @@ namespace Colours
                 }
             }
 
+            // because palettes with names have both v1 and v2, but v2
+            // has names, only export v1 if it has more colours
             return pal1.Colors.Count > pal2.Colors.Count
                 ? pal1 : pal2;
+        }
+
+        static byte[] ToPhotoshopColorV1(PaletteColor pc)
+        {
+            var buf = new byte[colorStructLen];
+
+            // default two bytes are 0, which means RGB color space
+
+            // red channel
+            Array.Copy(GetPartBE(BitConverter.GetBytes(pc.Color.R), 2), 0, buf, 2, 2);
+            // green channel
+            Array.Copy(GetPartBE(BitConverter.GetBytes(pc.Color.G), 2), 0, buf, 4, 2);
+            // blue channel
+            Array.Copy(GetPartBE(BitConverter.GetBytes(pc.Color.B), 2), 0, buf, 6, 2);
+            // no need for fourth channel
+
+            return buf;
+        }
+
+        static byte[] ToPhotoshopColorV2(PaletteColor pc)
+        {
+            var strWithNull = pc.Name + '\0';
+            var asBytes = Encoding.BigEndianUnicode.GetBytes(strWithNull);
+            var lenBytes = GetPartBE(BitConverter.GetBytes(asBytes.Length), 4);
+
+            var buf = new byte[colorStructLen + lenBytes.Length + asBytes.Length];
+            Array.Copy(ToPhotoshopColorV1(pc), buf, colorStructLen);
+            Array.Copy(lenBytes, 0, buf, colorStructLen, lenBytes.Length);
+            Array.Copy(asBytes, 0, buf, colorStructLen + lenBytes.Length, asBytes.Length);
+
+            return buf;
+        }
+
+        /// <summary>
+        /// Creates a Photoshop palette from a <see cref="Palette"/>.
+        /// </summary>
+        /// <param name="p">The palette to convert.</param>
+        /// <returns>The Photoshop palette file.</returns>
+        public static byte[] ToPhotoshopPalette(Palette p)
+        {
+            if (p.Colors.Count > ushort.MaxValue)
+                throw new ArgumentOutOfRangeException("There are too many colors in the palette.");
+
+            using (var s = new MemoryStream())
+            {
+                using (var sw = new BinaryWriter(s))
+                {
+                    // write both v1 and v2 palettes
+                    var countBytes = GetPartBE(BitConverter.GetBytes((ushort)p.Colors.Count), 0);
+
+                    // v1
+                    var v1 = GetPartBE(BitConverter.GetBytes((ushort)1), 0);
+                    sw.Write(v1);
+                    sw.Write(countBytes);
+                    foreach (var pc in p.Colors)
+                        sw.Write(ToPhotoshopColorV1(pc));
+
+                    // v2
+                    var v2 = GetPartBE(BitConverter.GetBytes((ushort)2), 0);
+                    sw.Write(v2);
+                    sw.Write(countBytes);
+                    foreach (var pc in p.Colors)
+                        sw.Write(ToPhotoshopColorV2(pc));
+                }
+                using (var sr = new BinaryReader(s))
+                {
+                    s.Position = 0;
+                    return sr.ReadBytes((int)s.Length);
+                }
+            }
         }
     }
 }
