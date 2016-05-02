@@ -179,7 +179,7 @@ namespace Colours
                             pos += 4;
                             var name = new string(Encoding.BigEndianUnicode.GetChars(file, pos, strLen));
                             pos += strLen;
-                            pal1.Colors.Add(new PaletteColor(c, name));
+                            pal2.Colors.Add(new PaletteColor(c, name));
                         }
                         else state = ParseState.Ending;
                         break;
