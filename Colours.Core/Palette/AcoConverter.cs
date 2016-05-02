@@ -68,6 +68,21 @@ namespace Colours
             return (byte)(s >> 8);
         }
 
+        static ushort ByteToShort(byte b)
+        {
+            return (ushort)(b << 8);
+        }
+
+        static byte[] GetBytesUShortBE(ushort s)
+        {
+            return GetPartBE(BitConverter.GetBytes(s), 2);
+        }
+
+        static byte[] GetBytesInt32BE(int i)
+        {
+            return GetPartBE(BitConverter.GetBytes(i), 4);
+        }
+
         static byte[] GetPartBE(byte[] b, int length, int position = 0)
         {
             return BitConverter.IsLittleEndian ?
@@ -200,11 +215,11 @@ namespace Colours
             // default two bytes are 0, which means RGB color space
 
             // red channel
-            Array.Copy(GetPartBE(BitConverter.GetBytes(pc.Color.R), 2), 0, buf, 2, 2);
+            Array.Copy(GetBytesUShortBE(pc.Color.R), 0, buf, 2, 2);
             // green channel
-            Array.Copy(GetPartBE(BitConverter.GetBytes(pc.Color.G), 2), 0, buf, 4, 2);
+            Array.Copy(GetBytesUShortBE(pc.Color.G), 0, buf, 4, 2);
             // blue channel
-            Array.Copy(GetPartBE(BitConverter.GetBytes(pc.Color.B), 2), 0, buf, 6, 2);
+            Array.Copy(GetBytesUShortBE(pc.Color.B), 0, buf, 6, 2);
             // no need for fourth channel
 
             return buf;
@@ -214,7 +229,7 @@ namespace Colours
         {
             var strWithNull = pc.Name + '\0';
             var asBytes = Encoding.BigEndianUnicode.GetBytes(strWithNull);
-            var lenBytes = GetPartBE(BitConverter.GetBytes(asBytes.Length), 4);
+            var lenBytes = GetBytesInt32BE(strWithNull.Length);
 
             var buf = new byte[colorStructLen + lenBytes.Length + asBytes.Length];
             Array.Copy(ToPhotoshopColorV1(pc), buf, colorStructLen);
@@ -239,17 +254,17 @@ namespace Colours
                 using (var sw = new BinaryWriter(s))
                 {
                     // write both v1 and v2 palettes
-                    var countBytes = GetPartBE(BitConverter.GetBytes((ushort)p.Colors.Count), 2);
+                    var countBytes = GetBytesUShortBE((ushort)p.Colors.Count);
 
                     // v1
-                    var v1 = GetPartBE(BitConverter.GetBytes((ushort)1), 2);
+                    var v1 = GetBytesUShortBE((ushort)1);
                     sw.Write(v1);
                     sw.Write(countBytes);
                     foreach (var pc in p.Colors)
                         sw.Write(ToPhotoshopColorV1(pc));
 
                     // v2
-                    var v2 = GetPartBE(BitConverter.GetBytes((ushort)2), 2);
+                    var v2 = GetBytesUShortBE((ushort)2);
                     sw.Write(v2);
                     sw.Write(countBytes);
                     foreach (var pc in p.Colors)
