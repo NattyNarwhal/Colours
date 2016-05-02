@@ -540,5 +540,22 @@ namespace Colours
             foreach (var c in app.Results)
                 appPal.AppendColor(c.ToRgb());
         }
+
+        private void importPhotoshopSwatchToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (importPhotoshopDialog.ShowDialog(this) == DialogResult.OK)
+                {
+                    var p = AcoConverter.FromPhotoshopPalette(
+                        File.ReadAllBytes(importPhotoshopDialog.FileName));
+                    appPal.NewFromPalette(p);
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("");
+            }
+        }
     }
 }
