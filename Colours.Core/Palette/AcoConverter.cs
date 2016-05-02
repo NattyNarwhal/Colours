@@ -118,7 +118,10 @@ namespace Colours
         /// <returns>The new palette.</returns>
         public static Palette FromPhotoshopPalette(byte[] file)
         {
-            var pal = new Palette();
+            // use two different palettes for v1 and v2 palettes,
+            // and only use the winner
+            var pal1 = new Palette();
+            var pal2 = new Palette();
 
             // Photoshop's smallest column size is 16, and some
             // palettes like Visibone do use the column view.
@@ -155,7 +158,7 @@ namespace Colours
                         if (colorPos++ < count)
                         {
                             var c = FromPhotoshopColorV1(GetColorStruct(file, pos));
-                            pal.Colors.Add(new PaletteColor(c));
+                            pal1.Colors.Add(new PaletteColor(c));
                             pos += colorStructLen;
                         }
                         else state = file.Length > pos ? ParseState.Version : ParseState.Ending;
@@ -169,20 +172,22 @@ namespace Colours
                     case ParseState.Color2:
                         if (colorPos++ < count)
                         {
+                            // TODO: this is pretty ugly
                             var c = FromPhotoshopColorV1(GetColorStruct(file, pos));
                             pos += colorStructLen;
                             int strLen = GetIntBE(file, pos) * 2;
                             pos += 4;
                             var name = new string(Encoding.BigEndianUnicode.GetChars(file, pos, strLen));
                             pos += strLen;
-                            pal.Colors.Add(new PaletteColor(c, name));
+                            pal1.Colors.Add(new PaletteColor(c, name));
                         }
                         else state = ParseState.Ending;
                         break;
                 }
             }
 
-            return pal;
+            return pal1.Colors.Count > pal2.Colors.Count
+                ? pal1 : pal2;
         }
     }
 }
