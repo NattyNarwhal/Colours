@@ -70,7 +70,8 @@ namespace Colours
 
         static ushort ByteToShort(byte b)
         {
-            return (ushort)(b << 8);
+            // Adobe software wants it doubled, not shifted
+            return (ushort)(b * 0x101);
         }
 
         static byte[] GetBytesUShortBE(ushort s)
