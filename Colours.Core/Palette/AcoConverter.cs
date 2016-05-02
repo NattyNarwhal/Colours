@@ -136,9 +136,9 @@ namespace Colours
                             pos += colorStructLen;
                             int strLen = GetIntBE(file, pos) * 2;
                             pos += 4;
-                            c.Name = new string(Encoding.BigEndianUnicode.GetChars(file, pos, strLen));
+                            var name = new string(Encoding.BigEndianUnicode.GetChars(file, pos, strLen));
                             pos += strLen;
-                            pal.Colors.Add(c);
+                            pal.Colors.Add(new PaletteColor(c, name));
                         }
                         else state = ParseState.Ending;
                         break;
