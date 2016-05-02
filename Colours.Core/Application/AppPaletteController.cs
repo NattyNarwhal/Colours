@@ -68,11 +68,7 @@ namespace Colours
         /// </summary>
         public void New()
         {
-            Palette = new Palette();
-            ResetState();
-            FileName = null;
-            Dirty = false;
-            OnPaletteChanged(new EventArgs());
+            NewFromPalette(new Palette());
         }
 
         /// <summary>
