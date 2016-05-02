@@ -89,7 +89,7 @@ namespace Colours
         {
             return BitConverter.ToInt16(GetPartBE(b, 4, position), 0);
         }
-        
+
         static byte[] GetColorStruct(byte[] full, int position)
         {
             return full.Skip(position).Take(colorStructLen).ToArray();
@@ -239,26 +239,27 @@ namespace Colours
                 using (var sw = new BinaryWriter(s))
                 {
                     // write both v1 and v2 palettes
-                    var countBytes = GetPartBE(BitConverter.GetBytes((ushort)p.Colors.Count), 0);
+                    var countBytes = GetPartBE(BitConverter.GetBytes((ushort)p.Colors.Count), 2);
 
                     // v1
-                    var v1 = GetPartBE(BitConverter.GetBytes((ushort)1), 0);
+                    var v1 = GetPartBE(BitConverter.GetBytes((ushort)1), 2);
                     sw.Write(v1);
                     sw.Write(countBytes);
                     foreach (var pc in p.Colors)
                         sw.Write(ToPhotoshopColorV1(pc));
 
                     // v2
-                    var v2 = GetPartBE(BitConverter.GetBytes((ushort)2), 0);
+                    var v2 = GetPartBE(BitConverter.GetBytes((ushort)2), 2);
                     sw.Write(v2);
                     sw.Write(countBytes);
                     foreach (var pc in p.Colors)
                         sw.Write(ToPhotoshopColorV2(pc));
-                }
-                using (var sr = new BinaryReader(s))
-                {
+                    
                     s.Position = 0;
-                    return sr.ReadBytes((int)s.Length);
+                    using (var sr = new BinaryReader(s))
+                    {
+                        return sr.ReadBytes((int)s.Length);
+                    }
                 }
             }
         }

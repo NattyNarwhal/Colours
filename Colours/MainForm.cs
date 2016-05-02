@@ -552,9 +552,27 @@ namespace Colours
                     appPal.NewFromPalette(p);
                 }
             }
-            catch (Exception)
+            catch (EncoderFallbackException)
             {
-                MessageBox.Show("");
+                MessageBox.Show(this, "The Photoshop palette could not be converted.",
+                    "Colours", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void exportPhotoshopSwatchToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (exportPhotoshopDialog.ShowDialog(this) == DialogResult.OK)
+                {
+                    File.WriteAllBytes(exportPhotoshopDialog.FileName,
+                        AcoConverter.ToPhotoshopPalette(appPal.Palette));
+                }
+            }
+            catch (EncoderFallbackException)
+            {
+                MessageBox.Show(this, "The Photoshop palette could not be converted.",
+                    "Colours", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

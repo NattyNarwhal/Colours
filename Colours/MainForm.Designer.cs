@@ -102,6 +102,9 @@
             this.saveAsHTMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importPhotoshopSwatchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importPhotoshopDialog = new System.Windows.Forms.OpenFileDialog();
+            this.exportPhotoshopDialog = new System.Windows.Forms.SaveFileDialog();
+            this.toolStripMenuItem10 = new System.Windows.Forms.ToolStripSeparator();
+            this.exportPhotoshopSwatchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.colorContextMenu.SuspendLayout();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -696,6 +699,8 @@
             // 
             this.importExportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.importPhotoshopSwatchToolStripMenuItem,
+            this.toolStripMenuItem10,
+            this.exportPhotoshopSwatchToolStripMenuItem,
             this.saveAsHTMLToolStripMenuItem});
             this.importExportToolStripMenuItem.Name = "importExportToolStripMenuItem";
             this.importExportToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
@@ -707,7 +712,7 @@
             this.saveAsHTMLToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.S)));
             this.saveAsHTMLToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
-            this.saveAsHTMLToolStripMenuItem.Text = "&Export to HTML...";
+            this.saveAsHTMLToolStripMenuItem.Text = "Export to &HTML...";
             this.saveAsHTMLToolStripMenuItem.Click += new System.EventHandler(this.saveAsHTMLToolStripMenuItem_Click);
             // 
             // importPhotoshopSwatchToolStripMenuItem
@@ -721,6 +726,23 @@
             // 
             this.importPhotoshopDialog.DefaultExt = "aco";
             this.importPhotoshopDialog.Filter = "Photoshop Swatches|*.aco|All files|*.*";
+            // 
+            // exportPhotoshopDialog
+            // 
+            this.exportPhotoshopDialog.DefaultExt = "aco";
+            this.exportPhotoshopDialog.Filter = "Photoshop Swatches|*.aco|All files|*.*";
+            // 
+            // toolStripMenuItem10
+            // 
+            this.toolStripMenuItem10.Name = "toolStripMenuItem10";
+            this.toolStripMenuItem10.Size = new System.Drawing.Size(235, 6);
+            // 
+            // exportPhotoshopSwatchToolStripMenuItem
+            // 
+            this.exportPhotoshopSwatchToolStripMenuItem.Name = "exportPhotoshopSwatchToolStripMenuItem";
+            this.exportPhotoshopSwatchToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
+            this.exportPhotoshopSwatchToolStripMenuItem.Text = "Export Photo&shop Swatch...";
+            this.exportPhotoshopSwatchToolStripMenuItem.Click += new System.EventHandler(this.exportPhotoshopSwatchToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -821,6 +843,9 @@
         private System.Windows.Forms.ToolStripMenuItem importPhotoshopSwatchToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveAsHTMLToolStripMenuItem;
         private System.Windows.Forms.OpenFileDialog importPhotoshopDialog;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem10;
+        private System.Windows.Forms.ToolStripMenuItem exportPhotoshopSwatchToolStripMenuItem;
+        private System.Windows.Forms.SaveFileDialog exportPhotoshopDialog;
     }
 }
 
