@@ -215,11 +215,11 @@ namespace Colours
             // default two bytes are 0, which means RGB color space
 
             // red channel
-            Array.Copy(GetBytesUShortBE(pc.Color.R), 0, buf, 2, 2);
+            Array.Copy(GetBytesUShortBE(ByteToShort(pc.Color.R)), 0, buf, 2, 2);
             // green channel
-            Array.Copy(GetBytesUShortBE(pc.Color.G), 0, buf, 4, 2);
+            Array.Copy(GetBytesUShortBE(ByteToShort(pc.Color.G)), 0, buf, 4, 2);
             // blue channel
-            Array.Copy(GetBytesUShortBE(pc.Color.B), 0, buf, 6, 2);
+            Array.Copy(GetBytesUShortBE(ByteToShort(pc.Color.B)), 0, buf, 6, 2);
             // no need for fourth channel
 
             return buf;
