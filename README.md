@@ -21,9 +21,11 @@ This is a small program to create colour schemes. There's a `System.Windows.Form
             * *InitialAppState* - AppState, but with extra info for palette file names to initialize a more fully-featured frontend.
 	    * `ColorUtils.cs` - Shared functions useful for converting colours.
 	    * `HsvColor.cs` - Represents a colour in Hue/Saturation/Value forms.
+        * `RgbColor.cs` - Represents a colour in Red/Green/Blue forms. This object intended for wrapping into your framework's native color type.
+    * Palette objects - classes that handle palettes and conversions between palette formats.
+        * `AcoConverter.cs` - Converts to and from Photoshop color swatches and Palette objects.
         * `Palette.cs` - Represents a colour palette, using the GIMP format.
         * `PaletteColor.cs` - Represents a colour in a palette.
-        * `RgbColor.cs` - Represents a colour in Red/Green/Blue forms. This object intended for wrapping into your framework's native color type.
 * `Colours.Gtk` - A Unix/Linux frontend using GTK#.
 	* `ConfigParser.cs` - Parses a config file. Extremely basic.
 	* `GdkWrapper.cs` - Converts to and from GDK and Core abstract objects.
