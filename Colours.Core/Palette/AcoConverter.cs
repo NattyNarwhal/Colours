@@ -136,8 +136,8 @@ namespace Colours
         {
             // use two different palettes for v1 and v2 palettes,
             // and only use the winner
-            var pal1 = new Palette();
-            var pal2 = new Palette();
+            var pal1 = new Palette() { Name = "Imported from Photoshop" };
+            var pal2 = new Palette() { Name = "Imported from Photoshop" };
 
             // Photoshop's smallest column size is 16, and some
             // palettes like Visibone do use the column view.
