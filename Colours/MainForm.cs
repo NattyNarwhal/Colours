@@ -534,5 +534,11 @@ namespace Colours
             // update cut/copy/paste, etc.
             UpdateUI();
         }
+
+        private void addAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (var c in app.Results)
+                appPal.AppendColor(c.ToRgb());
+        }
     }
 }
