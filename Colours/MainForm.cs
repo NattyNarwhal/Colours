@@ -117,8 +117,12 @@ namespace Colours
                 appPal.Palette.Name, appPal.Dirty ? "*" : "",
                 (string)schemeBox.SelectedItem, app.Color.ToHtml());
 
+            var hasAny = appPal.Palette.Colors.Count > 0;
+            var selected = paletteList.SelectedIndices.Count > 0;
+
             saveToolStripMenuItem.Enabled = appPal.Dirty;
-            saveAsHTMLToolStripMenuItem.Enabled = appPal.Palette.Colors.Count > 0;
+            saveAsHTMLToolStripMenuItem.Enabled = hasAny;
+            exportPhotoshopSwatchToolStripMenuItem.Enabled = hasAny;
 
             undoToolStripMenuItem.Enabled = appPal.CanUndo();
             redoToolStripMenuItem.Enabled = appPal.CanRedo();
@@ -129,8 +133,6 @@ namespace Colours
             darkenToolStripMenuItem.Enabled = app.CanDarken();
             saturateToolStripMenuItem.Enabled = app.CanSaturate();
             desaturateToolStripMenuItem.Enabled = app.CanDesaturate();
-
-            var selected = paletteList.SelectedIndices.Count > 0;
 
             cutSubmenuToolStripMenuItem.Enabled = selected;
             cutToolStripMenuItem.Enabled = selected;

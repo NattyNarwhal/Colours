@@ -726,11 +726,13 @@
             // 
             this.importPhotoshopDialog.DefaultExt = "aco";
             this.importPhotoshopDialog.Filter = "Photoshop Swatches|*.aco|All files|*.*";
+            this.importPhotoshopDialog.Title = "Import from Photoshop";
             // 
             // exportPhotoshopDialog
             // 
             this.exportPhotoshopDialog.DefaultExt = "aco";
             this.exportPhotoshopDialog.Filter = "Photoshop Swatches|*.aco|All files|*.*";
+            this.exportPhotoshopDialog.Title = "Export to Photoshop";
             // 
             // toolStripMenuItem10
             // 
