@@ -44,6 +44,7 @@
     <Compile Include="Models\ColorUtils.cs" />
     <Compile Include="Models\HsvColor.cs" />
     <Compile Include="Application\HtmlProofGenerator.cs" />
+    <Compile Include="Palette\AcoConverter.cs" />
     <Compile Include="Palette\Palette.cs" />
     <Compile Include="Palette\PaletteColor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
