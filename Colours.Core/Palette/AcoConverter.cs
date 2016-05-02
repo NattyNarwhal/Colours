@@ -23,22 +23,37 @@ namespace Colours
             /// <summary>
             /// Represents a color in the Red/Green/Blue space.
             /// </summary>
+            /// <remarks>
+            /// Uses 3 channels.
+            /// </remarks>
             Rgb = 0,
             /// <summary>
             /// Represents a color in the Hue/Saturation/Value space.
             /// </summary>
+            /// <remarks>
+            /// Uses 4 channels.
+            /// </remarks>
             Hsv = 1,
             /// <summary>
             /// Represents a color in the Cyan/Yellow/Magenta space.
             /// </summary>
+            /// <remarks>
+            /// Uses 4 channels.
+            /// </remarks>
             Cmyk = 2,
             /// <summary>
             /// Represents a color in the Lightness/A Chroma/B Chroma space.
             /// </summary>
+            /// <remarks>
+            /// Uses 3 channels.
+            /// </remarks>
             Lab = 7,
             /// <summary>
             /// Represents a greyscale color.
             /// </summary>
+            /// <remarks>
+            /// Uses 1 channel.
+            /// </remarks>
             Grey = 8,
         }
 
@@ -72,6 +87,28 @@ namespace Colours
         static int GetIntBE(byte[] b, int position = 0)
         {
             return BitConverter.ToInt16(GetPartBE(b, 4, position), 0);
+        }
+        
+        static byte[] GetColorStruct(byte[] full, int position)
+        {
+            return full.Skip(position).Take(colorStructLen).ToArray();
+        }
+
+        // TODO: use an actual struct?
+        static RgbColor FromPhotoshopColorV1(byte[] color)
+        {
+            var space = (ColorSpace)GetUShortBE(color);
+            switch (space)
+            {
+                case ColorSpace.Rgb:
+                    return new RgbColor(
+                            ShortToByte(GetUShortBE(color, 2)),
+                            ShortToByte(GetUShortBE(color, 4)),
+                            ShortToByte(GetUShortBE(color, 6))
+                        );
+                default:
+                    throw new NotImplementedException("The colourspace is unsupported.");
+            }
         }
 
         /// <summary>
@@ -117,7 +154,7 @@ namespace Colours
                     case ParseState.Color1:
                         if (colorPos++ < count)
                         {
-                            var c = FromPhotoshopColorV1(file.Skip(pos).Take(10).ToArray());
+                            var c = FromPhotoshopColorV1(GetColorStruct(file, pos));
                             pal.Colors.Add(new PaletteColor(c));
                             pos += colorStructLen;
                         }
@@ -132,7 +169,7 @@ namespace Colours
                     case ParseState.Color2:
                         if (colorPos++ < count)
                         {
-                            var c = FromPhotoshopColorV1(file.Skip(pos).Take(10).ToArray());
+                            var c = FromPhotoshopColorV1(GetColorStruct(file, pos));
                             pos += colorStructLen;
                             int strLen = GetIntBE(file, pos) * 2;
                             pos += 4;
@@ -146,22 +183,6 @@ namespace Colours
             }
 
             return pal;
-        }
-
-        static RgbColor FromPhotoshopColorV1(byte[] color)
-        {
-            var space = (ColorSpace)GetUShortBE(color);
-            switch (space)
-            {
-                case ColorSpace.Rgb:
-                    return new RgbColor(
-                            ShortToByte(GetUShortBE(color, 2)),
-                            ShortToByte(GetUShortBE(color, 4)),
-                            ShortToByte(GetUShortBE(color, 6))
-                        );
-                default:
-                    throw new NotImplementedException("The colourspace is unsupported.");
-            }
         }
     }
 }
