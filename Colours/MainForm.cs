@@ -176,26 +176,35 @@ namespace Colours
             Clipboard.SetText(cb.HsvColor.ToString());
         }
 
+        /// <summary>
+        /// Gives a prompt with options on how to proceed regarding
+        /// unsaved changes.
+        /// </summary>
+        /// <returns>If the user has canceled the actions.</returns>
+        public bool UnsavedPrompt()
+        {
+            var r = MessageBox.Show(this,
+                    "There are unsaved changes to the palette. Do you want to save?",
+                    "Colours", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question,
+                    MessageBoxDefaultButton.Button1);
+            switch (r)
+            {
+                case DialogResult.Yes:
+                    SavePalette(false);
+                    return false;
+                case DialogResult.Cancel:
+                    return true;
+                case DialogResult.No:
+                default:
+                    return false;
+            }
+        }
+
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (appPal.Dirty)
             {
-                var r = MessageBox.Show(this,
-                    "There are unsaved changes to the palette. Do you want to save?",
-                    "Colours", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question,
-                    MessageBoxDefaultButton.Button1);
-                switch (r)
-                {
-                    case DialogResult.Yes:
-                        SavePalette(false);
-                        break;
-                    case DialogResult.Cancel:
-                        e.Cancel = true;
-                        return;
-                    case DialogResult.No:
-                    default:
-                        break;
-                }
+                e.Cancel = UnsavedPrompt();
             }
 
             // save settings
@@ -359,16 +368,22 @@ namespace Colours
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (appPal.Dirty)
+                if (UnsavedPrompt()) return;
             SavePalette(false);
         }
 
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (appPal.Dirty)
+                if (UnsavedPrompt()) return;
             SavePalette(true);
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (appPal.Dirty)
+                if (UnsavedPrompt()) return;
             if (openPaletteDialog.ShowDialog(this) == DialogResult.OK)
             {
                 OpenPalette(openPaletteDialog.FileName);
