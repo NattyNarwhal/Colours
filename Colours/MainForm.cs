@@ -569,7 +569,12 @@ namespace Colours
                     appPal.NewFromPalette(p);
                 }
             }
-            catch (EncoderFallbackException)
+            catch (NotImplementedException)
+            {
+                MessageBox.Show(this, "The Photoshop palette has an unsupported colourspace..",
+                    "Colours", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception)
             {
                 MessageBox.Show(this, "The Photoshop palette could not be converted.",
                     "Colours", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -586,7 +591,7 @@ namespace Colours
                         AcoConverter.ToPhotoshopPalette(appPal.Palette));
                 }
             }
-            catch (EncoderFallbackException)
+            catch (Exception)
             {
                 MessageBox.Show(this, "The Photoshop palette could not be converted.",
                     "Colours", MessageBoxButtons.OK, MessageBoxIcon.Error);
