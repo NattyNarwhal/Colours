@@ -1,6 +1,19 @@
 # Colours
 
-This is a small program to create colour schemes. There's a `System.Windows.Forms` version as well as a GTK version, intended for Linux/BSD systems. The backend is portable to create a frontend on any .NET platform.
+This is a small program to create colour schemes and palette. There's a `System.Windows.Forms` version as well as a GTK version, intended for Linux/BSD systems. The backend is portable to create a frontend on any .NET platform.
+
+## Features
+
+* Simple UI
+* Cleanish-MVC design allowing for creating new interfaces, easily
+    * Windows frontend
+    * GTK frontend
+        * Unfortunately, out of parity. Needs UI work to add palette support.
+    * And any other UI framework supporting C#
+* Easily create colour schemes
+    * Variety of algorithms, easy to extend for adding more
+* Organize colours into palettes
+    * Natively operates on [GIMP](http://gimp.org) palettes, imports/exports Photoshop palettes
 
 ## Structure
 
@@ -9,6 +22,7 @@ This is a small program to create colour schemes. There's a `System.Windows.Form
     	* `AppArgParser.cs` - A primitive getopt-like parser, used to pass parameters for init on platforms that support passing arguments to Main.
     	* `AppController.cs`  - The application's logic, the "C" in MVC. A frontend will have this.
     		* Events are fired whenever the result changes. However, for your initializing in your view, initialize the object, hook up the event, and fire your handler manually, as the first event was fired before could handle it.
+            * You'll also need to modify `GetSchemeResults` if you do need to add a scheme type.
         * `AppPaletteController.cs` - An application controller for the palette management half.
     	* `HtmlProofGenerator.cs` - Makes an HTML page with a colour listing on it.
     		* This has room for improvement - maybe multiple listings? 
@@ -42,6 +56,14 @@ This is a small program to create colour schemes. There's a `System.Windows.Form
     * `PalettePropertiesForm.cs` - A form to manipulate the metadata of palettes.
 	* `Program.cs` - Init.
 
+## Similar programs
+
+I won't deny inspiration ;)
+
+* [Gpick](https://github.com/thezbyg/gpick) - Does a lot of things, including palette management and scheme generation, (with a greater variety of options, and a wheel to see where they fit) but also previews of colours in sample usage, importing from images, and various ways to blend colours into new ones. Has a clumsy interface though. Written in C++ and Lua, GTK only.
+* [Color Wheel Pro](http://www.color-wheel-pro.com/) - The inspiration for Agave. Multiple types of wheel options, preview templates, and Photoshop palette conversion. Seemingly unmaintained and proprietary.
+* [Agave](http://home.gna.org/colorscheme/) - My main inspiration. Basic, but with a nice UI. Seemingly unmaintained? Written in C++, GTK only.
+
 ## Goals
 
 * [ ] Android/iOS/UWP ports: The Core library has been converted to a PCL. This means you need to wrap RgbColor to your framework's native color type like `NSColor`, `System.Drawing.Color`, `Gdk.Color`, etc.
@@ -53,8 +75,6 @@ This is a small program to create colour schemes. There's a `System.Windows.Form
  * [ ] I'm not entirely happy with the UI though.
 * [ ] DPI awareness in SWF version: Does this even work?
 * [X] Colour pallettes - both either readymades and/or custom "bookmark" like ones.
- * [X] Perhaps parse GIMP or Photoshop pallettes if we do go with this.
-  * GIMP format is done. Photoshop format would be a weekend project, due to the complexity of the format.
  * Should favourites be implemented the same way as a pallette? This is flexible, though not as simple to implement UI or code wise.
 * [ ] Rebrand? - Colours is a generic name.
  * [ ] To go with this, maybe an icon.
