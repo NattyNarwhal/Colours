@@ -128,8 +128,10 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 This software uses these third-party components:
 
-The Mono implementation of System.Drawing.Color is used to implement parts RgbColor. Mono is licensed under MIT.
+The Mono implementation of System.Drawing.Color is used to implement parts of RgbColor. Mono is licensed under MIT.
 
-MouseKeyHook is used for implementing the eyedropper on Windows. MouseKeyHook is licensed under MIT by George Mamaladze.</value>
+MouseKeyHook is used for implementing the eyedropper on Windows. MouseKeyHook is licensed under MIT by George Mamaladze.
+
+Fugue icon set is (C) 2013 Yusuke Kamiyamane. All rights reserved.</value>
   </data>
 </root>
