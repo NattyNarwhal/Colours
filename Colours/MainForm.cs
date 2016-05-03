@@ -328,6 +328,8 @@ namespace Colours
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (appPal.Dirty)
+                if (UnsavedPrompt()) return;
             appPal.New();
         }
 
@@ -368,15 +370,11 @@ namespace Colours
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (appPal.Dirty)
-                if (UnsavedPrompt()) return;
             SavePalette(false);
         }
 
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (appPal.Dirty)
-                if (UnsavedPrompt()) return;
             SavePalette(true);
         }
 
