@@ -19,10 +19,7 @@ namespace Colours
         public MainForm()
         {
             InitializeComponent();
-            if (Properties.Settings.Default.CustomColors?.Count == 16)
-            {
-                colorDialog.CustomColors = Properties.Settings.Default.CustomColors.ToArray();
-            }
+
             // don't init the app with this func; init with AppState
             // this is just a base ctor
         }
@@ -107,6 +104,10 @@ namespace Colours
                 lvi.SubItems.Add(pc.Color.ToHtml());
                 paletteList.Items.Add(lvi);
             }
+
+            colorDialog.CustomColors = appPal.Palette.Colors.Take(16)
+                .Select(x => ColorTranslator.ToOle(x.Color.ToGdiColor()))
+                .ToArray();
 
             UpdateUI();
         }
@@ -209,7 +210,6 @@ namespace Colours
 
             // save settings
             Properties.Settings.Default.SchemeType = app.SchemeType;
-            Properties.Settings.Default.CustomColors = new ColorList(colorDialog.CustomColors);
             Properties.Settings.Default.LastColor = app.Color.ToGdiColor();
             Properties.Settings.Default.Save();
         }

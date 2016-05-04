@@ -60,7 +60,6 @@
     <Compile Include="ColorButton.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ColorList.cs" />
     <Compile Include="EyedropperForm.cs">
       <SubType>Form</SubType>
     </Compile>
