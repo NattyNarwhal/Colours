@@ -105,10 +105,6 @@ namespace Colours
                 paletteList.Items.Add(lvi);
             }
 
-            colorDialog.CustomColors = appPal.Palette.Colors.Take(16)
-                .Select(x => ColorTranslator.ToOle(x.Color.ToGdiColor()))
-                .ToArray();
-
             UpdateUI();
         }
 
@@ -148,6 +144,20 @@ namespace Colours
         private void SchemeColor_Click(object sender, EventArgs e)
         {
             colorDialog.Color = ((ColorButton)sender).Color.ToGdiColor();
+
+            if (paletteList.SelectedIndices.Count > 0)
+                colorDialog.CustomColors = paletteList.SelectedItems
+                    .Cast<ListViewItem>()
+                    .Take(16)
+                    .Select(x =>
+                        ColorTranslator.ToOle(((PaletteColor)x.Tag)
+                            .Color.ToGdiColor()))
+                    .ToArray();
+            else
+                colorDialog.CustomColors = appPal.Palette.Colors.Take(16)
+                    .Select(x => ColorTranslator.ToOle(x.Color.ToGdiColor()))
+                    .ToArray();
+
             if (colorDialog.ShowDialog(this) == DialogResult.OK)
             {
                 app.SetColor(colorDialog.Color.ToRgbColor(), true);
