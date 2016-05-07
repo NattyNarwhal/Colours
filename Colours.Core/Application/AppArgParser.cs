@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Colours
 {
@@ -39,6 +40,7 @@ namespace Colours
             HsvColor c = defaultColor;
             SchemeType t = defaultScheme;
             string p = initialPaletteFile;
+            List<string> u = new List<string>();
 
             ParsingMode m = ParsingMode.Normal;
             foreach (string a in args)
@@ -60,13 +62,14 @@ namespace Colours
                     default:
                         // find flags
                         if (a == "-t") m = ParsingMode.Scheme;
-                        if (a == "-c") m = ParsingMode.Color;
-                        if (a == "-p") m = ParsingMode.PaletteFile;
+                        else if (a == "-c") m = ParsingMode.Color;
+                        else if (a == "-p") m = ParsingMode.PaletteFile;
+                        else u.Add(a);
                         break;
                 }
             }
 
-            return new InitialAppState(c, t, p);
+            return new InitialAppState(c, t, p, u);
         }
     }
 }

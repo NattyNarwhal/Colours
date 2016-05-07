@@ -55,12 +55,19 @@ namespace Colours
         public string PaletteFileName { get; set; }
 
         /// <summary>
+        /// The arguments that were not parsed by the universal parser,
+        /// for parsing yourself.
+        /// </summary>
+        public List<string> UnparsedArgs { get; set; }
+
+        /// <summary>
         /// Creates a new initial application state representation.
         /// </summary>
         /// <param name="c">The color to use.</param>
         /// <param name="t">The scheme to use.</param>
         /// <param name="p">The filename of the palette to use.</param>
-        public InitialAppState(HsvColor c, SchemeType t, string p)
+        /// <param name="u">The list of unparsed arguments.</param>
+        public InitialAppState(HsvColor c, SchemeType t, string p, List<string> u = null)
             : base(c, t)
         {
             PaletteFileName = p;
