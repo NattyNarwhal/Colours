@@ -26,6 +26,8 @@ This is a small program to create colour schemes and palette. There's a `System.
         * `AppPaletteController.cs` - An application controller for the palette management half.
     	* `HtmlProofGenerator.cs` - Makes an HTML page with a colour listing on it.
     		* This has room for improvement - maybe multiple listings? 
+    * Mixing objects - Contains functions for blending and mixing operations on colours.
+        * `Blend.cs` - Gets colours between two colours by blending them together..
 	    * `Schemer.cs`
 		    * *Schemer* - Generates colour schemes.
 		    * *SchemeType* - An enum to correspond with `Schemer`. Note that applications depend on the ordering of it, at least for now.
