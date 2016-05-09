@@ -3,12 +3,18 @@
 
 open Colours
 
-let hsvHtml (hsv: HsvColor) = hsv.ToRgb().ToHtml();
+let trueColorEscape (s: string, r, g, b) = 
+    sprintf "\e[38;2;%d;%d;%dm%s\e[0m" r g b s
 
 [<EntryPoint>]
 let main argv = 
     let parsed =
         AppArgParser.ParseArgs(argv, new HsvColor(0.0, 1.0, 1.0), SchemeType.Complement)
+
+    let visual =
+        if not (isNull(parsed.UnparsedArgs)) then
+            parsed.UnparsedArgs.Contains("-v")
+        else false
 
     let results =
         match parsed.SchemeType with
@@ -21,7 +27,16 @@ let main argv =
             | _ -> System.Collections.Generic.List<HsvColor>() // this seems clunky
 
     for hsv in results do
-        let html = hsvHtml hsv
-        printfn "%s" html
+        let rgb = hsv.ToRgb();
+        let html = rgb.ToHtml()
+        if visual then
+            let escaped = trueColorEscape(html, rgb.R, rgb.G, rgb.B)
+            printfn "%s" escaped
+        else
+            printfn "%s" html
+
+#if DEBUG
+    ignore(System.Console.ReadLine())
+#endif
 
     0 // return an integer exit code
