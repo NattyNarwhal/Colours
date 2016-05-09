@@ -9,7 +9,10 @@ This is a small program to create colour schemes and palette. There's a `System.
     * Windows frontend
     * GTK frontend
         * Unfortunately, out of parity. Needs UI work to add palette support.
-    * And any other UI framework supporting C#
+    * Console frontend
+        * Invoke like any other unix tool - one shot with parameters
+        * Written in F#
+    * And any other UI framework supporting C# or another .NET language
 * Easily create colour schemes
     * Variety of algorithms, easy to extend for adding more
 * Organize colours into palettes
