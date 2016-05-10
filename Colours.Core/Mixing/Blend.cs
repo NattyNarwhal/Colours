@@ -35,5 +35,28 @@ namespace Colours
                     );
             }
         }
+
+        /// <summary>
+        /// Blends multiple colours together, using each color as a midpoint.
+        /// </summary>
+        /// <param name="c">The list of colours to blend.</param>
+        /// <param name="middle">How many colours to create between each point.</param>
+        /// <returns>A list of the coloours blended.</returns>
+        public static IEnumerable<RgbColor> BlendColours(IEnumerable<RgbColor> c, int middle)
+        {
+            if (c.Count() < 2)
+                throw new ArgumentOutOfRangeException("There aren't enough colors in the list.");
+            else if (c.Count() == 2)
+                foreach (var b in BlendColours(c.First(), c.Last(), middle))
+                    yield return b;
+            else
+            {
+                var l = c.Take(2);
+                foreach (var b in BlendColours(l.First(), l.Last(), middle))
+                    yield return b;
+                foreach (var b in BlendColours(c.Skip(1), middle))
+                    yield return b;
+            }
+        }
     }
 }
