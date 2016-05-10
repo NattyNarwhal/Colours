@@ -82,7 +82,7 @@
             this.commentsLabel.Name = "commentsLabel";
             this.commentsLabel.Size = new System.Drawing.Size(56, 13);
             this.commentsLabel.TabIndex = 4;
-            this.commentsLabel.Text = "Commen&ts";
+            this.commentsLabel.Text = "Co&mments";
             // 
             // commentsBox
             // 
