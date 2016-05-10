@@ -90,15 +90,7 @@ namespace Colours
             foreach (PaletteColor pc in appPal.Palette.Colors)
             {
                 var lvi = new ListViewItem(pc.Name);
-                using (var b = new Bitmap(16, 16))
-                {
-                    using (var g = Graphics.FromImage(b))
-                    {
-                        g.FillRectangle(new SolidBrush(pc.Color.ToGdiColor()), 0, 0, 16, 16);
-                        g.DrawRectangle(Pens.Black, 0, 0, 15, 15);
-                    }
-                    paletteListImages.Images.Add(b);
-                }
+                paletteListImages.Images.Add(RenderColorIcon.RenderIcon(pc.Color));
                 lvi.Tag = pc;
                 lvi.ImageIndex = i++;
                 lvi.SubItems.Add(pc.Color.ToHtml());
