@@ -64,7 +64,7 @@ namespace Colours
             {
                 resultsTable.ColumnStyles[i].SizeType = SizeType.Percent;
                 resultsTable.ColumnStyles[i].Width = 100 / app.Results.Count;
-                
+
                 ColorButton cb = new ColorButton(next);
                 if (app.HsvColor == next)
                     cb.Font = new Font(cb.Font, FontStyle.Bold);
@@ -132,7 +132,7 @@ namespace Colours
             renameToolStripMenuItem.Enabled = selected;
             useToolStripMenuItem.Enabled = selected;
         }
-        
+
         private void SchemeColor_Click(object sender, EventArgs e)
         {
             colorDialog.Color = ((ColorButton)sender).Color.ToGdiColor();
@@ -244,7 +244,8 @@ namespace Colours
 
         private void pasteAcquireToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            try {
+            try
+            {
                 if (Clipboard.ContainsText())
                 {
                     var clip = Clipboard.GetText();
@@ -301,6 +302,8 @@ namespace Colours
 
         private void saveAsHTMLToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (String.IsNullOrEmpty(saveAsHtmlDialog.FileName))
+                saveAsHtmlDialog.FileName = appPal.Palette.Name;
             if (saveAsHtmlDialog.ShowDialog(this) == DialogResult.OK)
             {
                 File.WriteAllText(saveAsHtmlDialog.FileName,
@@ -351,6 +354,11 @@ namespace Colours
         {
             if (forceDialog || appPal.FileName == null)
             {
+                // if we don't have a name already, give it one based
+                // on its palette title name - the save dialog will
+                // handle the extension
+                if (appPal.FileName == null)
+                    savePaletteDialog.FileName = appPal.Palette.Name;
                 if (savePaletteDialog.ShowDialog(this) == DialogResult.OK)
                 {
                     appPal.FileName = savePaletteDialog.FileName;
@@ -516,11 +524,13 @@ namespace Colours
 
         private void saveAsHTMLProofToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            var title = String.Format("{0} of {1}", app.SchemeType, app.Color.ToHtml());
+            if (String.IsNullOrEmpty(saveAsHtmlDialog.FileName))
+                saveAsHtmlDialog.FileName = title;
             if (saveAsHtmlDialog.ShowDialog(this) == DialogResult.OK)
             {
                 File.WriteAllText(saveAsHtmlDialog.FileName,
-                    HtmlProofGenerator.GeneratePage(String.Format("{0} of {1}",
-                        app.SchemeType, app.Color.ToHtml()),
+                    HtmlProofGenerator.GeneratePage(title,
                         HtmlProofGenerator.GenerateTable(app.Results))
                 );
             }
