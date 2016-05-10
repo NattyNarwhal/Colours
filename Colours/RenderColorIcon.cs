@@ -33,15 +33,13 @@ namespace Colours
         /// <returns>The icon.</returns>
         public static Bitmap RenderIcon(Color c, int w = 16, int h = 16)
         {
-            using (var b = new Bitmap(16, 16))
+            var b = new Bitmap(16, 16);
+            using (var g = Graphics.FromImage(b))
             {
-                using (var g = Graphics.FromImage(b))
-                {
-                    g.FillRectangle(new SolidBrush(c), 0, 0, w, h);
-                    g.DrawRectangle(Pens.Black, 0, 0, w - 1, h - 1);
-                }
-                return b;
+                g.FillRectangle(new SolidBrush(c), 0, 0, w, h);
+                g.DrawRectangle(Pens.Black, 0, 0, w - 1, h - 1);
             }
+            return b;
         }
     }
 }
