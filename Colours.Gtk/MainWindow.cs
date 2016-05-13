@@ -185,7 +185,7 @@ public partial class MainWindow: Gtk.Window
 		app.Redo ();
 	}
 
-	protected void OnSaveAsHTMLColorActionActivatedonActivated (object sender, EventArgs e)
+	protected void OnSaveAsHTMLColorActionActivated (object sender, EventArgs e)
 	{
 		FileChooserDialog fd = new FileChooserDialog ("Save as HTML", this,
 			FileChooserAction.Save, "Cancel", ResponseType.Cancel, "OK", ResponseType.Ok);
@@ -256,12 +256,12 @@ public partial class MainWindow: Gtk.Window
 		appPal.NewFromPalette (new Palette ());
 	}
 
-	protected void OnSaveAsActionActivatedonActivated (object sender, EventArgs e)
+	protected void OnSaveAsActionActivated (object sender, EventArgs e)
 	{
 		SavePalette(true);
 	}
 
-	protected void OnSaveAsActionActivated (object sender, EventArgs e)
+	protected void OnSaveActionActivated (object sender, EventArgs e)
 	{
 		SavePalette(false);
 	}
