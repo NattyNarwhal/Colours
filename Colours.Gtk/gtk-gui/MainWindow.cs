@@ -55,6 +55,10 @@ public partial class MainWindow
 	
 	private global::Gtk.Action saveAsAction;
 	
+	private global::Gtk.Action undoAction;
+	
+	private global::Gtk.Action redoAction;
+	
 	private global::Gtk.VBox mainVbox;
 	
 	private global::Gtk.MenuBar menubar1;
@@ -150,6 +154,12 @@ public partial class MainWindow
 		this.saveAsAction = new global::Gtk.Action ("saveAsAction", global::Mono.Unix.Catalog.GetString ("Save _As"), null, "gtk-save-as");
 		this.saveAsAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Save _As");
 		w1.Add (this.saveAsAction, null);
+		this.undoAction = new global::Gtk.Action ("undoAction", global::Mono.Unix.Catalog.GetString ("_Undo"), null, "gtk-undo");
+		this.undoAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("_Undo");
+		w1.Add (this.undoAction, null);
+		this.redoAction = new global::Gtk.Action ("redoAction", global::Mono.Unix.Catalog.GetString ("_Redo"), null, "gtk-redo");
+		this.redoAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("_Redo");
+		w1.Add (this.redoAction, null);
 		this.UIManager.InsertActionGroup (w1, 0);
 		this.AddAccelGroup (this.UIManager.AccelGroup);
 		this.Name = "MainWindow";
@@ -160,7 +170,26 @@ public partial class MainWindow
 		this.mainVbox.Name = "mainVbox";
 		this.mainVbox.Spacing = 6;
 		// Container child mainVbox.Gtk.Box+BoxChild
-		this.UIManager.AddUiFromString (@"<ui><menubar name='menubar1'><menu name='FileAction' action='FileAction'><menuitem name='newAction' action='newAction'/><menuitem name='openAction' action='openAction'/><menuitem name='saveAction' action='saveAction'/><menuitem name='saveAsAction' action='saveAsAction'/><separator/><menuitem name='quitAction' action='quitAction'/></menu><menu name='EditAction' action='EditAction'/><menu name='AcquireAction' action='AcquireAction'><menuitem name='PasteAcquireAction' action='PasteAcquireAction'/><menuitem name='refreshAction' action='refreshAction'/></menu><menu name='ColorAction' action='ColorAction'><menuitem name='goBackAction' action='goBackAction'/><menuitem name='goForwardAction' action='goForwardAction'/><separator/><menuitem name='CopyHexColorAction' action='CopyHexColorAction'/><menuitem name='CopyHSLColorAction' action='CopyHSLColorAction'/><menuitem name='CopyHSVColorAction' action='CopyHSVColorAction'/><menuitem name='SaveAsHTMLColorAction' action='SaveAsHTMLColorAction'/><separator/><menuitem name='BrightenAction' action='BrightenAction'/><menuitem name='DarkenAction' action='DarkenAction'/><separator/><menuitem name='SaturateAction' action='SaturateAction'/><menuitem name='DesaturateAction' action='DesaturateAction'/><separator/><menuitem name='InvertAction' action='InvertAction'/></menu><menu name='HelpAction' action='HelpAction'><menuitem name='aboutAction' action='aboutAction'/></menu></menubar></ui>");
+		this.UIManager.AddUiFromString ("<ui><menubar name=\'menubar1\'><menu name=\'FileAction\' action=\'FileAction\'><menuite" +
+		"m name=\'newAction\' action=\'newAction\'/><menuitem name=\'openAction\' action=\'openA" +
+		"ction\'/><menuitem name=\'saveAction\' action=\'saveAction\'/><menuitem name=\'saveAsA" +
+		"ction\' action=\'saveAsAction\'/><separator/><menuitem name=\'quitAction\' action=\'qu" +
+		"itAction\'/></menu><menu name=\'EditAction\' action=\'EditAction\'><menuitem name=\'un" +
+		"doAction\' action=\'undoAction\'/><menuitem name=\'redoAction\' action=\'redoAction\'/>" +
+		"</menu><menu name=\'AcquireAction\' action=\'AcquireAction\'><menuitem name=\'PasteAc" +
+		"quireAction\' action=\'PasteAcquireAction\'/><menuitem name=\'refreshAction\' action=" +
+		"\'refreshAction\'/></menu><menu name=\'ColorAction\' action=\'ColorAction\'><menuitem " +
+		"name=\'goBackAction\' action=\'goBackAction\'/><menuitem name=\'goForwardAction\' acti" +
+		"on=\'goForwardAction\'/><separator/><menuitem name=\'CopyHexColorAction\' action=\'Co" +
+		"pyHexColorAction\'/><menuitem name=\'CopyHSLColorAction\' action=\'CopyHSLColorActio" +
+		"n\'/><menuitem name=\'CopyHSVColorAction\' action=\'CopyHSVColorAction\'/><menuitem n" +
+		"ame=\'SaveAsHTMLColorAction\' action=\'SaveAsHTMLColorAction\'/><separator/><menuite" +
+		"m name=\'BrightenAction\' action=\'BrightenAction\'/><menuitem name=\'DarkenAction\' a" +
+		"ction=\'DarkenAction\'/><separator/><menuitem name=\'SaturateAction\' action=\'Satura" +
+		"teAction\'/><menuitem name=\'DesaturateAction\' action=\'DesaturateAction\'/><separat" +
+		"or/><menuitem name=\'InvertAction\' action=\'InvertAction\'/></menu><menu name=\'Help" +
+		"Action\' action=\'HelpAction\'><menuitem name=\'aboutAction\' action=\'aboutAction\'/><" +
+		"/menu></menubar></ui>");
 		this.menubar1 = ((global::Gtk.MenuBar)(this.UIManager.GetWidget ("/menubar1")));
 		this.menubar1.Name = "menubar1";
 		this.mainVbox.Add (this.menubar1);
@@ -238,6 +267,8 @@ public partial class MainWindow
 		this.openAction.Activated += new global::System.EventHandler (this.OnOpenActionActivated);
 		this.saveAction.Activated += new global::System.EventHandler (this.OnSaveActionActivated);
 		this.saveAsAction.Activated += new global::System.EventHandler (this.OnSaveAsActionActivated);
+		this.undoAction.Activated += new global::System.EventHandler (this.OnPaletteUndoActionActivated);
+		this.redoAction.Activated += new global::System.EventHandler (this.OnPaletteRedoActionActivated);
 		this.schemeBox.Changed += new global::System.EventHandler (this.OnSchemeBoxChanged);
 	}
 }

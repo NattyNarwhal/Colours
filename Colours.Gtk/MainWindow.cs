@@ -51,11 +51,12 @@ public partial class MainWindow: Gtk.Window
 		}
 
 		this.ShowAll ();
+		UpdateUI ();
 	}
 
 	public void SyncAppPalViewState(object sender, EventArgs e) 
 	{
-
+		UpdateUI ();
 	}
 
 	public void UpdateUI()
@@ -70,6 +71,9 @@ public partial class MainWindow: Gtk.Window
 		DarkenAction.Sensitive = app.CanDarken ();
 		SaturateAction.Sensitive = app.CanSaturate ();
 		DesaturateAction.Sensitive = app.CanDesaturate ();
+
+		undoAction.Sensitive = appPal.CanUndo ();
+		redoAction.Sensitive = appPal.CanRedo ();
 	}
 
 	protected void OnDeleteEvent (object sender, DeleteEventArgs a)
@@ -122,7 +126,7 @@ public partial class MainWindow: Gtk.Window
 		app.SetSchemeType ((SchemeType)schemeBox.Active, true);
 	}
 
-	protected void OnUndoActionActivated (object sender, EventArgs e)
+	protected void OnUndoActionActivatedtivated (object sender, EventArgs e)
 	{
 		app.Undo();
 	}	protected void OnInvertActionActivated (object sender, EventArgs e)
@@ -278,5 +282,15 @@ public partial class MainWindow: Gtk.Window
 			OpenPalette (fd.Filename);
 		}
 		fd.Destroy ();
+	}
+
+	protected void OnPaletteUndoActionActivated (object sender, EventArgs e)
+	{
+		appPal.Undo ();
+	}
+
+	protected void OnPaletteUndoActionActivated (object sender, EventArgs e)
+	{
+		appPal.Redo ();
 	}
 }
