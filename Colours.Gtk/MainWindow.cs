@@ -10,7 +10,6 @@ public partial class MainWindow: Gtk.Window
 
 	private static Gdk.Atom clipAtom = Gdk.Atom.Intern("CLIPBOARD", false);
 	Clipboard clipboard = Clipboard.Get (clipAtom);
-	HBox newBox;
 
 	public MainWindow () : base (Gtk.WindowType.Toplevel)
 	{
@@ -31,9 +30,8 @@ public partial class MainWindow: Gtk.Window
 		Title = String.Format ("{0} for {1}", schemeBox.ActiveText,
 			app.Color.ToHtml());
 
-		paddedBox.Remove (newBox);
-
-		newBox = new HBox (true, 6);
+		foreach (ColorButton cb in colorBox.Children)
+			colorBox.Remove (cb);
 		foreach (HsvColor c in app.Results) {
 			ColorButton cb = new ColorButton (c.ToGdkColor ());
 			cb.UseAlpha = false;
@@ -46,7 +44,7 @@ public partial class MainWindow: Gtk.Window
 			// bind the menu too
 			cb.ButtonPressEvent += HandleButtonPopupMenu;
 
-			newBox.PackStart(cb, true, true, 0);
+			colorBox.PackStart(cb, true, true, 0);
 		}
 
 		goBackAction.Sensitive = app.CanUndo ();
@@ -56,7 +54,6 @@ public partial class MainWindow: Gtk.Window
 		SaturateAction.Sensitive = app.CanSaturate ();
 		DesaturateAction.Sensitive = app.CanDesaturate ();
 
-		paddedBox.Add (newBox);
 		this.ShowAll ();
 	}
 

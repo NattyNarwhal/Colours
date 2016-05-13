@@ -52,6 +52,8 @@ public partial class MainWindow
 	private global::Gtk.VBox paddedBox;
 	
 	private global::Gtk.ComboBox schemeBox;
+	
+	private global::Gtk.HBox colorBox;
 
 	protected virtual void Build ()
 	{
@@ -129,7 +131,7 @@ public partial class MainWindow
 		this.mainVbox.Name = "mainVbox";
 		this.mainVbox.Spacing = 6;
 		// Container child mainVbox.Gtk.Box+BoxChild
-		this.UIManager.AddUiFromString ("<ui><menubar name='menubar1'><menu name='FileAction' action='FileAction'><menuitem name='saveAction' action='saveAction'/><separator/><menuitem name='quitAction' action='quitAction'/></menu><menu name='EditAction' action='EditAction'><menuitem name='goBackAction' action='goBackAction'/><menuitem name='goForwardAction' action='goForwardAction'/><separator/><menuitem name='copyAction' action='copyAction'/><menuitem name='CopyHSLAction' action='CopyHSLAction'/><menuitem name='CopyHSVAction' action='CopyHSVAction'/><separator/><menuitem name='pasteAction' action='pasteAction'/><menuitem name='refreshAction' action='refreshAction'/></menu><menu name='ColorAction' action='ColorAction'><menuitem name='BrightenAction' action='BrightenAction'/><menuitem name='DarkenAction' action='DarkenAction'/><separator/><menuitem name='SaturateAction' action='SaturateAction'/><menuitem name='DesaturateAction' action='DesaturateAction'/><separator/><menuitem name='InvertAction' action='InvertAction'/></menu><menu name='HelpAction' action='HelpAction'><menuitem name='aboutAction' action='aboutAction'/></menu></menubar></ui>");
+		this.UIManager.AddUiFromString (@"<ui><menubar name='menubar1'><menu name='FileAction' action='FileAction'><menuitem name='saveAction' action='saveAction'/><separator/><menuitem name='quitAction' action='quitAction'/></menu><menu name='EditAction' action='EditAction'><menuitem name='goBackAction' action='goBackAction'/><menuitem name='goForwardAction' action='goForwardAction'/><separator/><menuitem name='copyAction' action='copyAction'/><menuitem name='CopyHSLAction' action='CopyHSLAction'/><menuitem name='CopyHSVAction' action='CopyHSVAction'/><separator/><menuitem name='pasteAction' action='pasteAction'/><menuitem name='refreshAction' action='refreshAction'/></menu><menu name='ColorAction' action='ColorAction'><menuitem name='BrightenAction' action='BrightenAction'/><menuitem name='DarkenAction' action='DarkenAction'/><separator/><menuitem name='SaturateAction' action='SaturateAction'/><menuitem name='DesaturateAction' action='DesaturateAction'/><separator/><menuitem name='InvertAction' action='InvertAction'/></menu><menu name='HelpAction' action='HelpAction'><menuitem name='aboutAction' action='aboutAction'/></menu></menubar></ui>");
 		this.menubar1 = ((global::Gtk.MenuBar)(this.UIManager.GetWidget ("/menubar1")));
 		this.menubar1.Name = "menubar1";
 		this.mainVbox.Add (this.menubar1);
@@ -157,9 +159,17 @@ public partial class MainWindow
 		w3.Position = 0;
 		w3.Expand = false;
 		w3.Fill = false;
-		this.mainVbox.Add (this.paddedBox);
-		global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.mainVbox [this.paddedBox]));
+		// Container child paddedBox.Gtk.Box+BoxChild
+		this.colorBox = new global::Gtk.HBox ();
+		this.colorBox.Name = "colorBox";
+		this.colorBox.Homogeneous = true;
+		this.colorBox.Spacing = 6;
+		this.paddedBox.Add (this.colorBox);
+		global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.paddedBox [this.colorBox]));
 		w4.Position = 1;
+		this.mainVbox.Add (this.paddedBox);
+		global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.mainVbox [this.paddedBox]));
+		w5.Position = 1;
 		this.Add (this.mainVbox);
 		if ((this.Child != null)) {
 			this.Child.ShowAll ();
