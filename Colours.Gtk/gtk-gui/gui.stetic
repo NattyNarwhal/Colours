@@ -32,25 +32,25 @@
         <property name="StockId">gtk-go-forward</property>
         <signal name="Activated" handler="OnRedoActionActivated" />
       </action>
-      <action id="CopyHexAction">
+      <action id="CopyHexColorAction">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">Copy He_x</property>
         <property name="ShortLabel" translatable="yes">Copy He_x</property>
         <signal name="Activated" handler="OnCopyHexActionActivated" />
       </action>
-      <action id="CopyHSLAction">
+      <action id="CopyHSLColorAction">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">Copy HS_L</property>
         <property name="ShortLabel" translatable="yes">Copy HS_L</property>
         <signal name="Activated" handler="OnCopyHSLActionActivated" />
       </action>
-      <action id="CopyHSVAction">
+      <action id="CopyHSVColorAction">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">Copy HS_V</property>
         <property name="ShortLabel" translatable="yes">Copy HS_V</property>
         <signal name="Activated" handler="OnCopyHSVActionActivated" />
       </action>
-      <action id="PasteAction">
+      <action id="PasteAcquireAction">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">_Paste</property>
         <property name="ShortLabel" translatable="yes">_Paste</property>
@@ -103,7 +103,7 @@
         <property name="Label" translatable="yes">_File</property>
         <property name="ShortLabel" translatable="yes">_File</property>
       </action>
-      <action id="SaveAsHTMLAction">
+      <action id="SaveAsHTMLColorAction">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">_Save as HTML</property>
         <property name="ShortLabel" translatable="yes">_Save as HTML</property>
@@ -158,17 +158,17 @@
               </node>
               <node type="Menu" action="EditAction" />
               <node type="Menu" action="AcquireAction">
-                <node type="Menuitem" action="PasteAction" />
+                <node type="Menuitem" action="PasteAcquireAction" />
                 <node type="Menuitem" action="refreshAction" />
               </node>
               <node type="Menu" action="ColorAction">
                 <node type="Menuitem" action="goBackAction" />
                 <node type="Menuitem" action="goForwardAction" />
                 <node type="Separator" />
-                <node type="Menuitem" action="CopyHexAction" />
-                <node type="Menuitem" action="CopyHSLAction" />
-                <node type="Menuitem" action="CopyHSVAction" />
-                <node type="Menuitem" action="SaveAsHTMLAction" />
+                <node type="Menuitem" action="CopyHexColorAction" />
+                <node type="Menuitem" action="CopyHSLColorAction" />
+                <node type="Menuitem" action="CopyHSVColorAction" />
+                <node type="Menuitem" action="SaveAsHTMLColorAction" />
                 <node type="Separator" />
                 <node type="Menuitem" action="BrightenAction" />
                 <node type="Menuitem" action="DarkenAction" />
