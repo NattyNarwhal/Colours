@@ -7,6 +7,7 @@ using Colours;
 public partial class MainWindow: Gtk.Window
 {
 	public AppController app;
+	public AppPaletteController appPal;
 
 	private static Gdk.Atom clipAtom = Gdk.Atom.Intern("CLIPBOARD", false);
 	Clipboard clipboard = Clipboard.Get (clipAtom);
@@ -17,9 +18,13 @@ public partial class MainWindow: Gtk.Window
 		// don't use this for app init, only for base init
 	}
 
-	public MainWindow(AppState state) : this()
+	public MainWindow(InitialAppState state) : this()
 	{
 		app = new AppController (state);
+		appPal = new AppPaletteController ();
+		if (!String.IsNullOrWhiteSpace (state.PaletteFileName)) {
+
+		}
 		app.ResultChanged += SyncAppViewState;
 		SyncAppViewState (this, new EventArgs());
 	}
@@ -27,8 +32,6 @@ public partial class MainWindow: Gtk.Window
 	public void SyncAppViewState(object sender, EventArgs e)
 	{
 		schemeBox.Active = (int)app.SchemeType;
-		Title = String.Format ("{0} for {1}", schemeBox.ActiveText,
-			app.Color.ToHtml());
 
 		foreach (ColorButton cb in colorBox.Children)
 			colorBox.Remove (cb);
@@ -47,14 +50,26 @@ public partial class MainWindow: Gtk.Window
 			colorBox.PackStart(cb, true, true, 0);
 		}
 
+		this.ShowAll ();
+	}
+
+	public void SyncAppPalViewState(object sender, EventArgs e) 
+	{
+
+	}
+
+	public void UpdateUI()
+	{
+		Title = String.Format ("{0}{1} ({2} for {3})", appPal.Palette.Name,
+			appPal.Dirty ? "*" : "", schemeBox.ActiveText,
+			app.Color.ToHtml());
+
 		goBackAction.Sensitive = app.CanUndo ();
 		goForwardAction.Sensitive = app.CanRedo ();
 		BrightenAction.Sensitive = app.CanBrighten ();
 		DarkenAction.Sensitive = app.CanDarken ();
 		SaturateAction.Sensitive = app.CanSaturate ();
 		DesaturateAction.Sensitive = app.CanDesaturate ();
-
-		this.ShowAll ();
 	}
 
 	protected void OnDeleteEvent (object sender, DeleteEventArgs a)
@@ -74,6 +89,7 @@ public partial class MainWindow: Gtk.Window
 			MenuItem hexPopupItem = new MenuItem ("Copy He_x");
 			MenuItem hslPopupItem = new MenuItem ("Copy HS_L");
 			MenuItem hsvPopupItem = new MenuItem ("Copy HS_V");
+			MenuItem addPopupItem = new MenuItem ("_Add");
 			hexPopupItem.Activated += (o, a) => {
 				clipboard.Text = cb.Color.ToRgbColor().ToHtml();
 			};
@@ -83,9 +99,13 @@ public partial class MainWindow: Gtk.Window
 			hsvPopupItem.Activated += (o, a) => {
 				clipboard.Text = cb.Color.ToHsvColor().ToString();
 			};
+			addPopupItem.Activated += (o, a) => {
+				appPal.AppendColor(cb.Color.ToRgbColor());
+			};
 			m.Add (hexPopupItem);
 			m.Add (hslPopupItem);
 			m.Add (hsvPopupItem);
+			m.Add (addPopupItem);
 			m.ShowAll ();
 			m.Popup();
 		}
@@ -165,7 +185,7 @@ public partial class MainWindow: Gtk.Window
 		app.Redo ();
 	}
 
-	protected void OnSaveActionActivated (object sender, EventArgs e)
+	protected void OnSaveAsHTMLColorActionActivatedonActivated (object sender, EventArgs e)
 	{
 		FileChooserDialog fd = new FileChooserDialog ("Save as HTML", this,
 			FileChooserAction.Save, "Cancel", ResponseType.Cancel, "OK", ResponseType.Ok);
@@ -203,5 +223,60 @@ public partial class MainWindow: Gtk.Window
 		};
 		ad.Run ();
 		ad.Destroy ();
+	}
+
+	public void OpenPalette(string filename)
+	{
+		appPal.NewFromPalette (new Palette (File.ReadAllText (filename)), filename);
+	}
+
+	public bool SavePalette(bool forceDialog)
+	{
+		if (forceDialog || appPal.FileName == null) {
+			FileChooserDialog fd = new FileChooserDialog ("Save palette as", this,
+				FileChooserAction.Save, "Cancel", ResponseType.Cancel, "OK", ResponseType.Ok);
+			FileFilter ff = new FileFilter ();
+			ff.Name = "GIMP Palette";
+			ff.AddPattern ("*.gpl");
+			fd.AddFilter (ff);
+			if (fd.Run () == (int)ResponseType.Ok) {
+				appPal.FileName = fd.Filename;
+				fd.Destroy ();
+			} else {
+				fd.Destroy ();
+				return false;
+			}
+		}
+		File.WriteAllText (appPal.FileName, appPal.Palette.ToString ());
+		appPal.Dirty = false;
+		return true;
+	}
+	protected void OnNewActionActivated (object sender, EventArgs e)
+	{
+		appPal.NewFromPalette (new Palette ());
+	}
+
+	protected void OnSaveAsActionActivatedonActivated (object sender, EventArgs e)
+	{
+		SavePalette(true);
+	}
+
+	protected void OnSaveAsActionActivated (object sender, EventArgs e)
+	{
+		SavePalette(false);
+	}
+
+	protected void OnOpenActionActivated (object sender, EventArgs e)
+	{
+		FileChooserDialog fd = new FileChooserDialog ("Open palette", this,
+			FileChooserAction.Open, "Cancel", ResponseType.Cancel, "OK", ResponseType.Ok);
+		FileFilter ff = new FileFilter ();
+		ff.Name = "GIMP Palette";
+		ff.AddPattern ("*.gpl");
+		fd.AddFilter (ff);
+		if (fd.Run () == (int)ResponseType.Ok) {
+			OpenPalette (fd.Filename);
+		}
+		fd.Destroy ();
 	}
 }

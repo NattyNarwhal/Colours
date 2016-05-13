@@ -13,13 +13,13 @@ public partial class MainWindow
 	
 	private global::Gtk.Action goForwardAction;
 	
-	private global::Gtk.Action copyAction;
+	private global::Gtk.Action CopyHexColorAction;
 	
-	private global::Gtk.Action CopyHSLAction;
+	private global::Gtk.Action CopyHSLColorAction;
 	
-	private global::Gtk.Action CopyHSVAction;
+	private global::Gtk.Action CopyHSVColorAction;
 	
-	private global::Gtk.Action pasteAction;
+	private global::Gtk.Action PasteAcquireAction;
 	
 	private global::Gtk.Action refreshAction;
 	
@@ -35,7 +35,7 @@ public partial class MainWindow
 	
 	private global::Gtk.Action FileAction;
 	
-	private global::Gtk.Action saveAction;
+	private global::Gtk.Action SaveAsHTMLColorAction;
 	
 	private global::Gtk.Action quitAction;
 	
@@ -44,6 +44,8 @@ public partial class MainWindow
 	private global::Gtk.Action executeAction;
 	
 	private global::Gtk.Action aboutAction;
+	
+	private global::Gtk.Action AcquireAction;
 	
 	private global::Gtk.VBox mainVbox;
 	
@@ -54,6 +56,10 @@ public partial class MainWindow
 	private global::Gtk.ComboBox schemeBox;
 	
 	private global::Gtk.HBox colorBox;
+	
+	private global::Gtk.ScrolledWindow GtkScrolledWindow;
+	
+	private global::Gtk.NodeView nodeview1;
 
 	protected virtual void Build ()
 	{
@@ -69,22 +75,22 @@ public partial class MainWindow
 		w1.Add (this.ColorAction, null);
 		this.goBackAction = new global::Gtk.Action ("goBackAction", global::Mono.Unix.Catalog.GetString ("_Back"), null, "gtk-go-back");
 		this.goBackAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("_Undo");
-		w1.Add (this.goBackAction, "<Primary>z");
+		w1.Add (this.goBackAction, null);
 		this.goForwardAction = new global::Gtk.Action ("goForwardAction", global::Mono.Unix.Catalog.GetString ("_Forward"), null, "gtk-go-forward");
 		this.goForwardAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("_Redo");
-		w1.Add (this.goForwardAction, "<Primary>y");
-		this.copyAction = new global::Gtk.Action ("copyAction", global::Mono.Unix.Catalog.GetString ("Copy He_x"), null, "gtk-copy");
-		this.copyAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Copy He_x");
-		w1.Add (this.copyAction, null);
-		this.CopyHSLAction = new global::Gtk.Action ("CopyHSLAction", global::Mono.Unix.Catalog.GetString ("Copy HS_L"), null, null);
-		this.CopyHSLAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Copy HS_L");
-		w1.Add (this.CopyHSLAction, null);
-		this.CopyHSVAction = new global::Gtk.Action ("CopyHSVAction", global::Mono.Unix.Catalog.GetString ("Copy HS_V"), null, null);
-		this.CopyHSVAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Copy HS_V");
-		w1.Add (this.CopyHSVAction, null);
-		this.pasteAction = new global::Gtk.Action ("pasteAction", global::Mono.Unix.Catalog.GetString ("_Paste"), null, "gtk-paste");
-		this.pasteAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("_Paste");
-		w1.Add (this.pasteAction, null);
+		w1.Add (this.goForwardAction, null);
+		this.CopyHexColorAction = new global::Gtk.Action ("CopyHexColorAction", global::Mono.Unix.Catalog.GetString ("Copy He_x"), null, null);
+		this.CopyHexColorAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Copy He_x");
+		w1.Add (this.CopyHexColorAction, null);
+		this.CopyHSLColorAction = new global::Gtk.Action ("CopyHSLColorAction", global::Mono.Unix.Catalog.GetString ("Copy HS_L"), null, null);
+		this.CopyHSLColorAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Copy HS_L");
+		w1.Add (this.CopyHSLColorAction, null);
+		this.CopyHSVColorAction = new global::Gtk.Action ("CopyHSVColorAction", global::Mono.Unix.Catalog.GetString ("Copy HS_V"), null, null);
+		this.CopyHSVColorAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Copy HS_V");
+		w1.Add (this.CopyHSVColorAction, null);
+		this.PasteAcquireAction = new global::Gtk.Action ("PasteAcquireAction", global::Mono.Unix.Catalog.GetString ("_Paste"), null, null);
+		this.PasteAcquireAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("_Paste");
+		w1.Add (this.PasteAcquireAction, null);
 		this.refreshAction = new global::Gtk.Action ("refreshAction", global::Mono.Unix.Catalog.GetString ("_Random"), null, "gtk-refresh");
 		this.refreshAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Rando_m");
 		w1.Add (this.refreshAction, "<Primary>r");
@@ -106,9 +112,9 @@ public partial class MainWindow
 		this.FileAction = new global::Gtk.Action ("FileAction", global::Mono.Unix.Catalog.GetString ("_File"), null, null);
 		this.FileAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("_File");
 		w1.Add (this.FileAction, null);
-		this.saveAction = new global::Gtk.Action ("saveAction", global::Mono.Unix.Catalog.GetString ("_Save as HTML"), null, "gtk-save");
-		this.saveAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("_Save as HTML");
-		w1.Add (this.saveAction, null);
+		this.SaveAsHTMLColorAction = new global::Gtk.Action ("SaveAsHTMLColorAction", global::Mono.Unix.Catalog.GetString ("_Save as HTML"), null, null);
+		this.SaveAsHTMLColorAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("_Save as HTML");
+		w1.Add (this.SaveAsHTMLColorAction, null);
 		this.quitAction = new global::Gtk.Action ("quitAction", global::Mono.Unix.Catalog.GetString ("_Quit"), null, "gtk-quit");
 		this.quitAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("_Quit");
 		w1.Add (this.quitAction, null);
@@ -121,6 +127,9 @@ public partial class MainWindow
 		this.aboutAction = new global::Gtk.Action ("aboutAction", global::Mono.Unix.Catalog.GetString ("_About"), null, "gtk-about");
 		this.aboutAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("_About");
 		w1.Add (this.aboutAction, null);
+		this.AcquireAction = new global::Gtk.Action ("AcquireAction", global::Mono.Unix.Catalog.GetString ("_Acquire"), null, null);
+		this.AcquireAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("_Acquire");
+		w1.Add (this.AcquireAction, null);
 		this.UIManager.InsertActionGroup (w1, 0);
 		this.AddAccelGroup (this.UIManager.AccelGroup);
 		this.Name = "MainWindow";
@@ -131,7 +140,7 @@ public partial class MainWindow
 		this.mainVbox.Name = "mainVbox";
 		this.mainVbox.Spacing = 6;
 		// Container child mainVbox.Gtk.Box+BoxChild
-		this.UIManager.AddUiFromString (@"<ui><menubar name='menubar1'><menu name='FileAction' action='FileAction'><menuitem name='saveAction' action='saveAction'/><separator/><menuitem name='quitAction' action='quitAction'/></menu><menu name='EditAction' action='EditAction'><menuitem name='goBackAction' action='goBackAction'/><menuitem name='goForwardAction' action='goForwardAction'/><separator/><menuitem name='copyAction' action='copyAction'/><menuitem name='CopyHSLAction' action='CopyHSLAction'/><menuitem name='CopyHSVAction' action='CopyHSVAction'/><separator/><menuitem name='pasteAction' action='pasteAction'/><menuitem name='refreshAction' action='refreshAction'/></menu><menu name='ColorAction' action='ColorAction'><menuitem name='BrightenAction' action='BrightenAction'/><menuitem name='DarkenAction' action='DarkenAction'/><separator/><menuitem name='SaturateAction' action='SaturateAction'/><menuitem name='DesaturateAction' action='DesaturateAction'/><separator/><menuitem name='InvertAction' action='InvertAction'/></menu><menu name='HelpAction' action='HelpAction'><menuitem name='aboutAction' action='aboutAction'/></menu></menubar></ui>");
+		this.UIManager.AddUiFromString (@"<ui><menubar name='menubar1'><menu name='FileAction' action='FileAction'><separator/><menuitem name='quitAction' action='quitAction'/></menu><menu name='EditAction' action='EditAction'/><menu name='AcquireAction' action='AcquireAction'><menuitem name='PasteAcquireAction' action='PasteAcquireAction'/><menuitem name='refreshAction' action='refreshAction'/></menu><menu name='ColorAction' action='ColorAction'><menuitem name='goBackAction' action='goBackAction'/><menuitem name='goForwardAction' action='goForwardAction'/><separator/><menuitem name='CopyHexColorAction' action='CopyHexColorAction'/><menuitem name='CopyHSLColorAction' action='CopyHSLColorAction'/><menuitem name='CopyHSVColorAction' action='CopyHSVColorAction'/><menuitem name='SaveAsHTMLColorAction' action='SaveAsHTMLColorAction'/><separator/><menuitem name='BrightenAction' action='BrightenAction'/><menuitem name='DarkenAction' action='DarkenAction'/><separator/><menuitem name='SaturateAction' action='SaturateAction'/><menuitem name='DesaturateAction' action='DesaturateAction'/><separator/><menuitem name='InvertAction' action='InvertAction'/></menu><menu name='HelpAction' action='HelpAction'><menuitem name='aboutAction' action='aboutAction'/></menu></menubar></ui>");
 		this.menubar1 = ((global::Gtk.MenuBar)(this.UIManager.GetWidget ("/menubar1")));
 		this.menubar1.Name = "menubar1";
 		this.mainVbox.Add (this.menubar1);
@@ -167,30 +176,42 @@ public partial class MainWindow
 		this.paddedBox.Add (this.colorBox);
 		global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.paddedBox [this.colorBox]));
 		w4.Position = 1;
+		// Container child paddedBox.Gtk.Box+BoxChild
+		this.GtkScrolledWindow = new global::Gtk.ScrolledWindow ();
+		this.GtkScrolledWindow.Name = "GtkScrolledWindow";
+		this.GtkScrolledWindow.ShadowType = ((global::Gtk.ShadowType)(1));
+		// Container child GtkScrolledWindow.Gtk.Container+ContainerChild
+		this.nodeview1 = new global::Gtk.NodeView ();
+		this.nodeview1.CanFocus = true;
+		this.nodeview1.Name = "nodeview1";
+		this.GtkScrolledWindow.Add (this.nodeview1);
+		this.paddedBox.Add (this.GtkScrolledWindow);
+		global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.paddedBox [this.GtkScrolledWindow]));
+		w6.Position = 2;
 		this.mainVbox.Add (this.paddedBox);
-		global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.mainVbox [this.paddedBox]));
-		w5.Position = 1;
+		global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.mainVbox [this.paddedBox]));
+		w7.Position = 1;
 		this.Add (this.mainVbox);
 		if ((this.Child != null)) {
 			this.Child.ShowAll ();
 		}
 		this.DefaultWidth = 467;
-		this.DefaultHeight = 164;
+		this.DefaultHeight = 316;
 		this.Show ();
 		this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
 		this.goBackAction.Activated += new global::System.EventHandler (this.OnUndoActionActivated);
 		this.goForwardAction.Activated += new global::System.EventHandler (this.OnRedoActionActivated);
-		this.copyAction.Activated += new global::System.EventHandler (this.OnCopyHexActionActivated);
-		this.CopyHSLAction.Activated += new global::System.EventHandler (this.OnCopyHSLActionActivated);
-		this.CopyHSVAction.Activated += new global::System.EventHandler (this.OnCopyHSVActionActivated);
-		this.pasteAction.Activated += new global::System.EventHandler (this.OnPasteActionActivated);
+		this.CopyHexColorAction.Activated += new global::System.EventHandler (this.OnCopyHexActionActivated);
+		this.CopyHSLColorAction.Activated += new global::System.EventHandler (this.OnCopyHSLActionActivated);
+		this.CopyHSVColorAction.Activated += new global::System.EventHandler (this.OnCopyHSVActionActivated);
+		this.PasteAcquireAction.Activated += new global::System.EventHandler (this.OnPasteActionActivated);
 		this.refreshAction.Activated += new global::System.EventHandler (this.OnRandomActionActivated);
 		this.BrightenAction.Activated += new global::System.EventHandler (this.OnBrightenActionActivated);
 		this.DarkenAction.Activated += new global::System.EventHandler (this.OnDarkenActionActivated);
 		this.SaturateAction.Activated += new global::System.EventHandler (this.OnSaturateActionActivated);
 		this.DesaturateAction.Activated += new global::System.EventHandler (this.OnDesaturateActionActivated);
 		this.InvertAction.Activated += new global::System.EventHandler (this.OnInvertActionActivated);
-		this.saveAction.Activated += new global::System.EventHandler (this.OnSaveActionActivated);
+		this.SaveAsHTMLColorAction.Activated += new global::System.EventHandler (this.OnSaveAsHTMLColorActionActivated);
 		this.quitAction.Activated += new global::System.EventHandler (this.OnQuitActionActivated);
 		this.aboutAction.Activated += new global::System.EventHandler (this.OnAboutActionActivated);
 		this.schemeBox.Changed += new global::System.EventHandler (this.OnSchemeBoxChanged);

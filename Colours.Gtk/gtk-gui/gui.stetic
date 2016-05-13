@@ -6,7 +6,7 @@
   <import>
     <widget-library name="../bin/Debug/Colours.Gtk.exe" internal="true" />
   </import>
-  <widget class="Gtk.Window" id="MainWindow" design-size="467 164">
+  <widget class="Gtk.Window" id="MainWindow" design-size="467 316">
     <action-group name="Default">
       <action id="EditAction">
         <property name="Type">Action</property>
@@ -107,7 +107,7 @@
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">_Save as HTML</property>
         <property name="ShortLabel" translatable="yes">_Save as HTML</property>
-        <signal name="Activated" handler="OnSaveActionActivated" />
+        <signal name="Activated" handler="OnSaveAsHTMLColorActionActivated" />
       </action>
       <action id="quitAction">
         <property name="Type">Action</property>
@@ -139,6 +139,34 @@
         <property name="Label" translatable="yes">_Acquire</property>
         <property name="ShortLabel" translatable="yes">_Acquire</property>
       </action>
+      <action id="newAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_New</property>
+        <property name="ShortLabel" translatable="yes">_New</property>
+        <property name="StockId">gtk-new</property>
+        <signal name="Activated" handler="OnNewActionActivated" />
+      </action>
+      <action id="openAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Open</property>
+        <property name="ShortLabel" translatable="yes">_Open</property>
+        <property name="StockId">gtk-open</property>
+        <signal name="Activated" handler="OnOpenActionActivated" />
+      </action>
+      <action id="saveAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Save</property>
+        <property name="ShortLabel" translatable="yes">_Save</property>
+        <property name="StockId">gtk-save</property>
+        <signal name="Activated" handler="OnSaveActionActivated" />
+      </action>
+      <action id="saveAsAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Save _As</property>
+        <property name="ShortLabel" translatable="yes">Save _As</property>
+        <property name="StockId">gtk-save-as</property>
+        <signal name="Activated" handler="OnSaveAsActionActivated" />
+      </action>
     </action-group>
     <property name="MemberName" />
     <property name="Title" translatable="yes">MainWindow</property>
@@ -153,6 +181,10 @@
             <property name="MemberName" />
             <node name="menubar1" type="Menubar">
               <node type="Menu" action="FileAction">
+                <node type="Menuitem" action="newAction" />
+                <node type="Menuitem" action="openAction" />
+                <node type="Menuitem" action="saveAction" />
+                <node type="Menuitem" action="saveAsAction" />
                 <node type="Separator" />
                 <node type="Menuitem" action="quitAction" />
               </node>
@@ -236,7 +268,21 @@ Monochromatic</property>
               </packing>
             </child>
             <child>
-              <placeholder />
+              <widget class="Gtk.ScrolledWindow" id="GtkScrolledWindow">
+                <property name="MemberName" />
+                <property name="ShadowType">In</property>
+                <child>
+                  <widget class="Gtk.NodeView" id="nodeview1">
+                    <property name="MemberName" />
+                    <property name="CanFocus">True</property>
+                    <property name="ShowScrollbars">True</property>
+                  </widget>
+                </child>
+              </widget>
+              <packing>
+                <property name="Position">2</property>
+                <property name="AutoSize">True</property>
+              </packing>
             </child>
           </widget>
           <packing>
