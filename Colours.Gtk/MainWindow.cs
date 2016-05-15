@@ -12,10 +12,26 @@ public partial class MainWindow: Gtk.Window
 	private static Gdk.Atom clipAtom = Gdk.Atom.Intern("CLIPBOARD", false);
 	Clipboard clipboard = Clipboard.Get (clipAtom);
 
+	ListStore ls = new ListStore (typeof(string), typeof(string), typeof(RgbColor));
+
 	public MainWindow () : base (Gtk.WindowType.Toplevel)
 	{
 		Build ();
 		// don't use this for app init, only for base init
+		treeview1.Model = ls;
+
+		var pcNameRender = new CellRendererText ();
+		pcNameRender.Editable = true;
+		var pcNameCol = new TreeViewColumn ("Name", pcNameRender);
+		pcNameCol.AddAttribute (pcNameRender, "text", 0);
+
+		var pcColorRender = new CellRendererText ();
+		var pcColorCol = new TreeViewColumn ("Color", pcColorRender);
+		pcColorCol.AddAttribute (pcColorRender, "text", 1);
+
+		treeview1.AppendColumn (pcNameCol);
+		treeview1.AppendColumn (pcColorCol);
+
 	}
 
 	public MainWindow(InitialAppState state) : this()
@@ -26,7 +42,9 @@ public partial class MainWindow: Gtk.Window
 
 		}
 		app.ResultChanged += SyncAppViewState;
+		appPal.PaletteChanged += SyncAppPalViewState;
 		SyncAppViewState (this, new EventArgs());
+		SyncAppPalViewState (this, new EventArgs ());
 	}
 
 	public void SyncAppViewState(object sender, EventArgs e)
@@ -56,6 +74,12 @@ public partial class MainWindow: Gtk.Window
 
 	public void SyncAppPalViewState(object sender, EventArgs e) 
 	{
+		ls.Clear ();
+
+		foreach (PaletteColor pc in appPal.Palette.Colors) {
+			ls.AppendValues (pc.Name, pc.Color.ToHtml(), pc);
+		}
+
 		UpdateUI ();
 	}
 
@@ -126,7 +150,7 @@ public partial class MainWindow: Gtk.Window
 		app.SetSchemeType ((SchemeType)schemeBox.Active, true);
 	}
 
-	protected void OnUndoActionActivatedtivated (object sender, EventArgs e)
+	protected void OnUndoActionActivated (object sender, EventArgs e)
 	{
 		app.Undo();
 	}	protected void OnInvertActionActivated (object sender, EventArgs e)
@@ -289,7 +313,7 @@ public partial class MainWindow: Gtk.Window
 		appPal.Undo ();
 	}
 
-	protected void OnPaletteUndoActionActivated (object sender, EventArgs e)
+	protected void OnPaletteRedoActionActivated (object sender, EventArgs e)
 	{
 		appPal.Redo ();
 	}
