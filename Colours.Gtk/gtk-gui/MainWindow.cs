@@ -270,5 +270,6 @@ public partial class MainWindow
 		this.undoAction.Activated += new global::System.EventHandler (this.OnPaletteUndoActionActivated);
 		this.redoAction.Activated += new global::System.EventHandler (this.OnPaletteRedoActionActivated);
 		this.schemeBox.Changed += new global::System.EventHandler (this.OnSchemeBoxChanged);
+		this.treeview1.RowActivated += new global::Gtk.RowActivatedHandler (this.OnTreeview1RowActivated);
 	}
 }

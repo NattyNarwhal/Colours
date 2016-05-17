@@ -317,4 +317,13 @@ public partial class MainWindow: Gtk.Window
 	{
 		appPal.Redo ();
 	}
+
+	protected void OnTreeview1RowActivated (object o, RowActivatedArgs args)
+	{
+		TreeIter iter;
+		if (treeview1.Model.GetIter(out iter, args.Path)) {
+			var pc = (PaletteColor)treeview1.Model.GetValue (iter, 2);
+			app.SetColor (pc.Color, true);
+		}
+	}
 }

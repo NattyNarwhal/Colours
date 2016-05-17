@@ -293,6 +293,7 @@ Monochromatic</property>
                     <property name="MemberName" />
                     <property name="CanFocus">True</property>
                     <property name="ShowScrollbars">True</property>
+                    <signal name="RowActivated" handler="OnTreeview1RowActivated" />
                   </widget>
                 </child>
               </widget>
