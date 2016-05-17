@@ -181,6 +181,25 @@
         <property name="StockId">gtk-redo</property>
         <signal name="Activated" handler="OnPaletteRedoActionActivated" />
       </action>
+      <action id="Action">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">-</property>
+        <property name="ShortLabel" translatable="yes">-</property>
+      </action>
+      <action id="addAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Add</property>
+        <property name="ShortLabel" translatable="yes">_Add</property>
+        <property name="StockId">gtk-add</property>
+        <signal name="Activated" handler="OnAddActionActivated" />
+      </action>
+      <action id="deleteAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Delete</property>
+        <property name="ShortLabel" translatable="yes">_Delete</property>
+        <property name="StockId">gtk-delete</property>
+        <signal name="Activated" handler="OnDeleteActionActivated" />
+      </action>
     </action-group>
     <property name="MemberName" />
     <property name="Title" translatable="yes">MainWindow</property>
@@ -205,6 +224,9 @@
               <node type="Menu" action="EditAction">
                 <node type="Menuitem" action="undoAction" />
                 <node type="Menuitem" action="redoAction" />
+                <node type="Separator" />
+                <node type="Menuitem" action="addAction" />
+                <node type="Menuitem" action="deleteAction" />
               </node>
               <node type="Menu" action="AcquireAction">
                 <node type="Menuitem" action="PasteAcquireAction" />

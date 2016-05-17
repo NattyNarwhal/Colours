@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using Gtk;
@@ -12,7 +13,8 @@ public partial class MainWindow: Gtk.Window
 	private static Gdk.Atom clipAtom = Gdk.Atom.Intern("CLIPBOARD", false);
 	Clipboard clipboard = Clipboard.Get (clipAtom);
 
-	ListStore ls = new ListStore (typeof(string), typeof(string), typeof(RgbColor));
+	// TODO: should this be just PaletteColor, and use render funcs?
+	ListStore ls = new ListStore (typeof(string), typeof(string), typeof(PaletteColor));
 
 	public MainWindow () : base (Gtk.WindowType.Toplevel)
 	{
@@ -337,5 +339,19 @@ public partial class MainWindow: Gtk.Window
 			var pc = (PaletteColor)treeview1.Model.GetValue (iter, 2);
 			app.SetColor (pc.Color, true);
 		}
+	}
+	protected void OnAddActionActivated (object sender, EventArgs e)
+	{
+		appPal.AppendColor(app.Color);
+	}
+	protected void OnDeleteActionActivated (object sender, EventArgs e)
+	{
+		// TODO: wire to delete key?
+		List<PaletteColor> l = new List<PaletteColor> ();
+		treeview1.Selection.SelectedForeach ((m, p, i) => {
+			var pc = (PaletteColor)treeview1.Model.GetValue (i, 2);
+			l.Add(pc);
+		});
+		appPal.DeleteColors (l);
 	}
 }
