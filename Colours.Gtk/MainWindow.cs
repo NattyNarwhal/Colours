@@ -22,6 +22,7 @@ public partial class MainWindow: Gtk.Window
 
 		var pcNameRender = new CellRendererText ();
 		pcNameRender.Editable = true;
+		pcNameRender.Edited += pcNameRender_Edited;
 		var pcNameCol = new TreeViewColumn ("Name", pcNameRender);
 		pcNameCol.AddAttribute (pcNameRender, "text", 0);
 
@@ -316,6 +317,17 @@ public partial class MainWindow: Gtk.Window
 	protected void OnPaletteRedoActionActivated (object sender, EventArgs e)
 	{
 		appPal.Redo ();
+	}
+
+	protected void pcNameRender_Edited (object o, EditedArgs args)
+	{
+		TreeIter iter;
+		if (treeview1.Model.GetIterFromString(out iter, args.Path)) {
+			// get the index
+			var pc = (PaletteColor)treeview1.Model.GetValue (iter, 2);
+			if (pc.Name != args.NewText)
+				appPal.RenameColor (appPal.Palette.Colors.IndexOf (pc), args.NewText);
+		}
 	}
 
 	protected void OnTreeview1RowActivated (object o, RowActivatedArgs args)
