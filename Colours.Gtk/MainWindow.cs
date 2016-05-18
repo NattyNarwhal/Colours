@@ -462,4 +462,38 @@ public partial class MainWindow: Gtk.Window
 		}
 		fd.Destroy ();
 	}
+
+	protected void OnExportPhotoshopPaletteActionActivated (object sender, EventArgs e)
+	{
+		FileChooserDialog fd = new FileChooserDialog ("Save palette as", this,
+			FileChooserAction.Save, "Cancel", ResponseType.Cancel, "OK", ResponseType.Ok);
+		FileFilter ff = new FileFilter ();
+		ff.Name = "GIMP Palette";
+		ff.AddPattern ("*.gpl");
+		fd.AddFilter (ff);
+		if (fd.Run () == (int)ResponseType.Ok) {
+			File.WriteAllBytes (fd.Filename,
+				AcoConverter.ToPhotoshopPalette (appPal.Palette));
+		}
+		fd.Destroy ();
+	}
+
+	protected void OnExportHTMLActionActivated (object sender, EventArgs e)
+	{
+		FileChooserDialog fd = new FileChooserDialog ("Save as HTML", this,
+			FileChooserAction.Save, "Cancel", ResponseType.Cancel, "OK", ResponseType.Ok);
+		FileFilter ff = new FileFilter ();
+		ff.Name = "HTML";
+		ff.AddMimeType ("text/html");
+		ff.AddPattern ("*.html");
+		fd.AddFilter (ff);
+		if (fd.Run () == (int)ResponseType.Ok) {
+			File.WriteAllText(fd.Filename,
+				HtmlProofGenerator.GeneratePage(
+					appPal.Palette
+				)
+			);
+		}
+		fd.Destroy ();
+	}
 }
