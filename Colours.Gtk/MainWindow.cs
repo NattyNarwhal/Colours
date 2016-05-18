@@ -151,8 +151,7 @@ public partial class MainWindow: Gtk.Window
 			md.Destroy ();
 			switch (retVal) {
 			case ResponseType.Yes:
-				SavePalette (false);
-				return true;
+				return SavePalette (false);
 			case ResponseType.No:
 				return true;
 			default:
