@@ -266,7 +266,7 @@ public partial class MainWindow
 		this.vpaned1 = new global::Gtk.VPaned ();
 		this.vpaned1.CanFocus = true;
 		this.vpaned1.Name = "vpaned1";
-		this.vpaned1.Position = 105;
+		this.vpaned1.Position = 100;
 		// Container child vpaned1.Gtk.Paned+PanedChild
 		this.paddedBox = new global::Gtk.VBox ();
 		this.paddedBox.Name = "paddedBox";
@@ -306,6 +306,7 @@ public partial class MainWindow
 		this.treeview1 = new global::Gtk.TreeView ();
 		this.treeview1.CanFocus = true;
 		this.treeview1.Name = "treeview1";
+		this.treeview1.Reorderable = true;
 		this.GtkScrolledWindow.Add (this.treeview1);
 		this.vpaned1.Add (this.GtkScrolledWindow);
 		this.mainVbox.Add (this.vpaned1);
