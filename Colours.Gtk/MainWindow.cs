@@ -97,7 +97,7 @@ public partial class MainWindow: Gtk.Window
 		ls.Clear ();
 
 		foreach (PaletteColor pc in appPal.Palette.Colors) {
-			Gdk.Pixbuf buf = new Gdk.Pixbuf (Gdk.Colorspace.Rgb, false, 24, 16, 16);
+			Gdk.Pixbuf buf = new Gdk.Pixbuf (Gdk.Colorspace.Rgb, false, 8, 16, 16);
 
 			buf.Fill (pc.Color.ToGdkColor ().Pixel);
 
