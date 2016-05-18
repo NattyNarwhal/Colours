@@ -134,11 +134,42 @@ public partial class MainWindow: Gtk.Window
 		saveAsAction.Sensitive = hasItems;
 	}
 
+	/// <summary>
+	/// Asks to save changes
+	/// </summary>
+	/// <returns>If it's OK to close.</returns>
+	public bool DirtyPrompt()
+	{
+		if (appPal.Dirty) {
+			MessageDialog md = new MessageDialog (this, DialogFlags.Modal,
+				MessageType.Question, ButtonsType.None,
+				"There are unsaved changed. Do you want to save before you close this palette?");
+			md.AddButton ("Save", ResponseType.Yes);
+			md.AddButton ("Discard", ResponseType.No);
+			md.AddButton ("Cancel", ResponseType.Cancel);
+			var retVal = (ResponseType)md.Run ();
+			md.Destroy ();
+			switch (retVal) {
+			case ResponseType.Yes:
+				SavePalette (false);
+				return true;
+			case ResponseType.No:
+				return true;
+			default:
+				return false;
+			};
+		} else
+			return true;
+	}
+
 	protected void OnDeleteEvent (object sender, DeleteEventArgs a)
 	{
-		ConfigParser.SaveConfig (app.Color, app.SchemeType);
-		Application.Quit ();
-		a.RetVal = true;
+		if (DirtyPrompt ()) {
+			ConfigParser.SaveConfig (app.Color, app.SchemeType);
+			Application.Quit ();
+			a.RetVal = true;
+		} else
+			a.RetVal = true;
 	}
 
 	[GLib.ConnectBeforeAttribute]
@@ -327,7 +358,8 @@ public partial class MainWindow: Gtk.Window
 	}
 	protected void OnNewActionActivated (object sender, EventArgs e)
 	{
-		appPal.NewFromPalette (new Palette ());
+		if (DirtyPrompt ())
+			appPal.NewFromPalette (new Palette ());
 	}
 
 	protected void OnSaveAsActionActivated (object sender, EventArgs e)
@@ -342,16 +374,18 @@ public partial class MainWindow: Gtk.Window
 
 	protected void OnOpenActionActivated (object sender, EventArgs e)
 	{
-		FileChooserDialog fd = new FileChooserDialog ("Open palette", this,
-			FileChooserAction.Open, "Cancel", ResponseType.Cancel, "OK", ResponseType.Ok);
-		FileFilter ff = new FileFilter ();
-		ff.Name = "GIMP Palette";
-		ff.AddPattern ("*.gpl");
-		fd.AddFilter (ff);
-		if (fd.Run () == (int)ResponseType.Ok) {
-			OpenPalette (fd.Filename);
+		if (DirtyPrompt ()) {
+			FileChooserDialog fd = new FileChooserDialog ("Open palette", this,
+				FileChooserAction.Open, "Cancel", ResponseType.Cancel, "OK", ResponseType.Ok);
+			FileFilter ff = new FileFilter ();
+			ff.Name = "GIMP Palette";
+			ff.AddPattern ("*.gpl");
+			fd.AddFilter (ff);
+			if (fd.Run () == (int)ResponseType.Ok) {
+				OpenPalette (fd.Filename);
+			}
+			fd.Destroy ();
 		}
-		fd.Destroy ();
 	}
 
 	protected void OnPaletteUndoActionActivated (object sender, EventArgs e)
@@ -457,18 +491,20 @@ public partial class MainWindow: Gtk.Window
 
 	protected void OnImportPhotoshopPaletteActionActivated (object sender, EventArgs e)
 	{
-		FileChooserDialog fd = new FileChooserDialog ("Open palette", this,
-			FileChooserAction.Open, "Cancel", ResponseType.Cancel, "OK", ResponseType.Ok);
-		FileFilter ff = new FileFilter ();
-		ff.Name = "Photoshop Palette";
-		ff.AddPattern ("*.aco");
-		fd.AddFilter (ff);
-		if (fd.Run () == (int)ResponseType.Ok) {
-			appPal.NewFromPalette (
-				AcoConverter.FromPhotoshopPalette (
-					File.ReadAllBytes (fd.Filename)));
+		if (DirtyPrompt ()) {
+			FileChooserDialog fd = new FileChooserDialog ("Open palette", this,
+				FileChooserAction.Open, "Cancel", ResponseType.Cancel, "OK", ResponseType.Ok);
+			FileFilter ff = new FileFilter ();
+			ff.Name = "Photoshop Palette";
+			ff.AddPattern ("*.aco");
+			fd.AddFilter (ff);
+			if (fd.Run () == (int)ResponseType.Ok) {
+				appPal.NewFromPalette (
+					AcoConverter.FromPhotoshopPalette (
+						File.ReadAllBytes (fd.Filename)));
+			}
+			fd.Destroy ();
 		}
-		fd.Destroy ();
 	}
 
 	protected void OnExportPhotoshopPaletteActionActivated (object sender, EventArgs e)
