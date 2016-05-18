@@ -402,7 +402,9 @@ Monochromatic</property>
   <widget class="Gtk.Dialog" id="Colours.PropertiesDialog" design-size="400 179">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Palette Properties</property>
+    <property name="TypeHint">Dialog</property>
     <property name="WindowPosition">CenterOnParent</property>
+    <property name="SkipPagerHint">True</property>
     <property name="SkipTaskbarHint">True</property>
     <property name="Buttons">2</property>
     <property name="HelpButton">False</property>
