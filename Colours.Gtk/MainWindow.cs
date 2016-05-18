@@ -16,8 +16,7 @@ public partial class MainWindow: Gtk.Window
 	Clipboard clipboard = Clipboard.Get (clipAtom);
 
 	// TODO: should this be just PaletteColor, and use render funcs?
-	// TODO: a column for a visual representation, like winforms?
-	ListStore ls = new ListStore (typeof(string), typeof(string), typeof(PaletteColor));
+	ListStore ls = new ListStore (typeof(Gdk.Pixbuf), typeof(string), typeof(string), typeof(PaletteColor));
 
 	public MainWindow () : base (Gtk.WindowType.Toplevel)
 	{
@@ -25,16 +24,21 @@ public partial class MainWindow: Gtk.Window
 		// don't use this for app init, only for base init
 		treeview1.Model = ls;
 
+		var pcIconRender = new CellRendererPixbuf ();
+		var pcIconCol = new TreeViewColumn ("Icon", pcIconRender);
+		pcIconCol.AddAttribute (pcIconRender, "pixbuf", 0);
+
 		var pcNameRender = new CellRendererText ();
 		pcNameRender.Editable = true;
 		pcNameRender.Edited += pcNameRender_Edited;
 		var pcNameCol = new TreeViewColumn ("Name", pcNameRender);
-		pcNameCol.AddAttribute (pcNameRender, "text", 0);
+		pcNameCol.AddAttribute (pcNameRender, "text", 1);
 
 		var pcColorRender = new CellRendererText ();
 		var pcColorCol = new TreeViewColumn ("Color", pcColorRender);
-		pcColorCol.AddAttribute (pcColorRender, "text", 1);
+		pcColorCol.AddAttribute (pcColorRender, "text", 2);
 
+		treeview1.AppendColumn (pcIconCol);
 		treeview1.AppendColumn (pcNameCol);
 		treeview1.AppendColumn (pcColorCol);
 
@@ -59,7 +63,7 @@ public partial class MainWindow: Gtk.Window
 	// replaces var pc = (PaletteColor)treeview1.Model.GetValue (i, 2);
 	public PaletteColor GetItemFromIter(TreeIter i)
 	{
-		const int colColumn = 2;
+		const int colColumn = 3;
 		return (PaletteColor)treeview1.Model.GetValue (i, colColumn);
 	}
 
@@ -93,7 +97,11 @@ public partial class MainWindow: Gtk.Window
 		ls.Clear ();
 
 		foreach (PaletteColor pc in appPal.Palette.Colors) {
-			ls.AppendValues (pc.Name, pc.Color.ToHtml(), pc);
+			Gdk.Pixbuf buf = new Gdk.Pixbuf (Gdk.Colorspace.Rgb, false, 24, 16, 16);
+
+			buf.Fill (pc.Color.ToGdkColor ().Pixel);
+
+			ls.AppendValues (buf, pc.Name, pc.Color.ToHtml(), pc);
 		}
 
 		UpdateUI ();

@@ -266,7 +266,7 @@ public partial class MainWindow
 		this.vpaned1 = new global::Gtk.VPaned ();
 		this.vpaned1.CanFocus = true;
 		this.vpaned1.Name = "vpaned1";
-		this.vpaned1.Position = 116;
+		this.vpaned1.Position = 1;
 		// Container child vpaned1.Gtk.Paned+PanedChild
 		this.paddedBox = new global::Gtk.VBox ();
 		this.paddedBox.Name = "paddedBox";
