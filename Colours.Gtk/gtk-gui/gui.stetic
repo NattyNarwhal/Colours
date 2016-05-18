@@ -206,6 +206,24 @@
         <property name="ShortLabel" translatable="yes">Add A_ll</property>
         <signal name="Activated" handler="OnAddAllActionActivated" />
       </action>
+      <action id="cutAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Cu_t</property>
+        <property name="ShortLabel" translatable="yes">Cu_t</property>
+        <property name="StockId">gtk-cut</property>
+      </action>
+      <action id="copyAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Copy</property>
+        <property name="ShortLabel" translatable="yes">_Copy</property>
+        <property name="StockId">gtk-copy</property>
+      </action>
+      <action id="pasteAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Paste</property>
+        <property name="ShortLabel" translatable="yes">_Paste</property>
+        <property name="StockId">gtk-paste</property>
+      </action>
     </action-group>
     <property name="MemberName" />
     <property name="Title" translatable="yes">MainWindow</property>
@@ -230,6 +248,10 @@
               <node type="Menu" action="EditAction">
                 <node type="Menuitem" action="undoAction" />
                 <node type="Menuitem" action="redoAction" />
+                <node type="Separator" />
+                <node type="Menuitem" action="cutAction" />
+                <node type="Menuitem" action="copyAction" />
+                <node type="Menuitem" action="pasteAction" />
                 <node type="Separator" />
                 <node type="Menuitem" action="addAction" />
                 <node type="Menuitem" action="AddAllAction" />
