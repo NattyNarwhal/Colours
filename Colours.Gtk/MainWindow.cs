@@ -495,5 +495,23 @@ public partial class MainWindow: Gtk.Window
 			);
 		}
 		fd.Destroy ();
+	}
+
+	protected void OnPropertiesActionActivated (object sender, EventArgs e)
+	{
+		var pd = new PropertiesDialog();
+		pd.PaletteTitle = appPal.Palette.Name;
+		pd.PaletteColumns = appPal.Palette.Columns;
+		pd.PaletteComments = appPal.Palette.Comments;
+		if (pd.Run () == (int)ResponseType.Ok) {
+			var p = new Palette(appPal.Palette)
+			{
+				Name = pd.PaletteTitle,
+				Columns = pd.PaletteColumns,
+				Comments = pd.PaletteComments
+			};
+			appPal.SetPalette(p);
+		}
+		pd.Destroy ();
 	}
 }
