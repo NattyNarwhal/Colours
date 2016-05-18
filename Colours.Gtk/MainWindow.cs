@@ -187,7 +187,7 @@ public partial class MainWindow: Gtk.Window
 		app.SetColor (new RgbColor (r.Next (255), r.Next (255), r.Next (255)), true);
 	}
 
-	protected void OnPasteActionActivated (object sender, EventArgs e)
+	protected void OnPasteAcquireActionActivatedtivated (object sender, EventArgs e)
 	{
 		clipboard.RequestText ((c, s) => {
 			try {

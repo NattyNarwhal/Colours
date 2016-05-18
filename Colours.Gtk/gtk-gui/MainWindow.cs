@@ -275,7 +275,7 @@ public partial class MainWindow
 		this.CopyHexColorAction.Activated += new global::System.EventHandler (this.OnCopyHexActionActivated);
 		this.CopyHSLColorAction.Activated += new global::System.EventHandler (this.OnCopyHSLActionActivated);
 		this.CopyHSVColorAction.Activated += new global::System.EventHandler (this.OnCopyHSVActionActivated);
-		this.PasteAcquireAction.Activated += new global::System.EventHandler (this.OnPasteActionActivated);
+		this.PasteAcquireAction.Activated += new global::System.EventHandler (this.OnPasteAcquireActionActivated);
 		this.refreshAction.Activated += new global::System.EventHandler (this.OnRandomActionActivated);
 		this.BrightenAction.Activated += new global::System.EventHandler (this.OnBrightenActionActivated);
 		this.DarkenAction.Activated += new global::System.EventHandler (this.OnDarkenActionActivated);

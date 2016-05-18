@@ -54,7 +54,7 @@
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">_Paste</property>
         <property name="ShortLabel" translatable="yes">_Paste</property>
-        <signal name="Activated" handler="OnPasteActionActivated" />
+        <signal name="Activated" handler="OnPasteAcquireActionActivated" />
       </action>
       <action id="refreshAction">
         <property name="Type">Action</property>
