@@ -6,7 +6,7 @@
   <import>
     <widget-library name="../bin/Debug/Colours.Gtk.exe" internal="true" />
   </import>
-  <widget class="Gtk.Window" id="MainWindow" design-size="467 316">
+  <widget class="Gtk.Window" id="MainWindow" design-size="473 316">
     <action-group name="Default">
       <action id="EditAction">
         <property name="Type">Action</property>
@@ -225,6 +225,7 @@
         <property name="Label" translatable="yes">_Paste</property>
         <property name="ShortLabel" translatable="yes">_Paste</property>
         <property name="StockId">gtk-paste</property>
+        <signal name="Activated" handler="OnPasteActionActivated" />
       </action>
     </action-group>
     <property name="MemberName" />

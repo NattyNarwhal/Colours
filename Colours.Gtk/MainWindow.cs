@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using Gtk;
 using Colours;
 
@@ -187,11 +188,22 @@ public partial class MainWindow: Gtk.Window
 		app.SetColor (new RgbColor (r.Next (255), r.Next (255), r.Next (255)), true);
 	}
 
-	protected void OnPasteAcquireActionActivatedtivated (object sender, EventArgs e)
+	protected void OnPasteAcquireActionActivated (object sender, EventArgs e)
 	{
 		clipboard.RequestText ((c, s) => {
 			try {
-				app.SetColor (ColorUtils.FromString (s), true);
+				if (s.StartsWith("pc"))
+				{
+					foreach (var pc in Regex.Split(s, Environment.NewLine))
+					{
+						if (pc == "pc" || String.IsNullOrWhiteSpace(pc))
+							continue;
+						app.SetColor(new PaletteColor(pc).Color, true);
+						return;
+					}
+				}
+				else
+					app.SetColor (ColorUtils.FromString (s), true);
 			}
 			catch (Exception) {} // it doesn't matter
 		});
@@ -391,5 +403,25 @@ public partial class MainWindow: Gtk.Window
 	protected void OnCopyActionActivated (object sender, EventArgs e)
 	{
 		CopySelection ();
+	}
+
+	protected void OnPasteActionActivated (object sender, EventArgs e)
+	{
+		clipboard.RequestText ((c, s) => {
+			try {
+				if (s.StartsWith("pc"))
+				{
+					foreach (var pc in Regex.Split(s, Environment.NewLine))
+					{
+						if (pc == "pc" || String.IsNullOrWhiteSpace(pc))
+							continue;
+						appPal.AppendColor(new PaletteColor(pc));
+					}
+				}
+				else
+					appPal.AppendColor(ColorUtils.FromString(s).ToRgb());
+			}
+			catch (Exception) {} // it doesn't matter
+		});
 	}
 }

@@ -67,6 +67,12 @@ public partial class MainWindow
 	
 	private global::Gtk.Action AddAllAction;
 	
+	private global::Gtk.Action cutAction;
+	
+	private global::Gtk.Action copyAction;
+	
+	private global::Gtk.Action pasteAction;
+	
 	private global::Gtk.VBox mainVbox;
 	
 	private global::Gtk.MenuBar menubar1;
@@ -180,6 +186,15 @@ public partial class MainWindow
 		this.AddAllAction = new global::Gtk.Action ("AddAllAction", global::Mono.Unix.Catalog.GetString ("Add A_ll"), null, null);
 		this.AddAllAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Add A_ll");
 		w1.Add (this.AddAllAction, null);
+		this.cutAction = new global::Gtk.Action ("cutAction", global::Mono.Unix.Catalog.GetString ("Cu_t"), null, "gtk-cut");
+		this.cutAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Cu_t");
+		w1.Add (this.cutAction, null);
+		this.copyAction = new global::Gtk.Action ("copyAction", global::Mono.Unix.Catalog.GetString ("_Copy"), null, "gtk-copy");
+		this.copyAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("_Copy");
+		w1.Add (this.copyAction, null);
+		this.pasteAction = new global::Gtk.Action ("pasteAction", global::Mono.Unix.Catalog.GetString ("_Paste"), null, "gtk-paste");
+		this.pasteAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("_Paste");
+		w1.Add (this.pasteAction, null);
 		this.UIManager.InsertActionGroup (w1, 0);
 		this.AddAccelGroup (this.UIManager.AccelGroup);
 		this.Name = "MainWindow";
@@ -196,22 +211,24 @@ public partial class MainWindow
 		"ction\' action=\'saveAsAction\'/><separator/><menuitem name=\'quitAction\' action=\'qu" +
 		"itAction\'/></menu><menu name=\'EditAction\' action=\'EditAction\'><menuitem name=\'un" +
 		"doAction\' action=\'undoAction\'/><menuitem name=\'redoAction\' action=\'redoAction\'/>" +
-		"<separator/><menuitem name=\'addAction\' action=\'addAction\'/><menuitem name=\'AddAl" +
-		"lAction\' action=\'AddAllAction\'/><menuitem name=\'deleteAction\' action=\'deleteActi" +
-		"on\'/></menu><menu name=\'AcquireAction\' action=\'AcquireAction\'><menuitem name=\'Pa" +
-		"steAcquireAction\' action=\'PasteAcquireAction\'/><menuitem name=\'refreshAction\' ac" +
-		"tion=\'refreshAction\'/></menu><menu name=\'ColorAction\' action=\'ColorAction\'><menu" +
-		"item name=\'goBackAction\' action=\'goBackAction\'/><menuitem name=\'goForwardAction\'" +
-		" action=\'goForwardAction\'/><separator/><menuitem name=\'CopyHexColorAction\' actio" +
-		"n=\'CopyHexColorAction\'/><menuitem name=\'CopyHSLColorAction\' action=\'CopyHSLColor" +
-		"Action\'/><menuitem name=\'CopyHSVColorAction\' action=\'CopyHSVColorAction\'/><menui" +
-		"tem name=\'SaveAsHTMLColorAction\' action=\'SaveAsHTMLColorAction\'/><separator/><me" +
-		"nuitem name=\'BrightenAction\' action=\'BrightenAction\'/><menuitem name=\'DarkenActi" +
-		"on\' action=\'DarkenAction\'/><separator/><menuitem name=\'SaturateAction\' action=\'S" +
-		"aturateAction\'/><menuitem name=\'DesaturateAction\' action=\'DesaturateAction\'/><se" +
-		"parator/><menuitem name=\'InvertAction\' action=\'InvertAction\'/></menu><menu name=" +
-		"\'HelpAction\' action=\'HelpAction\'><menuitem name=\'aboutAction\' action=\'aboutActio" +
-		"n\'/></menu></menubar></ui>");
+		"<separator/><menuitem name=\'cutAction\' action=\'cutAction\'/><menuitem name=\'copyA" +
+		"ction\' action=\'copyAction\'/><menuitem name=\'pasteAction\' action=\'pasteAction\'/><" +
+		"separator/><menuitem name=\'addAction\' action=\'addAction\'/><menuitem name=\'AddAll" +
+		"Action\' action=\'AddAllAction\'/><menuitem name=\'deleteAction\' action=\'deleteActio" +
+		"n\'/></menu><menu name=\'AcquireAction\' action=\'AcquireAction\'><menuitem name=\'Pas" +
+		"teAcquireAction\' action=\'PasteAcquireAction\'/><menuitem name=\'refreshAction\' act" +
+		"ion=\'refreshAction\'/></menu><menu name=\'ColorAction\' action=\'ColorAction\'><menui" +
+		"tem name=\'goBackAction\' action=\'goBackAction\'/><menuitem name=\'goForwardAction\' " +
+		"action=\'goForwardAction\'/><separator/><menuitem name=\'CopyHexColorAction\' action" +
+		"=\'CopyHexColorAction\'/><menuitem name=\'CopyHSLColorAction\' action=\'CopyHSLColorA" +
+		"ction\'/><menuitem name=\'CopyHSVColorAction\' action=\'CopyHSVColorAction\'/><menuit" +
+		"em name=\'SaveAsHTMLColorAction\' action=\'SaveAsHTMLColorAction\'/><separator/><men" +
+		"uitem name=\'BrightenAction\' action=\'BrightenAction\'/><menuitem name=\'DarkenActio" +
+		"n\' action=\'DarkenAction\'/><separator/><menuitem name=\'SaturateAction\' action=\'Sa" +
+		"turateAction\'/><menuitem name=\'DesaturateAction\' action=\'DesaturateAction\'/><sep" +
+		"arator/><menuitem name=\'InvertAction\' action=\'InvertAction\'/></menu><menu name=\'" +
+		"HelpAction\' action=\'HelpAction\'><menuitem name=\'aboutAction\' action=\'aboutAction" +
+		"\'/></menu></menubar></ui>");
 		this.menubar1 = ((global::Gtk.MenuBar)(this.UIManager.GetWidget ("/menubar1")));
 		this.menubar1.Name = "menubar1";
 		this.mainVbox.Add (this.menubar1);
@@ -266,7 +283,7 @@ public partial class MainWindow
 		if ((this.Child != null)) {
 			this.Child.ShowAll ();
 		}
-		this.DefaultWidth = 467;
+		this.DefaultWidth = 473;
 		this.DefaultHeight = 316;
 		this.Show ();
 		this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
@@ -294,6 +311,9 @@ public partial class MainWindow
 		this.addAction.Activated += new global::System.EventHandler (this.OnAddActionActivated);
 		this.deleteAction.Activated += new global::System.EventHandler (this.OnDeleteActionActivated);
 		this.AddAllAction.Activated += new global::System.EventHandler (this.OnAddAllActionActivated);
+		this.cutAction.Activated += new global::System.EventHandler (this.OnCutActionActivated);
+		this.copyAction.Activated += new global::System.EventHandler (this.OnCopyActionActivated);
+		this.pasteAction.Activated += new global::System.EventHandler (this.OnPasteActionActivated);
 		this.schemeBox.Changed += new global::System.EventHandler (this.OnSchemeBoxChanged);
 		this.treeview1.RowActivated += new global::Gtk.RowActivatedHandler (this.OnTreeview1RowActivated);
 	}
