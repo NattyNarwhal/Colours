@@ -167,9 +167,8 @@ public partial class MainWindow: Gtk.Window
 		if (DirtyPrompt ()) {
 			ConfigParser.SaveConfig (app.Color, app.SchemeType);
 			Application.Quit ();
-			a.RetVal = true;
-		} else
-			a.RetVal = true;
+		}
+		a.RetVal = true;
 	}
 
 	[GLib.ConnectBeforeAttribute]
