@@ -85,6 +85,8 @@ public partial class MainWindow
 	
 	private global::Gtk.MenuBar menubar1;
 	
+	private global::Gtk.VPaned vpaned1;
+	
 	private global::Gtk.VBox paddedBox;
 	
 	private global::Gtk.ComboBox schemeBox;
@@ -261,6 +263,11 @@ public partial class MainWindow
 		w2.Expand = false;
 		w2.Fill = false;
 		// Container child mainVbox.Gtk.Box+BoxChild
+		this.vpaned1 = new global::Gtk.VPaned ();
+		this.vpaned1.CanFocus = true;
+		this.vpaned1.Name = "vpaned1";
+		this.vpaned1.Position = 116;
+		// Container child vpaned1.Gtk.Paned+PanedChild
 		this.paddedBox = new global::Gtk.VBox ();
 		this.paddedBox.Name = "paddedBox";
 		this.paddedBox.Spacing = 6;
@@ -288,7 +295,10 @@ public partial class MainWindow
 		this.paddedBox.Add (this.colorBox);
 		global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.paddedBox [this.colorBox]));
 		w4.Position = 1;
-		// Container child paddedBox.Gtk.Box+BoxChild
+		this.vpaned1.Add (this.paddedBox);
+		global::Gtk.Paned.PanedChild w5 = ((global::Gtk.Paned.PanedChild)(this.vpaned1 [this.paddedBox]));
+		w5.Resize = false;
+		// Container child vpaned1.Gtk.Paned+PanedChild
 		this.GtkScrolledWindow = new global::Gtk.ScrolledWindow ();
 		this.GtkScrolledWindow.Name = "GtkScrolledWindow";
 		this.GtkScrolledWindow.ShadowType = ((global::Gtk.ShadowType)(1));
@@ -297,12 +307,10 @@ public partial class MainWindow
 		this.treeview1.CanFocus = true;
 		this.treeview1.Name = "treeview1";
 		this.GtkScrolledWindow.Add (this.treeview1);
-		this.paddedBox.Add (this.GtkScrolledWindow);
-		global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.paddedBox [this.GtkScrolledWindow]));
-		w6.Position = 2;
-		this.mainVbox.Add (this.paddedBox);
-		global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.mainVbox [this.paddedBox]));
-		w7.Position = 1;
+		this.vpaned1.Add (this.GtkScrolledWindow);
+		this.mainVbox.Add (this.vpaned1);
+		global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.mainVbox [this.vpaned1]));
+		w8.Position = 1;
 		this.Add (this.mainVbox);
 		if ((this.Child != null)) {
 			this.Child.ShowAll ();

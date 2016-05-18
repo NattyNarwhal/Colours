@@ -88,4 +88,6 @@ I won't deny inspiration ;)
 * [ ] Picking colors from images would be neat.
 * for GTK version:
 	* [ ] Icons in treeView
-	* [ ] Splitter between colour picker and palette
+	* [ ] Dirty bit handling
+	* [ ] Drag reordering
+	* [ ] Genercize file dialog handling

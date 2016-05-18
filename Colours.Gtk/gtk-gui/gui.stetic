@@ -325,48 +325,58 @@
           </packing>
         </child>
         <child>
-          <widget class="Gtk.VBox" id="paddedBox">
+          <widget class="Gtk.VPaned" id="vpaned1">
             <property name="MemberName" />
-            <property name="Spacing">6</property>
-            <property name="BorderWidth">6</property>
+            <property name="CanFocus">True</property>
+            <property name="Position">116</property>
             <child>
-              <widget class="Gtk.ComboBox" id="schemeBox">
+              <widget class="Gtk.VBox" id="paddedBox">
                 <property name="MemberName" />
-                <property name="IsTextCombo">True</property>
-                <property name="Items" translatable="yes" comments="The ordering should be kept.">Complement
+                <property name="Spacing">6</property>
+                <property name="BorderWidth">6</property>
+                <child>
+                  <widget class="Gtk.ComboBox" id="schemeBox">
+                    <property name="MemberName" />
+                    <property name="IsTextCombo">True</property>
+                    <property name="Items" translatable="yes" comments="The ordering should be kept.">Complement
 Split Complements
 Triads
 Tetrads
 Analogous
 Monochromatic</property>
-                <property name="Active">0</property>
-                <signal name="Changed" handler="OnSchemeBoxChanged" />
+                    <property name="Active">0</property>
+                    <signal name="Changed" handler="OnSchemeBoxChanged" />
+                  </widget>
+                  <packing>
+                    <property name="Position">0</property>
+                    <property name="AutoSize">True</property>
+                    <property name="Expand">False</property>
+                    <property name="Fill">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.HBox" id="colorBox">
+                    <property name="MemberName" />
+                    <property name="Homogeneous">True</property>
+                    <property name="Spacing">6</property>
+                    <child>
+                      <placeholder />
+                    </child>
+                    <child>
+                      <placeholder />
+                    </child>
+                    <child>
+                      <placeholder />
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="Position">1</property>
+                    <property name="AutoSize">True</property>
+                  </packing>
+                </child>
               </widget>
               <packing>
-                <property name="Position">0</property>
-                <property name="AutoSize">True</property>
-                <property name="Expand">False</property>
-                <property name="Fill">False</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="Gtk.HBox" id="colorBox">
-                <property name="MemberName" />
-                <property name="Homogeneous">True</property>
-                <property name="Spacing">6</property>
-                <child>
-                  <placeholder />
-                </child>
-                <child>
-                  <placeholder />
-                </child>
-                <child>
-                  <placeholder />
-                </child>
-              </widget>
-              <packing>
-                <property name="Position">1</property>
-                <property name="AutoSize">True</property>
+                <property name="Resize">False</property>
               </packing>
             </child>
             <child>
@@ -382,10 +392,6 @@ Monochromatic</property>
                   </widget>
                 </child>
               </widget>
-              <packing>
-                <property name="Position">2</property>
-                <property name="AutoSize">True</property>
-              </packing>
             </child>
           </widget>
           <packing>
