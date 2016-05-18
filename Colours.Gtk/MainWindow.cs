@@ -99,7 +99,7 @@ public partial class MainWindow: Gtk.Window
 		foreach (PaletteColor pc in appPal.Palette.Colors) {
 			Gdk.Pixbuf buf = new Gdk.Pixbuf (Gdk.Colorspace.Rgb, false, 8, 16, 16);
 
-			buf.Fill (pc.Color.ToGdkColor ().Pixel);
+			buf.Fill (pc.Color.ToGdkPixel());
 
 			ls.AppendValues (buf, pc.Name, pc.Color.ToHtml(), pc);
 		}
