@@ -16,6 +16,7 @@ public partial class MainWindow: Gtk.Window
 	Clipboard clipboard = Clipboard.Get (clipAtom);
 
 	// TODO: should this be just PaletteColor, and use render funcs?
+	// TODO: a column for a visual representation, like winforms?
 	ListStore ls = new ListStore (typeof(string), typeof(string), typeof(PaletteColor));
 
 	public MainWindow () : base (Gtk.WindowType.Toplevel)
