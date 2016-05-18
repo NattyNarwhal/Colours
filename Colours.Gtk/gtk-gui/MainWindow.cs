@@ -58,9 +58,7 @@ public partial class MainWindow
 	private global::Gtk.Action undoAction;
 	
 	private global::Gtk.Action redoAction;
-	
-	private global::Gtk.Action Action;
-	
+
 	private global::Gtk.Action addAction;
 	
 	private global::Gtk.Action deleteAction;
@@ -184,9 +182,6 @@ public partial class MainWindow
 		this.redoAction = new global::Gtk.Action ("redoAction", global::Mono.Unix.Catalog.GetString ("_Redo"), null, "gtk-redo");
 		this.redoAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("_Redo");
 		w1.Add (this.redoAction, null);
-		this.Action = new global::Gtk.Action ("Action", global::Mono.Unix.Catalog.GetString ("-"), null, null);
-		this.Action.ShortLabel = global::Mono.Unix.Catalog.GetString ("-");
-		w1.Add (this.Action, null);
 		this.addAction = new global::Gtk.Action ("addAction", global::Mono.Unix.Catalog.GetString ("_Add"), null, "gtk-add");
 		this.addAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("_Add");
 		w1.Add (this.addAction, null);

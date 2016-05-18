@@ -4,6 +4,7 @@
     <images-root-path>..</images-root-path>
   </configuration>
   <import>
+    <widget-library name="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <widget-library name="../bin/Debug/Colours.Gtk.exe" internal="true" />
   </import>
   <widget class="Gtk.Window" id="MainWindow" design-size="473 316">
@@ -181,11 +182,6 @@
         <property name="StockId">gtk-redo</property>
         <signal name="Activated" handler="OnPaletteRedoActionActivated" />
       </action>
-      <action id="Action">
-        <property name="Type">Action</property>
-        <property name="Label" translatable="yes">-</property>
-        <property name="ShortLabel" translatable="yes">-</property>
-      </action>
       <action id="addAction">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">_Add</property>
@@ -328,7 +324,7 @@
           <widget class="Gtk.VPaned" id="vpaned1">
             <property name="MemberName" />
             <property name="CanFocus">True</property>
-            <property name="Position">105</property>
+            <property name="Position">100</property>
             <child>
               <widget class="Gtk.VBox" id="paddedBox">
                 <property name="MemberName" />
@@ -388,6 +384,7 @@ Monochromatic</property>
                     <property name="MemberName" />
                     <property name="CanFocus">True</property>
                     <property name="ShowScrollbars">True</property>
+                    <property name="Reorderable">True</property>
                     <signal name="RowActivated" handler="OnTreeview1RowActivated" />
                   </widget>
                 </child>
