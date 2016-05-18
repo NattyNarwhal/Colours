@@ -227,6 +227,22 @@
         <property name="StockId">gtk-paste</property>
         <signal name="Activated" handler="OnPasteActionActivated" />
       </action>
+      <action id="ImportPhotoshopPaletteAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Import Photoshop Palette</property>
+        <property name="ShortLabel" translatable="yes">Import Photoshop Palette</property>
+        <signal name="Activated" handler="OnImportPhotoshopPaletteActionActivated" />
+      </action>
+      <action id="ExportPhotoshopPaletteAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Export Photoshop Palette</property>
+        <property name="ShortLabel" translatable="yes">Export Photoshop Palette</property>
+      </action>
+      <action id="ExportHTMLAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Export HTML</property>
+        <property name="ShortLabel" translatable="yes">Export HTML</property>
+      </action>
     </action-group>
     <property name="MemberName" />
     <property name="Title" translatable="yes">MainWindow</property>
@@ -245,6 +261,10 @@
                 <node type="Menuitem" action="openAction" />
                 <node type="Menuitem" action="saveAction" />
                 <node type="Menuitem" action="saveAsAction" />
+                <node type="Separator" />
+                <node type="Menuitem" action="ImportPhotoshopPaletteAction" />
+                <node type="Menuitem" action="ExportPhotoshopPaletteAction" />
+                <node type="Menuitem" action="ExportHTMLAction" />
                 <node type="Separator" />
                 <node type="Menuitem" action="quitAction" />
               </node>

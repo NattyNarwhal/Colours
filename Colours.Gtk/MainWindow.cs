@@ -446,4 +446,20 @@ public partial class MainWindow: Gtk.Window
 			catch (Exception) {} // it doesn't matter
 		});
 	}
+
+	protected void OnImportPhotoshopPaletteActionActivated (object sender, EventArgs e)
+	{
+		FileChooserDialog fd = new FileChooserDialog ("Open palette", this,
+			FileChooserAction.Open, "Cancel", ResponseType.Cancel, "OK", ResponseType.Ok);
+		FileFilter ff = new FileFilter ();
+		ff.Name = "Photoshop Palette";
+		ff.AddPattern ("*.aco");
+		fd.AddFilter (ff);
+		if (fd.Run () == (int)ResponseType.Ok) {
+			appPal.NewFromPalette (
+				AcoConverter.FromPhotoshopPalette (
+					File.ReadAllBytes (fd.Filename)));
+		}
+		fd.Destroy ();
+	}
 }
