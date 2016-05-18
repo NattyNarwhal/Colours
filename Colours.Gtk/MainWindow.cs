@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Text;
 using Gtk;
 using Colours;
 
@@ -367,7 +368,18 @@ public partial class MainWindow: Gtk.Window
  	}
 	public void CopySelection()
 	{
-
+		// HACK: ideally, we'd just send a PaletteColor or List of
+		// those, except that won't work. ContainsData(type) says
+		// true, GetData(type) says null.
+		var sb = new StringBuilder("pc" + Environment.NewLine);
+		if (treeview1.Selection.CountSelectedRows() > 0)
+		{
+			treeview1.Selection.SelectedForeach ((m, p, i) => {
+				var pc = (PaletteColor)treeview1.Model.GetValue (i, 2);
+				sb.AppendLine(pc.ToString());
+			});
+			clipboard.Text = sb.ToString ();
+		}
 	}
 
 	protected void OnCutActionActivated (object sender, EventArgs e)

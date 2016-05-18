@@ -211,12 +211,14 @@
         <property name="Label" translatable="yes">Cu_t</property>
         <property name="ShortLabel" translatable="yes">Cu_t</property>
         <property name="StockId">gtk-cut</property>
+        <signal name="Activated" handler="OnCutActionActivated" />
       </action>
       <action id="copyAction">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">_Copy</property>
         <property name="ShortLabel" translatable="yes">_Copy</property>
         <property name="StockId">gtk-copy</property>
+        <signal name="Activated" handler="OnCopyActionActivated" />
       </action>
       <action id="pasteAction">
         <property name="Type">Action</property>
