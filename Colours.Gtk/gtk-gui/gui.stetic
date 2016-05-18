@@ -200,6 +200,12 @@
         <property name="StockId">gtk-delete</property>
         <signal name="Activated" handler="OnDeleteActionActivated" />
       </action>
+      <action id="AddAllAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Add A_ll</property>
+        <property name="ShortLabel" translatable="yes">Add A_ll</property>
+        <signal name="Activated" handler="OnAddAllActionActivated" />
+      </action>
     </action-group>
     <property name="MemberName" />
     <property name="Title" translatable="yes">MainWindow</property>
@@ -226,6 +232,7 @@
                 <node type="Menuitem" action="redoAction" />
                 <node type="Separator" />
                 <node type="Menuitem" action="addAction" />
+                <node type="Menuitem" action="AddAllAction" />
                 <node type="Menuitem" action="deleteAction" />
               </node>
               <node type="Menu" action="AcquireAction">

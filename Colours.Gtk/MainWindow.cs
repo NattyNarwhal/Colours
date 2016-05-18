@@ -343,8 +343,9 @@ public partial class MainWindow: Gtk.Window
 	protected void OnAddActionActivated (object sender, EventArgs e)
 	{
 		appPal.AppendColor(app.Color);
-	}
-	protected void OnDeleteActionActivated (object sender, EventArgs e)
+	}
+
+	public void DeleteSelected()
 	{
 		// TODO: wire to delete key?
 		List<PaletteColor> l = new List<PaletteColor> ();
@@ -353,5 +354,15 @@ public partial class MainWindow: Gtk.Window
 			l.Add(pc);
 		});
 		appPal.DeleteColors (l);
+	}
+	protected void OnDeleteActionActivated (object sender, EventArgs e)
+	{
+		DeleteSelected ();
+	}
+
+	protected void OnAddAllActionActivated (object sender, EventArgs e)
+	{
+		foreach (var c in app.Results)
+			appPal.AppendColor (c.ToRgb ());
 	}
 }
