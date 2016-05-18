@@ -86,8 +86,6 @@ I won't deny inspiration ;)
 * [ ] Icons for actions. There are generic sets, and the GTK version uses stock icons, but SWF could use, say, the VS image library for well-known functions like save. We still need a icons for commands like saturate though.
 * [ ] A colour wheel would be impressive. Kuler does this.
 * [ ] Picking colors from images would be neat.
-* for GTK version:
-	* [ ] Icons in treeView
-	* [ ] Dirty bit handling
-	* [ ] Drag reordering
-	* [ ] Genercize file dialog handling
+* [ ] Finish GTK parity
+ * [ ] Drag reordering
+ * [ ] Genercize file dialog handling

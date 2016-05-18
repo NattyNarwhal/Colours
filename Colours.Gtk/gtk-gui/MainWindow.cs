@@ -58,7 +58,7 @@ public partial class MainWindow
 	private global::Gtk.Action undoAction;
 	
 	private global::Gtk.Action redoAction;
-
+	
 	private global::Gtk.Action addAction;
 	
 	private global::Gtk.Action deleteAction;
