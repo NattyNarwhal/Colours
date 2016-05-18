@@ -55,6 +55,13 @@ public partial class MainWindow: Gtk.Window
 		SyncAppPalViewState (this, new EventArgs ());
 	}
 
+	// replaces var pc = (PaletteColor)treeview1.Model.GetValue (i, 2);
+	public PaletteColor GetItemFromIter(TreeIter i)
+	{
+		const int colColumn = 2;
+		return (PaletteColor)treeview1.Model.GetValue (i, colColumn);
+	}
+
 	public void SyncAppViewState(object sender, EventArgs e)
 	{
 		schemeBox.Active = (int)app.SchemeType;
@@ -353,7 +360,7 @@ public partial class MainWindow: Gtk.Window
 		TreeIter iter;
 		if (treeview1.Model.GetIterFromString(out iter, args.Path)) {
 			// get the index
-			var pc = (PaletteColor)treeview1.Model.GetValue (iter, 2);
+			var pc = GetItemFromIter(iter);
 			if (pc.Name != args.NewText)
 				appPal.RenameColor (appPal.Palette.Colors.IndexOf (pc), args.NewText);
 		}
@@ -363,7 +370,7 @@ public partial class MainWindow: Gtk.Window
 	{
 		TreeIter iter;
 		if (treeview1.Model.GetIter(out iter, args.Path)) {
-			var pc = (PaletteColor)treeview1.Model.GetValue (iter, 2);
+			var pc = GetItemFromIter (iter);
 			app.SetColor (pc.Color, true);
 		}
 	}
@@ -377,7 +384,7 @@ public partial class MainWindow: Gtk.Window
 		// TODO: wire to delete key?
 		List<PaletteColor> l = new List<PaletteColor> ();
 		treeview1.Selection.SelectedForeach ((m, p, i) => {
-			var pc = (PaletteColor)treeview1.Model.GetValue (i, 2);
+			var pc = GetItemFromIter(i);
 			l.Add(pc);
 		});
 		appPal.DeleteColors (l);
@@ -401,7 +408,7 @@ public partial class MainWindow: Gtk.Window
 		if (treeview1.Selection.CountSelectedRows() > 0)
 		{
 			treeview1.Selection.SelectedForeach ((m, p, i) => {
-				var pc = (PaletteColor)treeview1.Model.GetValue (i, 2);
+				var pc = GetItemFromIter(i);
 				sb.AppendLine(pc.ToString());
 			});
 			clipboard.Text = sb.ToString ();
