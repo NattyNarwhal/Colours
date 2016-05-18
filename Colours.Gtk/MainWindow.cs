@@ -48,6 +48,9 @@ public partial class MainWindow: Gtk.Window
 		}
 		app.ResultChanged += SyncAppViewState;
 		appPal.PaletteChanged += SyncAppPalViewState;
+		treeview1.Selection.Changed += (o, e) => {
+			UpdateUI();
+		};
 		SyncAppViewState (this, new EventArgs());
 		SyncAppPalViewState (this, new EventArgs ());
 	}
@@ -94,6 +97,9 @@ public partial class MainWindow: Gtk.Window
 			appPal.Dirty ? "*" : "", schemeBox.ActiveText,
 			app.Color.ToHtml());
 
+		var selected = treeview1.Selection.CountSelectedRows() > 0;
+		var hasItems = appPal.Palette.Colors.Count > 0;
+
 		goBackAction.Sensitive = app.CanUndo ();
 		goForwardAction.Sensitive = app.CanRedo ();
 		BrightenAction.Sensitive = app.CanBrighten ();
@@ -103,6 +109,13 @@ public partial class MainWindow: Gtk.Window
 
 		undoAction.Sensitive = appPal.CanUndo ();
 		redoAction.Sensitive = appPal.CanRedo ();
+
+		cutAction.Sensitive = selected;
+		copyAction.Sensitive = selected;
+		deleteAction.Sensitive = selected;
+
+		saveAction.Sensitive = hasItems;
+		saveAsAction.Sensitive = hasItems;
 	}
 
 	protected void OnDeleteEvent (object sender, DeleteEventArgs a)
@@ -293,6 +306,7 @@ public partial class MainWindow: Gtk.Window
 		}
 		File.WriteAllText (appPal.FileName, appPal.Palette.ToString ());
 		appPal.Dirty = false;
+		UpdateUI ();
 		return true;
 	}
 	protected void OnNewActionActivated (object sender, EventArgs e)
