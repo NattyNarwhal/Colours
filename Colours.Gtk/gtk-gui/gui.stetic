@@ -7,7 +7,7 @@
     <widget-library name="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <widget-library name="../bin/Debug/Colours.Gtk.exe" internal="true" />
   </import>
-  <widget class="Gtk.Window" id="MainWindow" design-size="473 316">
+  <widget class="Gtk.Window" id="MainWindow" design-size="493 316">
     <action-group name="Default">
       <action id="EditAction">
         <property name="Type">Action</property>
@@ -21,6 +21,7 @@
       </action>
       <action id="goBackAction">
         <property name="Type">Action</property>
+        <property name="Accelerator">&lt;Primary&gt;Left</property>
         <property name="Label" translatable="yes">_Back</property>
         <property name="ShortLabel" translatable="yes">_Undo</property>
         <property name="StockId">gtk-go-back</property>
@@ -28,6 +29,7 @@
       </action>
       <action id="goForwardAction">
         <property name="Type">Action</property>
+        <property name="Accelerator">&lt;Primary&gt;Right</property>
         <property name="Label" translatable="yes">_Forward</property>
         <property name="ShortLabel" translatable="yes">_Redo</property>
         <property name="StockId">gtk-go-forward</property>
@@ -170,6 +172,7 @@
       </action>
       <action id="undoAction">
         <property name="Type">Action</property>
+        <property name="Accelerator">&lt;Primary&gt;z</property>
         <property name="Label" translatable="yes">_Undo</property>
         <property name="ShortLabel" translatable="yes">_Undo</property>
         <property name="StockId">gtk-undo</property>
@@ -177,6 +180,7 @@
       </action>
       <action id="redoAction">
         <property name="Type">Action</property>
+        <property name="Accelerator">&lt;Primary&gt;y</property>
         <property name="Label" translatable="yes">_Redo</property>
         <property name="ShortLabel" translatable="yes">_Redo</property>
         <property name="StockId">gtk-redo</property>
@@ -184,6 +188,7 @@
       </action>
       <action id="addAction">
         <property name="Type">Action</property>
+        <property name="Accelerator">&lt;Primary&gt;a</property>
         <property name="Label" translatable="yes">_Add</property>
         <property name="ShortLabel" translatable="yes">_Add</property>
         <property name="StockId">gtk-add</property>
@@ -191,6 +196,7 @@
       </action>
       <action id="deleteAction">
         <property name="Type">Action</property>
+        <property name="Accelerator">Delete</property>
         <property name="Label" translatable="yes">_Delete</property>
         <property name="ShortLabel" translatable="yes">_Delete</property>
         <property name="StockId">gtk-delete</property>
