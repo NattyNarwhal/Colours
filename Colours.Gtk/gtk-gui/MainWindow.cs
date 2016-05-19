@@ -109,10 +109,10 @@ public partial class MainWindow
 		w1.Add (this.ColorAction, null);
 		this.goBackAction = new global::Gtk.Action ("goBackAction", global::Mono.Unix.Catalog.GetString ("_Back"), null, "gtk-go-back");
 		this.goBackAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("_Undo");
-		w1.Add (this.goBackAction, null);
+		w1.Add (this.goBackAction, "<Primary>Left");
 		this.goForwardAction = new global::Gtk.Action ("goForwardAction", global::Mono.Unix.Catalog.GetString ("_Forward"), null, "gtk-go-forward");
 		this.goForwardAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("_Redo");
-		w1.Add (this.goForwardAction, null);
+		w1.Add (this.goForwardAction, "<Primary>Right");
 		this.CopyHexColorAction = new global::Gtk.Action ("CopyHexColorAction", global::Mono.Unix.Catalog.GetString ("Copy He_x"), null, null);
 		this.CopyHexColorAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Copy He_x");
 		w1.Add (this.CopyHexColorAction, null);
@@ -178,16 +178,16 @@ public partial class MainWindow
 		w1.Add (this.saveAsAction, null);
 		this.undoAction = new global::Gtk.Action ("undoAction", global::Mono.Unix.Catalog.GetString ("_Undo"), null, "gtk-undo");
 		this.undoAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("_Undo");
-		w1.Add (this.undoAction, null);
+		w1.Add (this.undoAction, "<Primary>z");
 		this.redoAction = new global::Gtk.Action ("redoAction", global::Mono.Unix.Catalog.GetString ("_Redo"), null, "gtk-redo");
 		this.redoAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("_Redo");
-		w1.Add (this.redoAction, null);
+		w1.Add (this.redoAction, "<Primary>y");
 		this.addAction = new global::Gtk.Action ("addAction", global::Mono.Unix.Catalog.GetString ("_Add"), null, "gtk-add");
 		this.addAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("_Add");
-		w1.Add (this.addAction, null);
+		w1.Add (this.addAction, "<Primary>a");
 		this.deleteAction = new global::Gtk.Action ("deleteAction", global::Mono.Unix.Catalog.GetString ("_Delete"), null, "gtk-delete");
 		this.deleteAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("_Delete");
-		w1.Add (this.deleteAction, null);
+		w1.Add (this.deleteAction, "Delete");
 		this.AddAllAction = new global::Gtk.Action ("AddAllAction", global::Mono.Unix.Catalog.GetString ("Add A_ll"), null, null);
 		this.AddAllAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Add A_ll");
 		w1.Add (this.AddAllAction, null);
@@ -311,7 +311,7 @@ public partial class MainWindow
 		if ((this.Child != null)) {
 			this.Child.ShowAll ();
 		}
-		this.DefaultWidth = 473;
+		this.DefaultWidth = 493;
 		this.DefaultHeight = 316;
 		this.Show ();
 		this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);

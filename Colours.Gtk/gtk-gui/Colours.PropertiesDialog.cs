@@ -29,7 +29,11 @@ namespace Colours
 			global::Stetic.Gui.Initialize (this);
 			// Widget Colours.PropertiesDialog
 			this.Name = "Colours.PropertiesDialog";
+			this.Title = global::Mono.Unix.Catalog.GetString ("Palette Properties");
+			this.TypeHint = ((global::Gdk.WindowTypeHint)(1));
 			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
+			this.SkipPagerHint = true;
+			this.SkipTaskbarHint = true;
 			// Internal child Colours.PropertiesDialog.VBox
 			global::Gtk.VBox w1 = this.VBox;
 			w1.Name = "dialog1_VBox";
