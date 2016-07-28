@@ -118,8 +118,6 @@ namespace Colours
 			w1.Add (this.table1);
 			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(w1 [this.table1]));
 			w9.Position = 0;
-			w9.Expand = false;
-			w9.Fill = false;
 			// Internal child Colours.PropertiesDialog.ActionArea
 			global::Gtk.HButtonBox w10 = this.ActionArea;
 			w10.Name = "dialog1_ActionArea";
