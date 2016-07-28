@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -23,6 +24,29 @@ public partial class MainWindow: Gtk.Window
 		Build ();
 		// don't use this for app init, only for base init
 		treeview1.Model = ls;
+
+		treeview1.DragEnd += (o, args) => {
+			// HACK: GTK thinks it's special and has its own model
+			// instead of our own. Resync changes made to the GTK
+			// model, manually.
+
+			var newPal = new Palette(appPal.Palette);
+
+			// HACK: we don't have .Select on models
+			var newList = new List<PaletteColor>();
+			ls.Foreach((m, p, i) => {
+				var pc = GetItemFromIter(i);
+				newList.Add(pc);
+				return false; // .Foreach needs this to continue walking
+			});
+
+			// because thse are different lists, but containing the same
+			// objects, do this
+			if (!newPal.Colors.SequenceEqual(newList)) {
+				newPal.Colors = newList;
+				appPal.SetPalette(newPal);
+			}
+		};
 
 		var pcIconRender = new CellRendererPixbuf ();
 		var pcIconCol = new TreeViewColumn ("Icon", pcIconRender);
