@@ -8,7 +8,6 @@ This is a small program to create colour schemes and palette. There's a `System.
 * Cleanish-MVC design allowing for creating new interfaces, easily
     * Windows frontend
     * GTK frontend
-        * Unfortunately, out of parity. Needs UI work to add palette support.
     * Console frontend
         * Invoke like any other unix tool - one shot with parameters
         * Written in F#
@@ -87,5 +86,4 @@ I won't deny inspiration ;)
 * [ ] A colour wheel would be impressive. Kuler does this.
 * [ ] Picking colors from images would be neat.
 * [ ] Finish GTK parity
- * [ ] Drag reordering
  * [ ] Genercize file dialog handling
