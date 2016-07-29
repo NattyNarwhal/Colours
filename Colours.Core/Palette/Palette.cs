@@ -76,7 +76,7 @@ namespace Colours
         /// </summary>
         /// <param name="file">The file itself.</param>
         public Palette(string file) :
-            this(file.Split(Environment.NewLine.ToCharArray()))
+            this(Regex.Split(file, "\r?\n"))
         { }
 
         /// <summary>
