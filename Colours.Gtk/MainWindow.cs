@@ -144,7 +144,7 @@ public partial class MainWindow: Gtk.Window
 		if (appPal.Dirty) {
 			MessageDialog md = new MessageDialog (this, DialogFlags.Modal,
 				MessageType.Question, ButtonsType.None,
-				"There are unsaved changed. Do you want to save before you close this palette?");
+				"There are unsaved changes. Do you want to save before you close this palette?");
 			md.AddButton ("Save", ResponseType.Yes);
 			md.AddButton ("Discard", ResponseType.No);
 			md.AddButton ("Cancel", ResponseType.Cancel);
