@@ -348,5 +348,6 @@ public partial class MainWindow
 		this.propertiesAction.Activated += new global::System.EventHandler (this.OnPropertiesActionActivated);
 		this.schemeBox.Changed += new global::System.EventHandler (this.OnSchemeBoxChanged);
 		this.treeview1.RowActivated += new global::Gtk.RowActivatedHandler (this.OnTreeview1RowActivated);
+		this.treeview1.DragEnd += new global::Gtk.DragEndHandler (this.OnTreeview1DragEnd);
 	}
 }

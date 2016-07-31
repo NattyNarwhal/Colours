@@ -330,7 +330,7 @@
           <widget class="Gtk.VPaned" id="vpaned1">
             <property name="MemberName" />
             <property name="CanFocus">True</property>
-            <property name="Position">100</property>
+            <property name="Position">1</property>
             <child>
               <widget class="Gtk.VBox" id="paddedBox">
                 <property name="MemberName" />
@@ -392,6 +392,7 @@ Monochromatic</property>
                     <property name="ShowScrollbars">True</property>
                     <property name="Reorderable">True</property>
                     <signal name="RowActivated" handler="OnTreeview1RowActivated" />
+                    <signal name="DragEnd" handler="OnTreeview1DragEnd" />
                   </widget>
                 </child>
               </widget>
