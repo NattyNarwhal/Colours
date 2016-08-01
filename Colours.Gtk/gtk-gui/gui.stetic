@@ -231,19 +231,19 @@
       </action>
       <action id="ImportPhotoshopPaletteAction">
         <property name="Type">Action</property>
-        <property name="Label" translatable="yes">Import Photoshop Palette</property>
+        <property name="Label" translatable="yes">_Import Photoshop Palette</property>
         <property name="ShortLabel" translatable="yes">Import Photoshop Palette</property>
         <signal name="Activated" handler="OnImportPhotoshopPaletteActionActivated" />
       </action>
       <action id="ExportPhotoshopPaletteAction">
         <property name="Type">Action</property>
-        <property name="Label" translatable="yes">Export Photoshop Palette</property>
+        <property name="Label" translatable="yes">_Export Photoshop Palette</property>
         <property name="ShortLabel" translatable="yes">Export Photoshop Palette</property>
         <signal name="Activated" handler="OnExportPhotoshopPaletteActionActivated" />
       </action>
       <action id="ExportHTMLAction">
         <property name="Type">Action</property>
-        <property name="Label" translatable="yes">Export HTML</property>
+        <property name="Label" translatable="yes">Export _HTML</property>
         <property name="ShortLabel" translatable="yes">Export HTML</property>
         <signal name="Activated" handler="OnExportHTMLActionActivated" />
       </action>
@@ -330,7 +330,7 @@
           <widget class="Gtk.VPaned" id="vpaned1">
             <property name="MemberName" />
             <property name="CanFocus">True</property>
-            <property name="Position">1</property>
+            <property name="Position">92</property>
             <child>
               <widget class="Gtk.VBox" id="paddedBox">
                 <property name="MemberName" />
