@@ -225,7 +225,9 @@ public partial class MainWindow: Gtk.Window
 	protected void OnUndoActionActivated (object sender, EventArgs e)
 	{
 		app.Undo();
-	}	protected void OnInvertActionActivated (object sender, EventArgs e)
+	}
+
+	protected void OnInvertActionActivated (object sender, EventArgs e)
 	{
 		app.SetColor (app.Color.Invert (), true);
 	}
@@ -238,7 +240,8 @@ public partial class MainWindow: Gtk.Window
 	protected void OnSaturateActionActivated (object sender, EventArgs e)
 	{
 		app.Saturate ();
-	}
+	}
+
 	protected void OnDarkenActionActivated (object sender, EventArgs e)
 	{
 		app.Darken ();
@@ -320,7 +323,8 @@ public partial class MainWindow: Gtk.Window
 	protected void OnQuitActionActivated (object sender, EventArgs e)
 	{
 		Application.Quit ();
-	}
+	}
+
 	protected void OnAboutActionActivated (object sender, EventArgs e)
 	{
 		AboutDialog ad = new AboutDialog (){
@@ -357,12 +361,14 @@ public partial class MainWindow: Gtk.Window
 				fd.Destroy ();
 				return false;
 			}
-		}
+		}
+
 		File.WriteAllText (appPal.FileName, appPal.Palette.ToString ());
 		appPal.Dirty = false;
 		UpdateUI ();
 		return true;
-	}
+	}
+
 	protected void OnNewActionActivated (object sender, EventArgs e)
 	{
 		if (DirtyPrompt ())
@@ -423,7 +429,8 @@ public partial class MainWindow: Gtk.Window
 			var pc = GetItemFromIter (iter);
 			app.SetColor (pc.Color, true);
 		}
-	}
+	}
+
 	protected void OnAddActionActivated (object sender, EventArgs e)
 	{
 		appPal.AppendColor(app.Color);
@@ -438,7 +445,8 @@ public partial class MainWindow: Gtk.Window
 			l.Add(pc);
 		});
 		appPal.DeleteColors (l);
-	}
+	}
+
 	protected void OnDeleteActionActivated (object sender, EventArgs e)
 	{
 		DeleteSelection ();
@@ -448,7 +456,8 @@ public partial class MainWindow: Gtk.Window
 	{
 		foreach (var c in app.Results)
 			appPal.AppendColor (c.ToRgb ());
- 	}
+ 	}
+
 	public void CopySelection()
 	{
 		// HACK: ideally, we'd just send a PaletteColor or List of
@@ -546,7 +555,8 @@ public partial class MainWindow: Gtk.Window
 			);
 		}
 		fd.Destroy ();
-	}
+	}
+
 
 	protected void OnPropertiesActionActivated (object sender, EventArgs e)
 	{
