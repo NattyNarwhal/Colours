@@ -587,44 +587,21 @@ public partial class MainWindow: Gtk.Window
 	{
 		if (args.Event.Button == 3) { // right mouse button
 			Menu menu = new Menu();
-			MenuItem hexPopupItem = new MenuItem ("Copy He_x");
-			MenuItem hslPopupItem = new MenuItem ("Copy HS_L");
-			MenuItem hsvPopupItem = new MenuItem ("Copy HS_V");
+			MenuItem cutPopupItem = new MenuItem ("Cu_t");
+			MenuItem copyPopupItem = new MenuItem ("_Copy");
 			MenuItem delPopupItem = new MenuItem ("_Remove");
-			hexPopupItem.Activated += (s, a) => {
-				// TODO: genercize this SelectedForeach?
-				if (treeview1.Selection.CountSelectedRows() > 0)
-				{
-					treeview1.Selection.SelectedForeach ((m, p, i) => {
-						var pc = GetItemFromIter(i);
-						clipboard.Text = pc.Color.ToHtml();
-					});
-				}
+			cutPopupItem.Activated += (s, a) => {
+				CopySelection();
+				DeleteSelection();
 			};
-			hslPopupItem.Activated += (s, a) => {
-				if (treeview1.Selection.CountSelectedRows() > 0)
-				{
-					treeview1.Selection.SelectedForeach ((m, p, i) => {
-						var pc = GetItemFromIter(i);
-						clipboard.Text = pc.Color.ToHslString();
-					});
-				}
-			};
-			hsvPopupItem.Activated += (s, a) => {
-				if (treeview1.Selection.CountSelectedRows() > 0)
-				{
-					treeview1.Selection.SelectedForeach ((m, p, i) => {
-						var pc = GetItemFromIter(i);
-						clipboard.Text = new HsvColor(pc.Color).ToString();
-					});
-				}
+			copyPopupItem.Activated += (s, a) => {
+				CopySelection();
 			};
 			delPopupItem.Activated += (s, a) => {
 				DeleteSelection();
 			};
-			menu.Add (hexPopupItem);
-			menu.Add (hslPopupItem);
-			menu.Add (hsvPopupItem);
+			menu.Add (cutPopupItem);
+			menu.Add (copyPopupItem);
 			menu.Add (delPopupItem);
 			menu.ShowAll ();
 			menu.Popup();
