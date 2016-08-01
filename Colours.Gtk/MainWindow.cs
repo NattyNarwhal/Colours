@@ -16,7 +16,6 @@ public partial class MainWindow: Gtk.Window
 	private static Gdk.Atom clipAtom = Gdk.Atom.Intern("CLIPBOARD", false);
 	Clipboard clipboard = Clipboard.Get (clipAtom);
 
-	// TODO: should this be just PaletteColor, and use render funcs?
 	ListStore ls = new ListStore (typeof(PaletteColor));
 
 	public MainWindow () : base (Gtk.WindowType.Toplevel)
