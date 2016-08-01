@@ -17,7 +17,7 @@ public partial class MainWindow: Gtk.Window
 	Clipboard clipboard = Clipboard.Get (clipAtom);
 
 	// TODO: should this be just PaletteColor, and use render funcs?
-	ListStore ls = new ListStore (typeof(Gdk.Pixbuf), typeof(string), typeof(string), typeof(PaletteColor));
+	ListStore ls = new ListStore (typeof(PaletteColor));
 
 	public MainWindow () : base (Gtk.WindowType.Toplevel)
 	{
@@ -27,17 +27,30 @@ public partial class MainWindow: Gtk.Window
 
 		var pcIconRender = new CellRendererPixbuf ();
 		var pcIconCol = new TreeViewColumn ("Icon", pcIconRender);
-		pcIconCol.AddAttribute (pcIconRender, "pixbuf", 0);
+		pcIconCol.PackStart (pcIconRender, true);
+		pcIconCol.SetCellDataFunc (pcIconRender, new TreeCellDataFunc((tc, c, m, i) => {
+			Gdk.Pixbuf buf = new Gdk.Pixbuf (Gdk.Colorspace.Rgb, false, 8, 16, 16);
+
+			buf.Fill (GetItemFromIter(i).Color.ToGdkPixel());
+
+			((CellRendererPixbuf)c).Pixbuf = buf;
+		}));
 
 		var pcNameRender = new CellRendererText ();
 		pcNameRender.Editable = true;
 		pcNameRender.Edited += pcNameRender_Edited;
 		var pcNameCol = new TreeViewColumn ("Name", pcNameRender);
-		pcNameCol.AddAttribute (pcNameRender, "text", 1);
+		pcNameCol.PackStart (pcNameRender, true);
+		pcNameCol.SetCellDataFunc (pcNameRender, new TreeCellDataFunc((tc, c, m, i) => {
+			((CellRendererText)c).Text = GetItemFromIter(i).Name;
+		}));
 
 		var pcColorRender = new CellRendererText ();
 		var pcColorCol = new TreeViewColumn ("Color", pcColorRender);
-		pcColorCol.AddAttribute (pcColorRender, "text", 2);
+		pcColorCol.PackStart (pcColorRender, true);
+		pcColorCol.SetCellDataFunc (pcColorRender, new TreeCellDataFunc((tc, c, m, i) => {
+			((CellRendererText)c).Text = GetItemFromIter(i).Color.ToHtml();
+		}));
 
 		treeview1.AppendColumn (pcIconCol);
 		treeview1.AppendColumn (pcNameCol);
@@ -64,7 +77,7 @@ public partial class MainWindow: Gtk.Window
 	// replaces var pc = (PaletteColor)treeview1.Model.GetValue (i, 2);
 	public PaletteColor GetItemFromIter(TreeIter i)
 	{
-		const int colColumn = 3;
+		const int colColumn = 0;
 		return (PaletteColor)treeview1.Model.GetValue (i, colColumn);
 	}
 
@@ -97,13 +110,8 @@ public partial class MainWindow: Gtk.Window
 	{
 		ls.Clear ();
 
-		foreach (PaletteColor pc in appPal.Palette.Colors) {
-			Gdk.Pixbuf buf = new Gdk.Pixbuf (Gdk.Colorspace.Rgb, false, 8, 16, 16);
-
-			buf.Fill (pc.Color.ToGdkPixel());
-
-			ls.AppendValues (buf, pc.Name, pc.Color.ToHtml(), pc);
-		}
+		foreach (PaletteColor pc in appPal.Palette.Colors)
+			ls.AppendValues (pc);
 
 		UpdateUI ();
 	}
@@ -587,6 +595,7 @@ public partial class MainWindow: Gtk.Window
 	{
 		if (args.Event.Button == 3) { // right mouse button
 			Menu menu = new Menu();
+
 			MenuItem cutPopupItem = new MenuItem ("Cu_t");
 			MenuItem copyPopupItem = new MenuItem ("_Copy");
 			MenuItem delPopupItem = new MenuItem ("_Remove");

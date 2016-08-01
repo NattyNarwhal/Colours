@@ -200,13 +200,13 @@ public partial class MainWindow
 		this.pasteAction = new global::Gtk.Action ("pasteAction", global::Mono.Unix.Catalog.GetString ("_Paste"), null, "gtk-paste");
 		this.pasteAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("_Paste");
 		w1.Add (this.pasteAction, null);
-		this.ImportPhotoshopPaletteAction = new global::Gtk.Action ("ImportPhotoshopPaletteAction", global::Mono.Unix.Catalog.GetString ("Import Photoshop Palette"), null, null);
+		this.ImportPhotoshopPaletteAction = new global::Gtk.Action ("ImportPhotoshopPaletteAction", global::Mono.Unix.Catalog.GetString ("_Import Photoshop Palette"), null, null);
 		this.ImportPhotoshopPaletteAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Import Photoshop Palette");
 		w1.Add (this.ImportPhotoshopPaletteAction, null);
-		this.ExportPhotoshopPaletteAction = new global::Gtk.Action ("ExportPhotoshopPaletteAction", global::Mono.Unix.Catalog.GetString ("Export Photoshop Palette"), null, null);
+		this.ExportPhotoshopPaletteAction = new global::Gtk.Action ("ExportPhotoshopPaletteAction", global::Mono.Unix.Catalog.GetString ("_Export Photoshop Palette"), null, null);
 		this.ExportPhotoshopPaletteAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Export Photoshop Palette");
 		w1.Add (this.ExportPhotoshopPaletteAction, null);
-		this.ExportHTMLAction = new global::Gtk.Action ("ExportHTMLAction", global::Mono.Unix.Catalog.GetString ("Export HTML"), null, null);
+		this.ExportHTMLAction = new global::Gtk.Action ("ExportHTMLAction", global::Mono.Unix.Catalog.GetString ("Export _HTML"), null, null);
 		this.ExportHTMLAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Export HTML");
 		w1.Add (this.ExportHTMLAction, null);
 		this.propertiesAction = new global::Gtk.Action ("propertiesAction", global::Mono.Unix.Catalog.GetString ("_Properties"), null, "gtk-properties");
@@ -234,7 +234,7 @@ public partial class MainWindow
 		this.vpaned1 = new global::Gtk.VPaned ();
 		this.vpaned1.CanFocus = true;
 		this.vpaned1.Name = "vpaned1";
-		this.vpaned1.Position = 1;
+		this.vpaned1.Position = 92;
 		// Container child vpaned1.Gtk.Paned+PanedChild
 		this.paddedBox = new global::Gtk.VBox ();
 		this.paddedBox.Name = "paddedBox";
