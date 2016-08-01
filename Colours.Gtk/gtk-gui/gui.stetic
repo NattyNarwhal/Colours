@@ -393,6 +393,7 @@ Monochromatic</property>
                     <property name="Reorderable">True</property>
                     <signal name="RowActivated" handler="OnTreeview1RowActivated" />
                     <signal name="DragEnd" handler="OnTreeview1DragEnd" />
+                    <signal name="ButtonPressEvent" handler="OnTreeview1ButtonPressEvent" />
                   </widget>
                 </child>
               </widget>

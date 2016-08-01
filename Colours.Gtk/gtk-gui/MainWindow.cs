@@ -222,34 +222,7 @@ public partial class MainWindow
 		this.mainVbox.Name = "mainVbox";
 		this.mainVbox.Spacing = 6;
 		// Container child mainVbox.Gtk.Box+BoxChild
-		this.UIManager.AddUiFromString ("<ui><menubar name=\'menubar1\'><menu name=\'FileAction\' action=\'FileAction\'><menuite" +
-		"m name=\'newAction\' action=\'newAction\'/><menuitem name=\'openAction\' action=\'openA" +
-		"ction\'/><menuitem name=\'saveAction\' action=\'saveAction\'/><menuitem name=\'saveAsA" +
-		"ction\' action=\'saveAsAction\'/><separator/><menuitem name=\'propertiesAction\' acti" +
-		"on=\'propertiesAction\'/><separator/><menuitem name=\'ImportPhotoshopPaletteAction\'" +
-		" action=\'ImportPhotoshopPaletteAction\'/><menuitem name=\'ExportPhotoshopPaletteAc" +
-		"tion\' action=\'ExportPhotoshopPaletteAction\'/><menuitem name=\'ExportHTMLAction\' a" +
-		"ction=\'ExportHTMLAction\'/><separator/><menuitem name=\'quitAction\' action=\'quitAc" +
-		"tion\'/></menu><menu name=\'EditAction\' action=\'EditAction\'><menuitem name=\'undoAc" +
-		"tion\' action=\'undoAction\'/><menuitem name=\'redoAction\' action=\'redoAction\'/><sep" +
-		"arator/><menuitem name=\'cutAction\' action=\'cutAction\'/><menuitem name=\'copyActio" +
-		"n\' action=\'copyAction\'/><menuitem name=\'pasteAction\' action=\'pasteAction\'/><sepa" +
-		"rator/><menuitem name=\'addAction\' action=\'addAction\'/><menuitem name=\'AddAllActi" +
-		"on\' action=\'AddAllAction\'/><menuitem name=\'deleteAction\' action=\'deleteAction\'/>" +
-		"</menu><menu name=\'AcquireAction\' action=\'AcquireAction\'><menuitem name=\'PasteAc" +
-		"quireAction\' action=\'PasteAcquireAction\'/><menuitem name=\'refreshAction\' action=" +
-		"\'refreshAction\'/></menu><menu name=\'ColorAction\' action=\'ColorAction\'><menuitem " +
-		"name=\'goBackAction\' action=\'goBackAction\'/><menuitem name=\'goForwardAction\' acti" +
-		"on=\'goForwardAction\'/><separator/><menuitem name=\'CopyHexColorAction\' action=\'Co" +
-		"pyHexColorAction\'/><menuitem name=\'CopyHSLColorAction\' action=\'CopyHSLColorActio" +
-		"n\'/><menuitem name=\'CopyHSVColorAction\' action=\'CopyHSVColorAction\'/><menuitem n" +
-		"ame=\'SaveAsHTMLColorAction\' action=\'SaveAsHTMLColorAction\'/><separator/><menuite" +
-		"m name=\'BrightenAction\' action=\'BrightenAction\'/><menuitem name=\'DarkenAction\' a" +
-		"ction=\'DarkenAction\'/><separator/><menuitem name=\'SaturateAction\' action=\'Satura" +
-		"teAction\'/><menuitem name=\'DesaturateAction\' action=\'DesaturateAction\'/><separat" +
-		"or/><menuitem name=\'InvertAction\' action=\'InvertAction\'/></menu><menu name=\'Help" +
-		"Action\' action=\'HelpAction\'><menuitem name=\'aboutAction\' action=\'aboutAction\'/><" +
-		"/menu></menubar></ui>");
+		this.UIManager.AddUiFromString ("<ui><menubar name='menubar1'><menu name='FileAction' action='FileAction'><menuitem name='newAction' action='newAction'/><menuitem name='openAction' action='openAction'/><menuitem name='saveAction' action='saveAction'/><menuitem name='saveAsAction' action='saveAsAction'/><separator/><menuitem name='propertiesAction' action='propertiesAction'/><separator/><menuitem name='ImportPhotoshopPaletteAction' action='ImportPhotoshopPaletteAction'/><menuitem name='ExportPhotoshopPaletteAction' action='ExportPhotoshopPaletteAction'/><menuitem name='ExportHTMLAction' action='ExportHTMLAction'/><separator/><menuitem name='quitAction' action='quitAction'/></menu><menu name='EditAction' action='EditAction'><menuitem name='undoAction' action='undoAction'/><menuitem name='redoAction' action='redoAction'/><separator/><menuitem name='cutAction' action='cutAction'/><menuitem name='copyAction' action='copyAction'/><menuitem name='pasteAction' action='pasteAction'/><separator/><menuitem name='addAction' action='addAction'/><menuitem name='AddAllAction' action='AddAllAction'/><menuitem name='deleteAction' action='deleteAction'/></menu><menu name='AcquireAction' action='AcquireAction'><menuitem name='PasteAcquireAction' action='PasteAcquireAction'/><menuitem name='refreshAction' action='refreshAction'/></menu><menu name='ColorAction' action='ColorAction'><menuitem name='goBackAction' action='goBackAction'/><menuitem name='goForwardAction' action='goForwardAction'/><separator/><menuitem name='CopyHexColorAction' action='CopyHexColorAction'/><menuitem name='CopyHSLColorAction' action='CopyHSLColorAction'/><menuitem name='CopyHSVColorAction' action='CopyHSVColorAction'/><menuitem name='SaveAsHTMLColorAction' action='SaveAsHTMLColorAction'/><separator/><menuitem name='BrightenAction' action='BrightenAction'/><menuitem name='DarkenAction' action='DarkenAction'/><separator/><menuitem name='SaturateAction' action='SaturateAction'/><menuitem name='DesaturateAction' action='DesaturateAction'/><separator/><menuitem name='InvertAction' action='InvertAction'/></menu><menu name='HelpAction' action='HelpAction'><menuitem name='aboutAction' action='aboutAction'/></menu></menubar></ui>");
 		this.menubar1 = ((global::Gtk.MenuBar)(this.UIManager.GetWidget ("/menubar1")));
 		this.menubar1.Name = "menubar1";
 		this.mainVbox.Add (this.menubar1);
@@ -261,7 +234,7 @@ public partial class MainWindow
 		this.vpaned1 = new global::Gtk.VPaned ();
 		this.vpaned1.CanFocus = true;
 		this.vpaned1.Name = "vpaned1";
-		this.vpaned1.Position = 100;
+		this.vpaned1.Position = 1;
 		// Container child vpaned1.Gtk.Paned+PanedChild
 		this.paddedBox = new global::Gtk.VBox ();
 		this.paddedBox.Name = "paddedBox";
@@ -349,5 +322,6 @@ public partial class MainWindow
 		this.schemeBox.Changed += new global::System.EventHandler (this.OnSchemeBoxChanged);
 		this.treeview1.RowActivated += new global::Gtk.RowActivatedHandler (this.OnTreeview1RowActivated);
 		this.treeview1.DragEnd += new global::Gtk.DragEndHandler (this.OnTreeview1DragEnd);
+		this.treeview1.ButtonPressEvent += new global::Gtk.ButtonPressEventHandler (this.OnTreeview1ButtonPressEvent);
 	}
 }
