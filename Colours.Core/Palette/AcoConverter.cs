@@ -258,14 +258,14 @@ namespace Colours
                     var countBytes = GetBytesUShortBE((ushort)p.Colors.Count);
 
                     // v1
-                    var v1 = GetBytesUShortBE((ushort)1);
+                    var v1 = GetBytesUShortBE(1);
                     sw.Write(v1);
                     sw.Write(countBytes);
                     foreach (var pc in p.Colors)
                         sw.Write(ToPhotoshopColorV1(pc));
 
                     // v2
-                    var v2 = GetBytesUShortBE((ushort)2);
+                    var v2 = GetBytesUShortBE(2);
                     sw.Write(v2);
                     sw.Write(countBytes);
                     foreach (var pc in p.Colors)
