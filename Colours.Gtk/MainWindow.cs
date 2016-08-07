@@ -143,6 +143,10 @@ public partial class MainWindow: Gtk.Window
 
 		undoAction.Sensitive = appPal.CanUndo ();
 		redoAction.Sensitive = appPal.CanRedo ();
+		undoAction.Label = appPal.CanUndo() ?
+			"Undo " + appPal.UndoHistory.Peek().Name : "Can't Undo";
+		redoAction.Label = appPal.CanRedo() ?
+			"Redo " + appPal.RedoHistory.Peek().Name : "Can't Redo";
 
 		cutAction.Sensitive = selected;
 		copyAction.Sensitive = selected;
