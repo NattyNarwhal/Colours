@@ -7,6 +7,7 @@ namespace Colours
     /// Provides a unniversal getopt-like, special-purpose command-line
     /// argument parser for platforms that support command line arguments.
     /// </summary>
+    // TODO: fold into AppInitState as a ctor?
     public static class AppArgParser
     {
         private enum ParsingMode
@@ -34,7 +35,7 @@ namespace Colours
         /// the frontend doesn't support this, it will be ignored anyways.
         /// </param>
         /// <returns>The application state the frontend will load.</returns>
-        public static InitialAppState ParseArgs(string[] args,
+        public static AppInitState ParseArgs(string[] args,
             HsvColor defaultColor, SchemeType defaultScheme, string initialPaletteFile = null)
         {
             HsvColor c = defaultColor;
@@ -69,7 +70,12 @@ namespace Colours
                 }
             }
 
-            return new InitialAppState(c, t, p, u);
+            return new AppInitState()
+            {
+                MixerState = new AppState(c, t),
+                PaletteFileName = p,
+                UnparsedArgs = u
+            };
         }
     }
 }

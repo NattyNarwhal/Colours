@@ -57,9 +57,9 @@ public partial class MainWindow: Gtk.Window
 
 	}
 
-	public MainWindow(InitialAppState state) : this()
+	public MainWindow(AppInitState state) : this()
 	{
-		app = new AppController (state);
+		app = new AppController (state.MixerState);
 		appPal = new AppPaletteController ();
 		if (!String.IsNullOrWhiteSpace (state.PaletteFileName)) {
 

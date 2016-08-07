@@ -10,7 +10,7 @@ let trueColorEscape (s: string, r, g, b) =
 let main argv = 
     let parsed =
         AppArgParser.ParseArgs(argv, new HsvColor(0.0, 1.0, 1.0), SchemeType.Complement)
-    let controller = new AppController(parsed)
+    let controller = new AppController(parsed.MixerState)
 
     let visual =
         if not (isNull(parsed.UnparsedArgs)) then

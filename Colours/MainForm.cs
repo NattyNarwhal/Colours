@@ -24,9 +24,9 @@ namespace Colours
             // this is just a base ctor
         }
 
-        public MainForm(InitialAppState state) : this()
+        public MainForm(AppInitState state) : this()
         {
-            app = new AppController(state);
+            app = new AppController(state.MixerState);
             appPal = new AppPaletteController();
             if (state.PaletteFileName != null)
             {
