@@ -453,8 +453,7 @@ public partial class MainWindow: Gtk.Window
 
 	protected void OnAddAllActionActivated (object sender, EventArgs e)
 	{
-		foreach (var c in app.Results)
-			appPal.AppendColor (c.ToRgb ());
+		appPal.AppendColors(app.Results.Select(x => x.ToRgb()));
  	}
 
 	public void CopySelection()
