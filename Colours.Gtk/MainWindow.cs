@@ -80,6 +80,16 @@ public partial class MainWindow: Gtk.Window
 		return (PaletteColor)treeview1.Model.GetValue (i, colColumn);
 	}
 
+	public IEnumerable<PaletteColor> GetSelectedItems()
+	{
+		var toReturn = new List<PaletteColor>();
+		treeview1.Selection.SelectedForeach((m, p, i) =>
+		{
+			toReturn.Add(GetItemFromIter(i));
+		});
+		return toReturn;
+	}
+
 	public void SyncAppViewState(object sender, EventArgs e)
 	{
 		schemeBox.Active = (int)app.SchemeType;
@@ -254,7 +264,7 @@ public partial class MainWindow: Gtk.Window
 	protected void OnRandomActionActivated (object sender, EventArgs e)
 	{
 		Random r = new Random ();
-		app.SetColor (new RgbColor (r.Next (255), r.Next (255), r.Next (255));
+		app.SetColor (new RgbColor (r.Next (255), r.Next (255), r.Next (255)));
 	}
 
 	protected void OnPasteAcquireActionActivated (object sender, EventArgs e)
@@ -438,12 +448,7 @@ public partial class MainWindow: Gtk.Window
 	public void DeleteSelection()
 	{
 		// TODO: wire to delete key?
-		List<PaletteColor> l = new List<PaletteColor> ();
-		treeview1.Selection.SelectedForeach ((m, p, i) => {
-			var pc = GetItemFromIter(i);
-			l.Add(pc);
-		});
-		appPal.DeleteColors (l);
+		appPal.DeleteColors (GetSelectedItems());
 	}
 
 	protected void OnDeleteActionActivated (object sender, EventArgs e)
@@ -464,10 +469,8 @@ public partial class MainWindow: Gtk.Window
 		var sb = new StringBuilder("pc" + Environment.NewLine);
 		if (treeview1.Selection.CountSelectedRows() > 0)
 		{
-			treeview1.Selection.SelectedForeach ((m, p, i) => {
-				var pc = GetItemFromIter(i);
+			foreach (var pc in GetSelectedItems())
 				sb.AppendLine(pc.ToString());
-			});
 			clipboard.Text = sb.ToString ();
 		}
 	}
@@ -626,4 +629,16 @@ public partial class MainWindow: Gtk.Window
 			menu.Popup();
 		}
 	}
+
+	protected void OnBlendActionActivated(object sender, EventArgs e)
+	{
+		var bd = new BlendDialog(app.Color, treeview1.Selection.CountSelectedRows() > 0 ?
+		                         GetSelectedItems().First().Color : app.Color);
+		if (bd.Run() == (int)ResponseType.Ok)
+		{
+			appPal.AppendColors(bd.SelectedItems);
+		}
+		bd.Destroy();
+	}
 }
+ 

@@ -67,6 +67,8 @@
     <Compile Include="ConfigParser.cs" />
     <Compile Include="PropertiesDialog.cs" />
     <Compile Include="gtk-gui\Colours.PropertiesDialog.cs" />
+    <Compile Include="BlendDialog.cs" />
+    <Compile Include="gtk-gui\Colours.BlendDialog.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
