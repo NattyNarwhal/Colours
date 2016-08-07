@@ -115,6 +115,11 @@ namespace Colours
 
             undoToolStripMenuItem.Enabled = appPal.CanUndo();
             redoToolStripMenuItem.Enabled = appPal.CanRedo();
+            undoToolStripMenuItem.Text = appPal.CanUndo() ?
+                "Undo " + appPal.UndoHistory.Peek().Name : "Can't Undo";
+            redoToolStripMenuItem.Text = appPal.CanRedo() ?
+                "Redo " + appPal.RedoHistory.Peek().Name : "Can't Redo";
+
             backToolStripMenuItem.Enabled = app.CanUndo();
             forwardToolStripMenuItem.Enabled = app.CanRedo();
 
@@ -552,7 +557,7 @@ namespace Colours
                     Columns = pd.PaletteColumns,
                     Comments = pd.PaletteComments
                 };
-                appPal.SetPalette(p);
+                appPal.SetPalette(p, action: "Properties Change");
             }
         }
 

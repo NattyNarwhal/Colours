@@ -574,7 +574,7 @@ public partial class MainWindow: Gtk.Window
 				Columns = pd.PaletteColumns,
 				Comments = pd.PaletteComments
 			};
-			appPal.SetPalette(p);
+			appPal.SetPalette(p, action: "Properties Change");
 		}
 		pd.Destroy ();
 	}
@@ -599,7 +599,7 @@ public partial class MainWindow: Gtk.Window
 		// objects, do this
 		if (!newPal.Colors.SequenceEqual(newList)) {
 			newPal.Colors = newList;
-			appPal.SetPalette(newPal);
+			appPal.SetPalette(newPal, action: "Move Colour");
 		}
 	}
 

@@ -41,6 +41,7 @@
     <Compile Include="Application\AppPaletteController.cs" />
     <Compile Include="Mixing\Blend.cs" />
     <Compile Include="GenericFunctions.cs" />
+    <Compile Include="Models\AppPalUndo.cs" />
     <Compile Include="Models\AppState.cs" />
     <Compile Include="Models\ColorUtils.cs" />
     <Compile Include="Models\HsvColor.cs" />

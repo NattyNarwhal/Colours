@@ -47,6 +47,7 @@ namespace Colours
     /// Represents the application state to initialize an application,
     /// including palette information.
     /// </summary>
+    // TODO: this is a poor abstraction (maybe more contain an AppState)
     public class InitialAppState : AppState
     {
         /// <summary>
