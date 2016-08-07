@@ -40,7 +40,6 @@
     <Compile Include="Application\AppController.cs" />
     <Compile Include="Application\AppPaletteController.cs" />
     <Compile Include="Mixing\Blend.cs" />
-    <Compile Include="GenericFunctions.cs" />
     <Compile Include="Models\AppInitState.cs" />
     <Compile Include="Models\AppPalUndo.cs" />
     <Compile Include="Models\AppState.cs" />
