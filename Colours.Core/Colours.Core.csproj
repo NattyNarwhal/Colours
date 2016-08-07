@@ -40,9 +40,9 @@
     <Compile Include="Application\AppController.cs" />
     <Compile Include="Application\AppPaletteController.cs" />
     <Compile Include="Mixing\Blend.cs" />
-    <Compile Include="Models\AppInitState.cs" />
-    <Compile Include="Models\AppPalUndo.cs" />
-    <Compile Include="Models\AppState.cs" />
+    <Compile Include="Application\AppInitState.cs" />
+    <Compile Include="Application\AppPalUndo.cs" />
+    <Compile Include="Application\AppState.cs" />
     <Compile Include="Models\ColorUtils.cs" />
     <Compile Include="Models\HsvColor.cs" />
     <Compile Include="Application\HtmlProofGenerator.cs" />
