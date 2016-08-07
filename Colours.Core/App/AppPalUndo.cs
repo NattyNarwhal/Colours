@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Colours.App
 {
     /// <summary>
-    /// Represents the undo state of <see cref="Colours.AppPaletteController"/>.
+    /// Represents the undo state of <see cref="AppPaletteController"/>.
     /// </summary>
     public class AppPalUndo
     {

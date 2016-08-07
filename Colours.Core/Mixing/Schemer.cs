@@ -36,7 +36,7 @@ namespace Colours
 
     /// <summary>
     /// This object contains functions to generate colour schemes. For
-    /// application developers, the <see cref="AppController"/> object
+    /// application developers, the <see cref="App.AppController"/> object
     /// will call this for you as needed, using the <see cref="SchemeType"/>
     /// enum to choose which object is called.
     /// </summary>
