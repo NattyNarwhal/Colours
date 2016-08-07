@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Colours
+namespace Colours.App
 {
     /// <summary>
     /// Represents the undo state of <see cref="Colours.AppPaletteController"/>.

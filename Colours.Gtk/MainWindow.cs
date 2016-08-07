@@ -7,6 +7,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Gtk;
 using Colours;
+using Colours.App;
 
 public partial class MainWindow: Gtk.Window
 {

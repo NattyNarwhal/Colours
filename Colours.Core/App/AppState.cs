@@ -1,4 +1,4 @@
-﻿namespace Colours
+﻿namespace Colours.App
 {
     /// <summary>
     /// Represents the minimum amount of application state for the.

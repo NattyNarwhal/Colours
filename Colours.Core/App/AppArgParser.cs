@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Colours
+namespace Colours.App
 {
     /// <summary>
     /// Provides a unniversal getopt-like, special-purpose command-line

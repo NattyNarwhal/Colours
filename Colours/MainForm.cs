@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Colours.App; // should we move the apps into this NS too?
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;

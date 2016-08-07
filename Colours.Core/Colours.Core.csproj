@@ -36,16 +36,16 @@
   <ItemGroup>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Application\AppArgParser.cs" />
-    <Compile Include="Application\AppController.cs" />
-    <Compile Include="Application\AppPaletteController.cs" />
+    <Compile Include="App\AppArgParser.cs" />
+    <Compile Include="App\AppController.cs" />
+    <Compile Include="App\AppPaletteController.cs" />
     <Compile Include="Mixing\Blend.cs" />
-    <Compile Include="Application\AppInitState.cs" />
-    <Compile Include="Application\AppPalUndo.cs" />
-    <Compile Include="Application\AppState.cs" />
+    <Compile Include="App\AppInitState.cs" />
+    <Compile Include="App\AppPalUndo.cs" />
+    <Compile Include="App\AppState.cs" />
     <Compile Include="Models\ColorUtils.cs" />
     <Compile Include="Models\HsvColor.cs" />
-    <Compile Include="Application\HtmlProofGenerator.cs" />
+    <Compile Include="App\HtmlProofGenerator.cs" />
     <Compile Include="Palette\AcoConverter.cs" />
     <Compile Include="Palette\Palette.cs" />
     <Compile Include="Palette\PaletteColor.cs" />

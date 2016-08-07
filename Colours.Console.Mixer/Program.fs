@@ -2,6 +2,7 @@
 // See the 'F# Tutorial' project for more help.
 
 open Colours
+open Colours.App
 
 let trueColorEscape (s: string, r, g, b) = 
     sprintf "\e[38;2;%d;%d;%dm%s\e[0m" r g b s
