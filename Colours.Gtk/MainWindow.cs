@@ -213,7 +213,7 @@ public partial class MainWindow: Gtk.Window
 	protected void OnColorChooserColorChanged (object sender, EventArgs e)
 	{
 		ColorButton cb = (ColorButton)sender;
-		app.SetColor (cb.Color.ToRgbColor (), true);
+		app.SetColor (cb.Color.ToRgbColor ());
 	}
 
 	protected void OnSchemeBoxChanged (object sender, EventArgs e)
@@ -228,7 +228,7 @@ public partial class MainWindow: Gtk.Window
 
 	protected void OnInvertActionActivated (object sender, EventArgs e)
 	{
-		app.SetColor (app.Color.Invert (), true);
+		app.SetColor (app.Color.Invert ());
 	}
 
 	protected void OnDesaturateActionActivated (object sender, EventArgs e)
@@ -254,7 +254,7 @@ public partial class MainWindow: Gtk.Window
 	protected void OnRandomActionActivated (object sender, EventArgs e)
 	{
 		Random r = new Random ();
-		app.SetColor (new RgbColor (r.Next (255), r.Next (255), r.Next (255)), true);
+		app.SetColor (new RgbColor (r.Next (255), r.Next (255), r.Next (255));
 	}
 
 	protected void OnPasteAcquireActionActivated (object sender, EventArgs e)
@@ -267,12 +267,12 @@ public partial class MainWindow: Gtk.Window
 					{
 						if (pc == "pc" || String.IsNullOrWhiteSpace(pc))
 							continue;
-						app.SetColor(new PaletteColor(pc).Color, true);
+						app.SetColor(new PaletteColor(pc).Color);
 						return;
 					}
 				}
 				else
-					app.SetColor (ColorUtils.FromString (s), true);
+					app.SetColor (ColorUtils.FromString (s));
 			}
 			catch (Exception) {} // it doesn't matter
 		});
@@ -426,7 +426,7 @@ public partial class MainWindow: Gtk.Window
 		TreeIter iter;
 		if (treeview1.Model.GetIter(out iter, args.Path)) {
 			var pc = GetItemFromIter (iter);
-			app.SetColor (pc.Color, true);
+			app.SetColor (pc.Color);
 		}
 	}
 
@@ -490,12 +490,14 @@ public partial class MainWindow: Gtk.Window
 			try {
 				if (s.StartsWith("pc"))
 				{
+					var toAdd = new List<PaletteColor>();
 					foreach (var pc in Regex.Split(s, Environment.NewLine))
 					{
 						if (pc == "pc" || String.IsNullOrWhiteSpace(pc))
 							continue;
-						appPal.AppendColor(new PaletteColor(pc));
+						toAdd.Add(new PaletteColor(pc));
 					}
+					appPal.AppendColors(toAdd);
 				}
 				else
 					appPal.AppendColor(ColorUtils.FromString(s).ToRgb());
