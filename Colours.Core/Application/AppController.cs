@@ -11,13 +11,13 @@ namespace Colours
         #region properties
         /// <summary>
         /// The current color, in HSV form. Use
-        /// <see cref="Colours.AppController.SetColor(HsvColor, bool)"/>
+        /// <see cref="Colours.AppController.SetColor(HsvColor, bool, bool)"/>
         /// to change the color.
         /// </summary>
         public HsvColor HsvColor { get; private set; }
         /// <summary>
         /// The current color, in RGB form. Use
-        /// <see cref="Colours.AppController.SetColor(RgbColor, bool)"/>
+        /// <see cref="Colours.AppController.SetColor(RgbColor, bool, bool)"/>
         /// to change the color.
         /// </summary>
         public RgbColor Color
@@ -30,7 +30,7 @@ namespace Colours
 
         /// <summary>
         /// The current colour scheme. Use
-        /// <see cref="Colours.AppController.SetSchemeType(Colours.SchemeType, bool)"/>
+        /// <see cref="Colours.AppController.SetSchemeType(Colours.SchemeType, bool, bool)"/>
         /// to change the scheme.
         /// </summary>
         public SchemeType SchemeType { get; private set; }
@@ -108,7 +108,7 @@ namespace Colours
         /// <param name="fireEvent">
         /// If you want to fire the event.
         /// </param>
-        public void SetSchemeType(SchemeType t, bool keepHistory, bool fireEvent)
+        public void SetSchemeType(SchemeType t, bool keepHistory = true, bool fireEvent = true)
         {
             if (keepHistory && SchemeType != t)
             {
@@ -118,34 +118,6 @@ namespace Colours
             GetSchemeResults();
             if (fireEvent)
                 OnResultChanged(new EventArgs());
-        }
-
-        /// <summary>
-        /// Set the current scheme type and generate the Results in the
-        /// Results property, and fire an event.
-        /// </summary>
-        /// <param name="t">The new scheme type.</param>
-        /// <param name="keepHistory">
-        /// If you want to update the undo stack. Note that it will only update it if
-        /// the current scheme and new scheme are different.
-        /// </param>
-        public void SetSchemeType(SchemeType t, bool keepHistory)
-        {
-            SetSchemeType(t, keepHistory, true);
-        }
-
-        /// <summary>
-        /// Set the current colour (in RGB form) and generate the Results in the
-        /// Results property, and fire an event.
-        /// </summary>
-        /// <param name="c">The new colour.</param>
-        /// <param name="keepHistory">
-        /// If you want to update the undo stack. Note that it will only update it if
-        /// the current colour and new colour are different.
-        /// </param>
-        public void SetColor(RgbColor c, bool keepHistory)
-        {
-            SetColor(new HsvColor(c), keepHistory, true);
         }
 
         /// <summary>
@@ -160,23 +132,9 @@ namespace Colours
         /// <param name="fireEvent">
         /// If you want to fire the event.
         /// </param>
-        public void SetColor(RgbColor c, bool keepHistory, bool fireEvent)
+        public void SetColor(RgbColor c, bool keepHistory = true, bool fireEvent = true)
         {
             SetColor(new HsvColor(c), keepHistory, fireEvent);
-        }
-
-        /// <summary>
-        /// Set the current colour (in HSV form) and generate the Results in the
-        /// Results property, and fire an event.
-        /// </summary>
-        /// <param name="c">The new colour.</param>
-        /// <param name="keepHistory">
-        /// If you want to update the undo stack. Note that it will only update it if
-        /// the current colour and new colour are different.
-        /// </param>
-        public void SetColor(HsvColor c, bool keepHistory)
-        {
-            SetColor(c, keepHistory, true);
         }
 
         /// <summary>
@@ -191,7 +149,7 @@ namespace Colours
         /// <param name="fireEvent">
         /// If you want to fire the event.
         /// </param>
-        public void SetColor(HsvColor c, bool keepHistory, bool fireEvent)
+        public void SetColor(HsvColor c, bool keepHistory = true, bool fireEvent = true)
         {
             if (keepHistory && c.ToString() != HsvColor.ToString())
             {

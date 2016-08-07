@@ -152,13 +152,13 @@ namespace Colours
 
             if (colorDialog.ShowDialog(this) == DialogResult.OK)
             {
-                app.SetColor(colorDialog.Color.ToRgbColor(), true);
+                app.SetColor(colorDialog.Color.ToRgbColor());
             }
         }
 
         private void schemeBox_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            app.SetSchemeType((SchemeType)schemeBox.SelectedIndex, true);
+            app.SetSchemeType((SchemeType)schemeBox.SelectedIndex);
         }
 
         private void copyHexContextToolStripMenuItem_Click(object sender, EventArgs e)
@@ -219,7 +219,7 @@ namespace Colours
         private void randomButton_Click(object sender, EventArgs e)
         {
             Random r = new Random();
-            app.SetColor(new RgbColor(r.Next(255), r.Next(255), r.Next(255)), true);
+            app.SetColor(new RgbColor(r.Next(255), r.Next(255), r.Next(255)));
         }
 
         private void brightenToolStripMenuItem_Click(object sender, EventArgs e)
@@ -255,12 +255,12 @@ namespace Colours
                         {
                             if (pc == "pc" || String.IsNullOrWhiteSpace(pc))
                                 continue;
-                            app.SetColor(new PaletteColor(pc).Color, true);
+                            app.SetColor(new PaletteColor(pc).Color);
                             break;
                         }
                     }
                     else
-                        app.SetColor(ColorUtils.FromString(Clipboard.GetText()), true);
+                        app.SetColor(ColorUtils.FromString(Clipboard.GetText()));
                 }
             }
             catch (ArgumentException) // these are harmless
@@ -286,7 +286,7 @@ namespace Colours
 
         private void invertToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            app.SetColor(app.Color.Invert(), true);
+            app.SetColor(app.Color.Invert());
         }
 
         private void backToolStripMenuItem_Click(object sender, EventArgs e)
@@ -321,7 +321,7 @@ namespace Colours
             EyedropperForm ef = new EyedropperForm();
             if (ef.ShowDialog(this) == DialogResult.OK)
             {
-                app.SetColor(ef.Color.ToRgbColor(), true);
+                app.SetColor(ef.Color.ToRgbColor());
             }
         }
 
@@ -401,7 +401,7 @@ namespace Colours
         private void paletteList_ItemActivate(object sender, EventArgs e)
         {
             if (paletteList.SelectedIndices.Count > 0)
-                app.SetColor(appPal.Palette.Colors[paletteList.SelectedIndices[0]].Color, true);
+                app.SetColor(appPal.Palette.Colors[paletteList.SelectedIndices[0]].Color);
         }
 
         private void paletteList_AfterLabelEdit(object sender, LabelEditEventArgs e)
