@@ -607,5 +607,15 @@ namespace Colours
                     "Colours", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void blendToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BlendForm f = new BlendForm(app.Color, 
+                paletteList.SelectedIndices.Count > 0 ?
+                ((PaletteColor)paletteList.SelectedItems[0].Tag).Color : app.Color);
+            if (f.ShowDialog(this) == DialogResult.OK)
+                foreach (var c in f.SelectedItems)
+                    appPal.AppendColor(c);
+        }
     }
 }

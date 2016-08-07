@@ -57,6 +57,12 @@
     <Compile Include="AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="BlendForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BlendForm.Designer.cs">
+      <DependentUpon>BlendForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ColorButton.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -84,6 +90,9 @@
     <Compile Include="RenderColorIcon.cs" />
     <EmbeddedResource Include="AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BlendForm.resx">
+      <DependentUpon>BlendForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EyedropperForm.resx">
       <DependentUpon>EyedropperForm.cs</DependentUpon>
