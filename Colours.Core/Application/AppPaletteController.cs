@@ -130,6 +130,38 @@ namespace Colours
         }
 
         /// <summary>
+        /// Adds a list of colors to the palette.
+        /// </summary>
+        /// <param name="lc">A list of colors to add.</param>
+        /// <param name="keepHistory">If undo should have been added.</param>
+        /// <param name="fireEvent">If the event should fire.</param>
+        public void AppendColors(IEnumerable<RgbColor> lc, bool keepHistory = true, bool fireEvent = true)
+        {
+            if (keepHistory)
+                PushUndo();
+            foreach (var c in lc)
+                AppendColor(c, false, false);
+            if (fireEvent)
+                OnPaletteChanged(new EventArgs());
+        }
+
+        /// <summary>
+        /// Adds a list of colors to the palette.
+        /// </summary>
+        /// <param name="lc">A list of colors to add.</param>
+        /// <param name="keepHistory">If undo should have been added.</param>
+        /// <param name="fireEvent">If the event should fire.</param>
+        public void AppendColors(IEnumerable<PaletteColor> lc, bool keepHistory = true, bool fireEvent = true)
+        {
+            if (keepHistory)
+                PushUndo();
+            foreach (var pc in lc)
+                AppendColor(pc, false, false);
+            if (fireEvent)
+                OnPaletteChanged(new EventArgs());
+        }
+
+        /// <summary>
         /// Deletes a color from the palette.
         /// </summary>
         /// <param name="pc">The color to remove.</param>
@@ -150,7 +182,7 @@ namespace Colours
         /// <summary>
         /// Deletes a number of colors.
         /// </summary>
-        /// <param name="l"></param>
+        /// <param name="l">A list of colors to remove</param>
         /// <param name="keepHistory">If undo should have been added.</param>
         /// <param name="fireEvent">If the event should fire.</param>
         public void DeleteColors(IEnumerable<PaletteColor> l, bool keepHistory = true, bool fireEvent = true)

@@ -258,7 +258,6 @@ namespace Colours
                             app.SetColor(new PaletteColor(pc).Color, true);
                             break;
                         }
-                        SyncAppPalState(this, new EventArgs());
                     }
                     else
                         app.SetColor(ColorUtils.FromString(Clipboard.GetText()), true);
@@ -468,13 +467,14 @@ namespace Colours
                     var clip = Clipboard.GetText();
                     if (clip.StartsWith("pc"))
                     {
-                        foreach (var pc in Regex.Split(clip, Environment.NewLine))
+                        var toAdd = new List<PaletteColor>();
+                        foreach (var pc in Regex.Split(clip, "\r?\n"))
                         {
                             if (pc == "pc" || String.IsNullOrWhiteSpace(pc))
                                 continue;
-                            appPal.AppendColor(new PaletteColor(pc), fireEvent: false);
+                            toAdd.Add(new PaletteColor(pc));
                         }
-                        SyncAppPalState(this, new EventArgs());
+                        appPal.AppendColors(toAdd);
                     }
                     else
                         appPal.AppendColor(ColorUtils.FromString(clip).ToRgb());
@@ -564,8 +564,7 @@ namespace Colours
 
         private void addAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            foreach (var c in app.Results)
-                appPal.AppendColor(c.ToRgb());
+            appPal.AppendColors(app.Results.Select(x => x.ToRgb()));
         }
 
         private void importPhotoshopSwatchToolStripMenuItem_Click(object sender, EventArgs e)
@@ -614,8 +613,7 @@ namespace Colours
                 paletteList.SelectedIndices.Count > 0 ?
                 ((PaletteColor)paletteList.SelectedItems[0].Tag).Color : app.Color);
             if (f.ShowDialog(this) == DialogResult.OK)
-                foreach (var c in f.SelectedItems)
-                    appPal.AppendColor(c);
+                appPal.AppendColors(f.SelectedItems);
         }
     }
 }
