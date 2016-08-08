@@ -536,8 +536,8 @@ public partial class MainWindow: Gtk.Window
 		FileChooserDialog fd = new FileChooserDialog ("Save palette as", this,
 			FileChooserAction.Save, "Cancel", ResponseType.Cancel, "OK", ResponseType.Ok);
 		FileFilter ff = new FileFilter ();
-		ff.Name = "GIMP Palette";
-		ff.AddPattern ("*.gpl");
+		ff.Name = "Photoshop Palette";
+		ff.AddPattern ("*.aco");
 		fd.AddFilter (ff);
 		if (fd.Run () == (int)ResponseType.Ok) {
 			File.WriteAllBytes (fd.Filename,
