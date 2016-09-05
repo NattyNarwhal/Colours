@@ -21,6 +21,8 @@ namespace Colours
         {
             InitializeComponent();
 
+            schemeBox.Items.AddRange(Scheme.GetSchemes().ToArray());
+
             // don't init the app with this func; init with AppState
             // this is just a base ctor
         }
@@ -56,7 +58,8 @@ namespace Colours
         /// <param name="e"></param>
         public void SyncAppViewState(object sender, EventArgs e)
         {
-            schemeBox.SelectedIndex = (int)app.SchemeType;
+            schemeBox.SelectedItem = schemeBox.Items.Cast<Scheme>()
+                .Where(x => x.Type == app.SchemeType).FirstOrDefault();
 
             resultsTable.Controls.Clear();
             resultsTable.ColumnCount = app.Results.Count;
@@ -103,9 +106,9 @@ namespace Colours
 
         public void UpdateUI()
         {
-            Text = String.Format("{0}{1} ({2} for {3})",
+            Text = string.Format("{0}{1} ({2} for {3})",
                 appPal.Palette.Name, appPal.Dirty ? "*" : "",
-                (string)schemeBox.SelectedItem, app.Color.ToHtml());
+                schemeBox.SelectedItem.ToString(), app.Color.ToHtml());
 
             var hasAny = appPal.Palette.Colors.Count > 0;
             var selected = paletteList.SelectedIndices.Count > 0;
@@ -164,7 +167,7 @@ namespace Colours
 
         private void schemeBox_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            app.SetSchemeType((SchemeType)schemeBox.SelectedIndex);
+            app.SetSchemeType(((Scheme)schemeBox.SelectedItem).Type);
         }
 
         private void copyHexContextToolStripMenuItem_Click(object sender, EventArgs e)

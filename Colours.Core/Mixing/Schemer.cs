@@ -35,6 +35,68 @@ namespace Colours
     }
 
     /// <summary>
+    /// Represents a colour scheme with type and name, frontends with human
+    /// readable descriptions.
+    /// </summary>
+    /// <remarks>
+    /// Primarily used for System.Windows.Forms combo boxes.
+    /// </remarks>
+    // TODO: does this belong in Core, or in each frontend?
+    public class Scheme
+    {
+        /// <summary>
+        /// The type of scheme this is.
+        /// </summary>
+        public SchemeType Type { get; set; }
+        /// <summary>
+        /// The name of the scheme.
+        /// </summary>
+        public string Name { get; set; }
+
+        internal Scheme(SchemeType type, string name)
+        {
+            Type = type;
+            Name = name;
+        }
+
+        /// <summary>
+        /// Prints the name.
+        /// </summary>
+        /// <returns>The name</returns>
+        /// <remarks>
+        /// Again, mainly for ComboBox.
+        /// </remarks>
+        public override string ToString()
+        {
+            return Name;
+        }
+
+        /// <summary>
+        /// Gets a list of available schemes.
+        /// </summary>
+        /// <returns>The list of all schemes supported.</returns>
+        public static IEnumerable<Scheme> GetSchemes()
+        {
+            foreach (var i in SchemeNames)
+            {
+                yield return new Scheme(i.Key, i.Value);
+            }
+        }
+
+        static Dictionary<SchemeType, string> SchemeNames =
+            new Dictionary<SchemeType, string>()
+            {
+                // TODO: localizability here?
+                { SchemeType.Complement, "Complement" },
+                { SchemeType.SplitComplements, "Split Complements" },
+                { SchemeType.Triads, "Triads" },
+                { SchemeType.Tetrads, "Tetrads" },
+                { SchemeType.Analogous, "Analogous" },
+                { SchemeType.Monochromatic, "Monochromatic" },
+            };
+    }
+
+    /// <summary>
     /// This object contains functions to generate colour schemes. For
     /// application developers, the <see cref="App.AppController"/> object
     /// will call this for you as needed, using the <see cref="SchemeType"/>
@@ -42,6 +104,8 @@ namespace Colours
     /// </summary>
     public static class ColorSchemer
     {
+        
+
         /// <summary>
         /// Gets the color on the other side of the color wheel.
         /// </summary>

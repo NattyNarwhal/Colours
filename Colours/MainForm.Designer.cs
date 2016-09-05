@@ -71,6 +71,8 @@
             this.eyedropperToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.randomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pasteAcquireToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem11 = new System.Windows.Forms.ToolStripSeparator();
+            this.blendToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.colorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.backToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.forwardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -105,8 +107,6 @@
             this.openPaletteDialog = new System.Windows.Forms.OpenFileDialog();
             this.importPhotoshopDialog = new System.Windows.Forms.OpenFileDialog();
             this.exportPhotoshopDialog = new System.Windows.Forms.SaveFileDialog();
-            this.toolStripMenuItem11 = new System.Windows.Forms.ToolStripSeparator();
-            this.blendToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.colorContextMenu.SuspendLayout();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -122,13 +122,6 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.schemeBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.schemeBox.FormattingEnabled = true;
-            this.schemeBox.Items.AddRange(new object[] {
-            "Complement",
-            "Split Complements",
-            "Triads",
-            "Tetrads",
-            "Analogous",
-            "Monochromatic"});
             this.schemeBox.Location = new System.Drawing.Point(12, 3);
             this.schemeBox.Name = "schemeBox";
             this.schemeBox.Size = new System.Drawing.Size(324, 21);
@@ -487,6 +480,18 @@
             this.pasteAcquireToolStripMenuItem.Text = "From &Clipboard";
             this.pasteAcquireToolStripMenuItem.Click += new System.EventHandler(this.pasteAcquireToolStripMenuItem_Click);
             // 
+            // toolStripMenuItem11
+            // 
+            this.toolStripMenuItem11.Name = "toolStripMenuItem11";
+            this.toolStripMenuItem11.Size = new System.Drawing.Size(227, 6);
+            // 
+            // blendToolStripMenuItem
+            // 
+            this.blendToolStripMenuItem.Name = "blendToolStripMenuItem";
+            this.blendToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
+            this.blendToolStripMenuItem.Text = "&Blend...";
+            this.blendToolStripMenuItem.Click += new System.EventHandler(this.blendToolStripMenuItem_Click);
+            // 
             // colorToolStripMenuItem
             // 
             this.colorToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -777,18 +782,6 @@
             this.exportPhotoshopDialog.DefaultExt = "aco";
             this.exportPhotoshopDialog.Filter = "Photoshop Swatches|*.aco|All files|*.*";
             this.exportPhotoshopDialog.Title = "Export to Photoshop";
-            // 
-            // toolStripMenuItem11
-            // 
-            this.toolStripMenuItem11.Name = "toolStripMenuItem11";
-            this.toolStripMenuItem11.Size = new System.Drawing.Size(227, 6);
-            // 
-            // blendToolStripMenuItem
-            // 
-            this.blendToolStripMenuItem.Name = "blendToolStripMenuItem";
-            this.blendToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
-            this.blendToolStripMenuItem.Text = "&Blend...";
-            this.blendToolStripMenuItem.Click += new System.EventHandler(this.blendToolStripMenuItem_Click);
             // 
             // MainForm
             // 
