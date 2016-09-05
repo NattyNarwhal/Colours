@@ -17,12 +17,28 @@ public partial class MainWindow: Gtk.Window
 	private static Gdk.Atom clipAtom = Gdk.Atom.Intern("CLIPBOARD", false);
 	Clipboard clipboard = Clipboard.Get (clipAtom);
 
+	ListStore schemes = new ListStore(typeof(Scheme));
 	ListStore ls = new ListStore (typeof(PaletteColor));
 
 	public MainWindow () : base (Gtk.WindowType.Toplevel)
 	{
 		Build ();
 		// don't use this for app init, only for base init
+
+		// init the combobox
+		schemeBox.Model = schemes;
+		foreach (var s in Scheme.GetSchemes())
+			schemes.AppendValues(s);
+
+		var schemeRender = new CellRendererText();
+		schemeBox.PackStart(schemeRender, true);
+		schemeBox.SetCellDataFunc(schemeRender, new CellLayoutDataFunc((cl, c, m, i) =>
+		{
+			((CellRendererText)c).Text = ((Scheme)schemes.GetValue(i, 0)).Name;
+		}));
+		//schemeBox.AddAttribute(schemeRender, "text", 0);
+
+		// init the pallete list view
 		treeview1.Model = ls;
 
 		var pcIconRender = new CellRendererPixbuf ();
@@ -81,6 +97,17 @@ public partial class MainWindow: Gtk.Window
 		return (PaletteColor)treeview1.Model.GetValue (i, colColumn);
 	}
 
+	public IEnumerable<Scheme> GetSchemeList()
+	{
+		// Welcome to the hell that is ListStores and LINQ
+		return schemes.Cast<object[]>().Select(x => x[0]).Cast<Scheme>();
+	}
+
+	public Scheme GetSelectedScheme()
+	{
+		return GetSchemeList().ToList()[schemeBox.Active];
+	}
+
 	public IEnumerable<PaletteColor> GetSelectedItems()
 	{
 		var toReturn = new List<PaletteColor>();
@@ -93,7 +120,8 @@ public partial class MainWindow: Gtk.Window
 
 	public void SyncAppViewState(object sender, EventArgs e)
 	{
-		schemeBox.Active = (int)app.SchemeType;
+		schemeBox.Active = GetSchemeList().ToList()
+			.FindIndex(x => x.Type == app.SchemeType);
 
 		foreach (ColorButton cb in colorBox.Children)
 			colorBox.Remove (cb);
@@ -129,7 +157,7 @@ public partial class MainWindow: Gtk.Window
 	public void UpdateUI()
 	{
 		Title = String.Format ("{0}{1} ({2} for {3})", appPal.Palette.Name,
-			appPal.Dirty ? "*" : "", schemeBox.ActiveText,
+		    appPal.Dirty ? "*" : "", GetSelectedScheme().Name,
 			app.Color.ToHtml());
 
 		var selected = treeview1.Selection.CountSelectedRows() > 0;
@@ -233,7 +261,7 @@ public partial class MainWindow: Gtk.Window
 
 	protected void OnSchemeBoxChanged (object sender, EventArgs e)
 	{
-		app.SetSchemeType ((SchemeType)schemeBox.Active, true);
+		app.SetSchemeType (GetSelectedScheme().Type, true);
 	}
 
 	protected void OnUndoActionActivated (object sender, EventArgs e)
@@ -536,8 +564,8 @@ public partial class MainWindow: Gtk.Window
 		FileChooserDialog fd = new FileChooserDialog ("Save palette as", this,
 			FileChooserAction.Save, "Cancel", ResponseType.Cancel, "OK", ResponseType.Ok);
 		FileFilter ff = new FileFilter ();
-		ff.Name = "Photoshop Palette";
-		ff.AddPattern ("*.aco");
+		ff.Name = "GIMP Palette";
+		ff.AddPattern ("*.gpl");
 		fd.AddFilter (ff);
 		if (fd.Run () == (int)ResponseType.Ok) {
 			File.WriteAllBytes (fd.Filename,

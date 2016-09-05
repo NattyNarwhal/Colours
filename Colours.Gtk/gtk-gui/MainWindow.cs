@@ -267,22 +267,15 @@ public partial class MainWindow
 		this.vpaned1 = new global::Gtk.VPaned();
 		this.vpaned1.CanFocus = true;
 		this.vpaned1.Name = "vpaned1";
-		this.vpaned1.Position = 92;
+		this.vpaned1.Position = 109;
 		// Container child vpaned1.Gtk.Paned+PanedChild
 		this.paddedBox = new global::Gtk.VBox();
 		this.paddedBox.Name = "paddedBox";
 		this.paddedBox.Spacing = 6;
 		this.paddedBox.BorderWidth = ((uint)(6));
 		// Container child paddedBox.Gtk.Box+BoxChild
-		this.schemeBox = global::Gtk.ComboBox.NewText();
-		this.schemeBox.AppendText(global::Mono.Unix.Catalog.GetString("Complement"));
-		this.schemeBox.AppendText(global::Mono.Unix.Catalog.GetString("Split Complements"));
-		this.schemeBox.AppendText(global::Mono.Unix.Catalog.GetString("Triads"));
-		this.schemeBox.AppendText(global::Mono.Unix.Catalog.GetString("Tetrads"));
-		this.schemeBox.AppendText(global::Mono.Unix.Catalog.GetString("Analogous"));
-		this.schemeBox.AppendText(global::Mono.Unix.Catalog.GetString("Monochromatic"));
+		this.schemeBox = new global::Gtk.ComboBox();
 		this.schemeBox.Name = "schemeBox";
-		this.schemeBox.Active = 0;
 		this.paddedBox.Add(this.schemeBox);
 		global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.paddedBox[this.schemeBox]));
 		w3.Position = 0;

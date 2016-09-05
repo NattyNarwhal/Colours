@@ -338,7 +338,7 @@
           <widget class="Gtk.VPaned" id="vpaned1">
             <property name="MemberName" />
             <property name="CanFocus">True</property>
-            <property name="Position">92</property>
+            <property name="Position">109</property>
             <child>
               <widget class="Gtk.VBox" id="paddedBox">
                 <property name="MemberName" />
@@ -347,14 +347,8 @@
                 <child>
                   <widget class="Gtk.ComboBox" id="schemeBox">
                     <property name="MemberName" />
-                    <property name="IsTextCombo">True</property>
-                    <property name="Items" translatable="yes" comments="The ordering should be kept.">Complement
-Split Complements
-Triads
-Tetrads
-Analogous
-Monochromatic</property>
-                    <property name="Active">0</property>
+                    <property name="IsTextCombo">False</property>
+                    <property name="Items" />
                     <signal name="Changed" handler="OnSchemeBoxChanged" />
                   </widget>
                   <packing>
