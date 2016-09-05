@@ -25,6 +25,10 @@ namespace Colours
         /// </summary>
         Tetrads,
         /// <summary>
+        /// Three colors, one opposite of the color, and two adjacent to the color and its opposite.
+        /// </summary>
+        RectangleTetrads,
+        /// <summary>
         /// Two colors adjcanent.
         /// </summary>
         Analogous,
@@ -90,7 +94,8 @@ namespace Colours
                 { SchemeType.Complement, "Complement" },
                 { SchemeType.SplitComplements, "Split Complements" },
                 { SchemeType.Triads, "Triads" },
-                { SchemeType.Tetrads, "Tetrads" },
+                { SchemeType.Tetrads, "Square Tetrads" },
+                { SchemeType.RectangleTetrads, "Rectangular Tetrads" },
                 { SchemeType.Analogous, "Analogous" },
                 { SchemeType.Monochromatic, "Monochromatic" },
             };
@@ -175,6 +180,23 @@ namespace Colours
             HsvColor c2 = new HsvColor(c.Hue + offset, c.Saturation, c.Value);
 
             return new List<HsvColor>() { c, c1, c2 };
+        }
+
+        /// <summary>
+        /// Gets 3 colors, one opposite of the color, and two adjacent to the color and its opposite.
+        /// </summary>
+        /// <param name="c">The colour to generate the scheme from.</param>
+        /// <returns>The results of the scheme, including the previous color.</returns>
+        public static List<HsvColor> RectangleTetrads(HsvColor c)
+        {
+            HsvColor c1 = new HsvColor(c.Hue + (360 / 2), c.Saturation, c.Value);
+
+            const double offset = 360 / 3;
+
+            HsvColor c2 = new HsvColor(c.Hue - offset, c.Saturation, c.Value);
+            HsvColor c3 = new HsvColor(c1.Hue - offset, c.Saturation, c.Value);
+
+            return new List<HsvColor>() { c, c1, c2, c3 };
         }
 
         /// <summary>
