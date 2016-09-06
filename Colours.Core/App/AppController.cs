@@ -279,6 +279,9 @@ namespace Colours.App
                 case SchemeType.RectangleTetrads:
                     Results = ColorSchemer.RectangleTetrads(HsvColor);
                     break;
+                case SchemeType.FiveTone:
+                    Results = ColorSchemer.FiveTone(HsvColor);
+                    break;
                 case SchemeType.SixTone:
                     Results = ColorSchemer.SixTone(HsvColor);
                     break;
