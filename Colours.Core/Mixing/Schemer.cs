@@ -35,7 +35,11 @@ namespace Colours
         /// <summary>
         /// Two colors, darker and lighter.
         /// </summary>
-        Monochromatic
+        Monochromatic,
+        /// <summary>
+        /// Five colors, one adjacent, and four complementary triads.
+        /// </summary>
+        SixTone,
     }
 
     /// <summary>
@@ -96,6 +100,7 @@ namespace Colours
                 { SchemeType.Triads, "Triads" },
                 { SchemeType.Tetrads, "Square Tetrads" },
                 { SchemeType.RectangleTetrads, "Rectangular Tetrads" },
+                { SchemeType.SixTone, "Six Tone" },
                 { SchemeType.Analogous, "Analogous" },
                 { SchemeType.Monochromatic, "Monochromatic" },
             };
@@ -197,6 +202,27 @@ namespace Colours
             HsvColor c3 = new HsvColor(c1.Hue - offset, c.Saturation, c.Value);
 
             return new List<HsvColor>() { c, c1, c2, c3 };
+        }
+
+        /// <summary>
+        /// Gets 5 colors, one adjacent, and four complementary triads.
+        /// </summary>
+        /// <param name="c">The colour to generate the scheme from.</param>
+        /// <returns>The results of the scheme, including the previous color.</returns>
+        public static List<HsvColor> SixTone(HsvColor c)
+        {
+            const double offset1 = 360 / 3;
+            const double offset2 = (360 / 2 - offset1) / 2;
+
+            HsvColor c1 = new HsvColor(c.Hue + offset2, c.Saturation, c.Value);
+
+            HsvColor c2 = new HsvColor(c.Hue - offset1, c.Saturation, c.Value);
+            HsvColor c3 = new HsvColor((c.Hue - offset1) + offset2, c.Saturation, c.Value);
+
+            HsvColor c4 = new HsvColor(c.Hue + offset1, c.Saturation, c.Value);
+            HsvColor c5 = new HsvColor((c.Hue + offset1) + offset2, c.Saturation, c.Value);
+
+            return new List<HsvColor>() { c, c1, c2, c3, c4, c5 };
         }
 
         /// <summary>
