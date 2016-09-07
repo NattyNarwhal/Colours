@@ -29,8 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            Colours.RgbColor rgbColor1 = new Colours.RgbColor();
-            Colours.RgbColor rgbColor2 = new Colours.RgbColor();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.stepsLabel = new System.Windows.Forms.Label();
             this.color1Label = new System.Windows.Forms.Label();
@@ -93,10 +91,6 @@
             // colorButton1
             // 
             this.colorButton1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            rgbColor1.B = ((byte)(240));
-            rgbColor1.G = ((byte)(240));
-            rgbColor1.R = ((byte)(240));
-            this.colorButton1.Color = rgbColor1;
             this.colorButton1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.colorButton1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.colorButton1.ForeColor = System.Drawing.Color.Black;
@@ -139,10 +133,6 @@
             // colorButton2
             // 
             this.colorButton2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            rgbColor2.B = ((byte)(240));
-            rgbColor2.G = ((byte)(240));
-            rgbColor2.R = ((byte)(240));
-            this.colorButton2.Color = rgbColor2;
             this.colorButton2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.colorButton2.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.colorButton2.ForeColor = System.Drawing.Color.Black;
@@ -168,6 +158,7 @@
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.colourCol});
             this.listView1.FullRowSelect = true;
+            this.listView1.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.listView1.Location = new System.Drawing.Point(12, 60);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(260, 160);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,8 @@ namespace Colours
         /// <summary>
         /// Represents the color of the ColorButton.
         /// </summary>
+        // HACK: Visual Studio tries to serialize an RgbColor and it ends badly
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public RgbColor Color
         {
             get { return _color; }
