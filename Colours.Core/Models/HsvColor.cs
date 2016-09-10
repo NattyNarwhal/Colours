@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Globalization;
+using System.Runtime.Serialization;
 
 namespace Colours
 {
     /// <summary>
     /// Represents a color in the Hue/Saturation/Value form.
     /// </summary>
+    [DataContract]
     public class HsvColor
     {
         private double _hue;
@@ -13,6 +15,7 @@ namespace Colours
         /// <summary>
         /// The hue of the colour, on a wheel from 0 to 360 degrees.
         /// </summary>
+        [DataMember]
         public double Hue
         {
             get
@@ -32,10 +35,12 @@ namespace Colours
         /// <summary>
         /// The saturation of the colour, from 0 to 1.
         /// </summary>
+        [DataMember]
         public double Saturation { get; set; }
         /// <summary>
         /// The brightness of the colour, from 0 to 1.
         /// </summary>
+        [DataMember]
         public double Value { get; set; }
 
         // Functions adapted from:

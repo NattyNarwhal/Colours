@@ -1,39 +1,131 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
+using System.Text;
+using System.Text.RegularExpressions;
 using Gtk;
 using Colours;
+using Colours.App;
 
 public partial class MainWindow: Gtk.Window
 {
 	public AppController app;
+	public AppPaletteController appPal;
 
 	private static Gdk.Atom clipAtom = Gdk.Atom.Intern("CLIPBOARD", false);
 	Clipboard clipboard = Clipboard.Get (clipAtom);
-	HBox newBox;
+
+	ListStore schemes = new ListStore(typeof(Scheme));
+	ListStore ls = new ListStore (typeof(PaletteColor));
 
 	public MainWindow () : base (Gtk.WindowType.Toplevel)
 	{
 		Build ();
 		// don't use this for app init, only for base init
+
+		// init the combobox
+		schemeBox.Model = schemes;
+		foreach (var s in Scheme.GetSchemes())
+			schemes.AppendValues(s);
+
+		var schemeRender = new CellRendererText();
+		schemeBox.PackStart(schemeRender, true);
+		schemeBox.SetCellDataFunc(schemeRender, new CellLayoutDataFunc((cl, c, m, i) =>
+		{
+			((CellRendererText)c).Text = ((Scheme)schemes.GetValue(i, 0)).Name;
+		}));
+		//schemeBox.AddAttribute(schemeRender, "text", 0);
+
+		// init the pallete list view
+		treeview1.Model = ls;
+
+		var pcIconRender = new CellRendererPixbuf ();
+		var pcIconCol = new TreeViewColumn ("Icon", pcIconRender);
+		pcIconCol.PackStart (pcIconRender, true);
+		pcIconCol.SetCellDataFunc (pcIconRender, new TreeCellDataFunc((tc, c, m, i) => {
+			Gdk.Pixbuf buf = new Gdk.Pixbuf (Gdk.Colorspace.Rgb, false, 8, 16, 16);
+
+			buf.Fill (GetItemFromIter(i).Color.ToGdkPixel());
+
+			((CellRendererPixbuf)c).Pixbuf = buf;
+		}));
+
+		var pcColorRender = new CellRendererText ();
+		var pcColorCol = new TreeViewColumn ("Color", pcColorRender);
+		pcColorCol.PackStart (pcColorRender, true);
+		pcColorCol.SetCellDataFunc (pcColorRender, new TreeCellDataFunc((tc, c, m, i) => {
+			((CellRendererText)c).Text = GetItemFromIter(i).Color.ToHtml();
+		}));
+
+		var pcNameRender = new CellRendererText();
+		pcNameRender.Editable = true;
+		pcNameRender.Edited += pcNameRender_Edited;
+		var pcNameCol = new TreeViewColumn("Name", pcNameRender);
+		pcNameCol.PackStart(pcNameRender, true);
+		pcNameCol.SetCellDataFunc(pcNameRender, new TreeCellDataFunc((tc, c, m, i) =>
+		{
+			((CellRendererText)c).Text = GetItemFromIter(i).Name;
+		}));
+
+		treeview1.AppendColumn (pcIconCol);
+		treeview1.AppendColumn(pcColorCol);
+		treeview1.AppendColumn (pcNameCol);
+
 	}
 
-	public MainWindow(AppState state) : this()
+	public MainWindow(AppInitState state) : this()
 	{
-		app = new AppController (state);
+		app = new AppController (state.MixerState);
+		appPal = new AppPaletteController ();
+		if (!String.IsNullOrWhiteSpace (state.PaletteFileName)) {
+
+		}
 		app.ResultChanged += SyncAppViewState;
+		appPal.PaletteChanged += SyncAppPalViewState;
+		treeview1.Selection.Changed += (o, e) => {
+			UpdateUI();
+		};
 		SyncAppViewState (this, new EventArgs());
+		SyncAppPalViewState (this, new EventArgs ());
+	}
+
+	// replaces var pc = (PaletteColor)treeview1.Model.GetValue (i, 2);
+	public PaletteColor GetItemFromIter(TreeIter i)
+	{
+		const int colColumn = 0;
+		return (PaletteColor)treeview1.Model.GetValue (i, colColumn);
+	}
+
+	public IEnumerable<Scheme> GetSchemeList()
+	{
+		// Welcome to the hell that is ListStores and LINQ
+		return schemes.Cast<object[]>().Select(x => x[0]).Cast<Scheme>();
+	}
+
+	public Scheme GetSelectedScheme()
+	{
+		return GetSchemeList().ToList()[schemeBox.Active];
+	}
+
+	public IEnumerable<PaletteColor> GetSelectedItems()
+	{
+		var toReturn = new List<PaletteColor>();
+		treeview1.Selection.SelectedForeach((m, p, i) =>
+		{
+			toReturn.Add(GetItemFromIter(i));
+		});
+		return toReturn;
 	}
 
 	public void SyncAppViewState(object sender, EventArgs e)
 	{
-		schemeBox.Active = (int)app.SchemeType;
-		Title = String.Format ("{0} for {1}", schemeBox.ActiveText,
-			app.Color.ToHtml());
+		schemeBox.Active = GetSchemeList().ToList()
+			.FindIndex(x => x.Type == app.SchemeType);
 
-		paddedBox.Remove (newBox);
-
-		newBox = new HBox (true, 6);
+		foreach (ColorButton cb in colorBox.Children)
+			colorBox.Remove (cb);
 		foreach (HsvColor c in app.Results) {
 			ColorButton cb = new ColorButton (c.ToGdkColor ());
 			cb.UseAlpha = false;
@@ -46,8 +138,31 @@ public partial class MainWindow: Gtk.Window
 			// bind the menu too
 			cb.ButtonPressEvent += HandleButtonPopupMenu;
 
-			newBox.PackStart(cb, true, true, 0);
+			colorBox.PackStart(cb, true, true, 0);
 		}
+
+		this.ShowAll ();
+		UpdateUI ();
+	}
+
+	public void SyncAppPalViewState(object sender, EventArgs e) 
+	{
+		ls.Clear ();
+
+		foreach (PaletteColor pc in appPal.Palette.Colors)
+			ls.AppendValues (pc);
+
+		UpdateUI ();
+	}
+
+	public void UpdateUI()
+	{
+		Title = String.Format ("{0}{1} ({2} for {3})", appPal.Palette.Name,
+		    appPal.Dirty ? "*" : "", GetSelectedScheme().Name,
+			app.Color.ToHtml());
+
+		var selected = treeview1.Selection.CountSelectedRows() > 0;
+		var hasItems = appPal.Palette.Colors.Count > 0;
 
 		goBackAction.Sensitive = app.CanUndo ();
 		goForwardAction.Sensitive = app.CanRedo ();
@@ -56,14 +171,54 @@ public partial class MainWindow: Gtk.Window
 		SaturateAction.Sensitive = app.CanSaturate ();
 		DesaturateAction.Sensitive = app.CanDesaturate ();
 
-		paddedBox.Add (newBox);
-		this.ShowAll ();
+		undoAction.Sensitive = appPal.CanUndo ();
+		redoAction.Sensitive = appPal.CanRedo ();
+		undoAction.Label = appPal.CanUndo() ?
+			"Undo " + appPal.UndoHistory.Peek().Name : "Can't Undo";
+		redoAction.Label = appPal.CanRedo() ?
+			"Redo " + appPal.RedoHistory.Peek().Name : "Can't Redo";
+
+		cutAction.Sensitive = selected;
+		copyAction.Sensitive = selected;
+		deleteAction.Sensitive = selected;
+
+		saveAction.Sensitive = hasItems;
+		saveAsAction.Sensitive = hasItems;
+	}
+
+	/// <summary>
+	/// Asks to save changes
+	/// </summary>
+	/// <returns>If it's OK to close.</returns>
+	public bool DirtyPrompt()
+	{
+		if (appPal.Dirty) {
+			MessageDialog md = new MessageDialog (this, DialogFlags.Modal,
+				MessageType.Question, ButtonsType.None,
+				"There are unsaved changes. Do you want to save before you close this palette?");
+			md.AddButton ("Save", ResponseType.Yes);
+			md.AddButton ("Discard", ResponseType.No);
+			md.AddButton ("Cancel", ResponseType.Cancel);
+			var retVal = (ResponseType)md.Run ();
+			md.Destroy ();
+			switch (retVal) {
+			case ResponseType.Yes:
+				return SavePalette (false);
+			case ResponseType.No:
+				return true;
+			default:
+				return false;
+			};
+		} else
+			return true;
 	}
 
 	protected void OnDeleteEvent (object sender, DeleteEventArgs a)
 	{
-		ConfigParser.SaveConfig (app.Color, app.SchemeType);
-		Application.Quit ();
+		if (DirtyPrompt ()) {
+			ConfigParser.SaveConfig (app.Color, app.SchemeType);
+			Application.Quit ();
+		}
 		a.RetVal = true;
 	}
 
@@ -77,6 +232,7 @@ public partial class MainWindow: Gtk.Window
 			MenuItem hexPopupItem = new MenuItem ("Copy He_x");
 			MenuItem hslPopupItem = new MenuItem ("Copy HS_L");
 			MenuItem hsvPopupItem = new MenuItem ("Copy HS_V");
+			MenuItem addPopupItem = new MenuItem ("_Add");
 			hexPopupItem.Activated += (o, a) => {
 				clipboard.Text = cb.Color.ToRgbColor().ToHtml();
 			};
@@ -86,9 +242,13 @@ public partial class MainWindow: Gtk.Window
 			hsvPopupItem.Activated += (o, a) => {
 				clipboard.Text = cb.Color.ToHsvColor().ToString();
 			};
+			addPopupItem.Activated += (o, a) => {
+				appPal.AppendColor(cb.Color.ToRgbColor());
+			};
 			m.Add (hexPopupItem);
 			m.Add (hslPopupItem);
 			m.Add (hsvPopupItem);
+			m.Add (addPopupItem);
 			m.ShowAll ();
 			m.Popup();
 		}
@@ -97,20 +257,22 @@ public partial class MainWindow: Gtk.Window
 	protected void OnColorChooserColorChanged (object sender, EventArgs e)
 	{
 		ColorButton cb = (ColorButton)sender;
-		app.SetColor (cb.Color.ToRgbColor (), true);
+		app.SetColor (cb.Color.ToRgbColor ());
 	}
 
 	protected void OnSchemeBoxChanged (object sender, EventArgs e)
 	{
-		app.SetSchemeType ((SchemeType)schemeBox.Active, true);
+		app.SetSchemeType (GetSelectedScheme().Type, true);
 	}
 
 	protected void OnUndoActionActivated (object sender, EventArgs e)
 	{
 		app.Undo();
-	}	protected void OnInvertActionActivated (object sender, EventArgs e)
+	}
+
+	protected void OnInvertActionActivated (object sender, EventArgs e)
 	{
-		app.SetColor (app.Color.Invert (), true);
+		app.SetColor (app.Color.Invert ());
 	}
 
 	protected void OnDesaturateActionActivated (object sender, EventArgs e)
@@ -121,7 +283,8 @@ public partial class MainWindow: Gtk.Window
 	protected void OnSaturateActionActivated (object sender, EventArgs e)
 	{
 		app.Saturate ();
-	}
+	}
+
 	protected void OnDarkenActionActivated (object sender, EventArgs e)
 	{
 		app.Darken ();
@@ -135,14 +298,25 @@ public partial class MainWindow: Gtk.Window
 	protected void OnRandomActionActivated (object sender, EventArgs e)
 	{
 		Random r = new Random ();
-		app.SetColor (new RgbColor (r.Next (255), r.Next (255), r.Next (255)), true);
+		app.SetColor (new RgbColor (r.Next (255), r.Next (255), r.Next (255)));
 	}
 
-	protected void OnPasteActionActivated (object sender, EventArgs e)
+	protected void OnPasteAcquireActionActivated (object sender, EventArgs e)
 	{
 		clipboard.RequestText ((c, s) => {
 			try {
-				app.SetColor (ColorUtils.FromString (s), true);
+				if (s.StartsWith("pc"))
+				{
+					foreach (var pc in Regex.Split(s, Environment.NewLine))
+					{
+						if (pc == "pc" || String.IsNullOrWhiteSpace(pc))
+							continue;
+						app.SetColor(new PaletteColor(pc).Color);
+						return;
+					}
+				}
+				else
+					app.SetColor (ColorUtils.FromString (s));
 			}
 			catch (Exception) {} // it doesn't matter
 		});
@@ -168,7 +342,7 @@ public partial class MainWindow: Gtk.Window
 		app.Redo ();
 	}
 
-	protected void OnSaveActionActivated (object sender, EventArgs e)
+	protected void OnSaveAsHTMLColorActionActivated (object sender, EventArgs e)
 	{
 		FileChooserDialog fd = new FileChooserDialog ("Save as HTML", this,
 			FileChooserAction.Save, "Cancel", ResponseType.Cancel, "OK", ResponseType.Ok);
@@ -192,7 +366,8 @@ public partial class MainWindow: Gtk.Window
 	protected void OnQuitActionActivated (object sender, EventArgs e)
 	{
 		Application.Quit ();
-	}
+	}
+
 	protected void OnAboutActionActivated (object sender, EventArgs e)
 	{
 		AboutDialog ad = new AboutDialog (){
@@ -207,4 +382,297 @@ public partial class MainWindow: Gtk.Window
 		ad.Run ();
 		ad.Destroy ();
 	}
+
+	public void OpenPalette(string filename)
+	{
+		appPal.NewFromPalette (new Palette (File.ReadAllText (filename)), filename);
+	}
+
+	public bool SavePalette(bool forceDialog)
+	{
+		if (forceDialog || appPal.FileName == null) {
+			FileChooserDialog fd = new FileChooserDialog ("Save palette as", this,
+				FileChooserAction.Save, "Cancel", ResponseType.Cancel, "OK", ResponseType.Ok);
+			FileFilter ff = new FileFilter ();
+			ff.Name = "GIMP Palette";
+			ff.AddPattern ("*.gpl");
+			fd.AddFilter (ff);
+			if (fd.Run () == (int)ResponseType.Ok) {
+				appPal.FileName = fd.Filename;
+				fd.Destroy ();
+			} else {
+				fd.Destroy ();
+				return false;
+			}
+		}
+
+		File.WriteAllText (appPal.FileName, appPal.Palette.ToString ());
+		appPal.Dirty = false;
+		UpdateUI ();
+		return true;
+	}
+
+	protected void OnNewActionActivated (object sender, EventArgs e)
+	{
+		if (DirtyPrompt ())
+			appPal.NewFromPalette (new Palette ());
+	}
+
+	protected void OnSaveAsActionActivated (object sender, EventArgs e)
+	{
+		SavePalette(true);
+	}
+
+	protected void OnSaveActionActivated (object sender, EventArgs e)
+	{
+		SavePalette(false);
+	}
+
+	protected void OnOpenActionActivated (object sender, EventArgs e)
+	{
+		if (DirtyPrompt ()) {
+			FileChooserDialog fd = new FileChooserDialog ("Open palette", this,
+				FileChooserAction.Open, "Cancel", ResponseType.Cancel, "OK", ResponseType.Ok);
+			FileFilter ff = new FileFilter ();
+			ff.Name = "GIMP Palette";
+			ff.AddPattern ("*.gpl");
+			fd.AddFilter (ff);
+			if (fd.Run () == (int)ResponseType.Ok) {
+				OpenPalette (fd.Filename);
+			}
+			fd.Destroy ();
+		}
+	}
+
+	protected void OnPaletteUndoActionActivated (object sender, EventArgs e)
+	{
+		appPal.Undo ();
+	}
+
+	protected void OnPaletteRedoActionActivated (object sender, EventArgs e)
+	{
+		appPal.Redo ();
+	}
+
+	protected void pcNameRender_Edited (object o, EditedArgs args)
+	{
+		TreeIter iter;
+		if (treeview1.Model.GetIterFromString(out iter, args.Path)) {
+			// get the index
+			var pc = GetItemFromIter(iter);
+			if (pc.Name != args.NewText)
+				appPal.RenameColor (appPal.Palette.Colors.IndexOf (pc), args.NewText);
+		}
+	}
+
+	protected void OnTreeview1RowActivated (object o, RowActivatedArgs args)
+	{
+		TreeIter iter;
+		if (treeview1.Model.GetIter(out iter, args.Path)) {
+			var pc = GetItemFromIter (iter);
+			app.SetColor (pc.Color);
+		}
+	}
+
+	protected void OnAddActionActivated (object sender, EventArgs e)
+	{
+		appPal.AppendColor(app.Color);
+	}
+
+	public void DeleteSelection()
+	{
+		// TODO: wire to delete key?
+		appPal.DeleteColors (GetSelectedItems());
+	}
+
+	protected void OnDeleteActionActivated (object sender, EventArgs e)
+	{
+		DeleteSelection ();
+	}
+
+	protected void OnAddAllActionActivated (object sender, EventArgs e)
+	{
+		appPal.AppendColors(app.Results.Select(x => x.ToRgb()));
+ 	}
+
+	public void CopySelection()
+	{
+		// HACK: ideally, we'd just send a PaletteColor or List of
+		// those, except that won't work. ContainsData(type) says
+		// true, GetData(type) says null.
+		var sb = new StringBuilder("pc" + Environment.NewLine);
+		if (treeview1.Selection.CountSelectedRows() > 0)
+		{
+			foreach (var pc in GetSelectedItems())
+				sb.AppendLine(pc.ToString());
+			clipboard.Text = sb.ToString ();
+		}
+	}
+
+	protected void OnCutActionActivated (object sender, EventArgs e)
+	{
+		CopySelection ();
+		DeleteSelection ();
+	}
+
+	protected void OnCopyActionActivated (object sender, EventArgs e)
+	{
+		CopySelection ();
+	}
+
+	protected void OnPasteActionActivated (object sender, EventArgs e)
+	{
+		clipboard.RequestText ((c, s) => {
+			try {
+				if (s.StartsWith("pc"))
+				{
+					var toAdd = new List<PaletteColor>();
+					foreach (var pc in Regex.Split(s, Environment.NewLine))
+					{
+						if (pc == "pc" || String.IsNullOrWhiteSpace(pc))
+							continue;
+						toAdd.Add(new PaletteColor(pc));
+					}
+					appPal.AppendColors(toAdd);
+				}
+				else
+					appPal.AppendColor(ColorUtils.FromString(s).ToRgb());
+			}
+			catch (Exception) {} // it doesn't matter
+		});
+	}
+
+	protected void OnImportPhotoshopPaletteActionActivated (object sender, EventArgs e)
+	{
+		if (DirtyPrompt ()) {
+			FileChooserDialog fd = new FileChooserDialog ("Open palette", this,
+				FileChooserAction.Open, "Cancel", ResponseType.Cancel, "OK", ResponseType.Ok);
+			FileFilter ff = new FileFilter ();
+			ff.Name = "Photoshop Palette";
+			ff.AddPattern ("*.aco");
+			fd.AddFilter (ff);
+			if (fd.Run () == (int)ResponseType.Ok) {
+				appPal.NewFromPalette (
+					AcoConverter.FromPhotoshopPalette (
+						File.ReadAllBytes (fd.Filename)));
+			}
+			fd.Destroy ();
+		}
+	}
+
+	protected void OnExportPhotoshopPaletteActionActivated (object sender, EventArgs e)
+	{
+		FileChooserDialog fd = new FileChooserDialog ("Save palette as", this,
+			FileChooserAction.Save, "Cancel", ResponseType.Cancel, "OK", ResponseType.Ok);
+		FileFilter ff = new FileFilter ();
+		ff.Name = "GIMP Palette";
+		ff.AddPattern ("*.gpl");
+		fd.AddFilter (ff);
+		if (fd.Run () == (int)ResponseType.Ok) {
+			File.WriteAllBytes (fd.Filename,
+				AcoConverter.ToPhotoshopPalette (appPal.Palette));
+		}
+		fd.Destroy ();
+	}
+
+	protected void OnExportHTMLActionActivated (object sender, EventArgs e)
+	{
+		FileChooserDialog fd = new FileChooserDialog ("Save as HTML", this,
+			FileChooserAction.Save, "Cancel", ResponseType.Cancel, "OK", ResponseType.Ok);
+		FileFilter ff = new FileFilter ();
+		ff.Name = "HTML";
+		ff.AddMimeType ("text/html");
+		ff.AddPattern ("*.html");
+		fd.AddFilter (ff);
+		if (fd.Run () == (int)ResponseType.Ok) {
+			File.WriteAllText(fd.Filename,
+				HtmlProofGenerator.GeneratePage(
+					appPal.Palette
+				)
+			);
+		}
+		fd.Destroy ();
+	}
+
+
+	protected void OnPropertiesActionActivated (object sender, EventArgs e)
+	{
+		var pd = new PropertiesDialog();
+		pd.PaletteTitle = appPal.Palette.Name;
+		pd.PaletteColumns = appPal.Palette.Columns;
+		pd.PaletteComments = appPal.Palette.Comments;
+		if (pd.Run () == (int)ResponseType.Ok) {
+			var p = new Palette(appPal.Palette)
+			{
+				Name = pd.PaletteTitle,
+				Columns = pd.PaletteColumns,
+				Comments = pd.PaletteComments
+			};
+			appPal.SetPalette(p, action: "Properties Change");
+		}
+		pd.Destroy ();
+	}
+
+	protected void OnTreeview1DragEnd (object o, DragEndArgs args)
+	{
+		// HACK: GTK thinks it's special and has its own model
+		// instead of our own. Resync changes made to the GTK
+		// model, manually.
+
+		var newPal = new Palette(appPal.Palette);
+
+		// HACK: we don't have .Select on models
+		var newList = new List<PaletteColor>();
+		ls.Foreach((m, p, i) => {
+			var pc = GetItemFromIter(i);
+			newList.Add(pc);
+			return false; // .Foreach needs this to continue walking
+		});
+
+		// because thse are different lists, but containing the same
+		// objects, do this
+		if (!newPal.Colors.SequenceEqual(newList)) {
+			newPal.Colors = newList;
+			appPal.SetPalette(newPal, action: "Move Colour");
+		}
+	}
+
+	[GLib.ConnectBefore]
+	protected void OnTreeview1ButtonPressEvent (object o, ButtonPressEventArgs args)
+	{
+		if (args.Event.Button == 3) { // right mouse button
+			Menu menu = new Menu();
+
+			MenuItem cutPopupItem = new MenuItem ("Cu_t");
+			MenuItem copyPopupItem = new MenuItem ("_Copy");
+			MenuItem delPopupItem = new MenuItem ("_Remove");
+			cutPopupItem.Activated += (s, a) => {
+				CopySelection();
+				DeleteSelection();
+			};
+			copyPopupItem.Activated += (s, a) => {
+				CopySelection();
+			};
+			delPopupItem.Activated += (s, a) => {
+				DeleteSelection();
+			};
+			menu.Add (cutPopupItem);
+			menu.Add (copyPopupItem);
+			menu.Add (delPopupItem);
+			menu.ShowAll ();
+			menu.Popup();
+		}
+	}
+
+	protected void OnBlendActionActivated(object sender, EventArgs e)
+	{
+		var bd = new BlendDialog(app.Color, treeview1.Selection.CountSelectedRows() > 0 ?
+		                         GetSelectedItems().First().Color : app.Color);
+		if (bd.Run() == (int)ResponseType.Ok)
+		{
+			appPal.AppendColors(bd.SelectedItems);
+		}
+		bd.Destroy();
+	}
 }
+ 

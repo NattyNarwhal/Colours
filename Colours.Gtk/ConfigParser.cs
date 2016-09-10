@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Globalization;
+using Colours.App;
 
 namespace Colours
 {

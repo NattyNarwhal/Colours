@@ -1,5 +1,6 @@
 ﻿using System;
 using Gtk;
+using Colours.App;
 
 namespace Colours.Gtk
 {
@@ -7,8 +8,8 @@ namespace Colours.Gtk
 	{
 		public static void Main (string[] args)
 		{
-			AppState initialState = ConfigParser.LoadConfig ();
-			AppState parsed = AppArgParser.ParseArgs (args,
+			var initialState = ConfigParser.LoadConfig ();
+			var parsed = AppArgParser.ParseArgs (args,
 				initialState.Color, initialState.SchemeType);
 
 			Application.Init ();

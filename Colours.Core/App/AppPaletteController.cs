@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Colours
+namespace Colours.App
 {
     /// <summary>
     /// Represents the backend of the application, for managing color
@@ -19,11 +19,11 @@ namespace Colours
         /// <summary>
         /// The undo history. This will be set for you by the functions in this object.
         /// </summary>
-        public Stack<Palette> UndoHistory { get; private set; }
+        public Stack<AppPalUndo> UndoHistory { get; private set; } // should the user be able to peek at it?
         /// <summary>
         /// The redo history. This will be set for you by the functions in this object.
         /// </summary>
-        public Stack<Palette> RedoHistory { get; private set; }
+        public Stack<AppPalUndo> RedoHistory { get; private set; }
         /// <summary>
         /// Gets the file name of the loaded file
         /// </summary>
@@ -59,8 +59,8 @@ namespace Colours
 
         private void ResetState()
         {
-            UndoHistory = new Stack<Palette>();
-            RedoHistory = new Stack<Palette>();
+            UndoHistory = new Stack<AppPalUndo>();
+            RedoHistory = new Stack<AppPalUndo>();
         }
 
         /// <summary>
@@ -68,11 +68,7 @@ namespace Colours
         /// </summary>
         public void New()
         {
-            Palette = new Palette();
-            ResetState();
-            FileName = null;
-            Dirty = true;
-            OnPaletteChanged(new EventArgs());
+            NewFromPalette(new Palette());
         }
 
         /// <summary>
@@ -95,10 +91,11 @@ namespace Colours
         /// <param name="p"></param>
         /// <param name="keepHistory">If undo should have been added.</param>
         /// <param name="fireEvent">If the event should fire.</param>
-        public void SetPalette(Palette p, bool keepHistory = true, bool fireEvent = true)
+        /// <param name="action">If the undo is added, the action it is described as.</param>
+        public void SetPalette(Palette p, bool keepHistory = true, bool fireEvent = true, string action = null)
         {
             if (keepHistory && Palette != p)
-                PushUndo();
+                PushUndo(action ?? "Palette Change");
             Palette = p;
             Dirty = true;
             if (fireEvent)
@@ -111,7 +108,8 @@ namespace Colours
         /// <param name="c">The color to append.</param>
         /// <param name="keepHistory">If undo should have been added.</param>
         /// <param name="fireEvent">If the event should fire.</param>
-        public void AppendColor(RgbColor c, bool keepHistory = true, bool fireEvent = true)
+        /// <param name="action">If the undo is added, the action it is described as.</param>
+        public void AppendColor(RgbColor c, bool keepHistory = true, bool fireEvent = true, string action = null)
         {
             AppendColor(new PaletteColor(c), keepHistory, fireEvent);
         }
@@ -122,13 +120,43 @@ namespace Colours
         /// <param name="pc">The color to append.</param>
         /// <param name="keepHistory">If undo should have been added.</param>
         /// <param name="fireEvent">If the event should fire.</param>
-        public void AppendColor(PaletteColor pc, bool keepHistory = true, bool fireEvent = true)
+        /// <param name="action">If the undo is added, the action it is described as.</param>
+        public void AppendColor(PaletteColor pc, bool keepHistory = true, bool fireEvent = true, string action = null)
         {
             if (keepHistory)
-                PushUndo();
+                PushUndo(action ?? "Add Colour"); // TODO: should we announce the colour we're acting on? same for other funcs
             Palette = new Palette(Palette);
             Palette.Colors.Add(pc);
             Dirty = true;
+            if (fireEvent)
+                OnPaletteChanged(new EventArgs());
+        }
+
+        /// <summary>
+        /// Adds a list of colors to the palette.
+        /// </summary>
+        /// <param name="lc">A list of colors to add.</param>
+        /// <param name="keepHistory">If undo should have been added.</param>
+        /// <param name="fireEvent">If the event should fire.</param>
+        /// <param name="action">If the undo is added, the action it is described as.</param>
+        public void AppendColors(IEnumerable<RgbColor> lc, bool keepHistory = true, bool fireEvent = true, string action = null)
+        {
+            AppendColors(lc.Select(x => new PaletteColor(x)), keepHistory, fireEvent);
+        }
+
+        /// <summary>
+        /// Adds a list of colors to the palette.
+        /// </summary>
+        /// <param name="lc">A list of colors to add.</param>
+        /// <param name="keepHistory">If undo should have been added.</param>
+        /// <param name="fireEvent">If the event should fire.</param>
+        /// <param name="action">If the undo is added, the action it is described as.</param>
+        public void AppendColors(IEnumerable<PaletteColor> lc, bool keepHistory = true, bool fireEvent = true, string action = null)
+        {
+            if (keepHistory)
+                PushUndo(action ?? "Add Multiple Colours");
+            foreach (var pc in lc)
+                AppendColor(pc, false, false);
             if (fireEvent)
                 OnPaletteChanged(new EventArgs());
         }
@@ -139,10 +167,11 @@ namespace Colours
         /// <param name="pc">The color to remove.</param>
         /// <param name="keepHistory">If undo should have been added.</param>
         /// <param name="fireEvent">If the event should fire.</param>
-        public void DeleteColor(PaletteColor pc, bool keepHistory = true, bool fireEvent = true)
+        /// <param name="action">If the undo is added, the action it is described as.</param>
+        public void DeleteColor(PaletteColor pc, bool keepHistory = true, bool fireEvent = true, string action = null)
         {
             if (keepHistory)
-                PushUndo();
+                PushUndo(action ?? "Delete Colour");
             Palette = new Palette(Palette);
             Palette.Colors.Remove(pc);
             Dirty = true;
@@ -154,13 +183,14 @@ namespace Colours
         /// <summary>
         /// Deletes a number of colors.
         /// </summary>
-        /// <param name="l"></param>
+        /// <param name="l">A list of colors to remove</param>
         /// <param name="keepHistory">If undo should have been added.</param>
         /// <param name="fireEvent">If the event should fire.</param>
-        public void DeleteColors(IEnumerable<PaletteColor> l, bool keepHistory = true, bool fireEvent = true)
+        /// <param name="action">If the undo is added, the action it is described as.</param>
+        public void DeleteColors(IEnumerable<PaletteColor> l, bool keepHistory = true, bool fireEvent = true, string action = null)
         {
             if (keepHistory)
-                PushUndo();
+                PushUndo(action ?? "Delete Multiple Colours");
             foreach (var pc in l)
                 DeleteColor(pc, false, false);
             if (fireEvent)
@@ -174,10 +204,11 @@ namespace Colours
         /// <param name="newName">The new name of the color.</param>
         /// <param name="keepHistory">If undo should have been added.</param>
         /// <param name="fireEvent">If the event should fire.</param>
-        public void RenameColor(int index, string newName, bool keepHistory = true, bool fireEvent = true)
+        /// <param name="action">If the undo is added, the action it is described as.</param>
+        public void RenameColor(int index, string newName, bool keepHistory = true, bool fireEvent = true, string action = null)
         {
             if (keepHistory)
-                PushUndo();
+                PushUndo(action ?? "Rename Colour");
             Palette = new Palette(Palette);
             Palette.Colors[index] =
                 new PaletteColor(Palette.Colors[index].Color, newName);
@@ -193,10 +224,11 @@ namespace Colours
         /// <param name="newIndex">The new location of the color.</param>
         /// <param name="keepHistory">If undo should have been added.</param>
         /// <param name="fireEvent">If the event should fire.</param>
-        public void MoveColor(PaletteColor pc, int newIndex, bool keepHistory = true, bool fireEvent = true)
+        /// <param name="action">If the undo is added, the action it is described as.</param>
+        public void MoveColor(PaletteColor pc, int newIndex, bool keepHistory = true, bool fireEvent = true, string action = null)
         {
             if (keepHistory)
-                PushUndo();
+                PushUndo(action ?? "Move Colour");
             Palette = new Palette(Palette);
             Palette.Colors.Remove(pc);
             Palette.Colors.Insert(newIndex, pc);
@@ -208,9 +240,9 @@ namespace Colours
         /// <summary>
         /// Pushes the current state of the application to the undo stack, and purges the redo stack.
         /// </summary>
-        private void PushUndo()
+        private void PushUndo(string action)
         {
-            UndoHistory.Push(Palette);
+            UndoHistory.Push(new AppPalUndo(Palette, action));
             RedoHistory.Clear();
         }
 
@@ -222,13 +254,9 @@ namespace Colours
         {
             if (CanUndo())
             {
-                RedoHistory.Push(Palette);
-                var p = UndoHistory.Pop();
-                SetPalette(p, false, false);
-
-                // because we didn't use the setters to fire events
-                // because we'd be wastefully firing two otherwise
-                OnPaletteChanged(new EventArgs());
+                RedoHistory.Push(new AppPalUndo(Palette, UndoHistory.Peek().Name));
+                var state = UndoHistory.Pop();
+                SetPalette(state.Palette, false);
             }
         }
 
@@ -240,13 +268,9 @@ namespace Colours
         {
             if (CanRedo())
             {
-                UndoHistory.Push(Palette);
-                var p = RedoHistory.Pop();
-                SetPalette(p, false, false);
-
-                // because we didn't use the setters to fire events
-                // because we'd be wastefully firing two otherwise
-                OnPaletteChanged(new EventArgs());
+                UndoHistory.Push(new AppPalUndo(Palette, RedoHistory.Peek().Name));
+                var state = RedoHistory.Pop();
+                SetPalette(state.Palette, false);
             }
         }
 

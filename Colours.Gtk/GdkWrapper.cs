@@ -4,6 +4,13 @@ namespace Colours
 {
 	public static class GdkWrapper
 	{
+		public static uint ToGdkPixel(this RgbColor c)
+		{
+			// HACK: Gdk.Color.Pixel doesn't work well, even
+			// with colormap alloc
+			return (uint)((c.R << 24) | (c.G << 16) | (c.B << 8) | 0xFF);
+		}
+
 		public static RgbColor ToRgbColor(this Gdk.Color c)
 		{
 			// GDK colour channels are ushorts, not bytes

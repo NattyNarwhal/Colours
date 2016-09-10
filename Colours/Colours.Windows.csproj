@@ -57,10 +57,15 @@
     <Compile Include="AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="BlendForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BlendForm.Designer.cs">
+      <DependentUpon>BlendForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ColorButton.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ColorList.cs" />
     <Compile Include="EyedropperForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -82,8 +87,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RenderColorIcon.cs" />
     <EmbeddedResource Include="AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BlendForm.resx">
+      <DependentUpon>BlendForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EyedropperForm.resx">
       <DependentUpon>EyedropperForm.cs</DependentUpon>
@@ -123,6 +132,69 @@
       <Project>{e096d095-264e-4dd8-9081-b6b564591c49}</Project>
       <Name>Colours.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\New.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Open.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Properties.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Undo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Redo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Cut.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Copy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Paste.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Remove.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Eyedropper.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Random.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Photoshop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Save as HTML.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Back.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Forward.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Brighten.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Darken.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Saturate.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Desaturate.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

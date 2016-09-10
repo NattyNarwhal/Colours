@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Colours.App;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ namespace Colours
         [STAThread]
         static void Main(string[] args)
         {
-            InitialAppState state = AppArgParser.ParseArgs(args,
+            var state = AppArgParser.ParseArgs(args,
                 new HsvColor(Properties.Settings.Default.LastColor.ToRgbColor()),
                 Properties.Settings.Default.SchemeType);
             Application.EnableVisualStyles();

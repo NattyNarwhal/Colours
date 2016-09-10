@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Colours.Console.Mixer", "Colours.Console.Mixer\Colours.Console.Mixer.fsproj", "{A6A230F3-A566-421A-BAE9-00DC4A5CFDA1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{5128F749-086F-4740-AA6A-0CCBE79556ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5128F749-086F-4740-AA6A-0CCBE79556ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5128F749-086F-4740-AA6A-0CCBE79556ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6A230F3-A566-421A-BAE9-00DC4A5CFDA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6A230F3-A566-421A-BAE9-00DC4A5CFDA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6A230F3-A566-421A-BAE9-00DC4A5CFDA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6A230F3-A566-421A-BAE9-00DC4A5CFDA1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

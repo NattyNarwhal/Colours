@@ -36,19 +36,22 @@
   <ItemGroup>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Application\AppArgParser.cs" />
-    <Compile Include="Application\AppController.cs" />
-    <Compile Include="Application\AppPaletteController.cs" />
-    <Compile Include="GenericFunctions.cs" />
-    <Compile Include="Models\AppState.cs" />
+    <Compile Include="App\AppArgParser.cs" />
+    <Compile Include="App\AppController.cs" />
+    <Compile Include="App\AppPaletteController.cs" />
+    <Compile Include="Mixing\Blend.cs" />
+    <Compile Include="App\AppInitState.cs" />
+    <Compile Include="App\AppPalUndo.cs" />
+    <Compile Include="App\AppState.cs" />
     <Compile Include="Models\ColorUtils.cs" />
     <Compile Include="Models\HsvColor.cs" />
-    <Compile Include="Application\HtmlProofGenerator.cs" />
-    <Compile Include="Models\Palette.cs" />
-    <Compile Include="Models\PaletteColor.cs" />
+    <Compile Include="App\HtmlProofGenerator.cs" />
+    <Compile Include="Palette\AcoConverter.cs" />
+    <Compile Include="Palette\Palette.cs" />
+    <Compile Include="Palette\PaletteColor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\RgbColor.cs" />
-    <Compile Include="Application\Schemer.cs" />
+    <Compile Include="Mixing\Schemer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

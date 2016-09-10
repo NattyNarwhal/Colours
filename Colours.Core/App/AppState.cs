@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Colours
+﻿namespace Colours.App
 {
     /// <summary>
     /// Represents the minimum amount of application state for the.
@@ -38,32 +32,8 @@ namespace Colours
         /// <returns>The stringified state, for example, "Tetrads of #123456."</returns>
         public override string ToString()
         {
-            return String.Format("{0} of {1}", SchemeType.ToString(),
+            return string.Format("{0} of {1}", SchemeType.ToString(),
                 Color.ToRgb().ToHtml());
-        }
-    }
-
-    /// <summary>
-    /// Represents the application state to initialize an application,
-    /// including palette information.
-    /// </summary>
-    public class InitialAppState : AppState
-    {
-        /// <summary>
-        /// The file name of the palette, if the frontend supports it.
-        /// </summary>
-        public string PaletteFileName { get; set; }
-
-        /// <summary>
-        /// Creates a new initial application state representation.
-        /// </summary>
-        /// <param name="c">The color to use.</param>
-        /// <param name="t">The scheme to use.</param>
-        /// <param name="p">The filename of the palette to use.</param>
-        public InitialAppState(HsvColor c, SchemeType t, string p)
-            : base(c, t)
-        {
-            PaletteFileName = p;
         }
     }
 }

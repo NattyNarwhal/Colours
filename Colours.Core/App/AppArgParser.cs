@@ -1,11 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 
-namespace Colours
+namespace Colours.App
 {
     /// <summary>
     /// Provides a unniversal getopt-like, special-purpose command-line
     /// argument parser for platforms that support command line arguments.
     /// </summary>
+    // TODO: fold into AppInitState as a ctor?
     public static class AppArgParser
     {
         private enum ParsingMode
@@ -33,12 +35,13 @@ namespace Colours
         /// the frontend doesn't support this, it will be ignored anyways.
         /// </param>
         /// <returns>The application state the frontend will load.</returns>
-        public static InitialAppState ParseArgs(string[] args,
+        public static AppInitState ParseArgs(string[] args,
             HsvColor defaultColor, SchemeType defaultScheme, string initialPaletteFile = null)
         {
             HsvColor c = defaultColor;
             SchemeType t = defaultScheme;
             string p = initialPaletteFile;
+            List<string> u = new List<string>();
 
             ParsingMode m = ParsingMode.Normal;
             foreach (string a in args)
@@ -60,13 +63,19 @@ namespace Colours
                     default:
                         // find flags
                         if (a == "-t") m = ParsingMode.Scheme;
-                        if (a == "-c") m = ParsingMode.Color;
-                        if (a == "-p") m = ParsingMode.PaletteFile;
+                        else if (a == "-c") m = ParsingMode.Color;
+                        else if (a == "-p") m = ParsingMode.PaletteFile;
+                        else u.Add(a);
                         break;
                 }
             }
 
-            return new InitialAppState(c, t, p);
+            return new AppInitState()
+            {
+                MixerState = new AppState(c, t),
+                PaletteFileName = p,
+                UnparsedArgs = u
+            };
         }
     }
 }

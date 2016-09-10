@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Colours
 {
@@ -13,6 +14,10 @@ namespace Colours
     public class Palette
     {
         const string magic = "GIMP Palette";
+
+        const string nameRegex = "Name: ?(.*)";
+        const string columnsRegex = @"Columns: ?(\d*)";
+        const string commentRegex = @"#\s*(.*)";
 
         /// <summary>
         /// Gets or sets the name of the palette.
@@ -71,7 +76,7 @@ namespace Colours
         /// </summary>
         /// <param name="file">The file itself.</param>
         public Palette(string file) :
-            this(file.Split(Environment.NewLine.ToCharArray()))
+            this(Regex.Split(file, "\r?\n"))
         { }
 
         /// <summary>
@@ -89,22 +94,22 @@ namespace Colours
             foreach (string l in file)
             {
                 if (l == magic || l == "#") continue;
-                if (l.StartsWith("# "))
+                if (Regex.IsMatch(l, commentRegex))
                 {
-                    // TODO: handle comments without space
-                    Comments.Add(l.Remove(0, 2));
+                    Comments.Add(Regex.Match(l, commentRegex).Groups[1].Value);
                 }
-                else if (l.StartsWith("Columns: "))
+                else if (Regex.IsMatch(l, columnsRegex))
                 {
                     int i = 0; // a default
-                    int.TryParse(l.Remove(0, "Columns: ".Length), out i);
+                    int.TryParse(Regex.Match(l,
+                        columnsRegex).Groups[1].Value, out i);
                     Columns = i;
                 }
-                else if (l.StartsWith("Name: "))
+                else if (Regex.IsMatch(l, nameRegex))
                 {
-                    Name = l.Remove(0, "Name: ".Length);
+                    Name = Regex.Match(l, nameRegex).Groups[1].Value;
                 }
-                else
+                else if (PaletteColor.IsPaletteColorString(l))
                 {
                     // i guess we'll try to coax some colours out of it
                     Colors.Add(new PaletteColor(l));

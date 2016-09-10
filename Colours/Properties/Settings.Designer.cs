@@ -37,17 +37,6 @@ namespace Colours.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::Colours.ColorList CustomColors {
-            get {
-                return ((global::Colours.ColorList)(this["CustomColors"]));
-            }
-            set {
-                this["CustomColors"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Complement")]
         public global::Colours.SchemeType SchemeType {
             get {

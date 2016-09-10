@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Colours.App; // should we move the apps into this NS too?
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -19,17 +20,16 @@ namespace Colours
         public MainForm()
         {
             InitializeComponent();
-            if (Properties.Settings.Default.CustomColors?.Count == 16)
-            {
-                colorDialog.CustomColors = Properties.Settings.Default.CustomColors.ToArray();
-            }
+
+            schemeBox.Items.AddRange(Scheme.GetSchemes().ToArray());
+
             // don't init the app with this func; init with AppState
             // this is just a base ctor
         }
 
-        public MainForm(InitialAppState state) : this()
+        public MainForm(AppInitState state) : this()
         {
-            app = new AppController(state);
+            app = new AppController(state.MixerState);
             appPal = new AppPaletteController();
             if (state.PaletteFileName != null)
             {
@@ -58,16 +58,17 @@ namespace Colours
         /// <param name="e"></param>
         public void SyncAppViewState(object sender, EventArgs e)
         {
-            schemeBox.SelectedIndex = (int)app.SchemeType;
+            schemeBox.SelectedItem = schemeBox.Items.Cast<Scheme>()
+                .Where(x => x.Type == app.SchemeType).FirstOrDefault();
 
             resultsTable.Controls.Clear();
-            resultsTable.ColumnCount = app.Results.Count;
+            resultsTable.RowCount = app.Results.Count;
             int i = 0;
             foreach (HsvColor next in app.Results)
             {
-                resultsTable.ColumnStyles[i].SizeType = SizeType.Percent;
-                resultsTable.ColumnStyles[i].Width = 100 / app.Results.Count;
-                
+                resultsTable.RowStyles[i].SizeType = SizeType.Percent;
+                resultsTable.RowStyles[i].Height = 100 / app.Results.Count;
+
                 ColorButton cb = new ColorButton(next);
                 if (app.HsvColor == next)
                     cb.Font = new Font(cb.Font, FontStyle.Bold);
@@ -79,10 +80,10 @@ namespace Colours
                 cb.Dock = DockStyle.Fill;
                 cb.Click += SchemeColor_Click;
 
-                resultsTable.Controls.Add(cb, i++, 0);
+                resultsTable.Controls.Add(cb, 0, i++);
             }
 
-            EnableItems();
+            UpdateUI();
         }
 
         public void SyncAppPalState(object sender, EventArgs e)
@@ -93,32 +94,36 @@ namespace Colours
             foreach (PaletteColor pc in appPal.Palette.Colors)
             {
                 var lvi = new ListViewItem(pc.Name);
-                using (var b = new Bitmap(16, 16))
-                {
-                    using (var g = Graphics.FromImage(b))
-                    {
-                        g.FillRectangle(new SolidBrush(pc.Color.ToGdiColor()), 0, 0, 16, 16);
-                        g.DrawRectangle(Pens.Black, 0, 0, 15, 15);
-                    }
-                    paletteListImages.Images.Add(b);
-                }
+                paletteListImages.Images.Add(RenderColorIcon.RenderIcon(pc.Color));
                 lvi.Tag = pc;
                 lvi.ImageIndex = i++;
                 lvi.SubItems.Add(pc.Color.ToHtml());
                 paletteList.Items.Add(lvi);
             }
-
-            EnableItems();
+            
+            UpdateUI();
         }
 
-        public void EnableItems()
+        public void UpdateUI()
         {
-            Text = String.Format("{0}{1} ({2} for {3})",
+            Text = string.Format("{0}{1} ({2} for {3})",
                 appPal.Palette.Name, appPal.Dirty ? "*" : "",
-                (string)schemeBox.SelectedItem, app.Color.ToHtml());
+                schemeBox.SelectedItem.ToString(), app.Color.ToHtml());
+
+            var hasAny = appPal.Palette.Colors.Count > 0;
+            var selected = paletteList.SelectedIndices.Count > 0;
+
+            saveToolStripMenuItem.Enabled = appPal.Dirty;
+            saveAsHTMLToolStripMenuItem.Enabled = hasAny;
+            exportPhotoshopSwatchToolStripMenuItem.Enabled = hasAny;
 
             undoToolStripMenuItem.Enabled = appPal.CanUndo();
             redoToolStripMenuItem.Enabled = appPal.CanRedo();
+            undoToolStripMenuItem.Text = appPal.CanUndo() ?
+                "Undo " + appPal.UndoHistory.Peek().Name : "Can't Undo";
+            redoToolStripMenuItem.Text = appPal.CanRedo() ?
+                "Redo " + appPal.RedoHistory.Peek().Name : "Can't Redo";
+
             backToolStripMenuItem.Enabled = app.CanUndo();
             forwardToolStripMenuItem.Enabled = app.CanRedo();
 
@@ -126,20 +131,58 @@ namespace Colours
             darkenToolStripMenuItem.Enabled = app.CanDarken();
             saturateToolStripMenuItem.Enabled = app.CanSaturate();
             desaturateToolStripMenuItem.Enabled = app.CanDesaturate();
+
+            cutSubmenuToolStripMenuItem.Enabled = selected;
+            cutToolStripMenuItem.Enabled = selected;
+            copyPCSubmenuToolStripMenuItem.Enabled = selected;
+            copyPCToolStripMenuItem.Enabled = selected;
+            deleteSubmenuToolStripMenuItem.Enabled = selected;
+            deleteToolStripMenuItem.Enabled = selected;
+            renameToolStripMenuItem.Enabled = selected;
+            useToolStripMenuItem.Enabled = selected;
+
+            UpdateUIPaletteList();
         }
-        
+
+        public void UpdateUIPaletteList()
+        {
+            paletteList.AutoResizeColumn(1, paletteList.Items.Count > 0 ?
+                ColumnHeaderAutoResizeStyle.ColumnContent :
+                ColumnHeaderAutoResizeStyle.HeaderSize);
+
+            // ClientSize will deal with only the chunk we control, not the
+            // scroll bar and borders. However, sometimes shrinking resize
+            // events cause a horizontal scrollbar to appear (which disappears
+            // when you click it) It doesn't help if you shrink it quickly.
+            nameHeader.Width = paletteList.ClientSize.Width - colorHeader.Width;
+        }
+
         private void SchemeColor_Click(object sender, EventArgs e)
         {
             colorDialog.Color = ((ColorButton)sender).Color.ToGdiColor();
+
+            if (paletteList.SelectedIndices.Count > 0)
+                colorDialog.CustomColors = paletteList.SelectedItems
+                    .Cast<ListViewItem>()
+                    .Take(16)
+                    .Select(x =>
+                        ColorTranslator.ToOle(((PaletteColor)x.Tag)
+                            .Color.ToGdiColor()))
+                    .ToArray();
+            else
+                colorDialog.CustomColors = appPal.Palette.Colors.Take(16)
+                    .Select(x => ColorTranslator.ToOle(x.Color.ToGdiColor()))
+                    .ToArray();
+
             if (colorDialog.ShowDialog(this) == DialogResult.OK)
             {
-                app.SetColor(colorDialog.Color.ToRgbColor(), true);
+                app.SetColor(colorDialog.Color.ToRgbColor());
             }
         }
 
         private void schemeBox_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            app.SetSchemeType((SchemeType)schemeBox.SelectedIndex, true);
+            app.SetSchemeType(((Scheme)schemeBox.SelectedItem).Type);
         }
 
         private void copyHexContextToolStripMenuItem_Click(object sender, EventArgs e)
@@ -160,11 +203,39 @@ namespace Colours
             Clipboard.SetText(cb.HsvColor.ToString());
         }
 
+        /// <summary>
+        /// Gives a prompt with options on how to proceed regarding
+        /// unsaved changes.
+        /// </summary>
+        /// <returns>If the user has canceled the actions.</returns>
+        public bool UnsavedPrompt()
+        {
+            var r = MessageBox.Show(this,
+                    "There are unsaved changes to the palette. Do you want to save?",
+                    "Colours", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question,
+                    MessageBoxDefaultButton.Button1);
+            switch (r)
+            {
+                case DialogResult.Yes:
+                    SavePalette(false);
+                    return false;
+                case DialogResult.Cancel:
+                    return true;
+                case DialogResult.No:
+                default:
+                    return false;
+            }
+        }
+
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
+            if (appPal.Dirty)
+            {
+                e.Cancel = UnsavedPrompt();
+            }
+
             // save settings
             Properties.Settings.Default.SchemeType = app.SchemeType;
-            Properties.Settings.Default.CustomColors = new ColorList(colorDialog.CustomColors);
             Properties.Settings.Default.LastColor = app.Color.ToGdiColor();
             Properties.Settings.Default.Save();
         }
@@ -172,7 +243,7 @@ namespace Colours
         private void randomButton_Click(object sender, EventArgs e)
         {
             Random r = new Random();
-            app.SetColor(new RgbColor(r.Next(255), r.Next(255), r.Next(255)), true);
+            app.SetColor(new RgbColor(r.Next(255), r.Next(255), r.Next(255)));
         }
 
         private void brightenToolStripMenuItem_Click(object sender, EventArgs e)
@@ -197,7 +268,8 @@ namespace Colours
 
         private void pasteAcquireToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            try {
+            try
+            {
                 if (Clipboard.ContainsText())
                 {
                     var clip = Clipboard.GetText();
@@ -207,13 +279,12 @@ namespace Colours
                         {
                             if (pc == "pc" || String.IsNullOrWhiteSpace(pc))
                                 continue;
-                            app.SetColor(new PaletteColor(pc).Color, true);
+                            app.SetColor(new PaletteColor(pc).Color);
                             break;
                         }
-                        SyncAppPalState(this, new EventArgs());
                     }
                     else
-                        app.SetColor(ColorUtils.FromString(Clipboard.GetText()), true);
+                        app.SetColor(ColorUtils.FromString(Clipboard.GetText()));
                 }
             }
             catch (ArgumentException) // these are harmless
@@ -239,7 +310,7 @@ namespace Colours
 
         private void invertToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            app.SetColor(app.Color.Invert(), true);
+            app.SetColor(app.Color.Invert());
         }
 
         private void backToolStripMenuItem_Click(object sender, EventArgs e)
@@ -254,13 +325,12 @@ namespace Colours
 
         private void saveAsHTMLToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (String.IsNullOrEmpty(saveAsHtmlDialog.FileName))
+                saveAsHtmlDialog.FileName = appPal.Palette.Name;
             if (saveAsHtmlDialog.ShowDialog(this) == DialogResult.OK)
             {
                 File.WriteAllText(saveAsHtmlDialog.FileName,
-                    HtmlProofGenerator.GeneratePage(appPal.Palette.Name,
-                        String.Join("", appPal.Palette.Colors.Select
-                            (x => HtmlProofGenerator.GenerateTable(x)))
-                    )
+                    HtmlProofGenerator.GeneratePage(appPal.Palette)
                 );
             }
         }
@@ -275,7 +345,7 @@ namespace Colours
             EyedropperForm ef = new EyedropperForm();
             if (ef.ShowDialog(this) == DialogResult.OK)
             {
-                app.SetColor(ef.Color.ToRgbColor(), true);
+                app.SetColor(ef.Color.ToRgbColor());
             }
         }
 
@@ -286,6 +356,8 @@ namespace Colours
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (appPal.Dirty)
+                if (UnsavedPrompt()) return;
             appPal.New();
         }
 
@@ -301,41 +373,48 @@ namespace Colours
                 appPal.Redo();
         }
 
-        public void SavePalette()
+        public bool SavePalette(bool forceDialog)
         {
+            if (forceDialog || appPal.FileName == null)
+            {
+                // if we don't have a name already, give it one based
+                // on its palette title name - the save dialog will
+                // handle the extension
+                if (appPal.FileName == null)
+                    savePaletteDialog.FileName = appPal.Palette.Name;
+                if (savePaletteDialog.ShowDialog(this) == DialogResult.OK)
+                {
+                    appPal.FileName = savePaletteDialog.FileName;
+                }
+                else return false;
+            }
+
             File.WriteAllText(appPal.FileName, appPal.Palette.ToString());
+            appPal.Dirty = false;
+            // update the titlebar's dirtiness
+            UpdateUI();
+            return true;
         }
 
         public void OpenPalette(string fileName)
         {
-            appPal.NewFromPalette(new Palette(File.ReadAllLines(fileName)));
+            appPal.NewFromPalette(new Palette(File.ReadAllLines(fileName)), fileName);
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (appPal.FileName == null)
-            {
-                if (savePaletteDialog.ShowDialog(this) == DialogResult.OK)
-                {
-                    appPal.FileName = savePaletteDialog.FileName;
-                    SavePalette();
-                }
-            }
-            else
-                SavePalette();
+            SavePalette(false);
         }
 
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (savePaletteDialog.ShowDialog(this) == DialogResult.OK)
-            {
-                appPal.FileName = savePaletteDialog.FileName;
-                SavePalette();
-            }
+            SavePalette(true);
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (appPal.Dirty)
+                if (UnsavedPrompt()) return;
             if (openPaletteDialog.ShowDialog(this) == DialogResult.OK)
             {
                 OpenPalette(openPaletteDialog.FileName);
@@ -346,12 +425,13 @@ namespace Colours
         private void paletteList_ItemActivate(object sender, EventArgs e)
         {
             if (paletteList.SelectedIndices.Count > 0)
-                app.SetColor(appPal.Palette.Colors[paletteList.SelectedIndices[0]].Color, true);
+                app.SetColor(appPal.Palette.Colors[paletteList.SelectedIndices[0]].Color);
         }
 
         private void paletteList_AfterLabelEdit(object sender, LabelEditEventArgs e)
         {
-            appPal.RenameColor(e.Item, e.Label);
+            if (appPal.Palette.Colors.Count > e.Item)
+                appPal.RenameColor(e.Item, e.Label);
         }
 
         private void paletteList_ItemDrag(object sender, ItemDragEventArgs e)
@@ -411,13 +491,14 @@ namespace Colours
                     var clip = Clipboard.GetText();
                     if (clip.StartsWith("pc"))
                     {
-                        foreach (var pc in Regex.Split(clip, Environment.NewLine))
+                        var toAdd = new List<PaletteColor>();
+                        foreach (var pc in Regex.Split(clip, "\r?\n"))
                         {
                             if (pc == "pc" || String.IsNullOrWhiteSpace(pc))
                                 continue;
-                            appPal.AppendColor(new PaletteColor(pc), fireEvent: false);
+                            toAdd.Add(new PaletteColor(pc));
                         }
-                        SyncAppPalState(this, new EventArgs());
+                        appPal.AppendColors(toAdd);
                     }
                     else
                         appPal.AppendColor(ColorUtils.FromString(clip).ToRgb());
@@ -467,11 +548,13 @@ namespace Colours
 
         private void saveAsHTMLProofToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            var title = String.Format("{0} of {1}", app.SchemeType, app.Color.ToHtml());
+            if (String.IsNullOrEmpty(saveAsHtmlDialog.FileName))
+                saveAsHtmlDialog.FileName = title;
             if (saveAsHtmlDialog.ShowDialog(this) == DialogResult.OK)
             {
                 File.WriteAllText(saveAsHtmlDialog.FileName,
-                    HtmlProofGenerator.GeneratePage(String.Format("{0} of {1}",
-                        app.SchemeType, app.Color.ToHtml()),
+                    HtmlProofGenerator.GeneratePage(title,
                         HtmlProofGenerator.GenerateTable(app.Results))
                 );
             }
@@ -493,8 +576,73 @@ namespace Colours
                     Columns = pd.PaletteColumns,
                     Comments = pd.PaletteComments
                 };
-                appPal.SetPalette(p);
+                appPal.SetPalette(p, action: "Properties Change");
             }
+        }
+
+        private void paletteList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // update cut/copy/paste, etc.
+            UpdateUI();
+        }
+
+        private void addAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            appPal.AppendColors(app.Results.Select(x => x.ToRgb()));
+        }
+
+        private void importPhotoshopSwatchToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (importPhotoshopDialog.ShowDialog(this) == DialogResult.OK)
+                {
+                    var p = AcoConverter.FromPhotoshopPalette(
+                        File.ReadAllBytes(importPhotoshopDialog.FileName));
+                    appPal.NewFromPalette(p);
+                }
+            }
+            catch (NotImplementedException)
+            {
+                MessageBox.Show(this, "The Photoshop palette has an unsupported colourspace..",
+                    "Colours", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show(this, "The Photoshop palette could not be converted.",
+                    "Colours", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void exportPhotoshopSwatchToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (exportPhotoshopDialog.ShowDialog(this) == DialogResult.OK)
+                {
+                    File.WriteAllBytes(exportPhotoshopDialog.FileName,
+                        AcoConverter.ToPhotoshopPalette(appPal.Palette));
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show(this, "The Photoshop palette could not be converted.",
+                    "Colours", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void blendToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BlendForm f = new BlendForm(app.Color, 
+                paletteList.SelectedIndices.Count > 0 ?
+                ((PaletteColor)paletteList.SelectedItems[0].Tag).Color : app.Color);
+            if (f.ShowDialog(this) == DialogResult.OK)
+                appPal.AppendColors(f.SelectedItems);
+        }
+
+        private void paletteList_SizeChanged(object sender, EventArgs e)
+        {
+            UpdateUIPaletteList();
         }
     }
 }
