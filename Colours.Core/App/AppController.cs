@@ -288,6 +288,12 @@ namespace Colours.App
                 case SchemeType.Analogous:
                     Results = ColorSchemer.Analogous(HsvColor);
                     break;
+                case SchemeType.WideAnalogous:
+                    Results = ColorSchemer.WideAnalogous(HsvColor);
+                    break;
+                case SchemeType.NarrowAnalogous:
+                    Results = ColorSchemer.NarrowAnalogous(HsvColor);
+                    break;
                 case SchemeType.Monochromatic:
                     Results = ColorSchemer.Monochromatic(HsvColor);
                     break;

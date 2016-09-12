@@ -33,6 +33,14 @@ namespace Colours
         /// </summary>
         Analogous,
         /// <summary>
+        /// Five colors adjcanent, spread widely in a linear direction.
+        /// </summary>
+        WideAnalogous,
+        /// <summary>
+        /// Five colors adjcanent spread closely in a linear direction.
+        /// </summary>
+        NarrowAnalogous,
+        /// <summary>
         /// Two colors, darker and lighter.
         /// </summary>
         Monochromatic,
@@ -106,7 +114,9 @@ namespace Colours
                 { SchemeType.RectangleTetrads, "Rectangular Tetrads" },
                 { SchemeType.FiveTone, "Five Tone" },
                 { SchemeType.SixTone, "Six Tone" },
-                { SchemeType.Analogous, "Analogous" },
+                { SchemeType.Analogous, "Adjacent Analogous" },
+                { SchemeType.NarrowAnalogous, "Narrow Analogous" },
+                { SchemeType.WideAnalogous, "Wide Analogous" },
                 { SchemeType.Monochromatic, "Monochromatic" },
             };
     }
@@ -119,8 +129,6 @@ namespace Colours
     /// </summary>
     public static class ColorSchemer
     {
-        
-
         /// <summary>
         /// Gets the color on the other side of the color wheel.
         /// </summary>
@@ -175,6 +183,42 @@ namespace Colours
             HsvColor c2 = new HsvColor(c.Hue + offset, c.Saturation, c.Value);
 
             return new List<HsvColor>() { c, c1, c2 };
+        }
+
+        /// <summary>
+        /// Gets 5 colors farther from the colour in a linear direction, closely.
+        /// </summary>
+        /// <param name="c">The colour to generate the scheme from.</param>
+        /// <returns>The results of the scheme, including the previous color.</returns>
+        public static List<HsvColor> NarrowAnalogous(HsvColor c)
+        {
+            const double offset = 360 / 24;
+
+            HsvColor c1 = new HsvColor(c.Hue + offset, c.Saturation, c.Value);
+            HsvColor c2 = new HsvColor(c1.Hue + offset, c.Saturation, c.Value);
+            HsvColor c3 = new HsvColor(c2.Hue + offset, c.Saturation, c.Value);
+            HsvColor c4 = new HsvColor(c3.Hue + offset, c.Saturation, c.Value);
+            HsvColor c5 = new HsvColor(c4.Hue + offset, c.Saturation, c.Value);
+
+            return new List<HsvColor>() { c, c1, c2, c3, c4, c5 };
+        }
+
+        /// <summary>
+        /// Gets 5 colors farther from the colour in a linear direction, widely.
+        /// </summary>
+        /// <param name="c">The colour to generate the scheme from.</param>
+        /// <returns>The results of the scheme, including the previous color.</returns>
+        public static List<HsvColor> WideAnalogous(HsvColor c)
+        {
+            const double offset = 360 / 12;
+
+            HsvColor c1 = new HsvColor(c.Hue + offset, c.Saturation, c.Value);
+            HsvColor c2 = new HsvColor(c1.Hue + offset, c.Saturation, c.Value);
+            HsvColor c3 = new HsvColor(c2.Hue + offset, c.Saturation, c.Value);
+            HsvColor c4 = new HsvColor(c3.Hue + offset, c.Saturation, c.Value);
+            HsvColor c5 = new HsvColor(c4.Hue + offset, c.Saturation, c.Value);
+
+            return new List<HsvColor>() { c, c1, c2, c3, c4, c5 };
         }
 
         /// <summary>
