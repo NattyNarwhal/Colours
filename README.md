@@ -82,12 +82,9 @@ I won't deny inspiration ;)
 * [X] Eyedropper in SWF version. The GTK version naturally has this because the native colour picker does. Portability might have been a concern, but the GTK version exists now.
  * [ ] I'm not entirely happy with the UI though.
 * [ ] DPI awareness in SWF version: Does this even work?
-* [X] Colour pallettes - both either readymades and/or custom "bookmark" like ones.
- * Should favourites be implemented the same way as a pallette? This is flexible, though not as simple to implement UI or code wise.
 * [ ] Rebrand? - Colours is a generic name.
  * [ ] To go with this, maybe an icon.
-* [ ] Icons for actions. There are generic sets, and the GTK version uses stock icons, but SWF could use, say, the VS image library for well-known functions like save. We still need a icons for commands like saturate though.
 * [ ] A colour wheel would be impressive. Kuler does this.
+* [ ] Improve, consilidate, add schemes.
+* [ ] Alternative colour wheels for different blending beyond RGB would be nice.
 * [ ] Picking colors from images would be neat.
-* [ ] Finish GTK parity
- * [ ] Genercize file dialog handling
