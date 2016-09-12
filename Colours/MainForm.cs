@@ -62,12 +62,12 @@ namespace Colours
                 .Where(x => x.Type == app.SchemeType).FirstOrDefault();
 
             resultsTable.Controls.Clear();
-            resultsTable.ColumnCount = app.Results.Count;
+            resultsTable.RowCount = app.Results.Count;
             int i = 0;
             foreach (HsvColor next in app.Results)
             {
-                resultsTable.ColumnStyles[i].SizeType = SizeType.Percent;
-                resultsTable.ColumnStyles[i].Width = 100 / app.Results.Count;
+                resultsTable.RowStyles[i].SizeType = SizeType.Percent;
+                resultsTable.RowStyles[i].Height = 100 / app.Results.Count;
 
                 ColorButton cb = new ColorButton(next);
                 if (app.HsvColor == next)
@@ -80,7 +80,7 @@ namespace Colours
                 cb.Dock = DockStyle.Fill;
                 cb.Click += SchemeColor_Click;
 
-                resultsTable.Controls.Add(cb, i++, 0);
+                resultsTable.Controls.Add(cb, 0, i++);
             }
 
             UpdateUI();
@@ -100,7 +100,7 @@ namespace Colours
                 lvi.SubItems.Add(pc.Color.ToHtml());
                 paletteList.Items.Add(lvi);
             }
-
+            
             UpdateUI();
         }
 
@@ -623,6 +623,15 @@ namespace Colours
                 ((PaletteColor)paletteList.SelectedItems[0].Tag).Color : app.Color);
             if (f.ShowDialog(this) == DialogResult.OK)
                 appPal.AppendColors(f.SelectedItems);
+        }
+
+        private void paletteList_SizeChanged(object sender, EventArgs e)
+        {
+            // ClientSize will deal with only the chunk we control, not the
+            // scroll bar and borders. However, sometimes shrinking resize
+            // events cause a horizontal scrollbar to appear (which disappears
+            // when you click it) It doesn't help if you shrink it quickly.
+            nameHeader.Width = paletteList.ClientSize.Width - colorHeader.Width;
         }
     }
 }

@@ -124,7 +124,7 @@
             this.schemeBox.FormattingEnabled = true;
             this.schemeBox.Location = new System.Drawing.Point(12, 3);
             this.schemeBox.Name = "schemeBox";
-            this.schemeBox.Size = new System.Drawing.Size(324, 21);
+            this.schemeBox.Size = new System.Drawing.Size(140, 21);
             this.schemeBox.TabIndex = 2;
             this.schemeBox.SelectionChangeCommitted += new System.EventHandler(this.schemeBox_SelectionChangeCommitted);
             // 
@@ -133,18 +133,23 @@
             this.resultsTable.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.resultsTable.ColumnCount = 6;
+            this.resultsTable.ColumnCount = 1;
             this.resultsTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.resultsTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.resultsTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.resultsTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.resultsTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.resultsTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.resultsTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.resultsTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.resultsTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.resultsTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.resultsTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.resultsTable.Location = new System.Drawing.Point(12, 30);
             this.resultsTable.Name = "resultsTable";
-            this.resultsTable.RowCount = 1;
+            this.resultsTable.RowCount = 6;
             this.resultsTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.resultsTable.Size = new System.Drawing.Size(324, 108);
+            this.resultsTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.resultsTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.resultsTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.resultsTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.resultsTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.resultsTable.Size = new System.Drawing.Size(140, 245);
             this.resultsTable.TabIndex = 3;
             // 
             // colorDialog
@@ -207,7 +212,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(348, 24);
+            this.menuStrip.Size = new System.Drawing.Size(384, 24);
             this.menuStrip.TabIndex = 5;
             this.menuStrip.Text = "menuStrip1";
             // 
@@ -657,9 +662,9 @@
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.splitContainer1.Location = new System.Drawing.Point(0, 24);
             this.splitContainer1.Name = "splitContainer1";
-            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
             // splitContainer1.Panel1
             // 
@@ -669,8 +674,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.paletteList);
-            this.splitContainer1.Size = new System.Drawing.Size(348, 283);
-            this.splitContainer1.SplitterDistance = 141;
+            this.splitContainer1.Size = new System.Drawing.Size(384, 287);
+            this.splitContainer1.SplitterDistance = 155;
             this.splitContainer1.TabIndex = 6;
             // 
             // paletteList
@@ -684,9 +689,9 @@
             this.colorHeader});
             this.paletteList.ContextMenuStrip = this.paletteContextMenu;
             this.paletteList.LabelEdit = true;
-            this.paletteList.Location = new System.Drawing.Point(12, 3);
+            this.paletteList.Location = new System.Drawing.Point(3, 3);
             this.paletteList.Name = "paletteList";
-            this.paletteList.Size = new System.Drawing.Size(324, 123);
+            this.paletteList.Size = new System.Drawing.Size(210, 272);
             this.paletteList.SmallImageList = this.paletteListImages;
             this.paletteList.TabIndex = 0;
             this.paletteList.UseCompatibleStateImageBehavior = false;
@@ -695,18 +700,19 @@
             this.paletteList.ItemActivate += new System.EventHandler(this.paletteList_ItemActivate);
             this.paletteList.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.paletteList_ItemDrag);
             this.paletteList.SelectedIndexChanged += new System.EventHandler(this.paletteList_SelectedIndexChanged);
+            this.paletteList.SizeChanged += new System.EventHandler(this.paletteList_SizeChanged);
             this.paletteList.DragDrop += new System.Windows.Forms.DragEventHandler(this.paletteList_DragDrop);
             this.paletteList.DragEnter += new System.Windows.Forms.DragEventHandler(this.paletteList_DragEnter);
             // 
             // nameHeader
             // 
             this.nameHeader.Text = "Name";
-            this.nameHeader.Width = 180;
+            this.nameHeader.Width = 120;
             // 
             // colorHeader
             // 
             this.colorHeader.Text = "Color";
-            this.colorHeader.Width = 120;
+            this.colorHeader.Width = 80;
             // 
             // paletteContextMenu
             // 
@@ -789,7 +795,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(348, 307);
+            this.ClientSize = new System.Drawing.Size(384, 311);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.menuStrip);
             this.MainMenuStrip = this.menuStrip;
