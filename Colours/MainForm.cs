@@ -140,6 +140,21 @@ namespace Colours
             deleteToolStripMenuItem.Enabled = selected;
             renameToolStripMenuItem.Enabled = selected;
             useToolStripMenuItem.Enabled = selected;
+
+            UpdateUIPaletteList();
+        }
+
+        public void UpdateUIPaletteList()
+        {
+            paletteList.AutoResizeColumn(1, paletteList.Items.Count > 0 ?
+                ColumnHeaderAutoResizeStyle.ColumnContent :
+                ColumnHeaderAutoResizeStyle.HeaderSize);
+
+            // ClientSize will deal with only the chunk we control, not the
+            // scroll bar and borders. However, sometimes shrinking resize
+            // events cause a horizontal scrollbar to appear (which disappears
+            // when you click it) It doesn't help if you shrink it quickly.
+            nameHeader.Width = paletteList.ClientSize.Width - colorHeader.Width;
         }
 
         private void SchemeColor_Click(object sender, EventArgs e)
@@ -627,11 +642,7 @@ namespace Colours
 
         private void paletteList_SizeChanged(object sender, EventArgs e)
         {
-            // ClientSize will deal with only the chunk we control, not the
-            // scroll bar and borders. However, sometimes shrinking resize
-            // events cause a horizontal scrollbar to appear (which disappears
-            // when you click it) It doesn't help if you shrink it quickly.
-            nameHeader.Width = paletteList.ClientSize.Width - colorHeader.Width;
+            UpdateUIPaletteList();
         }
     }
 }
