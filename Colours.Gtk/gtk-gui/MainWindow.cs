@@ -298,7 +298,7 @@ public partial class MainWindow
 		this.treeview1 = new global::Gtk.TreeView();
 		this.treeview1.CanFocus = true;
 		this.treeview1.Name = "treeview1";
-		this.treeview1.Reorderable = true;
+		this.treeview1.HeadersVisible = false;
 		this.GtkScrolledWindow.Add(this.treeview1);
 		this.hpaned2.Add(this.GtkScrolledWindow);
 		this.mainVbox.Add(this.hpaned2);
