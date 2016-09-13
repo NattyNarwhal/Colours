@@ -52,15 +52,6 @@ public partial class MainWindow: Gtk.Window
 			((CellRendererPixbuf)c).Pixbuf = buf;
 		}));
 
-		var pcNameRender = new CellRendererText ();
-		pcNameRender.Editable = true;
-		pcNameRender.Edited += pcNameRender_Edited;
-		var pcNameCol = new TreeViewColumn ("Name", pcNameRender);
-		pcNameCol.PackStart (pcNameRender, true);
-		pcNameCol.SetCellDataFunc (pcNameRender, new TreeCellDataFunc((tc, c, m, i) => {
-			((CellRendererText)c).Text = GetItemFromIter(i).Name;
-		}));
-
 		var pcColorRender = new CellRendererText ();
 		var pcColorCol = new TreeViewColumn ("Color", pcColorRender);
 		pcColorCol.PackStart (pcColorRender, true);
@@ -68,9 +59,19 @@ public partial class MainWindow: Gtk.Window
 			((CellRendererText)c).Text = GetItemFromIter(i).Color.ToHtml();
 		}));
 
+		var pcNameRender = new CellRendererText();
+		pcNameRender.Editable = true;
+		pcNameRender.Edited += pcNameRender_Edited;
+		var pcNameCol = new TreeViewColumn("Name", pcNameRender);
+		pcNameCol.PackStart(pcNameRender, true);
+		pcNameCol.SetCellDataFunc(pcNameRender, new TreeCellDataFunc((tc, c, m, i) =>
+		{
+			((CellRendererText)c).Text = GetItemFromIter(i).Name;
+		}));
+
 		treeview1.AppendColumn (pcIconCol);
+		treeview1.AppendColumn(pcColorCol);
 		treeview1.AppendColumn (pcNameCol);
-		treeview1.AppendColumn (pcColorCol);
 
 	}
 

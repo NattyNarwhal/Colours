@@ -85,13 +85,13 @@ public partial class MainWindow
 
 	private global::Gtk.MenuBar menubar1;
 
-	private global::Gtk.VPaned vpaned1;
+	private global::Gtk.HPaned hpaned2;
 
 	private global::Gtk.VBox paddedBox;
 
 	private global::Gtk.ComboBox schemeBox;
 
-	private global::Gtk.HBox colorBox;
+	private global::Gtk.VBox colorBox;
 
 	private global::Gtk.ScrolledWindow GtkScrolledWindow;
 
@@ -225,7 +225,6 @@ public partial class MainWindow
 		// Container child MainWindow.Gtk.Container+ContainerChild
 		this.mainVbox = new global::Gtk.VBox();
 		this.mainVbox.Name = "mainVbox";
-		this.mainVbox.Spacing = 6;
 		// Container child mainVbox.Gtk.Box+BoxChild
 		this.UIManager.AddUiFromString("<ui><menubar name=\'menubar1\'><menu name=\'FileAction\' action=\'FileAction\'><menuite" +
 				"m name=\'newAction\' action=\'newAction\'/><menuitem name=\'openAction\' action=\'openA" +
@@ -264,11 +263,11 @@ public partial class MainWindow
 		w2.Expand = false;
 		w2.Fill = false;
 		// Container child mainVbox.Gtk.Box+BoxChild
-		this.vpaned1 = new global::Gtk.VPaned();
-		this.vpaned1.CanFocus = true;
-		this.vpaned1.Name = "vpaned1";
-		this.vpaned1.Position = 109;
-		// Container child vpaned1.Gtk.Paned+PanedChild
+		this.hpaned2 = new global::Gtk.HPaned();
+		this.hpaned2.CanFocus = true;
+		this.hpaned2.Name = "hpaned2";
+		this.hpaned2.Position = 140;
+		// Container child hpaned2.Gtk.Paned+PanedChild
 		this.paddedBox = new global::Gtk.VBox();
 		this.paddedBox.Name = "paddedBox";
 		this.paddedBox.Spacing = 6;
@@ -282,17 +281,16 @@ public partial class MainWindow
 		w3.Expand = false;
 		w3.Fill = false;
 		// Container child paddedBox.Gtk.Box+BoxChild
-		this.colorBox = new global::Gtk.HBox();
+		this.colorBox = new global::Gtk.VBox();
 		this.colorBox.Name = "colorBox";
-		this.colorBox.Homogeneous = true;
 		this.colorBox.Spacing = 6;
 		this.paddedBox.Add(this.colorBox);
 		global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.paddedBox[this.colorBox]));
 		w4.Position = 1;
-		this.vpaned1.Add(this.paddedBox);
-		global::Gtk.Paned.PanedChild w5 = ((global::Gtk.Paned.PanedChild)(this.vpaned1[this.paddedBox]));
+		this.hpaned2.Add(this.paddedBox);
+		global::Gtk.Paned.PanedChild w5 = ((global::Gtk.Paned.PanedChild)(this.hpaned2[this.paddedBox]));
 		w5.Resize = false;
-		// Container child vpaned1.Gtk.Paned+PanedChild
+		// Container child hpaned2.Gtk.Paned+PanedChild
 		this.GtkScrolledWindow = new global::Gtk.ScrolledWindow();
 		this.GtkScrolledWindow.Name = "GtkScrolledWindow";
 		this.GtkScrolledWindow.ShadowType = ((global::Gtk.ShadowType)(1));
@@ -302,9 +300,9 @@ public partial class MainWindow
 		this.treeview1.Name = "treeview1";
 		this.treeview1.Reorderable = true;
 		this.GtkScrolledWindow.Add(this.treeview1);
-		this.vpaned1.Add(this.GtkScrolledWindow);
-		this.mainVbox.Add(this.vpaned1);
-		global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.mainVbox[this.vpaned1]));
+		this.hpaned2.Add(this.GtkScrolledWindow);
+		this.mainVbox.Add(this.hpaned2);
+		global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.mainVbox[this.hpaned2]));
 		w8.Position = 1;
 		this.Add(this.mainVbox);
 		if ((this.Child != null))

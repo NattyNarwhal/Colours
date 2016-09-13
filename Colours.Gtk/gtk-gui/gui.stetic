@@ -268,7 +268,6 @@
     <child>
       <widget class="Gtk.VBox" id="mainVbox">
         <property name="MemberName" />
-        <property name="Spacing">6</property>
         <child>
           <widget class="Gtk.MenuBar" id="menubar1">
             <property name="MemberName" />
@@ -335,10 +334,10 @@
           </packing>
         </child>
         <child>
-          <widget class="Gtk.VPaned" id="vpaned1">
+          <widget class="Gtk.HPaned" id="hpaned2">
             <property name="MemberName" />
             <property name="CanFocus">True</property>
-            <property name="Position">109</property>
+            <property name="Position">140</property>
             <child>
               <widget class="Gtk.VBox" id="paddedBox">
                 <property name="MemberName" />
@@ -359,9 +358,8 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="Gtk.HBox" id="colorBox">
+                  <widget class="Gtk.VBox" id="colorBox">
                     <property name="MemberName" />
-                    <property name="Homogeneous">True</property>
                     <property name="Spacing">6</property>
                     <child>
                       <placeholder />
