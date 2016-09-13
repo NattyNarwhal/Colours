@@ -87,4 +87,6 @@ I won't deny inspiration ;)
 * [ ] A colour wheel would be impressive. Kuler does this.
 * [ ] Improve, consilidate, add schemes.
 * [ ] Alternative colour wheels for different blending beyond RGB would be nice.
+* [ ] Grid view.
+* [ ] Improved colour picker in Windows Forms.
 * [ ] Picking colors from images would be neat.
