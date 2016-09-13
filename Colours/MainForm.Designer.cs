@@ -140,7 +140,7 @@
             this.resultsTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.resultsTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.resultsTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.resultsTable.Location = new System.Drawing.Point(12, 30);
+            this.resultsTable.Location = new System.Drawing.Point(9, 27);
             this.resultsTable.Name = "resultsTable";
             this.resultsTable.RowCount = 6;
             this.resultsTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -149,7 +149,7 @@
             this.resultsTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.resultsTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.resultsTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.resultsTable.Size = new System.Drawing.Size(140, 245);
+            this.resultsTable.Size = new System.Drawing.Size(146, 251);
             this.resultsTable.TabIndex = 3;
             // 
             // colorDialog
