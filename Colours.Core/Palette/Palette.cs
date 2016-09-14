@@ -17,7 +17,8 @@ namespace Colours
 
         const string nameRegex = "Name: ?(.*)";
         const string columnsRegex = @"Columns: ?(\d*)";
-        const string commentRegex = @"#\s*(.*)";
+        // Hex codes as colour names would otherwise confuse
+        const string commentRegex = @"^#\s*(.*)";
 
         /// <summary>
         /// Gets or sets the name of the palette.
