@@ -107,6 +107,8 @@
             this.openPaletteDialog = new System.Windows.Forms.OpenFileDialog();
             this.importPhotoshopDialog = new System.Windows.Forms.OpenFileDialog();
             this.exportPhotoshopDialog = new System.Windows.Forms.SaveFileDialog();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.colorContextMenu.SuspendLayout();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -300,29 +302,27 @@
             // 
             this.importPhotoshopSwatchToolStripMenuItem.Image = global::Colours.Properties.Resources.Photoshop;
             this.importPhotoshopSwatchToolStripMenuItem.Name = "importPhotoshopSwatchToolStripMenuItem";
-            this.importPhotoshopSwatchToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
+            this.importPhotoshopSwatchToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
             this.importPhotoshopSwatchToolStripMenuItem.Text = "Import &Photoshop Swatch...";
             this.importPhotoshopSwatchToolStripMenuItem.Click += new System.EventHandler(this.importPhotoshopSwatchToolStripMenuItem_Click);
             // 
             // exportPhotoshopSwatchToolStripMenuItem
             // 
             this.exportPhotoshopSwatchToolStripMenuItem.Name = "exportPhotoshopSwatchToolStripMenuItem";
-            this.exportPhotoshopSwatchToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
+            this.exportPhotoshopSwatchToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
             this.exportPhotoshopSwatchToolStripMenuItem.Text = "Export Photo&shop Swatch...";
             this.exportPhotoshopSwatchToolStripMenuItem.Click += new System.EventHandler(this.exportPhotoshopSwatchToolStripMenuItem_Click);
             // 
             // toolStripMenuItem10
             // 
             this.toolStripMenuItem10.Name = "toolStripMenuItem10";
-            this.toolStripMenuItem10.Size = new System.Drawing.Size(235, 6);
+            this.toolStripMenuItem10.Size = new System.Drawing.Size(218, 6);
             // 
             // saveAsHTMLToolStripMenuItem
             // 
             this.saveAsHTMLToolStripMenuItem.Image = global::Colours.Properties.Resources.Save_as_HTML;
             this.saveAsHTMLToolStripMenuItem.Name = "saveAsHTMLToolStripMenuItem";
-            this.saveAsHTMLToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.S)));
-            this.saveAsHTMLToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
+            this.saveAsHTMLToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
             this.saveAsHTMLToolStripMenuItem.Text = "Export to &HTML...";
             this.saveAsHTMLToolStripMenuItem.Click += new System.EventHandler(this.saveAsHTMLToolStripMenuItem_Click);
             // 
@@ -348,6 +348,8 @@
             this.cutToolStripMenuItem,
             this.copyPCToolStripMenuItem,
             this.pasteToolStripMenuItem,
+            this.toolStripSeparator2,
+            this.selectAllToolStripMenuItem,
             this.toolStripMenuItem7,
             this.addToolStripMenuItem,
             this.addAllToolStripMenuItem,
@@ -362,7 +364,7 @@
             this.undoToolStripMenuItem.Image = global::Colours.Properties.Resources.Undo;
             this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
             this.undoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-            this.undoToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.undoToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.undoToolStripMenuItem.Text = "&Undo";
             this.undoToolStripMenuItem.Click += new System.EventHandler(this.undoToolStripMenuItem_Click);
             // 
@@ -371,21 +373,21 @@
             this.redoToolStripMenuItem.Image = global::Colours.Properties.Resources.Redo;
             this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
             this.redoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
-            this.redoToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.redoToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.redoToolStripMenuItem.Text = "&Redo";
             this.redoToolStripMenuItem.Click += new System.EventHandler(this.redoToolStripMenuItem_Click);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(184, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(161, 6);
             // 
             // cutToolStripMenuItem
             // 
             this.cutToolStripMenuItem.Image = global::Colours.Properties.Resources.Cut;
             this.cutToolStripMenuItem.Name = "cutToolStripMenuItem";
             this.cutToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.cutToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.cutToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.cutToolStripMenuItem.Text = "Cu&t";
             this.cutToolStripMenuItem.Click += new System.EventHandler(this.cutToolStripMenuItem_Click);
             // 
@@ -394,7 +396,7 @@
             this.copyPCToolStripMenuItem.Image = global::Colours.Properties.Resources.Copy;
             this.copyPCToolStripMenuItem.Name = "copyPCToolStripMenuItem";
             this.copyPCToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.copyPCToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.copyPCToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.copyPCToolStripMenuItem.Text = "&Copy";
             this.copyPCToolStripMenuItem.Click += new System.EventHandler(this.copyPCToolStripMenuItem_Click);
             // 
@@ -403,30 +405,28 @@
             this.pasteToolStripMenuItem.Image = global::Colours.Properties.Resources.Paste;
             this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
             this.pasteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.pasteToolStripMenuItem.Text = "&Paste";
             this.pasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
             // 
             // toolStripMenuItem7
             // 
             this.toolStripMenuItem7.Name = "toolStripMenuItem7";
-            this.toolStripMenuItem7.Size = new System.Drawing.Size(184, 6);
+            this.toolStripMenuItem7.Size = new System.Drawing.Size(161, 6);
             // 
             // addToolStripMenuItem
             // 
             this.addToolStripMenuItem.Image = global::Colours.Properties.Resources.Add;
             this.addToolStripMenuItem.Name = "addToolStripMenuItem";
-            this.addToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
-            this.addToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.addToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.addToolStripMenuItem.Text = "&Add";
             this.addToolStripMenuItem.Click += new System.EventHandler(this.addToolStripMenuItem_Click);
             // 
             // addAllToolStripMenuItem
             // 
             this.addAllToolStripMenuItem.Name = "addAllToolStripMenuItem";
-            this.addAllToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.A)));
-            this.addAllToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.addAllToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.addAllToolStripMenuItem.Text = "Add A&ll";
             this.addAllToolStripMenuItem.Click += new System.EventHandler(this.addAllToolStripMenuItem_Click);
             // 
@@ -435,7 +435,7 @@
             this.deleteToolStripMenuItem.Image = global::Colours.Properties.Resources.Remove;
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
             this.deleteToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Delete;
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.deleteToolStripMenuItem.Text = "&Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
@@ -443,7 +443,7 @@
             // 
             this.renameToolStripMenuItem.Name = "renameToolStripMenuItem";
             this.renameToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F2;
-            this.renameToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.renameToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.renameToolStripMenuItem.Text = "Re&name";
             this.renameToolStripMenuItem.Click += new System.EventHandler(this.renameToolStripMenuItem_Click);
             // 
@@ -792,6 +792,19 @@
             this.exportPhotoshopDialog.Filter = "Photoshop Swatches|*.aco|All files|*.*";
             this.exportPhotoshopDialog.Title = "Export to Photoshop";
             // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(161, 6);
+            // 
+            // selectAllToolStripMenuItem
+            // 
+            this.selectAllToolStripMenuItem.Name = "selectAllToolStripMenuItem";
+            this.selectAllToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
+            this.selectAllToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.selectAllToolStripMenuItem.Text = "&Select All";
+            this.selectAllToolStripMenuItem.Click += new System.EventHandler(this.selectAllToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -896,6 +909,8 @@
         private System.Windows.Forms.SaveFileDialog exportPhotoshopDialog;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem11;
         private System.Windows.Forms.ToolStripMenuItem blendToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem selectAllToolStripMenuItem;
     }
 }
 

@@ -644,5 +644,11 @@ namespace Colours
         {
             UpdateUIPaletteList();
         }
+
+        private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (ListViewItem i in paletteList.Items)
+                i.Selected = true;
+        }
     }
 }
