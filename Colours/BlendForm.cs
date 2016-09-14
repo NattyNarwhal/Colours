@@ -40,7 +40,7 @@ namespace Colours
         {
             get
             {
-                return listView1.SelectedItems.Cast<ListViewItem>()
+                return listView1.CheckedItems.Cast<ListViewItem>()
                     .Select(x => (RgbColor)x.Tag);
             }
         }
