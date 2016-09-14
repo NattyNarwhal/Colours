@@ -49,6 +49,7 @@
     <Compile Include="Palette\AcoConverter.cs" />
     <Compile Include="Palette\Palette.cs" />
     <Compile Include="Palette\PaletteColor.cs" />
+    <Compile Include="Palette\XResources.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\RgbColor.cs" />
     <Compile Include="Mixing\Schemer.cs" />
