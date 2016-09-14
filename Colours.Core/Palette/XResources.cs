@@ -133,10 +133,10 @@ namespace Colours
             Color8 = new RgbColor(0x55, 0x57, 0x53);    // Dark grey
             Color9 = new RgbColor(0xFF, 0x8D, 0x8D);    // Red
             Color10 = new RgbColor(0xC8, 0xE7, 0xA8);   // Green
-            Color11 = new RgbColor(0xFF, 0xC1, 0x23);    // Yellow
-            Color12 = new RgbColor(0x34, 0x65, 0xA4);    // Blue
-            Color13 = new RgbColor(0xF5, 0x79, 0x00);    // Magenta
-            Color14 = new RgbColor(0x46, 0xA4, 0xFF);    // Cyan
+            Color11 = new RgbColor(0xFF, 0xC1, 0x23);   // Yellow
+            Color12 = new RgbColor(0x34, 0x65, 0xA4);   // Blue
+            Color13 = new RgbColor(0xF5, 0x79, 0x00);   // Magenta
+            Color14 = new RgbColor(0x46, 0xA4, 0xFF);   // Cyan
             Color15 = new RgbColor(0xFF, 0xFF, 0xFF);   // White
 
             Foreground = new RgbColor(0, 0, 0);
