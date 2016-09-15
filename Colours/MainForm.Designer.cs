@@ -426,6 +426,7 @@
             // 
             // renameToolStripMenuItem
             // 
+            this.renameToolStripMenuItem.Image = global::Colours.Properties.Resources.Rename;
             this.renameToolStripMenuItem.Name = "renameToolStripMenuItem";
             this.renameToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F2;
             this.renameToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
