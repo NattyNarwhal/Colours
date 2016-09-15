@@ -47,6 +47,7 @@
     <Compile Include="Models\HsvColor.cs" />
     <Compile Include="App\HtmlProofGenerator.cs" />
     <Compile Include="Palette\AcoConverter.cs" />
+    <Compile Include="Palette\ActConverter.cs" />
     <Compile Include="Palette\Palette.cs" />
     <Compile Include="Palette\PaletteColor.cs" />
     <Compile Include="Palette\XResources.cs" />
