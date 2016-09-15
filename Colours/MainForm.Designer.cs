@@ -49,9 +49,6 @@
             this.propertiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem9 = new System.Windows.Forms.ToolStripSeparator();
             this.importExportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.importPhotoshopSwatchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportPhotoshopSwatchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem10 = new System.Windows.Forms.ToolStripSeparator();
             this.saveAsHTMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
             this.quitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -62,6 +59,8 @@
             this.cutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyPCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripSeparator();
             this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -105,10 +104,6 @@
             this.paletteListImages = new System.Windows.Forms.ImageList(this.components);
             this.savePaletteDialog = new System.Windows.Forms.SaveFileDialog();
             this.openPaletteDialog = new System.Windows.Forms.OpenFileDialog();
-            this.importPhotoshopDialog = new System.Windows.Forms.OpenFileDialog();
-            this.exportPhotoshopDialog = new System.Windows.Forms.SaveFileDialog();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.colorContextMenu.SuspendLayout();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -290,33 +285,10 @@
             // importExportToolStripMenuItem
             // 
             this.importExportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.importPhotoshopSwatchToolStripMenuItem,
-            this.exportPhotoshopSwatchToolStripMenuItem,
-            this.toolStripMenuItem10,
             this.saveAsHTMLToolStripMenuItem});
             this.importExportToolStripMenuItem.Name = "importExportToolStripMenuItem";
             this.importExportToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.importExportToolStripMenuItem.Text = "&Import/Export";
-            // 
-            // importPhotoshopSwatchToolStripMenuItem
-            // 
-            this.importPhotoshopSwatchToolStripMenuItem.Image = global::Colours.Properties.Resources.Photoshop;
-            this.importPhotoshopSwatchToolStripMenuItem.Name = "importPhotoshopSwatchToolStripMenuItem";
-            this.importPhotoshopSwatchToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
-            this.importPhotoshopSwatchToolStripMenuItem.Text = "Import &Photoshop Swatch...";
-            this.importPhotoshopSwatchToolStripMenuItem.Click += new System.EventHandler(this.importPhotoshopSwatchToolStripMenuItem_Click);
-            // 
-            // exportPhotoshopSwatchToolStripMenuItem
-            // 
-            this.exportPhotoshopSwatchToolStripMenuItem.Name = "exportPhotoshopSwatchToolStripMenuItem";
-            this.exportPhotoshopSwatchToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
-            this.exportPhotoshopSwatchToolStripMenuItem.Text = "Export Photo&shop Swatch...";
-            this.exportPhotoshopSwatchToolStripMenuItem.Click += new System.EventHandler(this.exportPhotoshopSwatchToolStripMenuItem_Click);
-            // 
-            // toolStripMenuItem10
-            // 
-            this.toolStripMenuItem10.Name = "toolStripMenuItem10";
-            this.toolStripMenuItem10.Size = new System.Drawing.Size(218, 6);
             // 
             // saveAsHTMLToolStripMenuItem
             // 
@@ -408,6 +380,19 @@
             this.pasteToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.pasteToolStripMenuItem.Text = "&Paste";
             this.pasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(161, 6);
+            // 
+            // selectAllToolStripMenuItem
+            // 
+            this.selectAllToolStripMenuItem.Name = "selectAllToolStripMenuItem";
+            this.selectAllToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
+            this.selectAllToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.selectAllToolStripMenuItem.Text = "&Select All";
+            this.selectAllToolStripMenuItem.Click += new System.EventHandler(this.selectAllToolStripMenuItem_Click);
             // 
             // toolStripMenuItem7
             // 
@@ -771,39 +756,14 @@
             // savePaletteDialog
             // 
             this.savePaletteDialog.DefaultExt = "gpl";
-            this.savePaletteDialog.Filter = "GIMP Palette|*.gpl|All files|*.*";
+            this.savePaletteDialog.Filter = "GIMP Palette|*.gpl|Photoshop Palette|*.aco|All files|*.*";
             this.savePaletteDialog.Title = "Save";
             // 
             // openPaletteDialog
             // 
             this.openPaletteDialog.DefaultExt = "gpl";
-            this.openPaletteDialog.Filter = "GIMP Palette|*.gpl|All files|*.*";
+            this.openPaletteDialog.Filter = "GIMP Palette|*.gpl|Photoshop Palette|*.aco|All files|*.*";
             this.openPaletteDialog.Title = "Open";
-            // 
-            // importPhotoshopDialog
-            // 
-            this.importPhotoshopDialog.DefaultExt = "aco";
-            this.importPhotoshopDialog.Filter = "Photoshop Swatches|*.aco|All files|*.*";
-            this.importPhotoshopDialog.Title = "Import from Photoshop";
-            // 
-            // exportPhotoshopDialog
-            // 
-            this.exportPhotoshopDialog.DefaultExt = "aco";
-            this.exportPhotoshopDialog.Filter = "Photoshop Swatches|*.aco|All files|*.*";
-            this.exportPhotoshopDialog.Title = "Export to Photoshop";
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(161, 6);
-            // 
-            // selectAllToolStripMenuItem
-            // 
-            this.selectAllToolStripMenuItem.Name = "selectAllToolStripMenuItem";
-            this.selectAllToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
-            this.selectAllToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
-            this.selectAllToolStripMenuItem.Text = "&Select All";
-            this.selectAllToolStripMenuItem.Click += new System.EventHandler(this.selectAllToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -901,12 +861,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem9;
         private System.Windows.Forms.ToolStripMenuItem addAllToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem importExportToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem importPhotoshopSwatchToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveAsHTMLToolStripMenuItem;
-        private System.Windows.Forms.OpenFileDialog importPhotoshopDialog;
-        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem10;
-        private System.Windows.Forms.ToolStripMenuItem exportPhotoshopSwatchToolStripMenuItem;
-        private System.Windows.Forms.SaveFileDialog exportPhotoshopDialog;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem11;
         private System.Windows.Forms.ToolStripMenuItem blendToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;

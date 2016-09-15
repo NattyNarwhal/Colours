@@ -115,7 +115,6 @@ namespace Colours
 
             saveToolStripMenuItem.Enabled = appPal.Dirty;
             saveAsHTMLToolStripMenuItem.Enabled = hasAny;
-            exportPhotoshopSwatchToolStripMenuItem.Enabled = hasAny;
 
             undoToolStripMenuItem.Enabled = appPal.CanUndo();
             redoToolStripMenuItem.Enabled = appPal.CanRedo();
@@ -375,7 +374,9 @@ namespace Colours
 
         public bool SavePalette(bool forceDialog)
         {
-            if (forceDialog || appPal.FileName == null)
+            var freshFile = forceDialog || appPal.FileName == null;
+
+            if (freshFile)
             {
                 // if we don't have a name already, give it one based
                 // on its palette title name - the save dialog will
@@ -389,7 +390,24 @@ namespace Colours
                 else return false;
             }
 
-            File.WriteAllText(appPal.FileName, appPal.Palette.ToString());
+            if (appPal.FileName.EndsWith(".aco"))
+            {
+                if (freshFile && MessageBox.Show(this,
+                    "Photoshop palettes don't support metadata like comments. Are you sure you want to continue?",
+                    "Colours", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
+                    == DialogResult.No)
+                {
+                    return false;
+                }
+
+                File.WriteAllBytes(appPal.FileName,
+                    AcoConverter.ToPhotoshopPalette(appPal.Palette));
+            }
+            else
+            {
+                File.WriteAllText(appPal.FileName, appPal.Palette.ToString());
+            }
+
             appPal.Dirty = false;
             // update the titlebar's dirtiness
             UpdateUI();
@@ -398,7 +416,26 @@ namespace Colours
 
         public void OpenPalette(string fileName)
         {
-            appPal.NewFromPalette(new Palette(File.ReadAllLines(fileName)), fileName);
+            if (fileName.EndsWith(".aco"))
+            {
+                try
+                {
+                    var p = AcoConverter.FromPhotoshopPalette(
+                        File.ReadAllBytes(fileName));
+                    p.Name = Path.GetFileNameWithoutExtension(fileName);
+                    appPal.NewFromPalette(p, fileName);
+                }
+                catch (NotImplementedException)
+                {
+                    MessageBox.Show(this, "The Photoshop palette has an unsupported colourspace..",
+                        "Colours", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            // implied to be GIMP palette
+            else
+            {
+                appPal.NewFromPalette(new Palette(File.ReadAllLines(fileName)), fileName);
+            }
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -589,46 +626,6 @@ namespace Colours
         private void addAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
             appPal.AppendColors(app.Results.Select(x => x.ToRgb()));
-        }
-
-        private void importPhotoshopSwatchToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (importPhotoshopDialog.ShowDialog(this) == DialogResult.OK)
-                {
-                    var p = AcoConverter.FromPhotoshopPalette(
-                        File.ReadAllBytes(importPhotoshopDialog.FileName));
-                    appPal.NewFromPalette(p);
-                }
-            }
-            catch (NotImplementedException)
-            {
-                MessageBox.Show(this, "The Photoshop palette has an unsupported colourspace..",
-                    "Colours", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (Exception)
-            {
-                MessageBox.Show(this, "The Photoshop palette could not be converted.",
-                    "Colours", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void exportPhotoshopSwatchToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (exportPhotoshopDialog.ShowDialog(this) == DialogResult.OK)
-                {
-                    File.WriteAllBytes(exportPhotoshopDialog.FileName,
-                        AcoConverter.ToPhotoshopPalette(appPal.Palette));
-                }
-            }
-            catch (Exception)
-            {
-                MessageBox.Show(this, "The Photoshop palette could not be converted.",
-                    "Colours", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
 
         private void blendToolStripMenuItem_Click(object sender, EventArgs e)
