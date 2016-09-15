@@ -375,6 +375,7 @@ namespace Colours
         public bool SavePalette(bool forceDialog)
         {
             var freshFile = forceDialog || appPal.FileName == null;
+            var fileName = "";
 
             if (freshFile)
             {
@@ -383,10 +384,11 @@ namespace Colours
                 // handle the extension
                 if (appPal.FileName == null)
                     savePaletteDialog.FileName = appPal.Palette.Name;
+                // set the file name later, in case more interruptions
+                // will stop us from writing the file (user intervention,
+                // exceptions)
                 if (savePaletteDialog.ShowDialog(this) == DialogResult.OK)
-                {
-                    appPal.FileName = savePaletteDialog.FileName;
-                }
+                    fileName = savePaletteDialog.FileName;
                 else return false;
             }
 
@@ -400,14 +402,15 @@ namespace Colours
                     return false;
                 }
 
-                File.WriteAllBytes(appPal.FileName,
+                File.WriteAllBytes(fileName,
                     AcoConverter.ToPhotoshopPalette(appPal.Palette));
             }
             else
             {
-                File.WriteAllText(appPal.FileName, appPal.Palette.ToString());
+                File.WriteAllText(fileName, appPal.Palette.ToString());
             }
 
+            appPal.FileName = fileName;
             appPal.Dirty = false;
             // update the titlebar's dirtiness
             UpdateUI();
