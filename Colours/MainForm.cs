@@ -139,6 +139,7 @@ namespace Colours
             deleteToolStripMenuItem.Enabled = selected;
             renameToolStripMenuItem.Enabled = selected;
             useToolStripMenuItem.Enabled = selected;
+            selectAllToolStripMenuItem.Enabled = hasAny;
 
             UpdateUIPaletteList();
         }
