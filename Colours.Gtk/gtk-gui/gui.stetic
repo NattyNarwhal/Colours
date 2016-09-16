@@ -229,18 +229,6 @@
         <property name="StockId">gtk-paste</property>
         <signal name="Activated" handler="OnPasteActionActivated" />
       </action>
-      <action id="ImportPhotoshopPaletteAction">
-        <property name="Type">Action</property>
-        <property name="Label" translatable="yes">_Import Photoshop Palette</property>
-        <property name="ShortLabel" translatable="yes">Import Photoshop Palette</property>
-        <signal name="Activated" handler="OnImportPhotoshopPaletteActionActivated" />
-      </action>
-      <action id="ExportPhotoshopPaletteAction">
-        <property name="Type">Action</property>
-        <property name="Label" translatable="yes">_Export Photoshop Palette</property>
-        <property name="ShortLabel" translatable="yes">Export Photoshop Palette</property>
-        <signal name="Activated" handler="OnExportPhotoshopPaletteActionActivated" />
-      </action>
       <action id="ExportHTMLAction">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">Export _HTML</property>
@@ -280,8 +268,6 @@
                 <node type="Separator" />
                 <node type="Menuitem" action="propertiesAction" />
                 <node type="Separator" />
-                <node type="Menuitem" action="ImportPhotoshopPaletteAction" />
-                <node type="Menuitem" action="ExportPhotoshopPaletteAction" />
                 <node type="Menuitem" action="ExportHTMLAction" />
                 <node type="Separator" />
                 <node type="Menuitem" action="quitAction" />

@@ -584,39 +584,6 @@ public partial class MainWindow: Gtk.Window
 		});
 	}
 
-	protected void OnImportPhotoshopPaletteActionActivated (object sender, EventArgs e)
-	{
-		if (DirtyPrompt ()) {
-			FileChooserDialog fd = new FileChooserDialog ("Open palette", this,
-				FileChooserAction.Open, "Cancel", ResponseType.Cancel, "OK", ResponseType.Ok);
-			FileFilter ff = new FileFilter ();
-			ff.Name = "Photoshop Palette";
-			ff.AddPattern ("*.aco");
-			fd.AddFilter (ff);
-			if (fd.Run () == (int)ResponseType.Ok) {
-				appPal.NewFromPalette (
-					AcoConverter.FromPhotoshopPalette (
-						File.ReadAllBytes (fd.Filename)));
-			}
-			fd.Destroy ();
-		}
-	}
-
-	protected void OnExportPhotoshopPaletteActionActivated (object sender, EventArgs e)
-	{
-		FileChooserDialog fd = new FileChooserDialog ("Save palette as", this,
-			FileChooserAction.Save, "Cancel", ResponseType.Cancel, "OK", ResponseType.Ok);
-		FileFilter ff = new FileFilter ();
-		ff.Name = "GIMP Palette";
-		ff.AddPattern ("*.gpl");
-		fd.AddFilter (ff);
-		if (fd.Run () == (int)ResponseType.Ok) {
-			File.WriteAllBytes (fd.Filename,
-				AcoConverter.ToPhotoshopPalette (appPal.Palette));
-		}
-		fd.Destroy ();
-	}
-
 	protected void OnExportHTMLActionActivated (object sender, EventArgs e)
 	{
 		FileChooserDialog fd = new FileChooserDialog ("Save as HTML", this,
