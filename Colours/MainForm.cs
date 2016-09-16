@@ -112,6 +112,13 @@ namespace Colours
 
             var hasAny = appPal.Palette.Colors.Count > 0;
             var selected = paletteList.SelectedIndices.Count > 0;
+            var supportsMetadata = string.IsNullOrEmpty(appPal.FileName)
+                || appPal.FileName.EndsWith(".gpl");
+
+            // GIMP palettes are the only supported format with metadata
+            propertiesToolStripMenuItem.Enabled = supportsMetadata;
+            propertiesToolStripMenuItem.ToolTipText = supportsMetadata ?
+                "" : "This file format doesn't support metadata.";
 
             saveToolStripMenuItem.Enabled = appPal.Dirty;
             saveAsHTMLToolStripMenuItem.Enabled = hasAny;
