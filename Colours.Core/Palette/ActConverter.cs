@@ -30,7 +30,7 @@ namespace Colours
         {
             var p = new Palette() { Name = "Imported from Photoshop" };
 
-            if (file.Length != 768 || file.Length != 772)
+            if (file.Length > 772 || file.Length < 768)
                 throw new InvalidDataException("Not a valid colour table length.");
 
             var metadata = file.Length == 772;

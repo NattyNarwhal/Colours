@@ -406,6 +406,12 @@ namespace Colours
                 File.WriteAllBytes(fileName,
                     AcoConverter.ToPhotoshopPalette(appPal.Palette));
             }
+            else if (fileName.EndsWith(".act"))
+            {
+                MessageBox.Show(this, "Saving Photoshop colour tables is unsupported.",
+                    "Colours", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
             else
             {
                 File.WriteAllText(fileName, appPal.Palette.ToString());
@@ -434,6 +440,12 @@ namespace Colours
                     MessageBox.Show(this, "The Photoshop palette has an unsupported colourspace..",
                         "Colours", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+            }
+            else if (fileName.EndsWith(".act"))
+            {
+                var p = ActConverter.FromTable(File.ReadAllBytes(fileName));
+                p.Name = Path.GetFileNameWithoutExtension(fileName);
+                appPal.NewFromPalette(p, fileName);
             }
             // implied to be GIMP palette
             else
