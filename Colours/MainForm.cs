@@ -376,7 +376,7 @@ namespace Colours
         public bool SavePalette(bool forceDialog)
         {
             var freshFile = forceDialog || appPal.FileName == null;
-            var fileName = "";
+            var fileName = freshFile ? "" : appPal.FileName;
 
             if (freshFile)
             {
