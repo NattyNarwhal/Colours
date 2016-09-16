@@ -763,7 +763,7 @@
             // openPaletteDialog
             // 
             this.openPaletteDialog.DefaultExt = "gpl";
-            this.openPaletteDialog.Filter = "GIMP Palette|*.gpl|Photoshop Palette|*.aco|All files|*.*";
+            this.openPaletteDialog.Filter = "GIMP Palette|*.gpl|Photoshop Palette|*.aco";
             this.openPaletteDialog.Title = "Open";
             // 
             // MainForm
