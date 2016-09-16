@@ -390,15 +390,26 @@ public partial class MainWindow: Gtk.Window
 
 	public bool SavePalette(bool forceDialog)
 	{
-		if (forceDialog || appPal.FileName == null) {
+		var freshFile = forceDialog || string.IsNullOrEmpty(appPal.FileName);
+		var fileName = freshFile ? "" : appPal.FileName;
+
+		if (forceDialog || string.IsNullOrEmpty(fileName)) {
 			FileChooserDialog fd = new FileChooserDialog ("Save palette as", this,
 				FileChooserAction.Save, "Cancel", ResponseType.Cancel, "OK", ResponseType.Ok);
-			FileFilter ff = new FileFilter ();
-			ff.Name = "GIMP Palette";
-			ff.AddPattern ("*.gpl");
-			fd.AddFilter (ff);
+			FileFilter ffGimp = new FileFilter ();
+			ffGimp.Name = "GIMP Palette";
+			ffGimp.AddPattern ("*.gpl");
+			fd.AddFilter (ffGimp);
+			FileFilter ffAco = new FileFilter();
+			ffAco.Name = "Photoshop Palette";
+			ffAco.AddPattern("*.aco");
+			fd.AddFilter(ffAco);
+			FileFilter ffAct = new FileFilter();
+			ffAct.Name = "Photoshop Colour Table";
+			ffAct.AddPattern("*.act");
+			fd.AddFilter(ffAct);
 			if (fd.Run () == (int)ResponseType.Ok) {
-				appPal.FileName = fd.Filename;
+				fileName = fd.Filename;
 				fd.Destroy ();
 			} else {
 				fd.Destroy ();
@@ -406,8 +417,18 @@ public partial class MainWindow: Gtk.Window
 			}
 		}
 
-		File.WriteAllText (appPal.FileName, appPal.Palette.ToString ());
+		if (fileName.EndsWith(".aco")) {
+			File.WriteAllBytes(fileName,
+				AcoConverter.ToPhotoshopPalette(appPal.Palette));
+		} else if (fileName.EndsWith(".act")) {
+			File.WriteAllBytes(fileName,
+				ActConverter.ToTable(appPal.Palette));
+		} else {
+			File.WriteAllText(fileName, appPal.Palette.ToString());
+		}
+
 		appPal.Dirty = false;
+		appPal.FileName = fileName;
 		UpdateUI ();
 		return true;
 	}
@@ -433,10 +454,18 @@ public partial class MainWindow: Gtk.Window
 		if (DirtyPrompt ()) {
 			FileChooserDialog fd = new FileChooserDialog ("Open palette", this,
 				FileChooserAction.Open, "Cancel", ResponseType.Cancel, "OK", ResponseType.Ok);
-			FileFilter ff = new FileFilter ();
-			ff.Name = "GIMP Palette";
-			ff.AddPattern ("*.gpl");
-			fd.AddFilter (ff);
+			FileFilter ffGimp = new FileFilter();
+			ffGimp.Name = "GIMP Palette";
+			ffGimp.AddPattern("*.gpl");
+			fd.AddFilter(ffGimp);
+			FileFilter ffAco = new FileFilter();
+			ffAco.Name = "Photoshop Palette";
+			ffAco.AddPattern("*.aco");
+			fd.AddFilter(ffAco);
+			FileFilter ffAct = new FileFilter();
+			ffAct.Name = "Photoshop Colour Table";
+			ffAct.AddPattern("*.act");
+			fd.AddFilter(ffAct);
 			if (fd.Run () == (int)ResponseType.Ok) {
 				OpenPalette (fd.Filename);
 			}
