@@ -104,6 +104,7 @@
             this.paletteListImages = new System.Windows.Forms.ImageList(this.components);
             this.savePaletteDialog = new System.Windows.Forms.SaveFileDialog();
             this.openPaletteDialog = new System.Windows.Forms.OpenFileDialog();
+            this.colorGrid1 = new Colours.ColorGrid();
             this.colorContextMenu.SuspendLayout();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -659,6 +660,7 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.colorGrid1);
             this.splitContainer1.Panel2.Controls.Add(this.paletteList);
             this.splitContainer1.Size = new System.Drawing.Size(384, 287);
             this.splitContainer1.SplitterDistance = 155;
@@ -767,6 +769,17 @@
     "o|Photoshop Colour Table|*.act";
             this.openPaletteDialog.Title = "Open";
             // 
+            // colorGrid1
+            // 
+            this.colorGrid1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.colorGrid1.ColorContextMenuStrip = null;
+            this.colorGrid1.Location = new System.Drawing.Point(40, 125);
+            this.colorGrid1.Name = "colorGrid1";
+            this.colorGrid1.Size = new System.Drawing.Size(150, 150);
+            this.colorGrid1.TabIndex = 1;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -868,6 +881,7 @@
         private System.Windows.Forms.ToolStripMenuItem blendToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem selectAllToolStripMenuItem;
+        private ColorGrid colorGrid1;
     }
 }
 

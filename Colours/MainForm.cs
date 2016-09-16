@@ -20,7 +20,7 @@ namespace Colours
         public MainForm()
         {
             InitializeComponent();
-
+            
             schemeBox.Items.AddRange(Scheme.GetSchemes().ToArray());
 
             // don't init the app with this func; init with AppState
@@ -88,6 +88,8 @@ namespace Colours
 
         public void SyncAppPalState(object sender, EventArgs e)
         {
+            colorGrid1.Palette = appPal.Palette;
+
             paletteList.Items.Clear();
             paletteListImages.Images.Clear();
             var i = 0;
