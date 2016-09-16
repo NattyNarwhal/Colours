@@ -294,7 +294,7 @@
             // 
             this.saveAsHTMLToolStripMenuItem.Image = global::Colours.Properties.Resources.Save_as_HTML;
             this.saveAsHTMLToolStripMenuItem.Name = "saveAsHTMLToolStripMenuItem";
-            this.saveAsHTMLToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.saveAsHTMLToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.saveAsHTMLToolStripMenuItem.Text = "Export to &HTML...";
             this.saveAsHTMLToolStripMenuItem.Click += new System.EventHandler(this.saveAsHTMLToolStripMenuItem_Click);
             // 
@@ -757,7 +757,7 @@
             // savePaletteDialog
             // 
             this.savePaletteDialog.DefaultExt = "gpl";
-            this.savePaletteDialog.Filter = "GIMP Palette|*.gpl|Photoshop Palette|*.aco|All files|*.*";
+            this.savePaletteDialog.Filter = "GIMP Palette|*.gpl|Photoshop Palette|*.aco";
             this.savePaletteDialog.Title = "Save";
             // 
             // openPaletteDialog
