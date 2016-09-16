@@ -62,5 +62,56 @@ namespace Colours
 
             return p;
         }
+
+        public static byte[] ToTable(Palette p)
+        {
+            using (var s = new MemoryStream())
+            {
+                using (var sw = new BinaryWriter(s))
+                {
+                    var l = p.Colors.Take(256).Select(x => x.Color).ToArray();
+
+                    const byte defaultChannel = 0xFF;
+                    for (int i = 0; i < 256; i++)
+                    {
+                        if (l.Length <= i)
+                        {
+                            // when in doubt, white?
+                            sw.Write(defaultChannel);
+                            sw.Write(defaultChannel);
+                            sw.Write(defaultChannel);
+                        }
+                        else
+                        {
+                            sw.Write(l[i].R);
+                            sw.Write(l[i].G);
+                            sw.Write(l[i].B);
+                        }
+                    }
+
+                    // if there's less than 256, truncate
+                    if (l.Length != 256)
+                    {
+                        var truncateAsBytes = BitConverter.GetBytes(Convert.ToUInt16(l.Length));
+                        // photoshop needs big endian
+                        if (BitConverter.IsLittleEndian)
+                            truncateAsBytes = truncateAsBytes.Reverse().ToArray();
+
+                        sw.Write(truncateAsBytes);
+
+                        // we also need to worry about transparency, so give
+                        // it the last one?
+                        sw.Write(defaultChannel);
+                        sw.Write(defaultChannel);
+                    }
+
+                    s.Position = 0;
+                    using (var sr = new BinaryReader(s))
+                    {
+                        return sr.ReadBytes((int)s.Length);
+                    }
+                }
+            }
+        }
     }
 }

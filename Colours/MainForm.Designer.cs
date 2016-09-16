@@ -757,7 +757,7 @@
             // savePaletteDialog
             // 
             this.savePaletteDialog.DefaultExt = "gpl";
-            this.savePaletteDialog.Filter = "GIMP Palette|*.gpl|Photoshop Palette|*.aco";
+            this.savePaletteDialog.Filter = "GIMP Palette|*.gpl|Photoshop Palette|*.aco|Photoshop Colour Table|*.act";
             this.savePaletteDialog.Title = "Save";
             // 
             // openPaletteDialog

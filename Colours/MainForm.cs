@@ -393,24 +393,28 @@ namespace Colours
                 else return false;
             }
 
-            if (fileName.EndsWith(".aco"))
-            {
+            // warn if the format doesn't support metadata
+            if (!fileName.EndsWith(".gpl"))
                 if (freshFile && MessageBox.Show(this,
-                    "Photoshop palettes don't support metadata like comments. Are you sure you want to continue?",
+                    "This format doesn't support metadata like comments. Are you sure you want to continue?",
                     "Colours", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
                     == DialogResult.No)
-                {
-                    return false;
-                }
+                        return false;
 
+            if (fileName.EndsWith(".aco"))
+            {
                 File.WriteAllBytes(fileName,
                     AcoConverter.ToPhotoshopPalette(appPal.Palette));
             }
             else if (fileName.EndsWith(".act"))
             {
-                MessageBox.Show(this, "Saving Photoshop colour tables is unsupported.",
-                    "Colours", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
+                if (appPal.Palette.Colors.Count > 256 && freshFile && MessageBox.Show(this,
+                    "There are too many colours in the palette, and will be truncated to fit. Are you sure you want to continue?",
+                    "Colours", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
+                    == DialogResult.No)
+                    return false;
+                File.WriteAllBytes(fileName,
+                    ActConverter.ToTable(appPal.Palette));
             }
             else
             {
