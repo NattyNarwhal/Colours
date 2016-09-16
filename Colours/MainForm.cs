@@ -402,11 +402,9 @@ namespace Colours
 
             // warn if the format doesn't support metadata
             if (!fileName.EndsWith(".gpl"))
-                if (freshFile && MessageBox.Show(this,
-                    "This format doesn't support metadata like comments. Are you sure you want to continue?",
-                    "Colours", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
-                    == DialogResult.No)
-                        return false;
+                MessageBox.Show(this,
+                    "This format doesn't support metadata like comments. Metadata will be lost when the file is reloaded.",
+                    "Colours", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
             if (fileName.EndsWith(".aco"))
             {
@@ -415,11 +413,10 @@ namespace Colours
             }
             else if (fileName.EndsWith(".act"))
             {
-                if (appPal.Palette.Colors.Count > 256 && freshFile && MessageBox.Show(this,
-                    "There are too many colours in the palette, and will be truncated to fit. Are you sure you want to continue?",
-                    "Colours", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
-                    == DialogResult.No)
-                    return false;
+                if (appPal.Palette.Colors.Count > 256 && freshFile)
+                    MessageBox.Show(this,
+                    "There are too many colours in the palette for this format, and will be truncated to fit.",
+                    "Colours", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 File.WriteAllBytes(fileName,
                     ActConverter.ToTable(appPal.Palette));
             }
