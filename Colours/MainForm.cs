@@ -393,7 +393,7 @@ namespace Colours
                 else return false;
             }
 
-            if (appPal.FileName.EndsWith(".aco"))
+            if (fileName.EndsWith(".aco"))
             {
                 if (freshFile && MessageBox.Show(this,
                     "Photoshop palettes don't support metadata like comments. Are you sure you want to continue?",
