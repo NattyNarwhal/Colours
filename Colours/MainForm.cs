@@ -471,7 +471,9 @@ namespace Colours
 
         private void paletteList_AfterLabelEdit(object sender, LabelEditEventArgs e)
         {
-            if (appPal.Palette.Colors.Count > e.Item)
+            // Null e.Label is from a cancelled edit, and empty/whitespace
+            // items could confuse the parsers.
+            if (appPal.Palette.Colors.Count > e.Item && !string.IsNullOrWhiteSpace(e.Label))
                 appPal.RenameColor(e.Item, e.Label);
         }
 
