@@ -71,10 +71,6 @@ public partial class MainWindow
 
 	private global::Gtk.Action pasteAction;
 
-	private global::Gtk.Action ImportPhotoshopPaletteAction;
-
-	private global::Gtk.Action ExportPhotoshopPaletteAction;
-
 	private global::Gtk.Action ExportHTMLAction;
 
 	private global::Gtk.Action propertiesAction;
@@ -202,12 +198,6 @@ public partial class MainWindow
 		this.pasteAction = new global::Gtk.Action("pasteAction", global::Mono.Unix.Catalog.GetString("_Paste"), null, "gtk-paste");
 		this.pasteAction.ShortLabel = global::Mono.Unix.Catalog.GetString("_Paste");
 		w1.Add(this.pasteAction, null);
-		this.ImportPhotoshopPaletteAction = new global::Gtk.Action("ImportPhotoshopPaletteAction", global::Mono.Unix.Catalog.GetString("_Import Photoshop Palette"), null, null);
-		this.ImportPhotoshopPaletteAction.ShortLabel = global::Mono.Unix.Catalog.GetString("Import Photoshop Palette");
-		w1.Add(this.ImportPhotoshopPaletteAction, null);
-		this.ExportPhotoshopPaletteAction = new global::Gtk.Action("ExportPhotoshopPaletteAction", global::Mono.Unix.Catalog.GetString("_Export Photoshop Palette"), null, null);
-		this.ExportPhotoshopPaletteAction.ShortLabel = global::Mono.Unix.Catalog.GetString("Export Photoshop Palette");
-		w1.Add(this.ExportPhotoshopPaletteAction, null);
 		this.ExportHTMLAction = new global::Gtk.Action("ExportHTMLAction", global::Mono.Unix.Catalog.GetString("Export _HTML"), null, null);
 		this.ExportHTMLAction.ShortLabel = global::Mono.Unix.Catalog.GetString("Export HTML");
 		w1.Add(this.ExportHTMLAction, null);
@@ -230,31 +220,28 @@ public partial class MainWindow
 				"m name=\'newAction\' action=\'newAction\'/><menuitem name=\'openAction\' action=\'openA" +
 				"ction\'/><menuitem name=\'saveAction\' action=\'saveAction\'/><menuitem name=\'saveAsA" +
 				"ction\' action=\'saveAsAction\'/><separator/><menuitem name=\'propertiesAction\' acti" +
-				"on=\'propertiesAction\'/><separator/><menuitem name=\'ImportPhotoshopPaletteAction\'" +
-				" action=\'ImportPhotoshopPaletteAction\'/><menuitem name=\'ExportPhotoshopPaletteAc" +
-				"tion\' action=\'ExportPhotoshopPaletteAction\'/><menuitem name=\'ExportHTMLAction\' a" +
-				"ction=\'ExportHTMLAction\'/><separator/><menuitem name=\'quitAction\' action=\'quitAc" +
-				"tion\'/></menu><menu name=\'EditAction\' action=\'EditAction\'><menuitem name=\'undoAc" +
-				"tion\' action=\'undoAction\'/><menuitem name=\'redoAction\' action=\'redoAction\'/><sep" +
-				"arator/><menuitem name=\'cutAction\' action=\'cutAction\'/><menuitem name=\'copyActio" +
-				"n\' action=\'copyAction\'/><menuitem name=\'pasteAction\' action=\'pasteAction\'/><sepa" +
-				"rator/><menuitem name=\'addAction\' action=\'addAction\'/><menuitem name=\'AddAllActi" +
-				"on\' action=\'AddAllAction\'/><menuitem name=\'deleteAction\' action=\'deleteAction\'/>" +
-				"</menu><menu name=\'AcquireAction\' action=\'AcquireAction\'><menuitem name=\'PasteAc" +
-				"quireAction\' action=\'PasteAcquireAction\'/><menuitem name=\'refreshAction\' action=" +
-				"\'refreshAction\'/><separator/><menuitem name=\'BlendAction\' action=\'BlendAction\'/>" +
-				"</menu><menu name=\'ColorAction\' action=\'ColorAction\'><menuitem name=\'goBackActio" +
-				"n\' action=\'goBackAction\'/><menuitem name=\'goForwardAction\' action=\'goForwardActi" +
-				"on\'/><separator/><menuitem name=\'CopyHexColorAction\' action=\'CopyHexColorAction\'" +
-				"/><menuitem name=\'CopyHSLColorAction\' action=\'CopyHSLColorAction\'/><menuitem nam" +
-				"e=\'CopyHSVColorAction\' action=\'CopyHSVColorAction\'/><menuitem name=\'SaveAsHTMLCo" +
-				"lorAction\' action=\'SaveAsHTMLColorAction\'/><separator/><menuitem name=\'BrightenA" +
-				"ction\' action=\'BrightenAction\'/><menuitem name=\'DarkenAction\' action=\'DarkenActi" +
-				"on\'/><separator/><menuitem name=\'SaturateAction\' action=\'SaturateAction\'/><menui" +
-				"tem name=\'DesaturateAction\' action=\'DesaturateAction\'/><separator/><menuitem nam" +
-				"e=\'InvertAction\' action=\'InvertAction\'/></menu><menu name=\'HelpAction\' action=\'H" +
-				"elpAction\'><menuitem name=\'aboutAction\' action=\'aboutAction\'/></menu></menubar><" +
-				"/ui>");
+				"on=\'propertiesAction\'/><separator/><menuitem name=\'ExportHTMLAction\' action=\'Exp" +
+				"ortHTMLAction\'/><separator/><menuitem name=\'quitAction\' action=\'quitAction\'/></m" +
+				"enu><menu name=\'EditAction\' action=\'EditAction\'><menuitem name=\'undoAction\' acti" +
+				"on=\'undoAction\'/><menuitem name=\'redoAction\' action=\'redoAction\'/><separator/><m" +
+				"enuitem name=\'cutAction\' action=\'cutAction\'/><menuitem name=\'copyAction\' action=" +
+				"\'copyAction\'/><menuitem name=\'pasteAction\' action=\'pasteAction\'/><separator/><me" +
+				"nuitem name=\'addAction\' action=\'addAction\'/><menuitem name=\'AddAllAction\' action" +
+				"=\'AddAllAction\'/><menuitem name=\'deleteAction\' action=\'deleteAction\'/></menu><me" +
+				"nu name=\'AcquireAction\' action=\'AcquireAction\'><menuitem name=\'PasteAcquireActio" +
+				"n\' action=\'PasteAcquireAction\'/><menuitem name=\'refreshAction\' action=\'refreshAc" +
+				"tion\'/><separator/><menuitem name=\'BlendAction\' action=\'BlendAction\'/></menu><me" +
+				"nu name=\'ColorAction\' action=\'ColorAction\'><menuitem name=\'goBackAction\' action=" +
+				"\'goBackAction\'/><menuitem name=\'goForwardAction\' action=\'goForwardAction\'/><sepa" +
+				"rator/><menuitem name=\'CopyHexColorAction\' action=\'CopyHexColorAction\'/><menuite" +
+				"m name=\'CopyHSLColorAction\' action=\'CopyHSLColorAction\'/><menuitem name=\'CopyHSV" +
+				"ColorAction\' action=\'CopyHSVColorAction\'/><menuitem name=\'SaveAsHTMLColorAction\'" +
+				" action=\'SaveAsHTMLColorAction\'/><separator/><menuitem name=\'BrightenAction\' act" +
+				"ion=\'BrightenAction\'/><menuitem name=\'DarkenAction\' action=\'DarkenAction\'/><sepa" +
+				"rator/><menuitem name=\'SaturateAction\' action=\'SaturateAction\'/><menuitem name=\'" +
+				"DesaturateAction\' action=\'DesaturateAction\'/><separator/><menuitem name=\'InvertA" +
+				"ction\' action=\'InvertAction\'/></menu><menu name=\'HelpAction\' action=\'HelpAction\'" +
+				"><menuitem name=\'aboutAction\' action=\'aboutAction\'/></menu></menubar></ui>");
 		this.menubar1 = ((global::Gtk.MenuBar)(this.UIManager.GetWidget("/menubar1")));
 		this.menubar1.Name = "menubar1";
 		this.mainVbox.Add(this.menubar1);
@@ -340,8 +327,6 @@ public partial class MainWindow
 		this.cutAction.Activated += new global::System.EventHandler(this.OnCutActionActivated);
 		this.copyAction.Activated += new global::System.EventHandler(this.OnCopyActionActivated);
 		this.pasteAction.Activated += new global::System.EventHandler(this.OnPasteActionActivated);
-		this.ImportPhotoshopPaletteAction.Activated += new global::System.EventHandler(this.OnImportPhotoshopPaletteActionActivated);
-		this.ExportPhotoshopPaletteAction.Activated += new global::System.EventHandler(this.OnExportPhotoshopPaletteActionActivated);
 		this.ExportHTMLAction.Activated += new global::System.EventHandler(this.OnExportHTMLActionActivated);
 		this.propertiesAction.Activated += new global::System.EventHandler(this.OnPropertiesActionActivated);
 		this.BlendAction.Activated += new global::System.EventHandler(this.OnBlendActionActivated);
