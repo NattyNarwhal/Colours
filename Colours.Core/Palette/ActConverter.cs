@@ -63,6 +63,15 @@ namespace Colours
             return p;
         }
 
+        /// <summary>
+        /// Creates a colour table from a palette.
+        /// </summary>
+        /// <param name="p">The palette to convert.</param>
+        /// <returns>The colour table, as a byte stream.</returns>
+        /// <remarks>
+        /// If the length of the palette is exactly 256, then no metadata will
+        /// be appended.
+        /// </remarks>
         public static byte[] ToTable(Palette p)
         {
             using (var s = new MemoryStream())
