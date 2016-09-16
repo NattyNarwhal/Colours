@@ -385,7 +385,20 @@ public partial class MainWindow: Gtk.Window
 
 	public void OpenPalette(string filename)
 	{
-		appPal.NewFromPalette (new Palette (File.ReadAllText (filename)), filename);
+		if (filename.EndsWith(".aco")) {
+			var p = AcoConverter.FromPhotoshopPalette(
+				File.ReadAllBytes(filename));
+			p.Name = System.IO.Path.GetFileNameWithoutExtension(filename);
+			appPal.NewFromPalette(p);
+		}
+		else if (filename.EndsWith(".act")) {
+			var p = ActConverter.FromTable(
+				File.ReadAllBytes(filename));
+			p.Name = System.IO.Path.GetFileNameWithoutExtension(filename);
+			appPal.NewFromPalette(p);
+		} else {
+			appPal.NewFromPalette(new Palette(File.ReadAllText(filename)), filename);
+		}
 	}
 
 	public bool SavePalette(bool forceDialog)
