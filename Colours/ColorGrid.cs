@@ -102,6 +102,14 @@ namespace Colours
                         if (e.Button == MouseButtons.Right)
                             ((ColorButton)o).Focus();
                     };
+                    cb.GotFocus += (o, e) =>
+                    {
+                        OnFocusedColorChange(new EventArgs());
+                    };
+                    cb.LostFocus += (o, e) =>
+                    {
+                        OnFocusedColorChange(new EventArgs());
+                    };
 
                     if (cols > 1 && c == ra.Count() - 1 && c == cols - 1)
                     {
@@ -135,6 +143,13 @@ namespace Colours
                 table.Controls.Cast<ColorButton>().Where(x => x.Tag == value)
                     .FirstOrDefault()?.Focus();
             }
+        }
+
+        public event EventHandler<EventArgs> FocusedColorChange;
+
+        protected virtual void OnFocusedColorChange(EventArgs e)
+        {
+            FocusedColorChange?.Invoke(this, e);
         }
     }
 }

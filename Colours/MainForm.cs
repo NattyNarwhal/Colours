@@ -558,8 +558,7 @@ namespace Colours
 
         public void DeletePaletteItems()
         {
-            appPal.DeleteColors(paletteList.SelectedItems
-                .Cast<ListViewItem>().Select(x => (PaletteColor)x.Tag));
+            appPal.DeleteColors(SelectedItems);
         }
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
@@ -601,10 +600,10 @@ namespace Colours
             // those, except that won't work. ContainsData(type) says
             // true, GetData(type) says null.
             var sb = new StringBuilder("pc" + Environment.NewLine);
-            if (paletteList.SelectedIndices.Count > 0)
+            if (SelectedItems.Count() > 0)
             {
-                foreach (ListViewItem i in paletteList.SelectedItems)
-                    sb.AppendLine(((PaletteColor)i.Tag).ToString());
+                foreach (var pc in SelectedItems)
+                    sb.AppendLine(pc.ToString());
                 Clipboard.SetText(sb.ToString());
             }
         }
@@ -737,6 +736,17 @@ namespace Colours
             paletteList.Enabled = false;
             paletteList.Visible = false;
             UpdateUI();
+        }
+
+        private void colorGrid1_FocusedColorChange(object sender, EventArgs e)
+        {
+            UpdateUI();
+        }
+
+        private void useToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (SelectedItems.Count() > 0)
+                app.SetColor(SelectedItems.FirstOrDefault().Color);
         }
     }
 }

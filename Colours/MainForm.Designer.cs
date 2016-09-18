@@ -66,6 +66,9 @@
             this.addAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.listToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.gridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.acquireToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.eyedropperToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.randomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -92,22 +95,19 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsHtmlDialog = new System.Windows.Forms.SaveFileDialog();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.paletteList = new System.Windows.Forms.ListView();
-            this.nameHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.colorHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colorGrid1 = new Colours.ColorGrid();
             this.paletteContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.useToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem8 = new System.Windows.Forms.ToolStripSeparator();
             this.cutSubmenuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyPCSubmenuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteSubmenuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.paletteList = new System.Windows.Forms.ListView();
+            this.nameHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colorHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.paletteListImages = new System.Windows.Forms.ImageList(this.components);
             this.savePaletteDialog = new System.Windows.Forms.SaveFileDialog();
             this.openPaletteDialog = new System.Windows.Forms.OpenFileDialog();
-            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.gridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.listToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.colorGrid1 = new Colours.ColorGrid();
             this.colorContextMenu.SuspendLayout();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -438,6 +438,31 @@
             this.renameToolStripMenuItem.Text = "Re&name";
             this.renameToolStripMenuItem.Click += new System.EventHandler(this.renameToolStripMenuItem_Click);
             // 
+            // viewToolStripMenuItem
+            // 
+            this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.listToolStripMenuItem,
+            this.gridToolStripMenuItem});
+            this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
+            this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.viewToolStripMenuItem.Text = "&View";
+            // 
+            // listToolStripMenuItem
+            // 
+            this.listToolStripMenuItem.Checked = true;
+            this.listToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.listToolStripMenuItem.Name = "listToolStripMenuItem";
+            this.listToolStripMenuItem.Size = new System.Drawing.Size(96, 22);
+            this.listToolStripMenuItem.Text = "&List";
+            this.listToolStripMenuItem.Click += new System.EventHandler(this.listToolStripMenuItem_Click);
+            // 
+            // gridToolStripMenuItem
+            // 
+            this.gridToolStripMenuItem.Name = "gridToolStripMenuItem";
+            this.gridToolStripMenuItem.Size = new System.Drawing.Size(96, 22);
+            this.gridToolStripMenuItem.Text = "&Grid";
+            this.gridToolStripMenuItem.Click += new System.EventHandler(this.gridToolStripMenuItem_Click);
+            // 
             // acquireToolStripMenuItem
             // 
             this.acquireToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -670,6 +695,69 @@
             this.splitContainer1.SplitterDistance = 155;
             this.splitContainer1.TabIndex = 6;
             // 
+            // colorGrid1
+            // 
+            this.colorGrid1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.colorGrid1.AutoScroll = true;
+            this.colorGrid1.ColorContextMenuStrip = this.paletteContextMenu;
+            this.colorGrid1.Enabled = false;
+            this.colorGrid1.FocusedColor = null;
+            this.colorGrid1.Location = new System.Drawing.Point(3, 3);
+            this.colorGrid1.Name = "colorGrid1";
+            this.colorGrid1.Size = new System.Drawing.Size(210, 272);
+            this.colorGrid1.TabIndex = 1;
+            this.colorGrid1.Visible = false;
+            this.colorGrid1.FocusedColorChange += new System.EventHandler<System.EventArgs>(this.colorGrid1_FocusedColorChange);
+            // 
+            // paletteContextMenu
+            // 
+            this.paletteContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.useToolStripMenuItem,
+            this.toolStripMenuItem8,
+            this.cutSubmenuToolStripMenuItem,
+            this.copyPCSubmenuToolStripMenuItem,
+            this.deleteSubmenuToolStripMenuItem});
+            this.paletteContextMenu.Name = "paletteContextMenu";
+            this.paletteContextMenu.Size = new System.Drawing.Size(153, 120);
+            // 
+            // useToolStripMenuItem
+            // 
+            this.useToolStripMenuItem.Name = "useToolStripMenuItem";
+            this.useToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.useToolStripMenuItem.Text = "&Use";
+            this.useToolStripMenuItem.Click += new System.EventHandler(this.useToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem8
+            // 
+            this.toolStripMenuItem8.Name = "toolStripMenuItem8";
+            this.toolStripMenuItem8.Size = new System.Drawing.Size(149, 6);
+            // 
+            // cutSubmenuToolStripMenuItem
+            // 
+            this.cutSubmenuToolStripMenuItem.Image = global::Colours.Properties.Resources.Cut;
+            this.cutSubmenuToolStripMenuItem.Name = "cutSubmenuToolStripMenuItem";
+            this.cutSubmenuToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.cutSubmenuToolStripMenuItem.Text = "Cu&t";
+            this.cutSubmenuToolStripMenuItem.Click += new System.EventHandler(this.cutToolStripMenuItem_Click);
+            // 
+            // copyPCSubmenuToolStripMenuItem
+            // 
+            this.copyPCSubmenuToolStripMenuItem.Image = global::Colours.Properties.Resources.Copy;
+            this.copyPCSubmenuToolStripMenuItem.Name = "copyPCSubmenuToolStripMenuItem";
+            this.copyPCSubmenuToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.copyPCSubmenuToolStripMenuItem.Text = "&Copy";
+            this.copyPCSubmenuToolStripMenuItem.Click += new System.EventHandler(this.copyPCToolStripMenuItem_Click);
+            // 
+            // deleteSubmenuToolStripMenuItem
+            // 
+            this.deleteSubmenuToolStripMenuItem.Image = global::Colours.Properties.Resources.Remove;
+            this.deleteSubmenuToolStripMenuItem.Name = "deleteSubmenuToolStripMenuItem";
+            this.deleteSubmenuToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.deleteSubmenuToolStripMenuItem.Text = "&Delete";
+            this.deleteSubmenuToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
+            // 
             // paletteList
             // 
             this.paletteList.AllowDrop = true;
@@ -707,53 +795,6 @@
             this.colorHeader.Text = "Color";
             this.colorHeader.Width = 80;
             // 
-            // paletteContextMenu
-            // 
-            this.paletteContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.useToolStripMenuItem,
-            this.toolStripMenuItem8,
-            this.cutSubmenuToolStripMenuItem,
-            this.copyPCSubmenuToolStripMenuItem,
-            this.deleteSubmenuToolStripMenuItem});
-            this.paletteContextMenu.Name = "paletteContextMenu";
-            this.paletteContextMenu.Size = new System.Drawing.Size(108, 98);
-            // 
-            // useToolStripMenuItem
-            // 
-            this.useToolStripMenuItem.Name = "useToolStripMenuItem";
-            this.useToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
-            this.useToolStripMenuItem.Text = "&Use";
-            this.useToolStripMenuItem.Click += new System.EventHandler(this.paletteList_ItemActivate);
-            // 
-            // toolStripMenuItem8
-            // 
-            this.toolStripMenuItem8.Name = "toolStripMenuItem8";
-            this.toolStripMenuItem8.Size = new System.Drawing.Size(104, 6);
-            // 
-            // cutSubmenuToolStripMenuItem
-            // 
-            this.cutSubmenuToolStripMenuItem.Image = global::Colours.Properties.Resources.Cut;
-            this.cutSubmenuToolStripMenuItem.Name = "cutSubmenuToolStripMenuItem";
-            this.cutSubmenuToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
-            this.cutSubmenuToolStripMenuItem.Text = "Cu&t";
-            this.cutSubmenuToolStripMenuItem.Click += new System.EventHandler(this.cutToolStripMenuItem_Click);
-            // 
-            // copyPCSubmenuToolStripMenuItem
-            // 
-            this.copyPCSubmenuToolStripMenuItem.Image = global::Colours.Properties.Resources.Copy;
-            this.copyPCSubmenuToolStripMenuItem.Name = "copyPCSubmenuToolStripMenuItem";
-            this.copyPCSubmenuToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
-            this.copyPCSubmenuToolStripMenuItem.Text = "&Copy";
-            this.copyPCSubmenuToolStripMenuItem.Click += new System.EventHandler(this.copyPCToolStripMenuItem_Click);
-            // 
-            // deleteSubmenuToolStripMenuItem
-            // 
-            this.deleteSubmenuToolStripMenuItem.Image = global::Colours.Properties.Resources.Remove;
-            this.deleteSubmenuToolStripMenuItem.Name = "deleteSubmenuToolStripMenuItem";
-            this.deleteSubmenuToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
-            this.deleteSubmenuToolStripMenuItem.Text = "&Delete";
-            this.deleteSubmenuToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
-            // 
             // paletteListImages
             // 
             this.paletteListImages.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
@@ -772,45 +813,6 @@
             this.openPaletteDialog.Filter = "All Supported Palettes|*.gpl;*.aco;*.act|GIMP Palette|*.gpl|Photoshop Swatch|*.ac" +
     "o|Photoshop Colour Table|*.act";
             this.openPaletteDialog.Title = "Open";
-            // 
-            // viewToolStripMenuItem
-            // 
-            this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.listToolStripMenuItem,
-            this.gridToolStripMenuItem});
-            this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
-            this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.viewToolStripMenuItem.Text = "&View";
-            // 
-            // gridToolStripMenuItem
-            // 
-            this.gridToolStripMenuItem.Name = "gridToolStripMenuItem";
-            this.gridToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.gridToolStripMenuItem.Text = "&Grid";
-            this.gridToolStripMenuItem.Click += new System.EventHandler(this.gridToolStripMenuItem_Click);
-            // 
-            // listToolStripMenuItem
-            // 
-            this.listToolStripMenuItem.Checked = true;
-            this.listToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.listToolStripMenuItem.Name = "listToolStripMenuItem";
-            this.listToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.listToolStripMenuItem.Text = "&List";
-            this.listToolStripMenuItem.Click += new System.EventHandler(this.listToolStripMenuItem_Click);
-            // 
-            // colorGrid1
-            // 
-            this.colorGrid1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.colorGrid1.AutoScroll = true;
-            this.colorGrid1.ColorContextMenuStrip = null;
-            this.colorGrid1.Enabled = false;
-            this.colorGrid1.Location = new System.Drawing.Point(3, 3);
-            this.colorGrid1.Name = "colorGrid1";
-            this.colorGrid1.Size = new System.Drawing.Size(210, 272);
-            this.colorGrid1.TabIndex = 1;
-            this.colorGrid1.Visible = false;
             // 
             // MainForm
             // 
