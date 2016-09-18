@@ -39,6 +39,15 @@ namespace Colours
             InitializeComponent();
 
             Palette = new Palette();
+            table.Resize += (o, e) =>
+            {
+                for (int i = 0; i < table.RowCount; i++)
+                {
+                    if (table.GetControlFromPosition(table.ColumnCount - 1, i) != null)
+                        ((ColorButton)table.GetControlFromPosition(table.ColumnCount - 1, i)).Width =
+                            ((ColorButton)table.GetControlFromPosition(table.ColumnCount - 2, i)).Width;
+                }
+            };
         }
 
         void UpdateGrid()
@@ -85,6 +94,13 @@ namespace Colours
                         Tag = pc,
                         ContextMenuStrip = ColorContextMenuStrip
                     };
+
+                    if (c == ra.Count() - 1)
+                    {
+                        cb.Dock = DockStyle.None;
+                        cb.Width = ((ColorButton)table.GetControlFromPosition(c - 1, r)).Width;
+                    }
+
                     toolTip1.SetToolTip(cb, string.Format("{0}\r\n{1}\r\n{2}",
                         pc.Name, pc.Color.ToHtml(), new HsvColor(pc.Color).ToString()));
                     table.Controls.Add(cb);
