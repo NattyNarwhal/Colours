@@ -218,6 +218,21 @@ namespace Colours.App
         }
 
         /// <summary>
+        /// Renames a color.
+        /// </summary>
+        /// <param name="pc">The color.</param>
+        /// <param name="newName">The new name of the color.</param>
+        /// <param name="keepHistory">If undo should have been added.</param>
+        /// <param name="fireEvent">If the event should fire.</param>
+        /// <param name="action">If the undo is added, the action it is described as.</param>
+        public void RenameColor(PaletteColor pc, string newName, bool keepHistory = true, bool fireEvent = true, string action = null)
+        {
+            if (Palette.Colors.Contains(pc))
+                RenameColor(Palette.Colors.IndexOf(pc), newName, keepHistory, fireEvent, action);
+            else throw new ArgumentException("The colour is not in the palette.");
+        }
+
+        /// <summary>
         /// Moves a color's position.
         /// </summary>
         /// <param name="pc">The color to move.</param>

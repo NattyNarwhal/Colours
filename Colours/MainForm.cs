@@ -113,8 +113,7 @@ namespace Colours
                 schemeBox.SelectedItem.ToString(), app.Color.ToHtml());
 
             var hasAny = appPal.Palette.Colors.Count > 0;
-            var selected = GridView ? colorGrid1.FocusedColor != null :
-                paletteList.SelectedIndices.Count > 0;
+            var selected = SelectedItems.Count() > 0;
             var supportsMetadata = string.IsNullOrEmpty(appPal.FileName)
                 || appPal.FileName.EndsWith(".gpl");
 
@@ -148,6 +147,7 @@ namespace Colours
             deleteSubmenuToolStripMenuItem.Enabled = selected;
             deleteToolStripMenuItem.Enabled = selected;
             renameToolStripMenuItem.Enabled = selected;
+            renameSubmenuToolStripMenuItem.Enabled = selected;
             useToolStripMenuItem.Enabled = selected;
             selectAllToolStripMenuItem.Enabled = !GridView && hasAny;
 
@@ -626,8 +626,21 @@ namespace Colours
 
         private void renameToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (paletteList.SelectedItems.Count > 0)
-                paletteList.SelectedItems[0].BeginEdit();
+            if (GridView)
+            {
+                if (SelectedItems.Count() > 0)
+                {
+                    var pc = SelectedItems.First();
+                    var rf = new RenameForm(pc);
+                    if (rf.ShowDialog(this) == DialogResult.OK)
+                        appPal.RenameColor(pc, rf.NewName);
+                }
+            }
+            else
+            {
+                if (paletteList.SelectedItems.Count > 0)
+                    paletteList.SelectedItems[0].BeginEdit();
+            }
         }
 
         private void saveAsHTMLProofToolStripMenuItem_Click(object sender, EventArgs e)
