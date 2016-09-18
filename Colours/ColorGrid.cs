@@ -41,12 +41,13 @@ namespace Colours
             Palette = new Palette();
             table.Resize += (o, e) =>
             {
-                for (int i = 0; i < table.RowCount; i++)
-                {
-                    if (table.GetControlFromPosition(table.ColumnCount - 1, i) != null)
-                        ((ColorButton)table.GetControlFromPosition(table.ColumnCount - 1, i)).Width =
-                            ((ColorButton)table.GetControlFromPosition(table.ColumnCount - 2, i)).Width;
-                }
+                if (table.ColumnCount > 1)
+                    for (int i = 0; i < table.RowCount; i++)
+                    {
+                        if (table.GetControlFromPosition(table.ColumnCount - 1, i) != null)
+                            ((ColorButton)table.GetControlFromPosition(table.ColumnCount - 1, i)).Width =
+                                ((ColorButton)table.GetControlFromPosition(table.ColumnCount - 2, i)).Width;
+                    }
             };
         }
 
@@ -95,7 +96,7 @@ namespace Colours
                         ContextMenuStrip = ColorContextMenuStrip
                     };
 
-                    if (c == ra.Count() - 1)
+                    if (cols > 1 && c == ra.Count() - 1 && c == cols - 1)
                     {
                         cb.Dock = DockStyle.None;
                         cb.Width = ((ColorButton)table.GetControlFromPosition(c - 1, r)).Width;
