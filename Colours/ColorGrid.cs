@@ -95,6 +95,13 @@ namespace Colours
                         Tag = pc,
                         ContextMenuStrip = ColorContextMenuStrip
                     };
+                    
+                    // we can't use MouseClick for right clicks on buttons
+                    cb.MouseUp += (o, e) =>
+                    {
+                        if (e.Button == MouseButtons.Right)
+                            ((ColorButton)o).Focus();
+                    };
 
                     if (cols > 1 && c == ra.Count() - 1 && c == cols - 1)
                     {
@@ -112,7 +119,22 @@ namespace Colours
 
         public PaletteColor GetPaletteColor(int col, int row)
         {
-            return (PaletteColor)((ColorButton)table.GetControlFromPosition(col, row)).Tag;
+            return (PaletteColor)((ColorButton)table
+                .GetControlFromPosition(col, row)).Tag;
+        }
+
+        public PaletteColor FocusedColor
+        {
+            get
+            {
+                return (PaletteColor)table.Controls.Cast<ColorButton>()
+                    .Where(x => x.Focused).FirstOrDefault()?.Tag;
+            }
+            set
+            {
+                table.Controls.Cast<ColorButton>().Where(x => x.Tag == value)
+                    .FirstOrDefault()?.Focus();
+            }
         }
     }
 }

@@ -113,7 +113,8 @@ namespace Colours
                 schemeBox.SelectedItem.ToString(), app.Color.ToHtml());
 
             var hasAny = appPal.Palette.Colors.Count > 0;
-            var selected = paletteList.SelectedIndices.Count > 0;
+            var selected = GridView ? colorGrid1.FocusedColor != null :
+                paletteList.SelectedIndices.Count > 0;
             var supportsMetadata = string.IsNullOrEmpty(appPal.FileName)
                 || appPal.FileName.EndsWith(".gpl");
 
@@ -148,7 +149,7 @@ namespace Colours
             deleteToolStripMenuItem.Enabled = selected;
             renameToolStripMenuItem.Enabled = selected;
             useToolStripMenuItem.Enabled = selected;
-            selectAllToolStripMenuItem.Enabled = hasAny;
+            selectAllToolStripMenuItem.Enabled = !GridView && hasAny;
 
             UpdateUIPaletteList();
         }
@@ -164,6 +165,25 @@ namespace Colours
             // events cause a horizontal scrollbar to appear (which disappears
             // when you click it) It doesn't help if you shrink it quickly.
             nameHeader.Width = paletteList.ClientSize.Width - colorHeader.Width;
+        }
+
+        public bool GridView => colorGrid1.Visible;
+
+        // if you need to get the LVIs, use it directly
+        public IEnumerable<PaletteColor> SelectedItems
+        {
+            get
+            {
+                if (GridView)
+                {
+                    return new List<PaletteColor>() { colorGrid1.FocusedColor };
+                }
+                else
+                {
+                    return paletteList.SelectedItems.Cast<ListViewItem>()
+                        .Select(x => (PaletteColor)x.Tag);
+                }
+            }
         }
 
         private void SchemeColor_Click(object sender, EventArgs e)
@@ -670,20 +690,36 @@ namespace Colours
             UpdateUIPaletteList();
         }
 
-        private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
+        public void SelectAll(bool select = true)
         {
             foreach (ListViewItem i in paletteList.Items)
-                i.Selected = true;
+                i.Selected = select;
+        }
+
+        private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SelectAll();
         }
 
         private void listToolStripMenuItem_Click(object sender, EventArgs e)
         {
             gridToolStripMenuItem.Checked = false;
             listToolStripMenuItem.Checked = true;
+
+            var selection = SelectedItems.FirstOrDefault();
+
             colorGrid1.Enabled = false;
             colorGrid1.Visible = false;
+            // transfer selections
+            SelectAll(false);
+            if (selection != null)
+                paletteList.Items.Cast<ListViewItem>()
+                    .Where(x => x.Tag == selection)
+                    .FirstOrDefault()
+                    .Selected = true;
             paletteList.Enabled = true;
             paletteList.Visible = true;
+            paletteList.Focus();
             UpdateUI();
         }
 
@@ -691,8 +727,13 @@ namespace Colours
         {
             gridToolStripMenuItem.Checked = true;
             listToolStripMenuItem.Checked = false;
+
+            var selection = SelectedItems.FirstOrDefault();
+
             colorGrid1.Enabled = true;
             colorGrid1.Visible = true;
+            if (selection != null)
+                colorGrid1.FocusedColor = selection;
             paletteList.Enabled = false;
             paletteList.Visible = false;
             UpdateUI();
