@@ -41,7 +41,7 @@ namespace Colours
             Palette = new Palette();
         }
 
-        public void UpdateGrid()
+        void UpdateGrid()
         {
             table.Controls.Clear();
 
@@ -80,6 +80,7 @@ namespace Colours
                         Width = 32,
                         Height = 32,
                         Dock = DockStyle.Fill,
+                        Margin = new Padding(1),
                         Color = pc.Color,
                         Tag = pc,
                         ContextMenuStrip = ColorContextMenuStrip
@@ -90,12 +91,6 @@ namespace Colours
                     table.SetCellPosition(cb, new TableLayoutPanelCellPosition(c, r));
                 }
             }
-
-            //foreach (RowStyle s in table.RowStyles)
-            //{
-            //    s.SizeType = SizeType.Percent;
-            //    s.Height = 100f / batches.Count();
-            //}
         }
 
         public PaletteColor GetPaletteColor(int col, int row)
