@@ -104,6 +104,9 @@
             this.paletteListImages = new System.Windows.Forms.ImageList(this.components);
             this.savePaletteDialog = new System.Windows.Forms.SaveFileDialog();
             this.openPaletteDialog = new System.Windows.Forms.OpenFileDialog();
+            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.gridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.listToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.colorGrid1 = new Colours.ColorGrid();
             this.colorContextMenu.SuspendLayout();
             this.menuStrip.SuspendLayout();
@@ -205,6 +208,7 @@
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.editToolStripMenuItem,
+            this.viewToolStripMenuItem,
             this.acquireToolStripMenuItem,
             this.colorToolStripMenuItem,
             this.helpToolStripMenuItem});
@@ -769,6 +773,31 @@
     "o|Photoshop Colour Table|*.act";
             this.openPaletteDialog.Title = "Open";
             // 
+            // viewToolStripMenuItem
+            // 
+            this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.listToolStripMenuItem,
+            this.gridToolStripMenuItem});
+            this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
+            this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.viewToolStripMenuItem.Text = "&View";
+            // 
+            // gridToolStripMenuItem
+            // 
+            this.gridToolStripMenuItem.Name = "gridToolStripMenuItem";
+            this.gridToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.gridToolStripMenuItem.Text = "&Grid";
+            this.gridToolStripMenuItem.Click += new System.EventHandler(this.gridToolStripMenuItem_Click);
+            // 
+            // listToolStripMenuItem
+            // 
+            this.listToolStripMenuItem.Checked = true;
+            this.listToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.listToolStripMenuItem.Name = "listToolStripMenuItem";
+            this.listToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.listToolStripMenuItem.Text = "&List";
+            this.listToolStripMenuItem.Click += new System.EventHandler(this.listToolStripMenuItem_Click);
+            // 
             // colorGrid1
             // 
             this.colorGrid1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -776,10 +805,12 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.colorGrid1.AutoScroll = true;
             this.colorGrid1.ColorContextMenuStrip = null;
+            this.colorGrid1.Enabled = false;
             this.colorGrid1.Location = new System.Drawing.Point(3, 3);
             this.colorGrid1.Name = "colorGrid1";
             this.colorGrid1.Size = new System.Drawing.Size(210, 272);
             this.colorGrid1.TabIndex = 1;
+            this.colorGrid1.Visible = false;
             // 
             // MainForm
             // 
@@ -883,6 +914,9 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem selectAllToolStripMenuItem;
         private ColorGrid colorGrid1;
+        private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem listToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem gridToolStripMenuItem;
     }
 }
 

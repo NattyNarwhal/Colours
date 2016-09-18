@@ -675,5 +675,27 @@ namespace Colours
             foreach (ListViewItem i in paletteList.Items)
                 i.Selected = true;
         }
+
+        private void listToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            gridToolStripMenuItem.Checked = false;
+            listToolStripMenuItem.Checked = true;
+            colorGrid1.Enabled = false;
+            colorGrid1.Visible = false;
+            paletteList.Enabled = true;
+            paletteList.Visible = true;
+            UpdateUI();
+        }
+
+        private void gridToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            gridToolStripMenuItem.Checked = true;
+            listToolStripMenuItem.Checked = false;
+            colorGrid1.Enabled = true;
+            colorGrid1.Visible = true;
+            paletteList.Enabled = false;
+            paletteList.Visible = false;
+            UpdateUI();
+        }
     }
 }
