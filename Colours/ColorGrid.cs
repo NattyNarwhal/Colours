@@ -110,6 +110,10 @@ namespace Colours
                     {
                         OnFocusedColorChange(new EventArgs());
                     };
+                    cb.Click += (o, e) =>
+                    {
+                        OnColorClick(new EventArgs(), cb);
+                    };
 
                     if (cols > 1 && c == ra.Count() - 1 && c == cols - 1)
                     {
@@ -150,6 +154,13 @@ namespace Colours
         protected virtual void OnFocusedColorChange(EventArgs e)
         {
             FocusedColorChange?.Invoke(this, e);
+        }
+
+        public event EventHandler<EventArgs> ColorClick;
+
+        protected virtual void OnColorClick(EventArgs e, ColorButton sender)
+        {
+            ColorClick?.Invoke(sender, e);
         }
     }
 }

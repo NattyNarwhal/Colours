@@ -774,5 +774,13 @@ namespace Colours
                 }
             }
         }
+
+        private void colorGrid1_ColorClick(object sender, EventArgs e)
+        {
+            if (sender is ColorButton)
+            {
+                app.SetColor(((ColorButton)sender).Color);
+            }
+        }
     }
 }
