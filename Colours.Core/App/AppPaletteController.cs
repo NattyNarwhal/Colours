@@ -253,6 +253,26 @@ namespace Colours.App
         }
 
         /// <summary>
+        /// Changes a color in place.
+        /// </summary>
+        /// <param name="pc">The color to change.</param>
+        /// <param name="newColor">The new color.</param>
+        /// <param name="keepHistory">If undo should have been added.</param>
+        /// <param name="fireEvent">If the event should fire.</param>
+        /// <param name="action">If the undo is added, the action it is described as.</param>
+        public void ChangeColor(PaletteColor pc, RgbColor newColor, bool keepHistory = true, bool fireEvent = true, string action = null)
+        {
+            if (keepHistory)
+                PushUndo(action ?? "Change Colour");
+            Palette = new Palette(Palette);
+            if (Palette.Colors.Contains(pc))
+                pc.Color = newColor;
+            Dirty = true;
+            if (fireEvent)
+                OnPaletteChanged(new EventArgs());
+        }
+
+        /// <summary>
         /// Pushes the current state of the application to the undo stack, and purges the redo stack.
         /// </summary>
         private void PushUndo(string action)

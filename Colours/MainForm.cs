@@ -149,6 +149,7 @@ namespace Colours
             renameToolStripMenuItem.Enabled = selected;
             renameSubmenuToolStripMenuItem.Enabled = selected;
             useToolStripMenuItem.Enabled = selected;
+            changeToolStripMenuItem.Enabled = selected;
             selectAllToolStripMenuItem.Enabled = !GridView && hasAny;
 
             UpdateUIPaletteList();
@@ -760,6 +761,18 @@ namespace Colours
         {
             if (SelectedItems.Count() > 0)
                 app.SetColor(SelectedItems.FirstOrDefault().Color);
+        }
+
+        private void changeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (SelectedItems.Count() > 0)
+            {
+                colorDialog.Color = SelectedItems.FirstOrDefault().Color.ToGdiColor();
+                if (colorDialog.ShowDialog(this) == DialogResult.OK)
+                {
+                    appPal.ChangeColor(SelectedItems.FirstOrDefault(), colorDialog.Color.ToRgbColor());
+                }
+            }
         }
     }
 }

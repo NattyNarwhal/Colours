@@ -102,13 +102,14 @@
             this.cutSubmenuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyPCSubmenuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteSubmenuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.renameSubmenuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.paletteList = new System.Windows.Forms.ListView();
             this.nameHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colorHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.paletteListImages = new System.Windows.Forms.ImageList(this.components);
             this.savePaletteDialog = new System.Windows.Forms.SaveFileDialog();
             this.openPaletteDialog = new System.Windows.Forms.OpenFileDialog();
-            this.renameSubmenuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.changeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.colorContextMenu.SuspendLayout();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -716,31 +717,32 @@
             // 
             this.paletteContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.useToolStripMenuItem,
+            this.changeToolStripMenuItem,
             this.toolStripMenuItem8,
             this.cutSubmenuToolStripMenuItem,
             this.copyPCSubmenuToolStripMenuItem,
             this.deleteSubmenuToolStripMenuItem,
             this.renameSubmenuToolStripMenuItem});
             this.paletteContextMenu.Name = "paletteContextMenu";
-            this.paletteContextMenu.Size = new System.Drawing.Size(118, 120);
+            this.paletteContextMenu.Size = new System.Drawing.Size(153, 164);
             // 
             // useToolStripMenuItem
             // 
             this.useToolStripMenuItem.Name = "useToolStripMenuItem";
-            this.useToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+            this.useToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.useToolStripMenuItem.Text = "&Use";
             this.useToolStripMenuItem.Click += new System.EventHandler(this.useToolStripMenuItem_Click);
             // 
             // toolStripMenuItem8
             // 
             this.toolStripMenuItem8.Name = "toolStripMenuItem8";
-            this.toolStripMenuItem8.Size = new System.Drawing.Size(114, 6);
+            this.toolStripMenuItem8.Size = new System.Drawing.Size(149, 6);
             // 
             // cutSubmenuToolStripMenuItem
             // 
             this.cutSubmenuToolStripMenuItem.Image = global::Colours.Properties.Resources.Cut;
             this.cutSubmenuToolStripMenuItem.Name = "cutSubmenuToolStripMenuItem";
-            this.cutSubmenuToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+            this.cutSubmenuToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.cutSubmenuToolStripMenuItem.Text = "Cu&t";
             this.cutSubmenuToolStripMenuItem.Click += new System.EventHandler(this.cutToolStripMenuItem_Click);
             // 
@@ -748,7 +750,7 @@
             // 
             this.copyPCSubmenuToolStripMenuItem.Image = global::Colours.Properties.Resources.Copy;
             this.copyPCSubmenuToolStripMenuItem.Name = "copyPCSubmenuToolStripMenuItem";
-            this.copyPCSubmenuToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+            this.copyPCSubmenuToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.copyPCSubmenuToolStripMenuItem.Text = "&Copy";
             this.copyPCSubmenuToolStripMenuItem.Click += new System.EventHandler(this.copyPCToolStripMenuItem_Click);
             // 
@@ -756,9 +758,17 @@
             // 
             this.deleteSubmenuToolStripMenuItem.Image = global::Colours.Properties.Resources.Remove;
             this.deleteSubmenuToolStripMenuItem.Name = "deleteSubmenuToolStripMenuItem";
-            this.deleteSubmenuToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+            this.deleteSubmenuToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.deleteSubmenuToolStripMenuItem.Text = "&Delete";
             this.deleteSubmenuToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
+            // 
+            // renameSubmenuToolStripMenuItem
+            // 
+            this.renameSubmenuToolStripMenuItem.Image = global::Colours.Properties.Resources.Rename;
+            this.renameSubmenuToolStripMenuItem.Name = "renameSubmenuToolStripMenuItem";
+            this.renameSubmenuToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.renameSubmenuToolStripMenuItem.Text = "&Rename";
+            this.renameSubmenuToolStripMenuItem.Click += new System.EventHandler(this.renameToolStripMenuItem_Click);
             // 
             // paletteList
             // 
@@ -816,13 +826,12 @@
     "o|Photoshop Colour Table|*.act";
             this.openPaletteDialog.Title = "Open";
             // 
-            // renameSubmenuToolStripMenuItem
+            // changeToolStripMenuItem
             // 
-            this.renameSubmenuToolStripMenuItem.Image = global::Colours.Properties.Resources.Rename;
-            this.renameSubmenuToolStripMenuItem.Name = "renameSubmenuToolStripMenuItem";
-            this.renameSubmenuToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
-            this.renameSubmenuToolStripMenuItem.Text = "&Rename";
-            this.renameSubmenuToolStripMenuItem.Click += new System.EventHandler(this.renameToolStripMenuItem_Click);
+            this.changeToolStripMenuItem.Name = "changeToolStripMenuItem";
+            this.changeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.changeToolStripMenuItem.Text = "C&hange";
+            this.changeToolStripMenuItem.Click += new System.EventHandler(this.changeToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -930,6 +939,7 @@
         private System.Windows.Forms.ToolStripMenuItem listToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem gridToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem renameSubmenuToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem changeToolStripMenuItem;
     }
 }
 
