@@ -51,6 +51,9 @@
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Mono.Posix" />
+    <Reference Include="MoreLinq">
+      <HintPath>..\packages\morelinq.1.4.0\lib\net35\MoreLinq.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="gtk-gui\gui.stetic">
@@ -69,6 +72,9 @@
     <Compile Include="gtk-gui\Colours.PropertiesDialog.cs" />
     <Compile Include="BlendDialog.cs" />
     <Compile Include="gtk-gui\Colours.BlendDialog.cs" />
+    <Compile Include="ColorGridWidget.cs" />
+    <Compile Include="gtk-gui\Colours.ColorGridWidget.cs" />
+    <Compile Include="GridColorButton.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -79,5 +85,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

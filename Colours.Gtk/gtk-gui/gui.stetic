@@ -7,7 +7,7 @@
     <widget-library name="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <widget-library name="../bin/Debug/Colours.Gtk.exe" internal="true" />
   </import>
-  <widget class="Gtk.Window" id="MainWindow" design-size="493 316">
+  <widget class="Gtk.Window" id="MainWindow" design-size="501 316">
     <action-group name="Default">
       <action id="EditAction">
         <property name="Type">Action</property>
@@ -248,6 +248,30 @@
         <property name="ShortLabel" translatable="yes">_Blend...</property>
         <signal name="Activated" handler="OnBlendActionActivated" />
       </action>
+      <action id="ViewAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_View</property>
+        <property name="ShortLabel" translatable="yes">_View</property>
+      </action>
+      <action id="ListAction">
+        <property name="Type">Radio</property>
+        <property name="Label" translatable="yes">_List</property>
+        <property name="ShortLabel" translatable="yes">_List</property>
+        <property name="DrawAsRadio">False</property>
+        <property name="Active">True</property>
+        <property name="Value">0</property>
+        <property name="Group">group1</property>
+        <signal name="Toggled" handler="OnListActionToggled" />
+      </action>
+      <action id="GridAction">
+        <property name="Type">Radio</property>
+        <property name="Label" translatable="yes">_Grid</property>
+        <property name="ShortLabel" translatable="yes">_Grid</property>
+        <property name="DrawAsRadio">False</property>
+        <property name="Active">False</property>
+        <property name="Value">0</property>
+        <property name="Group">group1</property>
+      </action>
     </action-group>
     <property name="MemberName" />
     <property name="Title" translatable="yes">MainWindow</property>
@@ -283,6 +307,10 @@
                 <node type="Menuitem" action="addAction" />
                 <node type="Menuitem" action="AddAllAction" />
                 <node type="Menuitem" action="deleteAction" />
+              </node>
+              <node type="Menu" action="ViewAction">
+                <node type="Menuitem" action="ListAction" />
+                <node type="Menuitem" action="GridAction" />
               </node>
               <node type="Menu" action="AcquireAction">
                 <node type="Menuitem" action="PasteAcquireAction" />
@@ -323,7 +351,7 @@
           <widget class="Gtk.HPaned" id="hpaned2">
             <property name="MemberName" />
             <property name="CanFocus">True</property>
-            <property name="Position">140</property>
+            <property name="Position">156</property>
             <child>
               <widget class="Gtk.VBox" id="paddedBox">
                 <property name="MemberName" />
@@ -368,19 +396,41 @@
               </packing>
             </child>
             <child>
-              <widget class="Gtk.ScrolledWindow" id="GtkScrolledWindow">
+              <widget class="Gtk.VBox" id="eitherBox">
                 <property name="MemberName" />
-                <property name="ShadowType">In</property>
                 <child>
-                  <widget class="Gtk.TreeView" id="treeview1">
+                  <widget class="Gtk.ScrolledWindow" id="GtkScrolledWindow">
                     <property name="MemberName" />
-                    <property name="CanFocus">True</property>
-                    <property name="ShowScrollbars">True</property>
-                    <property name="HeadersVisible">False</property>
-                    <signal name="RowActivated" handler="OnTreeview1RowActivated" />
-                    <signal name="DragEnd" handler="OnTreeview1DragEnd" />
-                    <signal name="ButtonPressEvent" handler="OnTreeview1ButtonPressEvent" />
+                    <property name="ShadowType">In</property>
+                    <child>
+                      <widget class="Gtk.TreeView" id="treeview1">
+                        <property name="MemberName" />
+                        <property name="CanFocus">True</property>
+                        <property name="ShowScrollbars">True</property>
+                        <property name="HeadersVisible">False</property>
+                        <signal name="RowActivated" handler="OnTreeview1RowActivated" />
+                        <signal name="DragEnd" handler="OnTreeview1DragEnd" />
+                        <signal name="ButtonPressEvent" handler="OnTreeview1ButtonPressEvent" />
+                      </widget>
+                    </child>
                   </widget>
+                  <packing>
+                    <property name="Position">0</property>
+                    <property name="AutoSize">True</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Colours.ColorGridWidget" id="colorgridwidget1">
+                    <property name="MemberName" />
+                    <property name="Visible">False</property>
+                    <property name="Sensitive">False</property>
+                    <property name="Events">ButtonPressMask</property>
+                  </widget>
+                  <packing>
+                    <property name="Position">1</property>
+                    <property name="AutoSize">False</property>
+                    <property name="Expand">False</property>
+                  </packing>
                 </child>
               </widget>
             </child>
@@ -829,6 +879,20 @@
             <property name="Expand">False</property>
             <property name="Fill">False</property>
           </packing>
+        </child>
+      </widget>
+    </child>
+  </widget>
+  <widget class="Gtk.Bin" id="Colours.ColorGridWidget" design-size="300 300">
+    <property name="MemberName" />
+    <property name="Visible">False</property>
+    <child>
+      <widget class="Gtk.Table" id="table1">
+        <property name="MemberName" />
+        <property name="RowSpacing">6</property>
+        <property name="ColumnSpacing">6</property>
+        <child>
+          <placeholder />
         </child>
       </widget>
     </child>

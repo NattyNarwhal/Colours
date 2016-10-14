@@ -77,6 +77,12 @@ public partial class MainWindow
 
 	private global::Gtk.Action BlendAction;
 
+	private global::Gtk.Action ViewAction;
+
+	private global::Gtk.RadioAction ListAction;
+
+	private global::Gtk.RadioAction GridAction;
+
 	private global::Gtk.VBox mainVbox;
 
 	private global::Gtk.MenuBar menubar1;
@@ -89,9 +95,13 @@ public partial class MainWindow
 
 	private global::Gtk.VBox colorBox;
 
+	private global::Gtk.VBox eitherBox;
+
 	private global::Gtk.ScrolledWindow GtkScrolledWindow;
 
 	private global::Gtk.TreeView treeview1;
+
+	private global::Colours.ColorGridWidget colorgridwidget1;
 
 	protected virtual void Build()
 	{
@@ -207,6 +217,17 @@ public partial class MainWindow
 		this.BlendAction = new global::Gtk.Action("BlendAction", global::Mono.Unix.Catalog.GetString("_Blend..."), null, null);
 		this.BlendAction.ShortLabel = global::Mono.Unix.Catalog.GetString("_Blend...");
 		w1.Add(this.BlendAction, null);
+		this.ViewAction = new global::Gtk.Action("ViewAction", global::Mono.Unix.Catalog.GetString("_View"), null, null);
+		this.ViewAction.ShortLabel = global::Mono.Unix.Catalog.GetString("_View");
+		w1.Add(this.ViewAction, null);
+		this.ListAction = new global::Gtk.RadioAction("ListAction", global::Mono.Unix.Catalog.GetString("_List"), null, null, 0);
+		this.ListAction.Group = new global::GLib.SList(global::System.IntPtr.Zero);
+		this.ListAction.ShortLabel = global::Mono.Unix.Catalog.GetString("_List");
+		w1.Add(this.ListAction, null);
+		this.GridAction = new global::Gtk.RadioAction("GridAction", global::Mono.Unix.Catalog.GetString("_Grid"), null, null, 0);
+		this.GridAction.Group = this.ListAction.Group;
+		this.GridAction.ShortLabel = global::Mono.Unix.Catalog.GetString("_Grid");
+		w1.Add(this.GridAction, null);
 		this.UIManager.InsertActionGroup(w1, 0);
 		this.AddAccelGroup(this.UIManager.AccelGroup);
 		this.Name = "MainWindow";
@@ -228,20 +249,22 @@ public partial class MainWindow
 				"\'copyAction\'/><menuitem name=\'pasteAction\' action=\'pasteAction\'/><separator/><me" +
 				"nuitem name=\'addAction\' action=\'addAction\'/><menuitem name=\'AddAllAction\' action" +
 				"=\'AddAllAction\'/><menuitem name=\'deleteAction\' action=\'deleteAction\'/></menu><me" +
-				"nu name=\'AcquireAction\' action=\'AcquireAction\'><menuitem name=\'PasteAcquireActio" +
-				"n\' action=\'PasteAcquireAction\'/><menuitem name=\'refreshAction\' action=\'refreshAc" +
-				"tion\'/><separator/><menuitem name=\'BlendAction\' action=\'BlendAction\'/></menu><me" +
-				"nu name=\'ColorAction\' action=\'ColorAction\'><menuitem name=\'goBackAction\' action=" +
-				"\'goBackAction\'/><menuitem name=\'goForwardAction\' action=\'goForwardAction\'/><sepa" +
-				"rator/><menuitem name=\'CopyHexColorAction\' action=\'CopyHexColorAction\'/><menuite" +
-				"m name=\'CopyHSLColorAction\' action=\'CopyHSLColorAction\'/><menuitem name=\'CopyHSV" +
-				"ColorAction\' action=\'CopyHSVColorAction\'/><menuitem name=\'SaveAsHTMLColorAction\'" +
-				" action=\'SaveAsHTMLColorAction\'/><separator/><menuitem name=\'BrightenAction\' act" +
-				"ion=\'BrightenAction\'/><menuitem name=\'DarkenAction\' action=\'DarkenAction\'/><sepa" +
-				"rator/><menuitem name=\'SaturateAction\' action=\'SaturateAction\'/><menuitem name=\'" +
-				"DesaturateAction\' action=\'DesaturateAction\'/><separator/><menuitem name=\'InvertA" +
-				"ction\' action=\'InvertAction\'/></menu><menu name=\'HelpAction\' action=\'HelpAction\'" +
-				"><menuitem name=\'aboutAction\' action=\'aboutAction\'/></menu></menubar></ui>");
+				"nu name=\'ViewAction\' action=\'ViewAction\'><menuitem name=\'ListAction\' action=\'Lis" +
+				"tAction\'/><menuitem name=\'GridAction\' action=\'GridAction\'/></menu><menu name=\'Ac" +
+				"quireAction\' action=\'AcquireAction\'><menuitem name=\'PasteAcquireAction\' action=\'" +
+				"PasteAcquireAction\'/><menuitem name=\'refreshAction\' action=\'refreshAction\'/><sep" +
+				"arator/><menuitem name=\'BlendAction\' action=\'BlendAction\'/></menu><menu name=\'Co" +
+				"lorAction\' action=\'ColorAction\'><menuitem name=\'goBackAction\' action=\'goBackActi" +
+				"on\'/><menuitem name=\'goForwardAction\' action=\'goForwardAction\'/><separator/><men" +
+				"uitem name=\'CopyHexColorAction\' action=\'CopyHexColorAction\'/><menuitem name=\'Cop" +
+				"yHSLColorAction\' action=\'CopyHSLColorAction\'/><menuitem name=\'CopyHSVColorAction" +
+				"\' action=\'CopyHSVColorAction\'/><menuitem name=\'SaveAsHTMLColorAction\' action=\'Sa" +
+				"veAsHTMLColorAction\'/><separator/><menuitem name=\'BrightenAction\' action=\'Bright" +
+				"enAction\'/><menuitem name=\'DarkenAction\' action=\'DarkenAction\'/><separator/><men" +
+				"uitem name=\'SaturateAction\' action=\'SaturateAction\'/><menuitem name=\'DesaturateA" +
+				"ction\' action=\'DesaturateAction\'/><separator/><menuitem name=\'InvertAction\' acti" +
+				"on=\'InvertAction\'/></menu><menu name=\'HelpAction\' action=\'HelpAction\'><menuitem " +
+				"name=\'aboutAction\' action=\'aboutAction\'/></menu></menubar></ui>");
 		this.menubar1 = ((global::Gtk.MenuBar)(this.UIManager.GetWidget("/menubar1")));
 		this.menubar1.Name = "menubar1";
 		this.mainVbox.Add(this.menubar1);
@@ -253,7 +276,7 @@ public partial class MainWindow
 		this.hpaned2 = new global::Gtk.HPaned();
 		this.hpaned2.CanFocus = true;
 		this.hpaned2.Name = "hpaned2";
-		this.hpaned2.Position = 140;
+		this.hpaned2.Position = 156;
 		// Container child hpaned2.Gtk.Paned+PanedChild
 		this.paddedBox = new global::Gtk.VBox();
 		this.paddedBox.Name = "paddedBox";
@@ -278,6 +301,9 @@ public partial class MainWindow
 		global::Gtk.Paned.PanedChild w5 = ((global::Gtk.Paned.PanedChild)(this.hpaned2[this.paddedBox]));
 		w5.Resize = false;
 		// Container child hpaned2.Gtk.Paned+PanedChild
+		this.eitherBox = new global::Gtk.VBox();
+		this.eitherBox.Name = "eitherBox";
+		// Container child eitherBox.Gtk.Box+BoxChild
 		this.GtkScrolledWindow = new global::Gtk.ScrolledWindow();
 		this.GtkScrolledWindow.Name = "GtkScrolledWindow";
 		this.GtkScrolledWindow.ShadowType = ((global::Gtk.ShadowType)(1));
@@ -287,17 +313,30 @@ public partial class MainWindow
 		this.treeview1.Name = "treeview1";
 		this.treeview1.HeadersVisible = false;
 		this.GtkScrolledWindow.Add(this.treeview1);
-		this.hpaned2.Add(this.GtkScrolledWindow);
-		this.mainVbox.Add(this.hpaned2);
-		global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.mainVbox[this.hpaned2]));
+		this.eitherBox.Add(this.GtkScrolledWindow);
+		global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.eitherBox[this.GtkScrolledWindow]));
+		w7.Position = 0;
+		// Container child eitherBox.Gtk.Box+BoxChild
+		this.colorgridwidget1 = new global::Colours.ColorGridWidget();
+		this.colorgridwidget1.Sensitive = false;
+		this.colorgridwidget1.Events = ((global::Gdk.EventMask)(256));
+		this.colorgridwidget1.Name = "colorgridwidget1";
+		this.eitherBox.Add(this.colorgridwidget1);
+		global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.eitherBox[this.colorgridwidget1]));
 		w8.Position = 1;
+		w8.Expand = false;
+		this.hpaned2.Add(this.eitherBox);
+		this.mainVbox.Add(this.hpaned2);
+		global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.mainVbox[this.hpaned2]));
+		w10.Position = 1;
 		this.Add(this.mainVbox);
 		if ((this.Child != null))
 		{
 			this.Child.ShowAll();
 		}
-		this.DefaultWidth = 493;
+		this.DefaultWidth = 501;
 		this.DefaultHeight = 316;
+		this.colorgridwidget1.Hide();
 		this.Show();
 		this.DeleteEvent += new global::Gtk.DeleteEventHandler(this.OnDeleteEvent);
 		this.goBackAction.Activated += new global::System.EventHandler(this.OnUndoActionActivated);
@@ -330,6 +369,7 @@ public partial class MainWindow
 		this.ExportHTMLAction.Activated += new global::System.EventHandler(this.OnExportHTMLActionActivated);
 		this.propertiesAction.Activated += new global::System.EventHandler(this.OnPropertiesActionActivated);
 		this.BlendAction.Activated += new global::System.EventHandler(this.OnBlendActionActivated);
+		this.ListAction.Toggled += new global::System.EventHandler(this.OnListActionToggled);
 		this.schemeBox.Changed += new global::System.EventHandler(this.OnSchemeBoxChanged);
 		this.treeview1.RowActivated += new global::Gtk.RowActivatedHandler(this.OnTreeview1RowActivated);
 		this.treeview1.DragEnd += new global::Gtk.DragEndHandler(this.OnTreeview1DragEnd);
