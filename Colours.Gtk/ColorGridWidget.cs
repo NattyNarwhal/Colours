@@ -52,6 +52,11 @@ namespace Colours
 					var pc = ra.ToArray()[c];
 					var cb = new GridColorButton(pc.Color.ToGdkColor());
 					cb.Tag = pc;
+					cb.TooltipMarkup = String.Format("<b>{0}</b>\r\n{1}\r\n{2}\r\n{3}",
+					                                 pc.Name,
+					                                 pc.Color.ToHtml(),
+					                                 pc.Color.ToHslString(),
+					                                 new HsvColor(pc.Color));
 					cb.ButtonPressEvent += ColorButton_Press;
 					cb.ColorSet += (sender, e) =>
 					{
