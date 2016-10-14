@@ -35,7 +35,7 @@ namespace Colours
 
 			if (Palette.Colors.Count == 0) return;
 
-			var cols = Convert.ToUInt32(Palette.Colors.Count > 0 ? Palette.Colors.Count :
+			var cols = Convert.ToUInt32(Palette.Columns > 0 ? Palette.Columns :
 			                            (Palette.Colors.Count < 16 ? Palette.Colors.Count : 16));
 
 			var batches = Palette.Colors.Batch(Convert.ToInt32(cols));
@@ -66,7 +66,7 @@ namespace Colours
 						FocusedOnColorChange(e, cb);
 					};
 
-					table1.Attach(cb, c, c + 1, r, r + 1);
+					table1.Attach(cb, c, c + 1, r, r + 1, AttachOptions.Shrink, AttachOptions.Fill, 0, 0);
 				}
 			}
 
