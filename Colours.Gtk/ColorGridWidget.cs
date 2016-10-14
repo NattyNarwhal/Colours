@@ -52,6 +52,19 @@ namespace Colours
 					var pc = ra.ToArray()[c];
 					var cb = new GridColorButton(pc.Color.ToGdkColor());
 					cb.Tag = pc;
+					cb.ButtonPressEvent += ColorButton_Press;
+					cb.ColorSet += (sender, e) =>
+					{
+						OnColorChange(new ColorGridChangeEventArgs(cb.Tag, cb.Color.ToRgbColor()), cb);
+					};
+					cb.FocusInEvent += (sender, e) =>
+					{
+						FocusedOnColorChange(e, cb);
+					};
+					cb.FocusOutEvent += (sender, e) =>
+					{
+						FocusedOnColorChange(e, cb);
+					};
 
 					table1.Attach(cb, c, c + 1, r, r + 1);
 				}
@@ -59,6 +72,12 @@ namespace Colours
 
 			if (Visible)
 				table1.ShowAll();
+		}
+
+		[GLib.ConnectBefore]
+		void ColorButton_Press(object sender, ButtonPressEventArgs e)
+		{
+			OnColorClick(e, sender);
 		}
 
 		public PaletteColor FocusedColor
@@ -83,6 +102,36 @@ namespace Colours
 						((GridColorButton)widget).HasFocus = true;
 				});
 			}
+		}
+
+		/// <summary>
+		/// A button representing a colour was pressed.
+		/// </summary>
+		public event ButtonPressEventHandler ColorClick;
+
+		protected virtual void OnColorClick(ButtonPressEventArgs e, object sender)
+		{
+			ColorClick?.Invoke(sender, e);
+		}
+
+		/// <summary>
+		/// A colour in the palette was changed by the user.
+		/// </summary>
+		public event EventHandler<ColorGridChangeEventArgs> ColorChange;
+
+		protected virtual void OnColorChange(ColorGridChangeEventArgs e, object sender)
+		{
+			ColorChange?.Invoke(sender, e);
+		}
+
+		/// <summary>
+		/// The focused colour was changed.
+		/// </summary>
+		public event EventHandler<EventArgs> FocusedColorChange;
+
+		protected virtual void FocusedOnColorChange(EventArgs e, object sender)
+		{
+			FocusedColorChange?.Invoke(sender, e);
 		}
 	}
 }

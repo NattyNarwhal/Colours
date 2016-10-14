@@ -782,4 +782,14 @@ public partial class MainWindow : Gtk.Window
 		if (!c && selection != null)
 			colorgridwidget1.FocusedColor = selection;
 	}
+
+	protected void OnColorgridwidget1FocusedColorChange(object sender, EventArgs e)
+	{
+		UpdateUI();
+	}
+
+	protected void OnColorgridwidget1ColorChange(object sender, ColorGridChangeEventArgs e)
+	{
+		appPal.ChangeColor(e.Color, e.NewColor);
+	}
 }

@@ -374,5 +374,8 @@ public partial class MainWindow
 		this.treeview1.RowActivated += new global::Gtk.RowActivatedHandler(this.OnTreeview1RowActivated);
 		this.treeview1.DragEnd += new global::Gtk.DragEndHandler(this.OnTreeview1DragEnd);
 		this.treeview1.ButtonPressEvent += new global::Gtk.ButtonPressEventHandler(this.OnTreeview1ButtonPressEvent);
+		this.colorgridwidget1.FocusedColorChange += new global::System.EventHandler<System.EventArgs>(this.OnColorgridwidget1FocusedColorChange);
+		this.colorgridwidget1.ColorChange += new global::System.EventHandler<Colours.ColorGridChangeEventArgs> (this.OnColorgridwidget1ColorChange);
+		this.colorgridwidget1.ColorClick += new global::Gtk.ButtonPressEventHandler(this.OnTreeview1ButtonPressEvent);
 	}
 }

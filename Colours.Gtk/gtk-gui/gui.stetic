@@ -425,6 +425,9 @@
                     <property name="Visible">False</property>
                     <property name="Sensitive">False</property>
                     <property name="Events">ButtonPressMask</property>
+                    <signal name="FocusedColorChange" handler="OnColorgridwidget1FocusedColorChange" />
+                    <signal name="ColorChange" handler="OnColorgridwidget1ColorChange" />
+                    <signal name="ColorClick" handler="OnTreeview1ButtonPressEvent" />
                   </widget>
                   <packing>
                     <property name="Position">1</property>
