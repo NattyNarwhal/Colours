@@ -76,6 +76,8 @@
     <Compile Include="gtk-gui\Colours.ColorGridWidget.cs" />
     <Compile Include="GridColorButton.cs" />
     <Compile Include="ColorGridChangeEventArgs.cs" />
+    <Compile Include="RenameColorDialog.cs" />
+    <Compile Include="gtk-gui\Colours.RenameColorDialog.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -715,6 +715,7 @@ public partial class MainWindow : Gtk.Window
 			MenuItem cutPopupItem = new MenuItem("Cu_t");
 			MenuItem copyPopupItem = new MenuItem("_Copy");
 			MenuItem delPopupItem = new MenuItem("_Remove");
+			MenuItem renPopupItem = new MenuItem("Re_name");
 			cutPopupItem.Activated += (s, a) =>
 			{
 				CopySelection();
@@ -728,9 +729,14 @@ public partial class MainWindow : Gtk.Window
 			{
 				DeleteSelection();
 			};
+			renPopupItem.Activated += (s, a) =>
+			{
+				RenameSelected();
+			};
 			menu.Add(cutPopupItem);
 			menu.Add(copyPopupItem);
 			menu.Add(delPopupItem);
+			menu.Add(renPopupItem);
 			menu.ShowAll();
 			menu.Popup();
 		}
@@ -791,5 +797,24 @@ public partial class MainWindow : Gtk.Window
 	protected void OnColorgridwidget1ColorChange(object sender, ColorGridChangeEventArgs e)
 	{
 		appPal.ChangeColor(e.Color, e.NewColor);
+	}
+
+	public void RenameSelected()
+	{
+		if (SelectedItems.Count() > 0)
+		{
+			var pc = SelectedItems.First();
+			var rd = new RenameColorDialog(pc.Color, pc.Name);
+			if (rd.Run() == (int)ResponseType.Ok)
+			{
+				appPal.RenameColor(pc, rd.NewText);
+			}
+			rd.Destroy();
+		}
+	}
+
+	protected void OnRenameActionActivated(object sender, EventArgs e)
+	{
+		RenameSelected();
 	}
 }
