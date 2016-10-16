@@ -18,5 +18,6 @@ namespace Colours
         }
 
         public string NewName => nameBox.Text;
+        public bool Numbered => numberedBox.Checked;
     }
 }

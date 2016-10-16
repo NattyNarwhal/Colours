@@ -646,7 +646,19 @@ namespace Colours
                 var pc = SelectedItems.First();
                 var rf = new RenameMultipleForm();
                 if (rf.ShowDialog(this) == DialogResult.OK)
-                    appPal.RenameColors(SelectedItems, rf.NewName);
+                {
+                    var names = Enumerable.Repeat(rf.NewName, SelectedItems.Count()).ToArray();
+                    if (rf.Numbered)
+                    {
+                        for (int i = 0; names.Count() > i; i++)
+                        {
+                            names[i] = string.Format("{0} ({1})", names[i], i + 1);
+                        }
+                    }
+                    appPal.RenameColors(SelectedItems
+                        .Zip(names, (x, y) => new { Key = x, Value = y })
+                        .ToDictionary(x => x.Key, x => x.Value));
+                }
             }
         }
 

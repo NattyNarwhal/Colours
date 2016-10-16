@@ -31,6 +31,7 @@
             this.nameBox = new System.Windows.Forms.TextBox();
             this.okButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
+            this.numberedBox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // nameBox
@@ -50,7 +51,7 @@
             this.okButton.Location = new System.Drawing.Point(116, 38);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(75, 23);
-            this.okButton.TabIndex = 2;
+            this.okButton.TabIndex = 3;
             this.okButton.Text = "&OK";
             this.okButton.UseVisualStyleBackColor = true;
             // 
@@ -62,9 +63,20 @@
             this.cancelButton.Location = new System.Drawing.Point(197, 38);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
-            this.cancelButton.TabIndex = 3;
+            this.cancelButton.TabIndex = 4;
             this.cancelButton.Text = "&Cancel";
             this.cancelButton.UseVisualStyleBackColor = true;
+            // 
+            // numberedBox
+            // 
+            this.numberedBox.AutoSize = true;
+            this.numberedBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.numberedBox.Location = new System.Drawing.Point(12, 41);
+            this.numberedBox.Name = "numberedBox";
+            this.numberedBox.Size = new System.Drawing.Size(69, 18);
+            this.numberedBox.TabIndex = 2;
+            this.numberedBox.Text = "&Number";
+            this.numberedBox.UseVisualStyleBackColor = true;
             // 
             // RenameMultipleForm
             // 
@@ -73,6 +85,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
             this.ClientSize = new System.Drawing.Size(284, 73);
+            this.Controls.Add(this.numberedBox);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.okButton);
             this.Controls.Add(this.nameBox);
@@ -93,5 +106,6 @@
         private System.Windows.Forms.TextBox nameBox;
         private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.Button cancelButton;
+        private System.Windows.Forms.CheckBox numberedBox;
     }
 }

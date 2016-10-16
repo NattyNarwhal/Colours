@@ -235,23 +235,22 @@ namespace Colours.App
         /// <summary>
         /// Renames several colors.
         /// </summary>
-        /// <param name="lpc">The colors to rename.</param>
-        /// <param name="newName">The new name of the colors.</param>
+        /// <param name="newNames">The color and their new names, as a dictionary.</param>
         /// <param name="keepHistory">If undo should have been added.</param>
         /// <param name="fireEvent">If the event should fire.</param>
         /// <param name="action">If the undo is added, the action it is described as.</param>
-        public void RenameColors(IEnumerable<PaletteColor> lpc, string newName, bool keepHistory = true, bool fireEvent = true, string action = null)
+        public void RenameColors(IDictionary<PaletteColor, string> newNames, bool keepHistory = true, bool fireEvent = true, string action = null)
         {
             if (keepHistory)
                 PushUndo(action ?? "Rename Colours");
             Palette = new Palette(Palette);
-            foreach (var pc in lpc)
+            foreach (var i in newNames)
             {
-                var index = Palette.Colors.IndexOf(pc);
+                var index = Palette.Colors.IndexOf(i.Key);
                 if (index == -1)
                     throw new ArgumentException("The colour is not in the palette."); ;
                 Palette.Colors[index] =
-                    new PaletteColor(Palette.Colors[index].Color, newName);
+                    new PaletteColor(Palette.Colors[index].Color, i.Value);
             }
             Dirty = true;
             if (fireEvent)
