@@ -70,6 +70,7 @@
     <Compile Include="ColorButton.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ColorDragEventArgs.cs" />
     <Compile Include="ColorGrid.cs">
       <SubType>UserControl</SubType>
     </Compile>

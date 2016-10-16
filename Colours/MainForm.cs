@@ -782,5 +782,10 @@ namespace Colours
                 app.SetColor(((ColorButton)sender).Color);
             }
         }
+
+        private void colorGrid1_ColorDrag(object sender, ColorDragEventArgs e)
+        {
+            appPal.MoveColor(e.DraggedColor, e.TargetColor);
+        }
     }
 }

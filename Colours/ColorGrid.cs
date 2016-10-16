@@ -14,6 +14,9 @@ namespace Colours
     public partial class ColorGrid : UserControl
     {
         Palette _palette;
+        // for button dnd
+        bool isDragged = false;
+        Point drag;
 
         // We can't let VS see this as it wants to serialize Palette, which it can't
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -102,17 +105,34 @@ namespace Colours
                         if (e.Button == MouseButtons.Right)
                             ((ColorButton)o).Focus();
                     };
-                    cb.GotFocus += (o, e) =>
+                    cb.GotFocus += (o, e) => OnFocusedColorChange(new EventArgs());
+                    cb.LostFocus += (o, e) =>  OnFocusedColorChange(new EventArgs());
+                    cb.Click += (o, e) => OnColorClick(new EventArgs(), cb);
+                    // drag and drop
+                    cb.MouseDown += (o, e) => isDragged = e.Button == MouseButtons.Left;
+                    cb.MouseMove += (o, e) =>
                     {
-                        OnFocusedColorChange(new EventArgs());
+                        // e.Location is relative to the control. If we have
+                        // the location of the control in its parent, and add
+                        // the relative mouse position of the control, we get
+                        // a workable offset.
+                        if (isDragged)
+                            drag = new Point(cb.Location.X + e.X, cb.Location.Y + e.Y);
                     };
-                    cb.LostFocus += (o, e) =>
+                    cb.MouseUp += (o, e) =>
                     {
-                        OnFocusedColorChange(new EventArgs());
-                    };
-                    cb.Click += (o, e) =>
-                    {
-                        OnColorClick(new EventArgs(), cb);
+                        if (isDragged)
+                        {
+                            var cp = table.GetChildAtPoint(drag);
+                            if (cp is ColorButton)
+                            {
+                                var dragged = (PaletteColor)cb.Tag;
+                                var target = (PaletteColor)((ColorButton)cp).Tag;
+                                if (dragged != target)
+                                    OnColorDrag(new ColorDragEventArgs(dragged, target), cb);
+                            }
+                        }
+                        isDragged = false;
                     };
 
                     if (cols > 1 && c == ra.Count() - 1 && c == cols - 1)
@@ -161,6 +181,13 @@ namespace Colours
         protected virtual void OnColorClick(EventArgs e, ColorButton sender)
         {
             ColorClick?.Invoke(sender, e);
+        }
+
+        public event EventHandler<ColorDragEventArgs> ColorDrag;
+
+        protected virtual void OnColorDrag(ColorDragEventArgs e, ColorButton sender)
+        {
+            ColorDrag?.Invoke(sender, e);
         }
     }
 }

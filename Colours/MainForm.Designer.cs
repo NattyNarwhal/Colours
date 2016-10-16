@@ -833,6 +833,7 @@
             this.colorGrid1.Visible = false;
             this.colorGrid1.FocusedColorChange += new System.EventHandler<System.EventArgs>(this.colorGrid1_FocusedColorChange);
             this.colorGrid1.ColorClick += new System.EventHandler<System.EventArgs>(this.colorGrid1_ColorClick);
+            this.colorGrid1.ColorDrag += new System.EventHandler<Colours.ColorDragEventArgs>(this.colorGrid1_ColorDrag);
             // 
             // MainForm
             // 

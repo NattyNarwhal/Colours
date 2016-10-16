@@ -253,6 +253,19 @@ namespace Colours.App
         }
 
         /// <summary>
+        /// Moves a color's position.
+        /// </summary>
+        /// <param name="pc">The color to move.</param>
+        /// <param name="targetPC">The new location of the color.</param>
+        /// <param name="keepHistory">If undo should have been added.</param>
+        /// <param name="fireEvent">If the event should fire.</param>
+        /// <param name="action">If the undo is added, the action it is described as.</param>
+        public void MoveColor(PaletteColor pc, PaletteColor targetPC, bool keepHistory = true, bool fireEvent = true, string action = null)
+        {
+            MoveColor(pc, Palette.Colors.IndexOf(targetPC), keepHistory, fireEvent, action);
+        }
+
+        /// <summary>
         /// Changes a color in place.
         /// </summary>
         /// <param name="pc">The color to change.</param>
