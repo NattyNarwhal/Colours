@@ -627,9 +627,13 @@ namespace Colours
 
         private void renameToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (GridView)
+            if (SelectedItems.Count() == 1)
             {
-                if (SelectedItems.Count() > 0)
+                if (!GridView)
+                {
+                    paletteList.SelectedItems[0].BeginEdit();
+                }
+                else
                 {
                     var pc = SelectedItems.First();
                     var rf = new RenameForm(pc);
@@ -637,10 +641,12 @@ namespace Colours
                         appPal.RenameColor(pc, rf.NewName);
                 }
             }
-            else
+            else if (SelectedItems.Count() > 1)
             {
-                if (paletteList.SelectedItems.Count > 0)
-                    paletteList.SelectedItems[0].BeginEdit();
+                var pc = SelectedItems.First();
+                var rf = new RenameMultipleForm();
+                if (rf.ShowDialog(this) == DialogResult.OK)
+                    appPal.RenameColors(SelectedItems, rf.NewName);
             }
         }
 
@@ -770,7 +776,7 @@ namespace Colours
                 colorDialog.Color = SelectedItems.FirstOrDefault().Color.ToGdiColor();
                 if (colorDialog.ShowDialog(this) == DialogResult.OK)
                 {
-                    appPal.ChangeColor(SelectedItems.FirstOrDefault(), colorDialog.Color.ToRgbColor());
+                    appPal.ChangeColors(SelectedItems, colorDialog.Color.ToRgbColor());
                 }
             }
         }

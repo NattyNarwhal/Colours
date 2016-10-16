@@ -154,7 +154,7 @@ namespace Colours.App
         public void AppendColors(IEnumerable<PaletteColor> lc, bool keepHistory = true, bool fireEvent = true, string action = null)
         {
             if (keepHistory)
-                PushUndo(action ?? "Add Multiple Colours");
+                PushUndo(action ?? "Add Colours");
             foreach (var pc in lc)
                 AppendColor(pc, false, false);
             if (fireEvent)
@@ -190,7 +190,7 @@ namespace Colours.App
         public void DeleteColors(IEnumerable<PaletteColor> l, bool keepHistory = true, bool fireEvent = true, string action = null)
         {
             if (keepHistory)
-                PushUndo(action ?? "Delete Multiple Colours");
+                PushUndo(action ?? "Delete Colours");
             foreach (var pc in l)
                 DeleteColor(pc, false, false);
             if (fireEvent)
@@ -230,6 +230,32 @@ namespace Colours.App
             if (Palette.Colors.Contains(pc))
                 RenameColor(Palette.Colors.IndexOf(pc), newName, keepHistory, fireEvent, action);
             else throw new ArgumentException("The colour is not in the palette.");
+        }
+
+        /// <summary>
+        /// Renames several colors.
+        /// </summary>
+        /// <param name="lpc">The colors to rename.</param>
+        /// <param name="newName">The new name of the colors.</param>
+        /// <param name="keepHistory">If undo should have been added.</param>
+        /// <param name="fireEvent">If the event should fire.</param>
+        /// <param name="action">If the undo is added, the action it is described as.</param>
+        public void RenameColors(IEnumerable<PaletteColor> lpc, string newName, bool keepHistory = true, bool fireEvent = true, string action = null)
+        {
+            if (keepHistory)
+                PushUndo(action ?? "Rename Colours");
+            Palette = new Palette(Palette);
+            foreach (var pc in lpc)
+            {
+                var index = Palette.Colors.IndexOf(pc);
+                if (index == -1)
+                    throw new ArgumentException("The colour is not in the palette."); ;
+                Palette.Colors[index] =
+                    new PaletteColor(Palette.Colors[index].Color, newName);
+            }
+            Dirty = true;
+            if (fireEvent)
+                OnPaletteChanged(new EventArgs());
         }
 
         /// <summary>
@@ -280,6 +306,27 @@ namespace Colours.App
             Palette = new Palette(Palette);
             if (Palette.Colors.Contains(pc))
                 pc.Color = newColor;
+            Dirty = true;
+            if (fireEvent)
+                OnPaletteChanged(new EventArgs());
+        }
+
+        /// <summary>
+        /// Changes several colors in place.
+        /// </summary>
+        /// <param name="lpc">The list of colors to change.</param>
+        /// <param name="newColor">The new color for all.</param>
+        /// <param name="keepHistory">If undo should have been added.</param>
+        /// <param name="fireEvent">If the event should fire.</param>
+        /// <param name="action">If the undo is added, the action it is described as.</param>
+        public void ChangeColors(IEnumerable<PaletteColor> lpc, RgbColor newColor, bool keepHistory = true, bool fireEvent = true, string action = null)
+        {
+            if (keepHistory)
+                PushUndo(action ?? "Change Colours");
+            Palette = new Palette(Palette);
+            foreach (var pc in lpc)
+                if (Palette.Colors.Contains(pc))
+                    pc.Color = newColor;
             Dirty = true;
             if (fireEvent)
                 OnPaletteChanged(new EventArgs());
