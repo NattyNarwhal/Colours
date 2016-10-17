@@ -771,6 +771,7 @@
             this.nameHeader,
             this.colorHeader});
             this.paletteList.ContextMenuStrip = this.paletteContextMenu;
+            this.paletteList.FullRowSelect = true;
             this.paletteList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.paletteList.LabelEdit = true;
             this.paletteList.Location = new System.Drawing.Point(3, 3);
