@@ -556,9 +556,11 @@ namespace Colours
             {
                 Point cp = paletteList.PointToClient(new Point(e.X, e.Y));
                 ListViewItem dragToItem = paletteList.GetItemAt(cp.X, cp.Y);
-                if (dragToItem != null && !paletteList.SelectedItems.Contains(dragToItem))
+                if (!paletteList.SelectedItems.Contains(dragToItem))
                 {
-                    int dropIndex = dragToItem.Index;
+                    var dropIndex = dragToItem != null ?
+                        appPal.Palette.Colors[dragToItem.Index] :
+                        null;
                     appPal.MoveColors(SelectedItems, dropIndex);
                 }
             }

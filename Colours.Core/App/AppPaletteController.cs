@@ -294,21 +294,23 @@ namespace Colours.App
         /// Moves the position of several colors.
         /// </summary>
         /// <param name="lpc">The list of colors to move.</param>
-        /// <param name="newIndex">The new location of the colors.</param>
+        /// <param name="targetPC">
+        /// The new location of the color. If null, it'll be the end of the list.
+        /// </param>
         /// <param name="keepHistory">If undo should have been added.</param>
         /// <param name="fireEvent">If the event should fire.</param>
         /// <param name="action">If the undo is added, the action it is described as.</param>
-        public void MoveColors(IEnumerable<PaletteColor> lpc, int newIndex, bool keepHistory = true, bool fireEvent = true, string action = null)
+        public void MoveColors(IEnumerable<PaletteColor> lpc, PaletteColor targetPC, bool keepHistory = true, bool fireEvent = true, string action = null)
         {
             if (keepHistory)
                 PushUndo(action ?? "Move Colours");
             Palette = new Palette(Palette);
-            int nextIndex = 0;
-            foreach (var pc in lpc)
-            {
-                Palette.Colors.Remove(pc);
-                Palette.Colors.Insert(newIndex + nextIndex++, pc);
-            }
+            Palette.Colors.RemoveAll(x => lpc.Contains(x));
+            // ugly stuff to handle moves gracefully
+            if (targetPC != null)
+                Palette.Colors.InsertRange(Palette.Colors.IndexOf(targetPC), lpc);
+            else
+                Palette.Colors.AddRange(lpc);
             Dirty = true;
             if (fireEvent)
                 OnPaletteChanged(new EventArgs());
