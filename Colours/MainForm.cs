@@ -554,16 +554,12 @@ namespace Colours
         {
             if (e.Effect == DragDropEffects.Move)
             {
-                ListViewItem selected = paletteList.SelectedItems[0];
-
                 Point cp = paletteList.PointToClient(new Point(e.X, e.Y));
                 ListViewItem dragToItem = paletteList.GetItemAt(cp.X, cp.Y);
-                if (dragToItem != null)
+                if (dragToItem != null && !paletteList.SelectedItems.Contains(dragToItem))
                 {
                     int dropIndex = dragToItem.Index;
-
-                    var pc = (PaletteColor)selected.Tag;
-                    appPal.MoveColor(pc, dropIndex);
+                    appPal.MoveColors(SelectedItems, dropIndex);
                 }
             }
         }
