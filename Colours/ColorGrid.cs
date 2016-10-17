@@ -13,6 +13,18 @@ namespace Colours
 {
     public partial class ColorGrid : UserControl
     {
+        // forcing the scrollbar makes the layout far more predictable
+        // looks kinda ugly though, and causes weird scrollbars at times
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                var cp = base.CreateParams;
+                cp.Style |= 0x00200000; // WS_VSCROLL
+                return cp;
+            }
+        }
+
         Palette _palette;
         // for button dnd
         bool isDragged = false;
@@ -44,13 +56,25 @@ namespace Colours
             Palette = new Palette();
             table.Resize += (o, e) =>
             {
+                // helps speed up, especially when we change height
+                table.SuspendLayout();
                 if (table.ColumnCount > 1)
+                {
                     for (int i = 0; i < table.RowCount; i++)
                     {
                         if (table.GetControlFromPosition(table.ColumnCount - 1, i) != null)
+                        {
+                            // make the width of the last column's items the
+                            // same as the previous, otherwise it looks ugly
                             ((ColorButton)table.GetControlFromPosition(table.ColumnCount - 1, i)).Width =
                                 ((ColorButton)table.GetControlFromPosition(table.ColumnCount - 2, i)).Width;
+                        }
                     }
+                }
+                // make the buttons square
+                foreach (ColorButton cb in table.Controls)
+                    cb.Height = cb.Width;
+                table.ResumeLayout();
             };
         }
 
@@ -61,6 +85,8 @@ namespace Colours
             // nothing to do
             if (Palette.Colors.Count == 0)
                 return;
+
+            table.SuspendLayout();
 
             int cols = Palette.Columns > 0 ? Palette.Columns :
                 (Palette.Colors.Count < 16 ? Palette.Colors.Count : 16);
@@ -147,6 +173,8 @@ namespace Colours
                     table.SetCellPosition(cb, new TableLayoutPanelCellPosition(c, r));
                 }
             }
+
+            table.ResumeLayout();
         }
 
         public PaletteColor GetPaletteColor(int col, int row)
