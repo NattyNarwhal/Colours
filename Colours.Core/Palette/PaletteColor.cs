@@ -59,7 +59,7 @@ namespace Colours
             var groups = Regex.Match(l, matchRegex).Groups;
 
             if (groups.Count < 4)
-                throw new Exception("The string was invalid.");
+                throw new PaletteException("The string was invalid.");
 
             var r = byte.Parse(groups[1].Value);
             var g = byte.Parse(groups[2].Value);

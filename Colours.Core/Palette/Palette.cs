@@ -15,10 +15,10 @@ namespace Colours
     {
         const string magic = "GIMP Palette";
 
-        const string nameRegex = "Name: ?(.*)";
-        const string columnsRegex = @"Columns: ?(\d*)";
+        const string nameRegex = "^Name: ?(.*)";
+        const string columnsRegex = @"^Columns: ?(\d*)";
         // Hex codes as colour names would otherwise confuse
-        const string commentRegex = @"^#\s*(.*)";
+        const string commentRegex = @"^#\s*(.*)?";
 
         /// <summary>
         /// Gets or sets the name of the palette.
@@ -87,16 +87,17 @@ namespace Colours
         public Palette(string[] file)
         {
             if (file[0] != magic)
-                throw new Exception("Palette is not in a valid format.");
+                throw new PaletteException("Palette is not in a valid format.");
 
             Colors = new List<PaletteColor>();
             Comments = new List<string>();
 
             foreach (string l in file)
             {
-                if (l == magic || l == "#") continue;
+                if (l == magic) continue;
                 if (Regex.IsMatch(l, commentRegex))
                 {
+                    // empty matches (like just a #) will give a string.Empty
                     Comments.Add(Regex.Match(l, commentRegex).Groups[1].Value);
                 }
                 else if (Regex.IsMatch(l, columnsRegex))
