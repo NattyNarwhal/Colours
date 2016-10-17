@@ -431,6 +431,13 @@ public partial class MainWindow : Gtk.Window
 			p.Name = System.IO.Path.GetFileNameWithoutExtension(filename);
 			appPal.NewFromPalette(p);
 		}
+		else if (filename.EndsWith(".ase"))
+		{
+			var p = AseConverter.FromAse(
+				File.ReadAllBytes(filename));
+			p.Name = System.IO.Path.GetFileNameWithoutExtension(filename);
+			appPal.NewFromPalette(p);
+		}
 		else if (filename.EndsWith(".act"))
 		{
 			var p = ActConverter.FromTable(
@@ -464,6 +471,10 @@ public partial class MainWindow : Gtk.Window
 			ffAct.Name = "Photoshop Colour Table";
 			ffAct.AddPattern("*.act");
 			fd.AddFilter(ffAct);
+			FileFilter ffAse = new FileFilter();
+			ffAse.Name = "Adobe Swatch Exchange";
+			ffAse.AddPattern("*.ase");
+			fd.AddFilter(ffAse);
 			if (fd.Run() == (int)ResponseType.Ok)
 			{
 				fileName = fd.Filename;
@@ -479,6 +490,11 @@ public partial class MainWindow : Gtk.Window
 		{
 			File.WriteAllBytes(fileName,
 				AcoConverter.ToPhotoshopPalette(appPal.Palette));
+		}
+		else if (fileName.EndsWith(".ase"))
+		{
+			File.WriteAllBytes(fileName,
+				AseConverter.ToAse(appPal.Palette));
 		}
 		else if (fileName.EndsWith(".act"))
 		{
@@ -529,6 +545,10 @@ public partial class MainWindow : Gtk.Window
 			ffAct.Name = "Photoshop Colour Table";
 			ffAct.AddPattern("*.act");
 			fd.AddFilter(ffAct);
+			FileFilter ffAse = new FileFilter();
+			ffAse.Name = "Adobe Swatch Exchange";
+			ffAse.AddPattern("*.ase");
+			fd.AddFilter(ffAse);
 			if (fd.Run() == (int)ResponseType.Ok)
 			{
 				OpenPalette(fd.Filename);

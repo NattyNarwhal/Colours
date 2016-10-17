@@ -436,6 +436,11 @@ namespace Colours
                     File.WriteAllBytes(fileName,
                         AcoConverter.ToPhotoshopPalette(appPal.Palette));
                 }
+                else if (fileName.EndsWith(".ase"))
+                {
+                    File.WriteAllBytes(fileName,
+                        AseConverter.ToAse(appPal.Palette));
+                }
                 else if (fileName.EndsWith(".act"))
                 {
                     if (appPal.Palette.Colors.Count > 256 && freshFile)
