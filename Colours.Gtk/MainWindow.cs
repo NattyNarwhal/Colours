@@ -837,4 +837,14 @@ public partial class MainWindow : Gtk.Window
 	{
 		RenameSelected();
 	}
+
+	protected void OnSortActionActivated(object sender, EventArgs e)
+	{
+		var sd = new SortDialog();
+		if (sd.Run() == (int)ResponseType.Ok)
+		{
+			appPal.SortColors(sd.SortBy, sd.Ascending);
+		}
+		sd.Destroy();
+	}
 }

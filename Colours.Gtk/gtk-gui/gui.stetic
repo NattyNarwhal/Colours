@@ -278,6 +278,13 @@
         <property name="ShortLabel" translatable="yes">Re_name</property>
         <signal name="Activated" handler="OnRenameActionActivated" />
       </action>
+      <action id="sortAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">S_ort</property>
+        <property name="ShortLabel" translatable="yes">S_ort</property>
+        <property name="StockId">gtk-sort-ascending</property>
+        <signal name="Activated" handler="OnSortActionActivated" />
+      </action>
     </action-group>
     <property name="MemberName" />
     <property name="Title" translatable="yes">MainWindow</property>
@@ -314,6 +321,7 @@
                 <node type="Menuitem" action="AddAllAction" />
                 <node type="Menuitem" action="deleteAction" />
                 <node type="Menuitem" action="RenameAction" />
+                <node type="Menuitem" action="sortAction" />
               </node>
               <node type="Menu" action="ViewAction">
                 <node type="Menuitem" action="ListAction" />
