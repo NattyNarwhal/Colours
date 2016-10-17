@@ -48,8 +48,10 @@
     <Compile Include="App\HtmlProofGenerator.cs" />
     <Compile Include="Palette\AcoConverter.cs" />
     <Compile Include="Palette\ActConverter.cs" />
+    <Compile Include="Palette\AseConverter.cs" />
     <Compile Include="Palette\Palette.cs" />
     <Compile Include="Palette\PaletteColor.cs" />
+    <Compile Include="Palette\PaletteException.cs" />
     <Compile Include="Palette\XResources.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\RgbColor.cs" />

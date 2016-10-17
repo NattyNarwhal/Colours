@@ -429,59 +429,71 @@ namespace Colours
                     "This format doesn't support metadata like comments. Metadata will be lost when the file is reloaded.",
                     "Colours", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-            if (fileName.EndsWith(".aco"))
+            try
             {
-                File.WriteAllBytes(fileName,
-                    AcoConverter.ToPhotoshopPalette(appPal.Palette));
+                if (fileName.EndsWith(".aco"))
+                {
+                    File.WriteAllBytes(fileName,
+                        AcoConverter.ToPhotoshopPalette(appPal.Palette));
+                }
+                else if (fileName.EndsWith(".act"))
+                {
+                    if (appPal.Palette.Colors.Count > 256 && freshFile)
+                        MessageBox.Show(this,
+                        "There are too many colours in the palette for this format, and will be truncated to fit.",
+                        "Colours", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    File.WriteAllBytes(fileName,
+                        ActConverter.ToTable(appPal.Palette));
+                }
+                else
+                {
+                    File.WriteAllText(fileName, appPal.Palette.ToString());
+                }
+                appPal.FileName = fileName;
+                appPal.Dirty = false;
+                // update the titlebar's dirtiness
+                UpdateUI();
+                return true;
             }
-            else if (fileName.EndsWith(".act"))
+            catch (PaletteException e)
             {
-                if (appPal.Palette.Colors.Count > 256 && freshFile)
-                    MessageBox.Show(this,
-                    "There are too many colours in the palette for this format, and will be truncated to fit.",
-                    "Colours", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                File.WriteAllBytes(fileName,
-                    ActConverter.ToTable(appPal.Palette));
+                MessageBox.Show(this, e.Message, "Palette Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
             }
-            else
-            {
-                File.WriteAllText(fileName, appPal.Palette.ToString());
-            }
-
-            appPal.FileName = fileName;
-            appPal.Dirty = false;
-            // update the titlebar's dirtiness
-            UpdateUI();
-            return true;
         }
 
         public void OpenPalette(string fileName)
         {
-            if (fileName.EndsWith(".aco"))
+            try
             {
-                try
+                if (fileName.EndsWith(".aco"))
                 {
                     var p = AcoConverter.FromPhotoshopPalette(
                         File.ReadAllBytes(fileName));
                     p.Name = Path.GetFileNameWithoutExtension(fileName);
                     appPal.NewFromPalette(p, fileName);
                 }
-                catch (NotImplementedException)
+                else if (fileName.EndsWith(".act"))
                 {
-                    MessageBox.Show(this, "The Photoshop palette has an unsupported colourspace..",
-                        "Colours", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    var p = ActConverter.FromTable(File.ReadAllBytes(fileName));
+                    p.Name = Path.GetFileNameWithoutExtension(fileName);
+                    appPal.NewFromPalette(p, fileName);
+                }
+                else if (fileName.EndsWith(".ase"))
+                {
+                    var p = AseConverter.FromAse(File.ReadAllBytes(fileName));
+                    p.Name = Path.GetFileNameWithoutExtension(fileName);
+                    appPal.NewFromPalette(p, fileName);
+                }
+                // implied to be GIMP palette
+                else
+                {
+                    appPal.NewFromPalette(new Palette(File.ReadAllLines(fileName)), fileName);
                 }
             }
-            else if (fileName.EndsWith(".act"))
+            catch (PaletteException e)
             {
-                var p = ActConverter.FromTable(File.ReadAllBytes(fileName));
-                p.Name = Path.GetFileNameWithoutExtension(fileName);
-                appPal.NewFromPalette(p, fileName);
-            }
-            // implied to be GIMP palette
-            else
-            {
-                appPal.NewFromPalette(new Palette(File.ReadAllLines(fileName)), fileName);
+                MessageBox.Show(this, e.Message, "Palette Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

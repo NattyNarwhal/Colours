@@ -95,6 +95,7 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsHtmlDialog = new System.Windows.Forms.SaveFileDialog();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.colorGrid1 = new Colours.ColorGrid();
             this.paletteContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.useToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -109,7 +110,6 @@
             this.paletteListImages = new System.Windows.Forms.ImageList(this.components);
             this.savePaletteDialog = new System.Windows.Forms.SaveFileDialog();
             this.openPaletteDialog = new System.Windows.Forms.OpenFileDialog();
-            this.colorGrid1 = new Colours.ColorGrid();
             this.colorContextMenu.SuspendLayout();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -697,6 +697,24 @@
             this.splitContainer1.SplitterDistance = 155;
             this.splitContainer1.TabIndex = 6;
             // 
+            // colorGrid1
+            // 
+            this.colorGrid1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.colorGrid1.AutoScroll = true;
+            this.colorGrid1.ColorContextMenuStrip = this.paletteContextMenu;
+            this.colorGrid1.Enabled = false;
+            this.colorGrid1.FocusedColor = null;
+            this.colorGrid1.Location = new System.Drawing.Point(3, 3);
+            this.colorGrid1.Name = "colorGrid1";
+            this.colorGrid1.Size = new System.Drawing.Size(210, 272);
+            this.colorGrid1.TabIndex = 1;
+            this.colorGrid1.Visible = false;
+            this.colorGrid1.FocusedColorChange += new System.EventHandler<System.EventArgs>(this.colorGrid1_FocusedColorChange);
+            this.colorGrid1.ColorClick += new System.EventHandler<System.EventArgs>(this.colorGrid1_ColorClick);
+            this.colorGrid1.ColorDrag += new System.EventHandler<Colours.ColorDragEventArgs>(this.colorGrid1_ColorDrag);
+            // 
             // paletteContextMenu
             // 
             this.paletteContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -813,27 +831,9 @@
             // openPaletteDialog
             // 
             this.openPaletteDialog.DefaultExt = "gpl";
-            this.openPaletteDialog.Filter = "All Supported Palettes|*.gpl;*.aco;*.act|GIMP Palette|*.gpl|Photoshop Swatch|*.ac" +
-    "o|Photoshop Colour Table|*.act";
+            this.openPaletteDialog.Filter = "All Supported Palettes|*.gpl;*.aco;*.act;*.ase|GIMP Palette|*.gpl|Photoshop Swatc" +
+    "h|*.aco|Adobe Swatch Exchange|*.ase|Photoshop Colour Table|*.act";
             this.openPaletteDialog.Title = "Open";
-            // 
-            // colorGrid1
-            // 
-            this.colorGrid1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.colorGrid1.AutoScroll = true;
-            this.colorGrid1.ColorContextMenuStrip = this.paletteContextMenu;
-            this.colorGrid1.Enabled = false;
-            this.colorGrid1.FocusedColor = null;
-            this.colorGrid1.Location = new System.Drawing.Point(3, 3);
-            this.colorGrid1.Name = "colorGrid1";
-            this.colorGrid1.Size = new System.Drawing.Size(210, 272);
-            this.colorGrid1.TabIndex = 1;
-            this.colorGrid1.Visible = false;
-            this.colorGrid1.FocusedColorChange += new System.EventHandler<System.EventArgs>(this.colorGrid1_FocusedColorChange);
-            this.colorGrid1.ColorClick += new System.EventHandler<System.EventArgs>(this.colorGrid1_ColorClick);
-            this.colorGrid1.ColorDrag += new System.EventHandler<Colours.ColorDragEventArgs>(this.colorGrid1_ColorDrag);
             // 
             // MainForm
             // 

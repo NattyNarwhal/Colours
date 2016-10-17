@@ -124,7 +124,8 @@ namespace Colours
                             ShortToByte(GetUShortBE(color, 6))
                         );
                 default:
-                    throw new NotImplementedException("The colourspace is unsupported.");
+                    throw new PaletteException(
+                        string.Format("The colourspace ({0}) is unsupported.", space));
             }
         }
 
@@ -137,8 +138,8 @@ namespace Colours
         {
             // use two different palettes for v1 and v2 palettes,
             // and only use the winner
-            var pal1 = new Palette() { Name = "Imported from Photoshop" };
-            var pal2 = new Palette() { Name = "Imported from Photoshop" };
+            var pal1 = new Palette();
+            var pal2 = new Palette();
 
             // Photoshop's smallest column size is 16, and some
             // palettes like Visibone do use the column view.
@@ -163,7 +164,7 @@ namespace Colours
                         else if (version == 2)
                             state = ParseState.Count2;
                         else
-                            throw new ArgumentOutOfRangeException("The version is unsupported.");
+                            throw new PaletteException("The version is unsupported.");
                         break;
                     case ParseState.Count1:
                         count = GetUShortBE(file, pos);
