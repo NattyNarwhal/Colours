@@ -820,5 +820,14 @@ namespace Colours
         {
             appPal.MoveColor(e.DraggedColor, e.TargetColor);
         }
+
+        private void sortToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var sf = new SortForm();
+            if (sf.ShowDialog(this) == DialogResult.OK)
+            {
+                appPal.SortColors(sf.SortBy, sf.Ascending);
+            }
+        }
     }
 }

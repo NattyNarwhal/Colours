@@ -358,6 +358,43 @@ namespace Colours.App
         }
 
         /// <summary>
+        /// Sorts the palette by some criteria.
+        /// </summary>
+        /// <param name="sortBy">The value to sort the list by.</param>
+        /// <param name="ascending">If the list should be in ascending order.</param>
+        /// <param name="keepHistory">If undo should have been added.</param>
+        /// <param name="fireEvent">If the event should fire.</param>
+        /// <param name="action">If the undo is added, the action it is described as.</param>
+        public void SortColors(PaletteSortBy sortBy, bool ascending, bool keepHistory = true, bool fireEvent = true, string action = null)
+        {
+            if (keepHistory)
+                PushUndo(action ?? "Sort Colours");
+            Palette = new Palette(Palette);
+            switch (sortBy)
+            {
+                case PaletteSortBy.Name:
+                    Palette.Colors = ascending ? Palette.Colors.OrderBy(x => x.Name).ToList()
+                        : Palette.Colors.OrderByDescending(x => x.Name).ToList();
+                    break;
+                case PaletteSortBy.Hue:
+                    Palette.Colors = ascending ? Palette.Colors.OrderBy(x => new HsvColor(x.Color).Hue).ToList()
+                        : Palette.Colors.OrderByDescending(x => new HsvColor(x.Color).Hue).ToList();
+                    break;
+                case PaletteSortBy.Saturation:
+                    Palette.Colors = ascending ? Palette.Colors.OrderBy(x => new HsvColor(x.Color).Saturation).ToList()
+                        : Palette.Colors.OrderByDescending(x => new HsvColor(x.Color).Saturation).ToList();
+                    break;
+                case PaletteSortBy.Brightness:
+                    Palette.Colors = ascending ? Palette.Colors.OrderBy(x => new HsvColor(x.Color).Value).ToList()
+                        : Palette.Colors.OrderByDescending(x => new HsvColor(x.Color).Value).ToList();
+                    break;
+            }
+            Dirty = true;
+            if (fireEvent)
+                OnPaletteChanged(new EventArgs());
+        }
+
+        /// <summary>
         /// Pushes the current state of the application to the undo stack, and purges the redo stack.
         /// </summary>
         private void PushUndo(string action)

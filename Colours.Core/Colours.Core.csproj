@@ -39,6 +39,7 @@
     <Compile Include="App\AppArgParser.cs" />
     <Compile Include="App\AppController.cs" />
     <Compile Include="App\AppPaletteController.cs" />
+    <Compile Include="App\PaletteSortBy.cs" />
     <Compile Include="Mixing\Blend.cs" />
     <Compile Include="App\AppInitState.cs" />
     <Compile Include="App\AppPalUndo.cs" />
