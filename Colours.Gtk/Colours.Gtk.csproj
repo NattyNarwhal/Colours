@@ -78,6 +78,8 @@
     <Compile Include="ColorGridChangeEventArgs.cs" />
     <Compile Include="RenameColorDialog.cs" />
     <Compile Include="gtk-gui\Colours.RenameColorDialog.cs" />
+    <Compile Include="SortDialog.cs" />
+    <Compile Include="gtk-gui\Colours.SortDialog.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
