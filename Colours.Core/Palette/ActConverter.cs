@@ -47,11 +47,7 @@ namespace Colours
 
                     if (metadata)
                     {
-                        var truncateRaw = sr.ReadBytes(2);
-                        // Photoshop values are BE
-                        if (BitConverter.IsLittleEndian)
-                            truncateRaw = truncateRaw.Reverse().ToArray();
-                        var truncateTo = BitConverter.ToUInt16(truncateRaw, 0);
+                        var truncateTo = sr.ReadUInt16BE();
 
                         p.Colors = p.Colors.Take(truncateTo).ToList();
 
@@ -101,12 +97,7 @@ namespace Colours
                     // if there's less than 256, truncate
                     if (l.Length != 256)
                     {
-                        var truncateAsBytes = BitConverter.GetBytes(Convert.ToUInt16(l.Length));
-                        // photoshop needs big endian
-                        if (BitConverter.IsLittleEndian)
-                            truncateAsBytes = truncateAsBytes.Reverse().ToArray();
-
-                        sw.Write(truncateAsBytes);
+                        sw.WriteUInt16BE(Convert.ToUInt16(l.Length));
 
                         // we also need to worry about transparency, so give
                         // it the last one?

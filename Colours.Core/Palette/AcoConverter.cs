@@ -74,59 +74,30 @@ namespace Colours
             return (ushort)(b * 0x101);
         }
 
-        static byte[] GetBytesUShortBE(ushort s)
-        {
-            return GetPartBE(BitConverter.GetBytes(s), 2);
-        }
-
-        static byte[] GetBytesInt32BE(int i)
-        {
-            return GetPartBE(BitConverter.GetBytes(i), 4);
-        }
-
-        static byte[] GetPartBE(byte[] b, int length, int position = 0)
-        {
-            return BitConverter.IsLittleEndian ?
-                b.Skip(position).Take(length).Reverse().ToArray() :
-                b.Skip(position).Take(length).ToArray();
-        }
-
-        static ushort GetUShortBE(byte[] b, int position = 0)
-        {
-            return BitConverter.ToUInt16(GetPartBE(b, 2, position), 0);
-        }
-
-        static uint GetUIntBE(byte[] b, int position = 0)
-        {
-            return BitConverter.ToUInt16(GetPartBE(b, 4, position), 0);
-        }
-
-        static int GetIntBE(byte[] b, int position = 0)
-        {
-            return BitConverter.ToInt16(GetPartBE(b, 4, position), 0);
-        }
-
-        static byte[] GetColorStruct(byte[] full, int position)
-        {
-            return full.Skip(position).Take(colorStructLen).ToArray();
-        }
-
         // TODO: use an actual struct?
-        static RgbColor FromPhotoshopColorV1(byte[] color)
+        static RgbColor FromPhotoshopColorV1(ushort t, ushort c1, ushort c2, ushort c3, ushort c4)
         {
-            var space = (ColorSpace)GetUShortBE(color);
+            var space = (ColorSpace)t;
             switch (space)
             {
                 case ColorSpace.Rgb:
                     return new RgbColor(
-                            ShortToByte(GetUShortBE(color, 2)),
-                            ShortToByte(GetUShortBE(color, 4)),
-                            ShortToByte(GetUShortBE(color, 6))
+                            ShortToByte(c1),
+                            ShortToByte(c2),
+                            ShortToByte(c3)
                         );
                 default:
                     throw new PaletteException(
                         string.Format("The colourspace ({0}) is unsupported.", space));
             }
+        }
+
+        static RgbColor FromPhotoshopColorV1(BinaryReader br)
+        {
+            // read 10 bytes (colorStructLen == 10)
+            return FromPhotoshopColorV1(br.ReadUInt16BE(),
+                br.ReadUInt16BE(), br.ReadUInt16BE(),
+                br.ReadUInt16BE(), br.ReadUInt16BE());
         }
 
         /// <summary>
@@ -148,59 +119,56 @@ namespace Colours
             ushort version = 0;
             ushort count = 0;
             var state = ParseState.Version;
-
-            int pos = 0;
+            
             ushort colorPos = 0;
 
-            while (state != ParseState.Ending)
+            using (var ms = new MemoryStream(file))
             {
-                switch (state)
+                using (var sr = new BinaryReader(ms))
                 {
-                    case ParseState.Version:
-                        version = GetUShortBE(file, pos);
-                        pos += 2;
-                        if (version == 1)
-                            state = ParseState.Count1;
-                        else if (version == 2)
-                            state = ParseState.Count2;
-                        else
-                            throw new PaletteException("The version is unsupported.");
-                        break;
-                    case ParseState.Count1:
-                        count = GetUShortBE(file, pos);
-                        colorPos = 0;
-                        pos += 2;
-                        state = ParseState.Color1;
-                        break;
-                    case ParseState.Color1:
-                        if (colorPos++ < count)
+                    while (state != ParseState.Ending)
+                    {
+                        switch (state)
                         {
-                            var c = FromPhotoshopColorV1(GetColorStruct(file, pos));
-                            pal1.Colors.Add(new PaletteColor(c));
-                            pos += colorStructLen;
+                            case ParseState.Version:
+                                version = sr.ReadUInt16BE();
+                                if (version == 1)
+                                    state = ParseState.Count1;
+                                else if (version == 2)
+                                    state = ParseState.Count2;
+                                else
+                                    throw new PaletteException("The version is unsupported.");
+                                break;
+                            case ParseState.Count1:
+                                count = sr.ReadUInt16BE();
+                                state = ParseState.Color1;
+                                colorPos = 0;
+                                break;
+                            case ParseState.Color1:
+                                if (colorPos++ < count)
+                                {
+                                    var c = FromPhotoshopColorV1(sr);
+                                    pal1.Colors.Add(new PaletteColor(c));
+                                }
+                                else state = file.Length > ms.Position ? ParseState.Version : ParseState.Ending;
+                                break;
+                            case ParseState.Count2:
+                                count = sr.ReadUInt16BE();
+                                state = ParseState.Color2;
+                                colorPos = 0;
+                                break;
+                            case ParseState.Color2:
+                                if (colorPos++ < count)
+                                {
+                                    var c = FromPhotoshopColorV1(sr);
+                                    var strLen = sr.ReadUInt32BE();
+                                    var name = sr.ReadStringBE(Convert.ToInt32(strLen), true);
+                                    pal2.Colors.Add(new PaletteColor(c, name));
+                                }
+                                else state = ParseState.Ending;
+                                break;
                         }
-                        else state = file.Length > pos ? ParseState.Version : ParseState.Ending;
-                        break;
-                    case ParseState.Count2:
-                        count = GetUShortBE(file, pos);
-                        colorPos = 0;
-                        pos += 2;
-                        state = ParseState.Color2;
-                        break;
-                    case ParseState.Color2:
-                        if (colorPos++ < count)
-                        {
-                            // TODO: this is pretty ugly
-                            var c = FromPhotoshopColorV1(GetColorStruct(file, pos));
-                            pos += colorStructLen;
-                            int strLen = GetIntBE(file, pos) * 2;
-                            pos += 4;
-                            var name = new string(Encoding.BigEndianUnicode.GetChars(file, pos, strLen));
-                            pos += strLen;
-                            pal2.Colors.Add(new PaletteColor(c, name));
-                        }
-                        else state = ParseState.Ending;
-                        break;
+                    }
                 }
             }
 
@@ -210,35 +178,31 @@ namespace Colours
                 ? pal1 : pal2;
         }
 
-        static byte[] ToPhotoshopColorV1(PaletteColor pc)
+        static void ToPhotoshopColorV1(BinaryWriter bw, PaletteColor pc)
         {
-            var buf = new byte[colorStructLen];
+            // 10 bytes: 1 ushort for type, 4 ushorts for channels
 
-            // default two bytes are 0, which means RGB color space
-
+            // type
+            bw.WriteUInt16BE((ushort)ColorSpace.Rgb);
             // red channel
-            Array.Copy(GetBytesUShortBE(ByteToShort(pc.Color.R)), 0, buf, 2, 2);
+            bw.WriteUInt16BE(ByteToShort(pc.Color.R));
             // green channel
-            Array.Copy(GetBytesUShortBE(ByteToShort(pc.Color.G)), 0, buf, 4, 2);
+            bw.WriteUInt16BE(ByteToShort(pc.Color.G));
             // blue channel
-            Array.Copy(GetBytesUShortBE(ByteToShort(pc.Color.B)), 0, buf, 6, 2);
-            // no need for fourth channel
-
-            return buf;
+            bw.WriteUInt16BE(ByteToShort(pc.Color.B));
+            // no need for fourth channel, so write 0
+            bw.WriteUInt16BE(0);
         }
 
-        static byte[] ToPhotoshopColorV2(PaletteColor pc)
+        static void ToPhotoshopColorV2(BinaryWriter bw, PaletteColor pc)
         {
+            // write the V1 color, then the string
+            ToPhotoshopColorV1(bw, pc);
+
             var strWithNull = pc.Name + '\0';
-            var asBytes = Encoding.BigEndianUnicode.GetBytes(strWithNull);
-            var lenBytes = GetBytesInt32BE(strWithNull.Length);
-
-            var buf = new byte[colorStructLen + lenBytes.Length + asBytes.Length];
-            Array.Copy(ToPhotoshopColorV1(pc), buf, colorStructLen);
-            Array.Copy(lenBytes, 0, buf, colorStructLen, lenBytes.Length);
-            Array.Copy(asBytes, 0, buf, colorStructLen + lenBytes.Length, asBytes.Length);
-
-            return buf;
+            // length, and then string
+            bw.WriteUInt32BE(Convert.ToUInt32(strWithNull.Length));
+            bw.WriteStringBE(strWithNull);
         }
 
         /// <summary>
@@ -256,21 +220,19 @@ namespace Colours
                 using (var sw = new BinaryWriter(s))
                 {
                     // write both v1 and v2 palettes
-                    var countBytes = GetBytesUShortBE((ushort)p.Colors.Count);
+                    var count = Convert.ToUInt16(p.Colors.Count);
 
                     // v1
-                    var v1 = GetBytesUShortBE(1);
-                    sw.Write(v1);
-                    sw.Write(countBytes);
+                    sw.WriteUInt16BE(1);
+                    sw.WriteUInt16BE(count);
                     foreach (var pc in p.Colors)
-                        sw.Write(ToPhotoshopColorV1(pc));
+                        ToPhotoshopColorV1(sw, pc);
 
                     // v2
-                    var v2 = GetBytesUShortBE(2);
-                    sw.Write(v2);
-                    sw.Write(countBytes);
+                    sw.WriteUInt16BE(2);
+                    sw.WriteUInt16BE(count);
                     foreach (var pc in p.Colors)
-                        sw.Write(ToPhotoshopColorV2(pc));
+                        ToPhotoshopColorV2(sw, pc);
                     
                     s.Position = 0;
                     using (var sr = new BinaryReader(s))

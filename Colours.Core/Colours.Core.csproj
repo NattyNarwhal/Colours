@@ -50,6 +50,7 @@
     <Compile Include="Palette\AcoConverter.cs" />
     <Compile Include="Palette\ActConverter.cs" />
     <Compile Include="Palette\AseConverter.cs" />
+    <Compile Include="Palette\BigEndianUtils.cs" />
     <Compile Include="Palette\Palette.cs" />
     <Compile Include="Palette\PaletteColor.cs" />
     <Compile Include="Palette\PaletteException.cs" />
