@@ -90,6 +90,7 @@ namespace Colours
         {
             colorGrid1.Palette = appPal.Palette;
 
+            paletteList.SuspendLayout();
             paletteList.Items.Clear();
             paletteListImages.Images.Clear();
             var i = 0;
@@ -102,6 +103,7 @@ namespace Colours
                 lvi.SubItems.Add(pc.Color.ToHtml());
                 paletteList.Items.Add(lvi);
             }
+            paletteList.ResumeLayout(false);
             
             UpdateUI();
         }
