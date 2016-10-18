@@ -106,8 +106,15 @@ namespace Colours
                     var magenta = 1d - br.ReadUInt16BE() / 65535d;
                     var yellow = 1d - br.ReadUInt16BE() / 65535d;
                     var key = 1d - br.ReadUInt16BE() / 65535d;
-                    System.Diagnostics.Debug.WriteLine(string.Format("C {0} M {1} Y {2} K {3}", cyan, magenta, yellow, key));
                     return new CmykColor(cyan, magenta, yellow, key).ToRgb();
+                case ColorSpace.Hsv:
+                    // don't ask how I came up with this constant
+                    var hue = br.ReadUInt16BE() / 182.0399d;
+                    var saturation = br.ReadUInt16BE() / 65535d;
+                    var value = br.ReadUInt16BE() / 65535d;
+                    br.ReadUInt16BE();
+                    System.Diagnostics.Debug.WriteLine(string.Format("H {0} S {1} V {2}", hue, saturation, value));
+                    return new HsvColor(hue, saturation, value).ToRgb();
                 default:
                     throw new PaletteException(
                         string.Format("The colourspace ({0}) is unsupported.", space));
