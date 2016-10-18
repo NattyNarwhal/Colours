@@ -113,7 +113,6 @@ namespace Colours
                     var saturation = br.ReadUInt16BE() / 65535d;
                     var value = br.ReadUInt16BE() / 65535d;
                     br.ReadUInt16BE();
-                    System.Diagnostics.Debug.WriteLine(string.Format("H {0} S {1} V {2}", hue, saturation, value));
                     return new HsvColor(hue, saturation, value).ToRgb();
                 default:
                     throw new PaletteException(
