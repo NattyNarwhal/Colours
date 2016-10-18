@@ -62,9 +62,10 @@ namespace Colours
         /// <param name="b">The blue channel of the color.</param>
         public RgbColor(int r, int g, int b)
         {
-            R = (byte)r;
-            G = (byte)g;
-            B = (byte)b;
+            // clamp to handle negative values (XYZ conversions can)
+            R = (byte)r.Clamp(0, 255);
+            G = (byte)g.Clamp(0, 255);
+            B = (byte)b.Clamp(0, 255);
         }
 
         /// <summary>
@@ -124,7 +125,7 @@ namespace Colours
             if (maxval == minval)
                 return 0.0f;
 
-            float diff = (float)(maxval - minval);
+            float diff = maxval - minval;
             float rnorm = (maxval - R) / diff;
             float gnorm = (maxval - G) / diff;
             float bnorm = (maxval - B) / diff;
@@ -151,7 +152,7 @@ namespace Colours
             CultureInfo cssCulture = new CultureInfo(CultureInfo.InvariantCulture.Name);
             cssCulture.NumberFormat.PercentDecimalDigits = 0;
             cssCulture.NumberFormat.PercentPositivePattern = 1;
-            return String.Format(cssCulture,
+            return string.Format(cssCulture,
                 "hsl({0:F0}, {1:P}, {2:P})",
                 GetHue(), GetSaturation(), GetBrightness());
         }
@@ -163,7 +164,7 @@ namespace Colours
         /// <returns>The string, in a "#123456" format.</returns>
         public string ToHtml()
         {
-            return String.Format("#{0:X2}{1:X2}{2:X2}", R, G, B);
+            return string.Format("#{0:X2}{1:X2}{2:X2}", R, G, B);
         }
 
         /// <summary>
@@ -172,7 +173,34 @@ namespace Colours
         /// <returns>The color, in a "RgbColor [R=0, G=0, B=0]" format."</returns>
         public override string ToString()
         {
-            return String.Format("RgbColor [R={0}, G={1}, B={2}]", R, G, B);
+            return string.Format("RgbColor [R={0}, G={1}, B={2}]", R, G, B);
+        }
+
+        /// <summary>
+        /// Converts the colour into an XYZ representation.
+        /// </summary>
+        /// <returns>The XYZ representation of the colour.</returns>
+        public XyzColor ToXyz()
+        {
+            // normalize red, green, blue values
+            double rLinear = R / 255.0;
+            double gLinear = G / 255.0;
+            double bLinear = B / 255.0;
+
+            // convert to a sRGB form
+            double r = (rLinear > 0.04045) ? Math.Pow((rLinear + 0.055) / (
+                1 + 0.055), 2.2) : (rLinear / 12.92);
+            double g = (gLinear > 0.04045) ? Math.Pow((gLinear + 0.055) / (
+                1 + 0.055), 2.2) : (gLinear / 12.92);
+            double b = (bLinear > 0.04045) ? Math.Pow((bLinear + 0.055) / (
+                1 + 0.055), 2.2) : (bLinear / 12.92);
+
+            // converts
+            return new XyzColor(
+                (r * 0.4124 + g * 0.3576 + b * 0.1805),
+                (r * 0.2126 + g * 0.7152 + b * 0.0722),
+                (r * 0.0193 + g * 0.1192 + b * 0.9505)
+                );
         }
     }
 }

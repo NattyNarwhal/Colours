@@ -47,6 +47,9 @@
     <Compile Include="Models\ColorUtils.cs" />
     <Compile Include="Models\HsvColor.cs" />
     <Compile Include="App\HtmlProofGenerator.cs" />
+    <Compile Include="Models\LabColor.cs" />
+    <Compile Include="Models\MathUtils.cs" />
+    <Compile Include="Models\XyzColor.cs" />
     <Compile Include="Palette\AcoConverter.cs" />
     <Compile Include="Palette\ActConverter.cs" />
     <Compile Include="Palette\AseConverter.cs" />

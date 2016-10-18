@@ -52,13 +52,23 @@ namespace Colours
                                 case "RGB ":
                                     var r = sr.ReadSingleBE();
                                     var g = sr.ReadSingleBE();
-                                    var b = sr.ReadSingleBE();
+                                    // HACK: we can't use same named variable
+                                    // declarations in a switch/case block, due
+                                    // to C behaviour leftovers
+                                    var blue = sr.ReadSingleBE();
 
                                     var rr = Convert.ToByte(Math.Round(r * 255));
                                     var gr = Convert.ToByte(Math.Round(g * 255));
-                                    var br = Convert.ToByte(Math.Round(b * 255));
+                                    var br = Convert.ToByte(Math.Round(blue * 255));
 
                                     color = new RgbColor(rr, gr, br);
+                                    break;
+                                case "LAB ":
+                                    var l = sr.ReadSingleBE() * 100;
+                                    var a = sr.ReadSingleBE();
+                                    var b = sr.ReadSingleBE();
+
+                                    color = new LabColor(l, a, b).ToXyz().ToRgb();
                                     break;
                                 default:
                                     throw new PaletteException(
