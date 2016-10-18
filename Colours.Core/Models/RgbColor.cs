@@ -202,5 +202,29 @@ namespace Colours
                 (r * 0.0193 + g * 0.1192 + b * 0.9505)
                 );
         }
+
+        /// <summary>
+        /// Converts the colour into an CMYK representation.
+        /// </summary>
+        /// <returns>The CMYK representation of the colour.</returns>
+        public CmykColor ToCmyk()
+        {
+            // normalizes red, green, blue values
+            double c = (double)(255 - R) / 255;
+            double m = (double)(255 - G) / 255;
+            double y = (double)(255 - B) / 255;
+
+            double k = Math.Min(c, Math.Min(m, y));
+
+            if (k == 1.0)
+            {
+                return new CmykColor(0, 0, 0, 1);
+            }
+            else
+            {
+                return new CmykColor((c - k) / (1 - k), (m - k) / (1 - k), (y - k) / (1 - k), k);
+            }
+
+        }
     }
 }

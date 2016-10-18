@@ -44,6 +44,7 @@
     <Compile Include="App\AppInitState.cs" />
     <Compile Include="App\AppPalUndo.cs" />
     <Compile Include="App\AppState.cs" />
+    <Compile Include="Models\CmykColor.cs" />
     <Compile Include="Models\ColorUtils.cs" />
     <Compile Include="Models\HsvColor.cs" />
     <Compile Include="App\HtmlProofGenerator.cs" />

@@ -101,6 +101,13 @@ namespace Colours
                     var b = br.ReadInt16BE() / 100;
                     br.ReadUInt16BE(); // nop channel
                     return new LabColor(l, a, b).ToXyz().ToRgb();
+                case ColorSpace.Cmyk:
+                    var cyan = 1d - br.ReadUInt16BE() / 65535d;
+                    var magenta = 1d - br.ReadUInt16BE() / 65535d;
+                    var yellow = 1d - br.ReadUInt16BE() / 65535d;
+                    var key = 1d - br.ReadUInt16BE() / 65535d;
+                    System.Diagnostics.Debug.WriteLine(string.Format("C {0} M {1} Y {2} K {3}", cyan, magenta, yellow, key));
+                    return new CmykColor(cyan, magenta, yellow, key).ToRgb();
                 default:
                     throw new PaletteException(
                         string.Format("The colourspace ({0}) is unsupported.", space));
