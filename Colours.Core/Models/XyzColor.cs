@@ -92,7 +92,7 @@ namespace Colours
         {
             double[] Clinear = new double[3];
             Clinear[0] = X * 3.2410 - Y * 1.5374 - Z * 0.4986; // red
-            Clinear[1] = -X * 0.9692 + Y * 1.8760 - Z * 0.0416; // green
+            Clinear[1] = -X * 0.9692 + Y * 1.8760 + Z * 0.0416; // green
             Clinear[2] = X * 0.0556 - Y * 0.2040 + Z * 1.0570; // blue
 
             for (int i = 0; i < 3; i++)
