@@ -175,6 +175,14 @@ namespace Colours
             }
 
             table.ResumeLayout();
+
+            // after layout, the controls get their widths, so pause and resize
+            // yet again
+            table.SuspendLayout();
+            // make the buttons square
+            foreach (ColorButton cb in table.Controls)
+                cb.Height = cb.Width;
+            table.ResumeLayout();
         }
 
         public PaletteColor GetPaletteColor(int col, int row)
