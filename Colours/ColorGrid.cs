@@ -67,29 +67,7 @@ namespace Colours
             InitializeComponent();
 
             Palette = new Palette();
-            Resize += (o, e) =>
-            {
-                // helps speed up, especially when we change height
-                table.SuspendLayout();
-                if (table.ColumnCount > 1)
-                {
-                    for (int i = 0; i < table.RowCount; i++)
-                    {
-                        if (table.GetControlFromPosition(table.ColumnCount - 1, i) != null)
-                        {
-                            // make the width of the last column's items the
-                            // same as the previous, otherwise it looks ugly
-                            ((ColorButton)table.GetControlFromPosition(table.ColumnCount - 1, i)).Width =
-                                ((ColorButton)table.GetControlFromPosition(table.ColumnCount - 2, i)).Width;
-                        }
-                    }
-                }
-                // make the buttons square
-                foreach (ColorButton cb in table.Controls)
-                    cb.Height = cb.Width;
-                table.ResumeLayout();
-                EnableVScrollBar(table.Height > Height);
-            };
+            Resize += (o, e) => ResizeUI();
         }
 
         void UpdateGrid()
@@ -129,8 +107,8 @@ namespace Colours
                     var pc = ra.ToArray()[c];
                     var cb = new ColorButton()
                     {
-                        Width = 32,
-                        Height = 32,
+                        //Width = 32,
+                        //Height = 32,
                         Dock = DockStyle.Fill,
                         Margin = new Padding(1),
                         Color = pc.Color,
@@ -175,10 +153,7 @@ namespace Colours
                     };
 
                     if (cols > 1 && c == ra.Count() - 1 && c == cols - 1)
-                    {
                         cb.Dock = DockStyle.None;
-                        cb.Width = ((ColorButton)table.GetControlFromPosition(c - 1, r)).Width;
-                    }
 
                     toolTip1.SetToolTip(cb, string.Format("{0}\r\n{1}\r\n{2}",
                         pc.Name, pc.Color.ToHtml(), new HsvColor(pc.Color).ToString()));
@@ -187,16 +162,32 @@ namespace Colours
                 }
             }
 
+            end:
             table.ResumeLayout();
 
-            // after layout, the controls get their widths, so pause and resize
-            // yet again
+            ResizeUI();
+        }
+
+        void ResizeUI()
+        {
+            // helps speed up, especially when we change height
             table.SuspendLayout();
+            if (table.ColumnCount > 1)
+            {
+                for (int i = 0; i < table.RowCount; i++)
+                {
+                    ColorButton cb;
+                    if ((cb = (ColorButton)table.GetControlFromPosition(table.ColumnCount - 1, i)) != null)
+                    {
+                        // make the width of the last column's items the
+                        // same as the previous, otherwise it looks ugly
+                        cb.Width = ((ColorButton)table.GetControlFromPosition(table.ColumnCount - 2, i)).Width;
+                    }
+                }
+            }
             // make the buttons square
             foreach (ColorButton cb in table.Controls)
                 cb.Height = cb.Width;
-
-            end:
             table.ResumeLayout();
             EnableVScrollBar(table.Height > Height);
         }
