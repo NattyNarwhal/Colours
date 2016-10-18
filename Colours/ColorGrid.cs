@@ -54,7 +54,7 @@ namespace Colours
             InitializeComponent();
 
             Palette = new Palette();
-            table.Resize += (o, e) =>
+            Resize += (o, e) =>
             {
                 // helps speed up, especially when we change height
                 table.SuspendLayout();
