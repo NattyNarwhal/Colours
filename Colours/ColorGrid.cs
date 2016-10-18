@@ -197,6 +197,7 @@ namespace Colours
             foreach (ColorButton cb in table.Controls)
                 cb.Height = cb.Width;
             table.ResumeLayout();
+            EnableVScrollBar(table.Height > Height);
         }
 
         public PaletteColor GetPaletteColor(int col, int row)
