@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MoreLinq;
+using System.Runtime.InteropServices;
 
 namespace Colours
 {
@@ -23,6 +24,18 @@ namespace Colours
                 cp.Style |= 0x00200000; // WS_VSCROLL
                 return cp;
             }
+        }
+        
+        // but we can disable it when it isn't needed
+        [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true, SetLastError = true)]
+        static extern bool EnableScrollBar(HandleRef hWnd, int nBar, int value);
+
+        void EnableVScrollBar(bool enable)
+        {
+            // check if we can do this by being on windows (only NT matters)
+            // 1 = vscroll
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+                EnableScrollBar(new HandleRef(this, Handle), 1, enable ? 0 : 3);
         }
 
         Palette _palette;
@@ -75,6 +88,7 @@ namespace Colours
                 foreach (ColorButton cb in table.Controls)
                     cb.Height = cb.Width;
                 table.ResumeLayout();
+                EnableVScrollBar(table.Height > Height);
             };
         }
 
