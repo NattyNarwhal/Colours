@@ -94,13 +94,12 @@ namespace Colours
 
         void UpdateGrid()
         {
+            table.SuspendLayout();
             table.Controls.Clear();
 
             // nothing to do
             if (Palette.Colors.Count == 0)
-                return;
-
-            table.SuspendLayout();
+                goto end; // a velociraptor eats you
 
             int cols = Palette.Columns > 0 ? Palette.Columns :
                 (Palette.Colors.Count < 16 ? Palette.Colors.Count : 16);
@@ -196,6 +195,8 @@ namespace Colours
             // make the buttons square
             foreach (ColorButton cb in table.Controls)
                 cb.Height = cb.Width;
+
+            end:
             table.ResumeLayout();
             EnableVScrollBar(table.Height > Height);
         }
