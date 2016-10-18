@@ -98,7 +98,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
             this.ClientSize = new System.Drawing.Size(284, 155);
-            this.ControlBox = false;
             this.Controls.Add(this.stateLabel);
             this.Controls.Add(this.dropButton);
             this.Controls.Add(this.previewLabel);
@@ -109,6 +108,9 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "EyedropperForm";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Eyedropper";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.EyedropperForm_KeyDown);
             this.ResumeLayout(false);

@@ -95,6 +95,7 @@
             this.Name = "RenameMultipleForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Rename";
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -104,6 +104,7 @@
             this.Name = "RenameForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Rename";
             ((System.ComponentModel.ISupportInitialize)(this.colorIconBox)).EndInit();
             this.ResumeLayout(false);

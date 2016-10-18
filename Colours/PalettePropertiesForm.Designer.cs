@@ -141,6 +141,7 @@
             this.Name = "PalettePropertiesForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Palette Properties";
             ((System.ComponentModel.ISupportInitialize)(this.columnsBox)).EndInit();
             this.ResumeLayout(false);

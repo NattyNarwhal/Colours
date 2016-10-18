@@ -113,6 +113,7 @@
             this.Name = "SortForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Sort By";
             this.ResumeLayout(false);
             this.PerformLayout();
