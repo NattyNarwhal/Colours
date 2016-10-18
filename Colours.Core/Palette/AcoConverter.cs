@@ -42,6 +42,11 @@ namespace Colours
             /// Uses 4 channels.
             /// </remarks>
             Cmyk = 2,
+            // these are unknown and explicitly "black boxes"
+            Pantone = 3,
+            Focoltone = 4,
+            Trumatch = 5,
+            Toyo88Colorfinder1050 = 6,
             /// <summary>
             /// Represents a color in the Lightness/A Chroma/B Chroma space.
             /// </summary>
@@ -56,6 +61,8 @@ namespace Colours
             /// Uses 1 channel.
             /// </remarks>
             Grey = 8,
+            // more "black boxes"
+            HKS = 10
         }
 
         enum ParseState
@@ -74,30 +81,30 @@ namespace Colours
             return (ushort)(b * 0x101);
         }
 
-        // TODO: use an actual struct?
-        static RgbColor FromPhotoshopColorV1(ushort t, ushort c1, ushort c2, ushort c3, ushort c4)
+        static RgbColor FromPhotoshopColorV1(BinaryReader br)
         {
-            var space = (ColorSpace)t;
+            var space = (ColorSpace)br.ReadUInt16BE();
+            
             switch (space)
             {
                 case ColorSpace.Rgb:
-                    return new RgbColor(
-                            ShortToByte(c1),
-                            ShortToByte(c2),
-                            ShortToByte(c3)
-                        );
+                    var red = ShortToByte(br.ReadUInt16BE());
+                    var green = ShortToByte(br.ReadUInt16BE());
+                    var blue = ShortToByte(br.ReadUInt16BE());
+                    br.ReadUInt16BE(); // nop channel
+                    return new RgbColor(red, green, blue);
+                case ColorSpace.Lab:
+                    // 0 - 10000 -> 0 - 100
+                    var l = br.ReadUInt16BE() / 100;
+                    // -12800 - 12700 -> -128 - 127
+                    var a = br.ReadInt16BE() / 100;
+                    var b = br.ReadInt16BE() / 100;
+                    br.ReadUInt16BE(); // nop channel
+                    return new LabColor(l, a, b).ToXyz().ToRgb();
                 default:
                     throw new PaletteException(
                         string.Format("The colourspace ({0}) is unsupported.", space));
             }
-        }
-
-        static RgbColor FromPhotoshopColorV1(BinaryReader br)
-        {
-            // read 10 bytes (colorStructLen == 10)
-            return FromPhotoshopColorV1(br.ReadUInt16BE(),
-                br.ReadUInt16BE(), br.ReadUInt16BE(),
-                br.ReadUInt16BE(), br.ReadUInt16BE());
         }
 
         /// <summary>

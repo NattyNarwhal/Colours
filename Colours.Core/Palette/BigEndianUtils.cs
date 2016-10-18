@@ -43,6 +43,21 @@ namespace Colours
         }
 
         /// <summary>
+        /// Reads 2 bytes in big endian and returns a signed 16-bit integer.
+        /// </summary>
+        /// <param name="br">
+        /// A <see cref="BinaryReader"/> that has a short in big endian to read.
+        /// </param>
+        /// <returns>A signed 16-bit integer.</returns>
+        public static short ReadInt16BE(this BinaryReader br)
+        {
+            var b = br.ReadBytes(2);
+            if (BitConverter.IsLittleEndian)
+                Array.Reverse(b);
+            return BitConverter.ToInt16(b, 0);
+        }
+
+        /// <summary>
         /// Reads 2 bytes in big endian and returns a 32-bit float.
         /// </summary>
         /// <param name="br">
