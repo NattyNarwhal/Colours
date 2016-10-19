@@ -156,7 +156,7 @@ namespace Colours
                         cb.Dock = DockStyle.None;
 
                     toolTip1.SetToolTip(cb, string.Format("{0}\r\n{1}\r\n{2}",
-                        pc.Name, pc.Color.ToHtml(), new HsvColor(pc.Color).ToString()));
+                        pc.Name, pc.Color.ToHtml(), pc.Color.ToHsv().ToString()));
                     table.Controls.Add(cb);
                     table.SetCellPosition(cb, new TableLayoutPanelCellPosition(c, r));
                 }

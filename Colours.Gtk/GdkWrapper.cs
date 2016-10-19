@@ -18,7 +18,7 @@ namespace Colours
 
 		public static HsvColor ToHsvColor(this Gdk.Color c)
 		{
-			return new HsvColor(ToRgbColor(c));
+			return ToRgbColor(c).ToHsv();
 		}
 
 		public static Gdk.Color ToGdkColor(this RgbColor c)

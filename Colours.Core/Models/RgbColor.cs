@@ -249,6 +249,22 @@ namespace Colours
         }
 
         /// <summary>
+        /// Converts the colour into an HSV representation.
+        /// </summary>
+        /// <returns>The HSV representation of the colour.</returns>
+        public HsvColor ToHsv()
+        {
+            int max = Math.Max(R, Math.Max(G, B));
+            int min = Math.Min(R, Math.Min(G, B));
+
+            var hue = GetHue();
+            var saturation = (max == 0) ? 0 : 1d - (1d * min / max);
+            var value = max / 65535d;
+
+            return new HsvColor(hue, saturation, value);
+        }
+
+        /// <summary>
         /// Converts the colour into an XYZ representation.
         /// </summary>
         /// <returns>The XYZ representation of the colour.</returns>

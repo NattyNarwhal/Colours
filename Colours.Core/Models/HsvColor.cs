@@ -47,20 +47,6 @@ namespace Colours
         // http://stackoverflow.com/questions/359612/how-to-change-rgb-color-to-hsv/1626175#1626175
 
         /// <summary>
-        /// Creates a new HsvColor from an existing RgbColor.
-        /// </summary>
-        /// <param name="c">The RgbColor to create from.</param>
-        public HsvColor(RgbColor c)
-        {
-            int max = Math.Max(c.R, Math.Max(c.G, c.B));
-            int min = Math.Min(c.R, Math.Min(c.G, c.B));
-
-            Hue = c.GetHue();
-            Saturation = (max == 0) ? 0 : 1d - (1d * min / max);
-            Value = max / 65535d;
-        }
-
-        /// <summary>
         /// Creates a new HsvColor from the numbered values.
         /// </summary>
         /// <param name="h">The hue of the color.</param>

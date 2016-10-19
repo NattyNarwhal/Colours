@@ -132,13 +132,13 @@ namespace Colours
 
             try
             {
-                return new HsvColor(FromHtml(colorString));
+                return FromHtml(colorString).ToHsv();
             }
             catch (Exception) // we tried to do HTML, which does a good job normally
             {
                 if (colorString.StartsWith("rgb("))
                 {
-                    return new HsvColor(FromCssRgb(colorString));
+                    return FromCssRgb(colorString).ToHsv();
                 }
                 // TODO: hsl
                 else if (colorString.StartsWith("hsv("))
@@ -148,7 +148,7 @@ namespace Colours
                 else if (colorString.StartsWith("Color [")
                     || colorString.StartsWith("RgbColor ["))
                 {
-                    return new HsvColor(FromGdiColorString(colorString));
+                    return FromGdiColorString(colorString).ToHsv();
                 }
                 throw new ArgumentException("The string could not be converted.");
             }

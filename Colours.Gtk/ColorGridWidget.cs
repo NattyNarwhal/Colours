@@ -56,7 +56,7 @@ namespace Colours
 					                                 pc.Name,
 					                                 pc.Color.ToHtml(),
 					                                 pc.Color.ToHslString(),
-					                                 new HsvColor(pc.Color));
+					                                 pc.Color.ToHsv());
 					cb.ButtonPressEvent += ColorButton_Press;
 					cb.ColorSet += (sender, e) =>
 					{

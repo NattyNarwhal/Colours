@@ -134,7 +134,7 @@ namespace Colours.App
         /// </param>
         public void SetColor(RgbColor c, bool keepHistory = true, bool fireEvent = true)
         {
-            SetColor(new HsvColor(c), keepHistory, fireEvent);
+            SetColor(c.ToHsv(), keepHistory, fireEvent);
         }
 
         /// <summary>

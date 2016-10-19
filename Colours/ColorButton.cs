@@ -35,21 +35,6 @@ namespace Colours
             }
         }
 
-        /// <summary>
-        /// Represents the color of the ColorButton, in HSV form.
-        /// </summary>
-        public HsvColor HsvColor
-        {
-            get
-            {
-                return new HsvColor(Color);
-            }
-            set
-            {
-                Color = value.ToRgb();
-            }
-        }
-
         public ColorButton() : base()
         {
             FlatStyle = FlatStyle.Popup;
@@ -63,7 +48,7 @@ namespace Colours
 
         public ColorButton(HsvColor c) : this()
         {
-            HsvColor = c;
+            Color = c.ToRgb();
         }
     }
 }

@@ -31,7 +31,7 @@ namespace Colours
                 previewLabel.Text = String.Format("{0}\r\n{1}\r\n{2}",
                     value.ToRgbColor().ToHtml(),
                     value.ToRgbColor().ToHslString(),
-                    new HsvColor(value.ToRgbColor()).ToString());
+                    value.ToRgbColor().ToHsv().ToString());
             }
         }
 

@@ -377,16 +377,16 @@ namespace Colours.App
                         : Palette.Colors.OrderByDescending(x => x.Name).ToList();
                     break;
                 case PaletteSortBy.Hue:
-                    Palette.Colors = ascending ? Palette.Colors.OrderBy(x => new HsvColor(x.Color).Hue).ToList()
-                        : Palette.Colors.OrderByDescending(x => new HsvColor(x.Color).Hue).ToList();
+                    Palette.Colors = ascending ? Palette.Colors.OrderBy(x => x.Color.ToHsv().Hue).ToList()
+                        : Palette.Colors.OrderByDescending(x => x.Color.ToHsv().Hue).ToList();
                     break;
                 case PaletteSortBy.Saturation:
-                    Palette.Colors = ascending ? Palette.Colors.OrderBy(x => new HsvColor(x.Color).Saturation).ToList()
-                        : Palette.Colors.OrderByDescending(x => new HsvColor(x.Color).Saturation).ToList();
+                    Palette.Colors = ascending ? Palette.Colors.OrderBy(x => x.Color.ToHsv().Saturation).ToList()
+                        : Palette.Colors.OrderByDescending(x => x.Color.ToHsv().Saturation).ToList();
                     break;
                 case PaletteSortBy.Brightness:
-                    Palette.Colors = ascending ? Palette.Colors.OrderBy(x => new HsvColor(x.Color).Value).ToList()
-                        : Palette.Colors.OrderByDescending(x => new HsvColor(x.Color).Value).ToList();
+                    Palette.Colors = ascending ? Palette.Colors.OrderBy(x => x.Color.ToHsv().Value).ToList()
+                        : Palette.Colors.OrderByDescending(x => x.Color.ToHsv().Value).ToList();
                     break;
             }
             Dirty = true;

@@ -232,7 +232,7 @@ namespace Colours
         private void copyHsvContextToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ColorButton cb = (ColorButton)colorContextMenu.SourceControl;
-            Clipboard.SetText(cb.HsvColor.ToString());
+            Clipboard.SetText(cb.Color.ToHsv().ToString());
         }
 
         /// <summary>

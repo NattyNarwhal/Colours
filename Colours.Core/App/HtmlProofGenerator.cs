@@ -35,7 +35,7 @@ namespace Colours.App
                 String.Format(table,
                     pc.Color.ToHtml(),
                     pc.Color.ToHslString(),
-                    new HsvColor(pc.Color).ToString()
+                    pc.Color.ToHsv().ToString()
                 )
             );
         }

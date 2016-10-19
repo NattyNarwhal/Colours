@@ -33,7 +33,7 @@ namespace Colours
 			} catch (Exception) { // just load some defaults
 
 			}
-			return new AppState (new HsvColor(c), t);
+			return new AppState (c.ToHsv(), t);
 		}
 
 		public static void SaveConfig(RgbColor c, SchemeType t)
