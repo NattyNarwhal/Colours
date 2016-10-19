@@ -70,17 +70,6 @@ namespace Colours
             Version, Count1, Count2, Color1, Color2, Ending
         }
 
-        static byte ShortToByte(int s)
-        {
-            return (byte)(s >> 8);
-        }
-
-        static ushort ByteToShort(byte b)
-        {
-            // Adobe software wants it doubled, not shifted
-            return (ushort)(b * 0x101);
-        }
-
         static RgbColor FromPhotoshopColorV1(BinaryReader br)
         {
             var space = (ColorSpace)br.ReadUInt16BE();
@@ -88,9 +77,9 @@ namespace Colours
             switch (space)
             {
                 case ColorSpace.Rgb:
-                    var red = ShortToByte(br.ReadUInt16BE());
-                    var green = ShortToByte(br.ReadUInt16BE());
-                    var blue = ShortToByte(br.ReadUInt16BE());
+                    var red = br.ReadUInt16BE();
+                    var green = br.ReadUInt16BE();
+                    var blue = br.ReadUInt16BE();
                     br.ReadUInt16BE(); // nop channel
                     return new RgbColor(red, green, blue);
                 case ColorSpace.Lab:
@@ -205,11 +194,11 @@ namespace Colours
             // type
             bw.WriteUInt16BE((ushort)ColorSpace.Rgb);
             // red channel
-            bw.WriteUInt16BE(ByteToShort(pc.Color.R));
+            bw.WriteUInt16BE(pc.Color.R);
             // green channel
-            bw.WriteUInt16BE(ByteToShort(pc.Color.G));
+            bw.WriteUInt16BE(pc.Color.G);
             // blue channel
-            bw.WriteUInt16BE(ByteToShort(pc.Color.B));
+            bw.WriteUInt16BE(pc.Color.B);
             // no need for fourth channel, so write 0
             bw.WriteUInt16BE(0);
         }

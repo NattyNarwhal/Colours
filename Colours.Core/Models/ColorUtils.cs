@@ -57,7 +57,7 @@ namespace Colours
                     .Select(g => int.Parse(g.Value)).ToList();
                 if (ints.Count() == 3)
                     return new RgbColor
-                        (ints[0], ints[1], ints[2]);
+                        (ints[0], ints[1], ints[2], 8);
             }
             fail:
             throw new ArgumentException("The color is invalid.");
@@ -86,7 +86,7 @@ namespace Colours
                 // TODO: should handle out-of-order ones if existant
                 if (ints.Count() == 3)
                     return new RgbColor
-                        (ints[0], ints[1], ints[2]);
+                        (ints[0], ints[1], ints[2], 8);
             }
             fail:
             throw new ArgumentException("The color is invalid.");

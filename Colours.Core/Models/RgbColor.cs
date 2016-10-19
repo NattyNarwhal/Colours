@@ -16,20 +16,65 @@ namespace Colours
     public class RgbColor
     {
         /// <summary>
-        /// The red channel of the color. Values from 0-255.
+        /// The red channel of the color. Values from 0-65535.
         /// </summary>
         [DataMember]
-        public byte R { get; set; }
+        public ushort R { get; set; }
+        /// <summary>
+        /// The green channel of the color. Values from 0-65535.
+        /// </summary>
+        [DataMember]
+        public ushort G { get; set; }
+        /// <summary>
+        /// The blue channel of the color. Values from 0-66535.
+        /// </summary>
+        [DataMember]
+        public ushort B { get; set; }
+
+        /// <summary>
+        /// The red channel of the color. Values from 0-255.
+        /// </summary>
+        // Adobe rounds 0x<FF>00 to 0xFE. Multiply by 0x101 instead of
+        // bit shifting. Do GDK and Cocoa do this too?
+        public byte R8
+        {
+            get
+            {
+                return (byte)(R >> 8);
+            }
+            set
+            {
+                R = (ushort)(value * 0x101);
+            }
+        }
         /// <summary>
         /// The green channel of the color. Values from 0-255.
         /// </summary>
-        [DataMember]
-        public byte G { get; set; }
+        public byte G8
+        {
+            get
+            {
+                return (byte)(G >> 8);
+            }
+            set
+            {
+                G = (ushort)(value * 0x101);
+            }
+        }
         /// <summary>
         /// The blue channel of the color. Values from 0-255.
         /// </summary>
-        [DataMember]
-        public byte B { get; set; }
+        public byte B8
+        {
+            get
+            {
+                return (byte)(B >> 8);
+            }
+            set
+            {
+                B = (ushort)(value * 0x101);
+            }
+        }
 
         /// <summary>
         /// Creates a new RgbColor as the color black.
@@ -49,6 +94,19 @@ namespace Colours
         /// <param name="b">The blue channel of the color.</param>
         public RgbColor(byte r, byte g, byte b)
         {
+            R8 = r;
+            G8 = g;
+            B8 = b;
+        }
+
+        /// <summary>
+        /// Creates a new color from the numbered values.
+        /// </summary>
+        /// <param name="r">The red channel of the color.</param>
+        /// <param name="g">The green channel of the color.</param>
+        /// <param name="b">The blue channel of the color.</param>
+        public RgbColor(ushort r, ushort g, ushort b)
+        {
             R = r;
             G = g;
             B = b;
@@ -60,12 +118,24 @@ namespace Colours
         /// <param name="r">The red channel of the color.</param>
         /// <param name="g">The green channel of the color.</param>
         /// <param name="b">The blue channel of the color.</param>
-        public RgbColor(int r, int g, int b)
+        /// <param name="depth">The bit depth of the colour, 8 or 16.</param>
+        public RgbColor(int r, int g, int b, int depth)
         {
-            // clamp to handle negative values (XYZ conversions can)
-            R = (byte)r.Clamp(0, 255);
-            G = (byte)g.Clamp(0, 255);
-            B = (byte)b.Clamp(0, 255);
+            if (depth == 8)
+            {
+                // clamp to handle negative values (XYZ conversions can)
+                R8 = (byte)r.Clamp(0, 255);
+                G8 = (byte)g.Clamp(0, 255);
+                B8 = (byte)b.Clamp(0, 255);
+            }
+            else if (depth == 16)
+            {
+                R = (ushort)r.Clamp(0, ushort.MaxValue);
+                G = (ushort)g.Clamp(0, ushort.MaxValue);
+                B = (ushort)b.Clamp(0, ushort.MaxValue);
+            }
+            else
+                throw new ArgumentOutOfRangeException("Invalid bit depth.");
         }
 
         /// <summary>
@@ -75,9 +145,10 @@ namespace Colours
         public RgbColor Invert()
         {
             return new RgbColor(
-                255 - R,
-                255 - G,
-                255 - B);
+                ushort.MaxValue - R,
+                ushort.MaxValue - G,
+                ushort.MaxValue - B,
+                16);
         }
 
         // imports of Mono's System.Drawing
@@ -88,8 +159,9 @@ namespace Colours
         /// <returns>A number from 0 to 1.</returns>
         public float GetBrightness()
         {
-            byte minval = Math.Min(R, Math.Min(G, B));
-            byte maxval = Math.Max(R, Math.Max(G, B));
+            // TODO: adapt to 16-bit values (the constant looks wrong for that)
+            var minval = Math.Min(R8, Math.Min(G8, B8));
+            var maxval = Math.Max(R8, Math.Max(G8, B8));
 
             return (float)(maxval + minval) / 510;
         }
@@ -100,8 +172,8 @@ namespace Colours
         /// <returns>A number from 0 to 1.</returns>
         public float GetSaturation()
         {
-            byte minval = Math.Min(R, Math.Min(G, B));
-            byte maxval = Math.Max(R, Math.Max(G, B));
+            var minval = Math.Min(R8, Math.Min(G8, B8));
+            var maxval = Math.Max(R8, Math.Max(G8, B8));
 
             if (maxval == minval)
                 return 0.0f;
@@ -119,8 +191,8 @@ namespace Colours
         /// <returns>A number from 0-360.</returns>
         public float GetHue()
         {
-            byte minval = Math.Min(R, Math.Min(G, B));
-            byte maxval = Math.Max(R, Math.Max(G, B));
+            var minval = Math.Min(R, Math.Min(G, B));
+            var maxval = Math.Max(R, Math.Max(G, B));
 
             if (maxval == minval)
                 return 0.0f;
@@ -164,7 +236,7 @@ namespace Colours
         /// <returns>The string, in a "#123456" format.</returns>
         public string ToHtml()
         {
-            return string.Format("#{0:X2}{1:X2}{2:X2}", R, G, B);
+            return string.Format("#{0:X2}{1:X2}{2:X2}", R8, G8, B8);
         }
 
         /// <summary>
@@ -173,7 +245,7 @@ namespace Colours
         /// <returns>The color, in a "RgbColor [R=0, G=0, B=0]" format."</returns>
         public override string ToString()
         {
-            return string.Format("RgbColor [R={0}, G={1}, B={2}]", R, G, B);
+            return string.Format("RgbColor [R={0}, G={1}, B={2}]", R8, G8, B8);
         }
 
         /// <summary>
@@ -183,9 +255,9 @@ namespace Colours
         public XyzColor ToXyz()
         {
             // normalize red, green, blue values
-            double rLinear = R / 255.0;
-            double gLinear = G / 255.0;
-            double bLinear = B / 255.0;
+            double rLinear = R / 65535.0;
+            double gLinear = G / 65535.0;
+            double bLinear = B / 65535.0;
 
             // convert to a sRGB form
             double r = (rLinear > 0.04045) ? Math.Pow((rLinear + 0.055) / (
@@ -210,9 +282,9 @@ namespace Colours
         public CmykColor ToCmyk()
         {
             // normalizes red, green, blue values
-            double c = (double)(255 - R) / 255;
-            double m = (double)(255 - G) / 255;
-            double y = (double)(255 - B) / 255;
+            double c = (double)(65535 - R) / 65535;
+            double m = (double)(65535 - G) / 65535;
+            double y = (double)(65535 - B) / 65535;
 
             double k = Math.Min(c, Math.Min(m, y));
 

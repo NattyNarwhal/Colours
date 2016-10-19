@@ -15,7 +15,7 @@ namespace Colours
 
         public static Color ToGdiColor(this RgbColor c)
         {
-            return Color.FromArgb(c.R, c.G, c.B);
+            return Color.FromArgb(c.R8, c.G8, c.B8);
         }
     }
 }

@@ -275,7 +275,11 @@ namespace Colours
         private void randomButton_Click(object sender, EventArgs e)
         {
             Random r = new Random();
-            app.SetColor(new RgbColor(r.Next(255), r.Next(255), r.Next(255)));
+            app.SetColor(new RgbColor(
+                r.Next(ushort.MaxValue),
+                r.Next(ushort.MaxValue),
+                r.Next(ushort.MaxValue),
+                16));
         }
 
         private void brightenToolStripMenuItem_Click(object sender, EventArgs e)

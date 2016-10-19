@@ -88,9 +88,9 @@ namespace Colours
                         }
                         else
                         {
-                            sw.Write(l[i].R);
-                            sw.Write(l[i].G);
-                            sw.Write(l[i].B);
+                            sw.Write(l[i].R8);
+                            sw.Write(l[i].G8);
+                            sw.Write(l[i].B8);
                         }
                     }
 

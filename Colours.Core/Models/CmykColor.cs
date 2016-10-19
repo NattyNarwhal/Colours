@@ -98,11 +98,11 @@ namespace Colours
         /// <returns>The RGB representation of the colour.</returns>
         public RgbColor ToRgb()
         {
-            int red = Convert.ToInt32((1 - Cyan) * (1 - Key) * 255.0);
-            int green = Convert.ToInt32((1 - Magenta) * (1 - Key) * 255.0);
-            int blue = Convert.ToInt32((1 - Yellow) * (1 - Key) * 255.0);
+            int red = Convert.ToInt32((1 - Cyan) * (1 - Key) * 65535.0);
+            int green = Convert.ToInt32((1 - Magenta) * (1 - Key) * 65535.0);
+            int blue = Convert.ToInt32((1 - Yellow) * (1 - Key) * 65535.0);
 
-            return new RgbColor(red, green, blue);
+            return new RgbColor(red, green, blue, 16);
         }
     }
 }

@@ -103,12 +103,12 @@ namespace Colours
 
             return new RgbColor(
                 Convert.ToInt32(double.Parse(string.Format("{0:0.00}",
-                    Clinear[0] * 255.0))),
+                    Clinear[0] * 65535.0))),
                 Convert.ToInt32(double.Parse(string.Format("{0:0.00}",
-                    Clinear[1] * 255.0))),
+                    Clinear[1] * 65535.0))),
                 Convert.ToInt32(double.Parse(string.Format("{0:0.00}",
-                    Clinear[2] * 255.0)))
-                );
+                    Clinear[2] * 65535.0))),
+                16);
         }
 
         static double Fxyz(double t)

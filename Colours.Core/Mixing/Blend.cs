@@ -31,8 +31,8 @@ namespace Colours
                 yield return new RgbColor(
                     c1.R + (sr * i),
                     c1.G + (sg * i),
-                    c1.B + (sb * i)
-                    );
+                    c1.B + (sb * i),
+                    16);
             }
         }
 

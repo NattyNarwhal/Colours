@@ -24,7 +24,7 @@ let main argv =
         let rgb = hsv.ToRgb();
         let html = rgb.ToHtml()
         if visual then
-            let escaped = trueColorEscape(html, rgb.R, rgb.G, rgb.B)
+            let escaped = trueColorEscape(html, rgb.R8, rgb.G8, rgb.B8)
             printfn "%s" escaped
         else
             printfn "%s" html

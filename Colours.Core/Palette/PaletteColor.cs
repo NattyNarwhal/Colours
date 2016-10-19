@@ -76,7 +76,7 @@ namespace Colours
         /// <returns>The color in a "R G B[tab]Name" form.</returns>
         public override string ToString()
         {
-            return String.Format("{0} {1} {2}\t{3}", Color.R, Color.G, Color.B, Name);
+            return string.Format("{0} {1} {2}\t{3}", Color.R8, Color.G8, Color.B8, Name);
         }
 
         /// <summary>

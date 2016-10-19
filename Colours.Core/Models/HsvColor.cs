@@ -57,7 +57,7 @@ namespace Colours
 
             Hue = c.GetHue();
             Saturation = (max == 0) ? 0 : 1d - (1d * min / max);
-            Value = max / 255d;
+            Value = max / 65535d;
         }
 
         /// <summary>
@@ -82,24 +82,24 @@ namespace Colours
             int hi = Convert.ToInt32(Math.Floor(Hue / 60)) % 6;
             double f = Hue / 60 - Math.Floor(Hue / 60);
 
-            double tempValue = Value * 255;
+            double tempValue = Value * 65535;
             int v = Convert.ToInt32(tempValue);
             int p = Convert.ToInt32(tempValue * (1 - Saturation));
             int q = Convert.ToInt32(tempValue * (1 - f * Saturation));
             int t = Convert.ToInt32(tempValue * (1 - (1 - f) * Saturation));
 
             if (hi == 0)
-                return new RgbColor(v, t, p);
+                return new RgbColor(v, t, p, 16);
             else if (hi == 1)
-                return new RgbColor(q, v, p);
+                return new RgbColor(q, v, p, 16);
             else if (hi == 2)
-                return new RgbColor(p, v, t);
+                return new RgbColor(p, v, t, 16);
             else if (hi == 3)
-                return new RgbColor(p, q, v);
+                return new RgbColor(p, q, v, 16);
             else if (hi == 4)
-                return new RgbColor(t, p, v);
+                return new RgbColor(t, p, v, 16);
             else
-                return new RgbColor(v, p, q);
+                return new RgbColor(v, p, q, 16);
         }
 
         /// <summary>

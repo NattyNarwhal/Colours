@@ -57,9 +57,9 @@ namespace Colours
                                     // to C behaviour leftovers
                                     var blue = sr.ReadSingleBE();
 
-                                    var rr = Convert.ToByte(Math.Round(r * 255));
-                                    var gr = Convert.ToByte(Math.Round(g * 255));
-                                    var br = Convert.ToByte(Math.Round(blue * 255));
+                                    var rr = Convert.ToUInt16(Math.Round(r * 65535));
+                                    var gr = Convert.ToUInt16(Math.Round(g * 65535));
+                                    var br = Convert.ToUInt16(Math.Round(blue * 65535));
 
                                     color = new RgbColor(rr, gr, br);
                                     break;
@@ -136,9 +136,9 @@ namespace Colours
                                 // the FP precision seems to be different than
                                 // Adobe's, but for 8-bit values it generates
                                 // close enough to be the same
-                                csw.WriteSingleBE(pc.Color.R / 255f);
-                                csw.WriteSingleBE(pc.Color.G / 255f);
-                                csw.WriteSingleBE(pc.Color.B / 255f);
+                                csw.WriteSingleBE(pc.Color.R / 65535f);
+                                csw.WriteSingleBE(pc.Color.G / 65535f);
+                                csw.WriteSingleBE(pc.Color.B / 65535f);
 
                                 // write length then chunk
                                 long len = cms.Length;
