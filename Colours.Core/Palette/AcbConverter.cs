@@ -12,8 +12,13 @@ namespace Colours
     /// color books. (ACB files)
     /// </summary>
     /// <remarks>
+    /// <para>
     /// See Adobe's documentation: 
     /// http://www.adobe.com/devnet-apps/photoshop/fileformatashtml/#50577411_pgfId-1066780
+    /// </para>
+    /// <para>
+    /// More useful information: http://magnetiq.com/pages/acb-spec/
+    /// </para>
     /// </remarks>
     public static class AcbConverter
     {
