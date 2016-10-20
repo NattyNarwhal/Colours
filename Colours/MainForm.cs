@@ -496,6 +496,12 @@ namespace Colours
                     p.Name = Path.GetFileNameWithoutExtension(fileName);
                     appPal.NewFromPalette(p, fileName);
                 }
+                else if (fileName.EndsWith(".acb"))
+                {
+                    var p = AcbConverter.FromAcb(File.ReadAllBytes(fileName));
+                    p.Name = Path.GetFileNameWithoutExtension(fileName);
+                    appPal.NewFromPalette(p, fileName);
+                }
                 // implied to be GIMP palette
                 else
                 {

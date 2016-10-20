@@ -94,6 +94,26 @@ namespace Colours
             return s;
         }
 
+        /// <summary>
+        /// Reads a UTF-16BE string.
+        /// </summary>
+        /// <param name="br">
+        /// A <see cref="BinaryReader"/> that has a UTF-16BE string to read.
+        /// </param>
+        /// <param name="trimNull">
+        /// If the trailing null should be trimmed.
+        /// </param>
+        /// <returns>A <see cref="string"/>.</returns>
+        public static string ReadStringBE(this BinaryReader br, bool trimNull)
+        {
+            var len = Convert.ToInt32(br.ReadUInt32BE()) * 2;
+            // we get the length in characters but UTF-16 chars are doublewide
+            var s = Encoding.BigEndianUnicode.GetString(br.ReadBytes(len), 0, len);
+            if (trimNull)
+                s = s.TrimEnd('\0');
+            return s;
+        }
+
         // be explicit with write types
 
         /// <summary>

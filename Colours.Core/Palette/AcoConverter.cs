@@ -19,52 +19,6 @@ namespace Colours
     {
         const int colorStructLen = 10;
 
-        enum ColorSpace
-        {
-            /// <summary>
-            /// Represents a color in the Red/Green/Blue space.
-            /// </summary>
-            /// <remarks>
-            /// Uses 3 channels.
-            /// </remarks>
-            Rgb = 0,
-            /// <summary>
-            /// Represents a color in the Hue/Saturation/Value space.
-            /// </summary>
-            /// <remarks>
-            /// Uses 4 channels.
-            /// </remarks>
-            Hsv = 1,
-            /// <summary>
-            /// Represents a color in the Cyan/Yellow/Magenta space.
-            /// </summary>
-            /// <remarks>
-            /// Uses 4 channels.
-            /// </remarks>
-            Cmyk = 2,
-            // these are unknown and explicitly "black boxes"
-            Pantone = 3,
-            Focoltone = 4,
-            Trumatch = 5,
-            Toyo88Colorfinder1050 = 6,
-            /// <summary>
-            /// Represents a color in the Lightness/A Chroma/B Chroma space.
-            /// </summary>
-            /// <remarks>
-            /// Uses 3 channels.
-            /// </remarks>
-            Lab = 7,
-            /// <summary>
-            /// Represents a greyscale color.
-            /// </summary>
-            /// <remarks>
-            /// Uses 1 channel.
-            /// </remarks>
-            Grey = 8,
-            // more "black boxes"
-            HKS = 10
-        }
-
         enum ParseState
         {
             Version, Count1, Count2, Color1, Color2, Ending
@@ -72,17 +26,17 @@ namespace Colours
 
         static RgbColor FromPhotoshopColorV1(BinaryReader br)
         {
-            var space = (ColorSpace)br.ReadUInt16BE();
+            var space = (AdobeColorSpace)br.ReadUInt16BE();
             
             switch (space)
             {
-                case ColorSpace.Rgb:
+                case AdobeColorSpace.Rgb:
                     var red = br.ReadUInt16BE();
                     var green = br.ReadUInt16BE();
                     var blue = br.ReadUInt16BE();
                     br.ReadUInt16BE(); // nop channel
                     return new RgbColor(red, green, blue);
-                case ColorSpace.Lab:
+                case AdobeColorSpace.Lab:
                     // 0 - 10000 -> 0 - 100
                     var l = br.ReadUInt16BE() / 100;
                     // -12800 - 12700 -> -128 - 127
@@ -90,13 +44,13 @@ namespace Colours
                     var b = br.ReadInt16BE() / 100;
                     br.ReadUInt16BE(); // nop channel
                     return new LabColor(l, a, b).ToXyz().ToRgb();
-                case ColorSpace.Cmyk:
+                case AdobeColorSpace.Cmyk:
                     var cyan = 1d - br.ReadUInt16BE() / 65535d;
                     var magenta = 1d - br.ReadUInt16BE() / 65535d;
                     var yellow = 1d - br.ReadUInt16BE() / 65535d;
                     var key = 1d - br.ReadUInt16BE() / 65535d;
                     return new CmykColor(cyan, magenta, yellow, key).ToRgb();
-                case ColorSpace.Hsv:
+                case AdobeColorSpace.Hsv:
                     // don't ask how I came up with this constant
                     var hue = br.ReadUInt16BE() / 182.0399d;
                     var saturation = br.ReadUInt16BE() / 65535d;
@@ -192,7 +146,7 @@ namespace Colours
             // 10 bytes: 1 ushort for type, 4 ushorts for channels
 
             // type
-            bw.WriteUInt16BE((ushort)ColorSpace.Rgb);
+            bw.WriteUInt16BE((ushort)AdobeColorSpace.Rgb);
             // red channel
             bw.WriteUInt16BE(pc.Color.R);
             // green channel

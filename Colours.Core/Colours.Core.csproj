@@ -51,8 +51,10 @@
     <Compile Include="Models\LabColor.cs" />
     <Compile Include="Models\MathUtils.cs" />
     <Compile Include="Models\XyzColor.cs" />
+    <Compile Include="Palette\AcbConverter.cs" />
     <Compile Include="Palette\AcoConverter.cs" />
     <Compile Include="Palette\ActConverter.cs" />
+    <Compile Include="Palette\AdobeColorSpace.cs" />
     <Compile Include="Palette\AseConverter.cs" />
     <Compile Include="Palette\BigEndianUtils.cs" />
     <Compile Include="Palette\Palette.cs" />
