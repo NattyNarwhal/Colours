@@ -131,7 +131,7 @@ namespace Colours
                     if (new string(sr.ReadChars(4)) != "8BCB")
                         throw new PaletteException("Not a valid color book.");
                     var version = sr.ReadUInt16BE();
-                    Id = sr.ReadUInt16BE();
+                    ID = sr.ReadUInt16BE();
 
                     System.Diagnostics.Debug.WriteLine("ID {0}", id);
 
