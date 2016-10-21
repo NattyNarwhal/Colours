@@ -529,6 +529,10 @@ public partial class MainWindow : Gtk.Window
 			ffAct.Name = "Photoshop Colour Table";
 			ffAct.AddPattern("*.act");
 			fd.AddFilter(ffAct);
+			FileFilter ffAcb = new FileFilter();
+			ffAcb.Name = "Photoshop Color Book";
+			ffAcb.AddPattern("*.acb");
+			fd.AddFilter(ffAcb);
 			FileFilter ffAse = new FileFilter();
 			ffAse.Name = "Adobe Swatch Exchange";
 			ffAse.AddPattern("*.ase");
