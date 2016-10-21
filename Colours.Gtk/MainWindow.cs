@@ -183,7 +183,7 @@ public partial class MainWindow : Gtk.Window
 
 	public void UpdateUI()
 	{
-		Title = String.Format("{0}{1} ({2} for {3})", appPal.Palette.Name,
+		Title = string.Format("{0}{1} ({2} for {3})", appPal.PaletteName,
 			appPal.Dirty ? "*" : "", GetSelectedScheme().Name,
 			app.Color.ToHtml());
 
@@ -430,27 +430,24 @@ public partial class MainWindow : Gtk.Window
 	{
 		if (filename.EndsWith(".aco"))
 		{
-			var p = AcoConverter.FromPhotoshopPalette(
+			var p = new AcoPalette(
 				File.ReadAllBytes(filename));
-			p.Name = System.IO.Path.GetFileNameWithoutExtension(filename);
-			appPal.NewFromPalette(p);
+			appPal.NewFromPalette(p, filename);
 		}
 		else if (filename.EndsWith(".ase"))
 		{
-			var p = AseConverter.FromAse(
+			var p = new AsePalette(
 				File.ReadAllBytes(filename));
-			p.Name = System.IO.Path.GetFileNameWithoutExtension(filename);
-			appPal.NewFromPalette(p);
+			appPal.NewFromPalette(p, filename);
 		}
 		else if (filename.EndsWith(".act"))
 		{
-			var p = ActConverter.FromTable(
+			var p = new ActPalette(
 				File.ReadAllBytes(filename));
-			p.Name = System.IO.Path.GetFileNameWithoutExtension(filename);
-			appPal.NewFromPalette(p);
+			appPal.NewFromPalette(p, filename);
 		}
 		else {
-			appPal.NewFromPalette(new Palette(File.ReadAllText(filename)), filename);
+			appPal.NewFromPalette(new GimpPalette(File.ReadAllText(filename)), filename);
 		}
 	}
 
@@ -490,24 +487,7 @@ public partial class MainWindow : Gtk.Window
 			}
 		}
 
-		if (fileName.EndsWith(".aco"))
-		{
-			File.WriteAllBytes(fileName,
-				AcoConverter.ToPhotoshopPalette(appPal.Palette));
-		}
-		else if (fileName.EndsWith(".ase"))
-		{
-			File.WriteAllBytes(fileName,
-				AseConverter.ToAse(appPal.Palette));
-		}
-		else if (fileName.EndsWith(".act"))
-		{
-			File.WriteAllBytes(fileName,
-				ActConverter.ToTable(appPal.Palette));
-		}
-		else {
-			File.WriteAllText(fileName, appPal.Palette.ToString());
-		}
+		File.WriteAllBytes(fileName, appPal.Palette.ToFile());
 
 		appPal.Dirty = false;
 		appPal.FileName = fileName;
@@ -518,7 +498,7 @@ public partial class MainWindow : Gtk.Window
 	protected void OnNewActionActivated(object sender, EventArgs e)
 	{
 		if (DirtyPrompt())
-			appPal.NewFromPalette(new Palette());
+			appPal.NewFromPalette(new GimpPalette());
 	}
 
 	protected void OnSaveAsActionActivated(object sender, EventArgs e)
@@ -686,21 +666,23 @@ public partial class MainWindow : Gtk.Window
 
 	protected void OnPropertiesActionActivated(object sender, EventArgs e)
 	{
-		var pd = new PropertiesDialog();
-		pd.PaletteTitle = appPal.Palette.Name;
-		pd.PaletteColumns = appPal.Palette.Columns;
-		pd.PaletteComments = appPal.Palette.Comments;
-		if (pd.Run() == (int)ResponseType.Ok)
+		if (appPal.Palette is GimpPalette)
 		{
-			var p = new Palette(appPal.Palette)
+			var unboxed = appPal.Palette as GimpPalette;
+			var pd = new PropertiesDialog();
+			pd.PaletteTitle = unboxed.Name;
+			pd.PaletteColumns = unboxed.Columns;
+			pd.PaletteComments = unboxed.Comments;
+			if (pd.Run() == (int)ResponseType.Ok)
 			{
-				Name = pd.PaletteTitle,
-				Columns = pd.PaletteColumns,
-				Comments = pd.PaletteComments
-			};
-			appPal.SetPalette(p, action: "Properties Change");
+				var p = (GimpPalette)unboxed.Clone();
+				p.Name = pd.PaletteTitle;
+				p.Columns = pd.PaletteColumns;
+				p.Comments = pd.PaletteComments;
+				appPal.SetPalette(p, action: "Properties Change");
+			}
+			pd.Destroy();
 		}
-		pd.Destroy();
 	}
 
 	protected void OnTreeview1DragEnd(object o, DragEndArgs args)
@@ -709,7 +691,7 @@ public partial class MainWindow : Gtk.Window
 		// instead of our own. Resync changes made to the GTK
 		// model, manually.
 
-		var newPal = new Palette(appPal.Palette);
+		var newPal = appPal.Palette.Clone();
 
 		// HACK: we don't have .Select on models
 		var newList = new List<PaletteColor>();
@@ -769,7 +751,7 @@ public partial class MainWindow : Gtk.Window
 	protected void OnBlendActionActivated(object sender, EventArgs e)
 	{
 		var bd = new BlendDialog(app.Color, treeview1.Selection.CountSelectedRows() > 0 ?
-		                         SelectedItems.First().Color : app.Color);
+								 SelectedItems.First().Color : app.Color);
 		if (bd.Run() == (int)ResponseType.Ok)
 		{
 			appPal.AppendColors(bd.SelectedItems);

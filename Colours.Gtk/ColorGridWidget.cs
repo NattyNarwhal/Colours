@@ -8,9 +8,9 @@ namespace Colours
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class ColorGridWidget : Bin
 	{
-		Palette _palette;
+		IPalette _palette;
 
-		public Palette Palette
+		public IPalette Palette
 		{
 			get
 			{
@@ -26,7 +26,7 @@ namespace Colours
 		public ColorGridWidget()
 		{
 			this.Build();
-			Palette = new Palette();
+			Palette = new GimpPalette();
 		}
 
 		void UpdateGrid()
@@ -35,8 +35,10 @@ namespace Colours
 
 			if (Palette.Colors.Count == 0) return;
 
-			var cols = Convert.ToUInt32(Palette.Columns > 0 ? Palette.Columns :
-			                            (Palette.Colors.Count < 16 ? Palette.Colors.Count : 16));
+			uint cols = 16;
+			if (Palette is GimpPalette)
+				cols = Convert.ToUInt32(((GimpPalette)Palette).Columns > 0 ? ((GimpPalette)Palette).Columns :
+				    (Palette.Colors.Count < 16 ? Palette.Colors.Count : 16));
 
 			var batches = Palette.Colors.Batch(Convert.ToInt32(cols));
 			var rows = Convert.ToUInt32(batches.Count());
@@ -53,10 +55,10 @@ namespace Colours
 					var cb = new GridColorButton(pc.Color.ToGdkColor());
 					cb.Tag = pc;
 					cb.TooltipMarkup = String.Format("<b>{0}</b>\r\n{1}\r\n{2}\r\n{3}",
-					                                 pc.Name,
-					                                 pc.Color.ToHtml(),
-					                                 pc.Color.ToHslString(),
-					                                 pc.Color.ToHsv());
+													 pc.Name,
+													 pc.Color.ToHtml(),
+													 pc.Color.ToHslString(),
+													 pc.Color.ToHsv());
 					cb.ButtonPressEvent += ColorButton_Press;
 					cb.ColorSet += (sender, e) =>
 					{
