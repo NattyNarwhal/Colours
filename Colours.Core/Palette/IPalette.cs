@@ -34,4 +34,15 @@ namespace Colours
         /// <returns>The new palette.</returns>
         IPalette Clone();
     }
+
+    /// <summary>
+    /// Represents a color palette abstraction that has a title.
+    /// </summary>
+    public interface INamedPalette : IPalette
+    {
+        /// <summary>
+        /// Gets or sets the name of the palette.
+        /// </summary>
+        string Name { get; set; }
+    }
 }

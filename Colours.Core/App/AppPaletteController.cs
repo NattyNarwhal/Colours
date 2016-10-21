@@ -41,8 +41,8 @@ namespace Colours.App
         {
             get
             {
-                if (Palette is GimpPalette)
-                    return ((GimpPalette)Palette).Name;
+                if (Palette is INamedPalette)
+                    return ((INamedPalette)Palette).Name;
                 else if (!string.IsNullOrWhiteSpace(FileName))
                     return Path.GetFileNameWithoutExtension(FileName);
                 else

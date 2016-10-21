@@ -22,7 +22,7 @@ namespace Colours
     /// </para>
     /// </remarks>
     [DataContract]
-    public class AcbPalette : IPalette
+    public class AcbPalette : INamedPalette
     {
         const string proc = "spflproc";
         const string spot = "spflspot";

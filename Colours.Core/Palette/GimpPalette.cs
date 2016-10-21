@@ -12,7 +12,7 @@ namespace Colours
     /// Represents a color palette, using the GIMP's format as the backend.
     /// </summary>
     [DataContract]
-    public class GimpPalette : IPalette
+    public class GimpPalette : INamedPalette
     {
         const string magic = "GIMP Palette";
 
