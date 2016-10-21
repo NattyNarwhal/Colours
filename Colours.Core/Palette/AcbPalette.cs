@@ -113,13 +113,17 @@ namespace Colours
             return raw.Split('=')[1];
         }
 
+        AcbPalette()
+        {
+            Colors = new List<PaletteColor>();
+        }
+
         /// <summary>
         /// Creates a palette from a Photoshop color book file.
         /// </summary>
         /// <param name="file">The file to convert from.</param>
-        public AcbPalette(byte[] file)
+        public AcbPalette(byte[] file) : this()
         {
-            Colors = new List<PaletteColor>();
             using (var ms = new MemoryStream(file))
             {
                 using (var sr = new BinaryReader(ms))
@@ -127,7 +131,7 @@ namespace Colours
                     if (new string(sr.ReadChars(4)) != "8BCB")
                         throw new PaletteException("Not a valid color book.");
                     var version = sr.ReadUInt16BE();
-                    var id = sr.ReadUInt16BE();
+                    Id = sr.ReadUInt16BE();
 
                     System.Diagnostics.Debug.WriteLine("ID {0}", id);
 
@@ -215,7 +219,22 @@ namespace Colours
         /// <returns>The new palette.</returns>
         public IPalette Clone()
         {
-            throw new NotImplementedException();
+            var p = new AcbPalette();
+            p.ID = ID;
+            p.Name = Name;
+            p.Prefix = Prefix;
+            p.Postfix = Postfix;
+            p.Description = Description;
+            p.ItemsPerPage = ItemsPerPage;
+            p.DefaultSelection = DefaultSelection;
+            p.ColorSpace = ColorSpace;
+            p.Purpose = Purpose;
+            p.Colors = new List<PaletteColor>();
+            // simply copying the list doesn't make it deep but a fill
+            // deep copy would make the colors different; not desirable
+            foreach (var pc in Colors)
+                p.Colors.Add(pc);
+            return p;
         }
     }
 }
