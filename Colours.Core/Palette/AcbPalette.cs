@@ -68,15 +68,21 @@ namespace Colours
         /// This property has similar behaviour to <see cref="GimpPalette.Columns"/>.
         /// </remarks>
         [DataMember]
-        public int ItemsPerPage { get; set; }
+        public ushort ItemsPerPage { get; set; }
         /// <summary>
         /// Gets or sets the index of the default selection on a page.
         /// </summary>
         /// <remarks>
+        /// <para>
+        /// In the scrollbar for a color book in Photoshop, this will be the
+        /// color shown for that page.
+        /// </para>
+        /// <para>
         /// This must be less than or equal to <see cref="ItemsPerPage"/>.
+        /// </para>
         /// </remarks>
         [DataMember]
-        public int DefaultSelection { get; set; }
+        public ushort DefaultSelection { get; set; }
         /// <summary>
         /// Gets or sets the color space of the palette.
         /// </summary>
