@@ -2,22 +2,27 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Colours
 {
     /// <summary>
-    /// Converts to and from <see cref="Palette"/> and Photoshop
-    /// swatches. (ACO files)
+    /// Represents a color palette, using the Adobe's format as the backend.
     /// </summary>
     /// <remarks>
     /// See Adobe's documentation: 
     /// http://www.adobe.com/devnet-apps/photoshop/fileformatashtml/#50577411_pgfId-1055819
     /// </remarks>
-    public static class AcoConverter
+    [DataContract]
+    public class AcoPalette : IPalette
     {
-        const int colorStructLen = 10;
+        /// <summary>
+        /// Gets or sets a list of colors.
+        /// </summary>
+        [DataMember]
+        public List<PaletteColor> Colors { get; set; }
 
         enum ParseState
         {
@@ -63,17 +68,21 @@ namespace Colours
             }
         }
 
+        private AcoPalette()
+        {
+            Colors = new List<PaletteColor>();
+        }
+
         /// <summary>
         /// Creates a palette from a Photoshop swatch file.
         /// </summary>
         /// <param name="file">The file to convert from.</param>
-        /// <returns>The new palette.</returns>
-        public static Palette FromPhotoshopPalette(byte[] file)
+        public AcoPalette(byte[] file)
         {
             // use two different palettes for v1 and v2 palettes,
             // and only use the winner
-            var pal1 = new Palette();
-            var pal2 = new Palette();
+            var pal1 = new List<PaletteColor>();
+            var pal2 = new List<PaletteColor>();
 
             // Photoshop's smallest column size is 16, and some
             // palettes like Visibone do use the column view.
@@ -111,7 +120,7 @@ namespace Colours
                                 if (colorPos++ < count)
                                 {
                                     var c = FromPhotoshopColorV1(sr);
-                                    pal1.Colors.Add(new PaletteColor(c));
+                                    pal1.Add(new PaletteColor(c));
                                 }
                                 else state = file.Length > ms.Position ? ParseState.Version : ParseState.Ending;
                                 break;
@@ -126,7 +135,7 @@ namespace Colours
                                     var c = FromPhotoshopColorV1(sr);
                                     var strLen = sr.ReadUInt32BE();
                                     var name = sr.ReadStringBE(Convert.ToInt32(strLen), true);
-                                    pal2.Colors.Add(new PaletteColor(c, name));
+                                    pal2.Add(new PaletteColor(c, name));
                                 }
                                 else state = ParseState.Ending;
                                 break;
@@ -137,8 +146,7 @@ namespace Colours
 
             // because palettes with names have both v1 and v2, but v2
             // has names, only export v1 if it has more colours
-            return pal1.Colors.Count > pal2.Colors.Count
-                ? pal1 : pal2;
+            Colors = pal1.Count > pal2.Count ? pal1 : pal2;
         }
 
         static void ToPhotoshopColorV1(BinaryWriter bw, PaletteColor pc)
@@ -169,13 +177,12 @@ namespace Colours
         }
 
         /// <summary>
-        /// Creates a Photoshop palette from a <see cref="Palette"/>.
+        /// Creates a Photoshop palette file from this palette.
         /// </summary>
-        /// <param name="p">The palette to convert.</param>
         /// <returns>The Photoshop palette file.</returns>
-        public static byte[] ToPhotoshopPalette(Palette p)
+        public byte[] ToFile()
         {
-            if (p.Colors.Count > ushort.MaxValue)
+            if (Colors.Count > ushort.MaxValue)
                 throw new ArgumentOutOfRangeException("There are too many colors in the palette.");
 
             using (var s = new MemoryStream())
@@ -183,18 +190,18 @@ namespace Colours
                 using (var sw = new BinaryWriter(s))
                 {
                     // write both v1 and v2 palettes
-                    var count = Convert.ToUInt16(p.Colors.Count);
+                    var count = Convert.ToUInt16(Colors.Count);
 
                     // v1
                     sw.WriteUInt16BE(1);
                     sw.WriteUInt16BE(count);
-                    foreach (var pc in p.Colors)
+                    foreach (var pc in Colors)
                         ToPhotoshopColorV1(sw, pc);
 
                     // v2
                     sw.WriteUInt16BE(2);
                     sw.WriteUInt16BE(count);
-                    foreach (var pc in p.Colors)
+                    foreach (var pc in Colors)
                         ToPhotoshopColorV2(sw, pc);
                     
                     s.Position = 0;
@@ -204,6 +211,24 @@ namespace Colours
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Creates a new palette with properties identical to the old one.
+        /// </summary>
+        /// <remarks>
+        /// This is intended for changing the properties of a palette, while
+        /// preserving the old version's properties, due to changing the
+        /// reference.
+        /// </remarks>
+        /// <returns>The new palette.</returns>
+        public IPalette Clone()
+        {
+            var p = new AcoPalette();
+            p.Colors = new List<PaletteColor>();
+            foreach (var c in Colors)
+                p.Colors.Add(c);
+            return p;
         }
     }
 }

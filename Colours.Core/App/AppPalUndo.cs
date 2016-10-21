@@ -14,7 +14,7 @@ namespace Colours.App
         /// <summary>
         /// The palette state.
         /// </summary>
-        public Palette Palette { get; set; }
+        public IPalette Palette { get; set; }
         /// <summary>
         /// The name of the action that was taken.
         /// </summary>
@@ -25,7 +25,7 @@ namespace Colours.App
         /// </summary>
         /// <param name="p">The palette.</param>
         /// <param name="n">The name of the action that was taken.</param>
-        public AppPalUndo(Palette p, string n)
+        public AppPalUndo(IPalette p, string n)
         {
             Palette = p;
             Name = n;

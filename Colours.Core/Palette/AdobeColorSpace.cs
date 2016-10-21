@@ -9,12 +9,7 @@ namespace Colours
     /// <summary>
     /// The color space values that Adobe file formats use.
     /// </summary>
-    /// <remarks>
-    /// The converters that use these are <see cref="AcoConverter"/> and
-    /// <see cref="AcbConverter"/>. <see cref="AseConverter"/> does not use
-    /// these values, instead using four-character identifiers.
-    /// </remarks>
-    internal enum AdobeColorSpace
+    public enum AdobeColorSpace
     {
         /// <summary>
         /// Represents a color in the Red/Green/Blue space.

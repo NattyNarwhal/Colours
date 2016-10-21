@@ -2,34 +2,46 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Colours
 {
     /// <summary>
-    /// Converts to and from <see cref="Palette"/> and Photoshop tables.
-    /// (ACT files)
+    /// Represents a color palette, using the Adobe's color tables format as
+    /// the backend.
     /// </summary>
     /// <remarks>
     /// See Adobe's documentation: 
     /// http://www.adobe.com/devnet-apps/photoshop/fileformatashtml/#50577411_pgfId-1070626
     /// </remarks>
-    public static class ActConverter
+    [DataContract]
+    public class ActPalette : IPalette
     {
+        /// <summary>
+        /// Gets or sets a list of colors.
+        /// </summary>
+        [DataMember]
+        public List<PaletteColor> Colors { get; set; }
+
+        // TODO: Transparency index support
+
+        ActPalette()
+        {
+            Colors = new List<PaletteColor>();
+        }
+
         /// <summary>
         /// Creates a palette from a colour table.
         /// </summary>
-        /// <param name="file">The file as a bytestream.</param>
-        /// <returns>A palette from the table</returns>
+        /// <param name="file">The file as a byte array.</param>
         /// <remarks>
         /// Note that the resulting color can be truncated by a directive
         /// after the first 768 bytes.
         /// </remarks>
-        public static Palette FromTable(byte[] file)
+        public ActPalette(byte[] file) : this()
         {
-            var p = new Palette() { Name = "Imported from Photoshop" };
-
             if (file.Length > 772 || file.Length < 768)
                 throw new PaletteException("Not a valid colour table length.");
 
@@ -39,7 +51,7 @@ namespace Colours
                 using (var sr = new BinaryReader(s))
                 {
                     for (int i = 0; i < 256; i++)
-                        p.Colors.Add(
+                        Colors.Add(
                             new PaletteColor(
                                 new RgbColor(sr.ReadByte(), sr.ReadByte(), sr.ReadByte())
                                 )
@@ -49,32 +61,29 @@ namespace Colours
                     {
                         var truncateTo = sr.ReadUInt16BE();
 
-                        p.Colors = p.Colors.Take(truncateTo).ToList();
+                        Colors = Colors.Take(truncateTo).ToList();
 
                         // we don't support transparency indices
                     }
                 }
             }
-
-            return p;
         }
 
         /// <summary>
         /// Creates a colour table from a palette.
         /// </summary>
-        /// <param name="p">The palette to convert.</param>
         /// <returns>The colour table, as a byte stream.</returns>
         /// <remarks>
         /// If the length of the palette is exactly 256, then no metadata will
         /// be appended.
         /// </remarks>
-        public static byte[] ToTable(Palette p)
+        public byte[] ToFile()
         {
             using (var s = new MemoryStream())
             {
                 using (var sw = new BinaryWriter(s))
                 {
-                    var l = p.Colors.Take(256).Select(x => x.Color).ToArray();
+                    var l = Colors.Take(256).Select(x => x.Color).ToArray();
 
                     const byte defaultChannel = 0xFF;
                     for (int i = 0; i < 256; i++)
@@ -112,6 +121,24 @@ namespace Colours
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Creates a new palette with properties identical to the old one.
+        /// </summary>
+        /// <remarks>
+        /// This is intended for changing the properties of a palette, while
+        /// preserving the old version's properties, due to changing the
+        /// reference.
+        /// </remarks>
+        /// <returns>The new palette.</returns>
+        public IPalette Clone()
+        {
+            var p = new ActPalette();
+            p.Colors = new List<PaletteColor>();
+            foreach (var c in Colors)
+                p.Colors.Add(c);
+            return p;
         }
     }
 }

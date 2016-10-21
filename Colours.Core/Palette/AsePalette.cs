@@ -2,22 +2,36 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Colours
 {
     /// <summary>
-    /// Converts to and from the Adobe Swatch Exchange format.
+    /// Represents a color palette, using the Adobe's Swatch Exchange format as
+    /// the backend.
     /// </summary>
-    public static class AseConverter
+    [DataContract]
+    public class AsePalette : IPalette
     {
+        /// <summary>
+        /// Gets or sets a list of colors.
+        /// </summary>
+        [DataMember]
+        public List<PaletteColor> Colors { get; set; }
+
+        AsePalette()
+        {
+            Colors = new List<PaletteColor>();
+        }
+
         /// <summary>
         /// Creates a palette from an Adobe Swatch Exchange file.
         /// </summary>
         /// <param name="file">The file, as an array of bytes.</param>
         /// <returns>The converted palette.</returns>
-        public static Palette FromAse(byte[] file)
+        public AsePalette(byte[] file) : this()
         {
             using (var ms = new MemoryStream(file))
             {
@@ -33,7 +47,6 @@ namespace Colours
                         throw new PaletteException("The version is unsupported.");
 
                     var count = sr.ReadUInt32BE();
-                    var p = new Palette();
 
                     for (int i = 0; i < count; i++)
                     {
@@ -75,7 +88,7 @@ namespace Colours
                                         string.Format("The colorspace ({0}) is unsupported.", colorSpace));
                             }
 
-                            p.Colors.Add(new PaletteColor(color, name));
+                            Colors.Add(new PaletteColor(color, name));
 
                             var colorType = sr.ReadUInt16BE();
                         }
@@ -85,8 +98,6 @@ namespace Colours
                             sr.ReadBytes(Convert.ToInt32(length));
                         }
                     }
-
-                    return p;
                 }
             }
         }
@@ -94,9 +105,8 @@ namespace Colours
         /// <summary>
         /// Creates an Adobe Swatch Exchange file from a palette.
         /// </summary>
-        /// <param name="p">The palette to convert.</param>
         /// <returns>The ASE file, as a byte array.</returns>
-        public static byte[] ToAse(Palette p)
+        public byte[] ToFile()
         {
             using (var ms = new MemoryStream())
             {
@@ -110,8 +120,8 @@ namespace Colours
                     sw.Write(new byte[] { 0, 1, 0, 0 });
 
                     // count
-                    sw.WriteUInt32BE(Convert.ToUInt32(p.Colors.Count));
-                    foreach (var pc in p.Colors)
+                    sw.WriteUInt32BE(Convert.ToUInt32(Colors.Count));
+                    foreach (var pc in Colors)
                     {
                         // block is color
                         sw.WriteUInt16BE(1);
@@ -163,6 +173,24 @@ namespace Colours
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Creates a new palette with properties identical to the old one.
+        /// </summary>
+        /// <remarks>
+        /// This is intended for changing the properties of a palette, while
+        /// preserving the old version's properties, due to changing the
+        /// reference.
+        /// </remarks>
+        /// <returns>The new palette.</returns>
+        public IPalette Clone()
+        {
+            var p = new AsePalette();
+            p.Colors = new List<PaletteColor>();
+            foreach (var c in Colors)
+                p.Colors.Add(c);
+            return p;
         }
     }
 }

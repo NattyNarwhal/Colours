@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace Colours.App
         /// <summary>
         /// Represents the application's palette. Use the setter to change this.
         /// </summary>
-        public Palette Palette { get; set; }
+        public IPalette Palette { get; set; }
         /// <summary>
         /// The undo history. This will be set for you by the functions in this object.
         /// </summary>
@@ -25,13 +26,29 @@ namespace Colours.App
         /// </summary>
         public Stack<AppPalUndo> RedoHistory { get; private set; }
         /// <summary>
-        /// Gets the file name of the loaded file
+        /// Gets the file name of the loaded file.
         /// </summary>
         public string FileName { get; set; }
         /// <summary>
         /// Gets if the file should be saved.
         /// </summary>
         public bool Dirty { get; set; }
+
+        /// <summary>
+        /// Gets the name of the palette, using the file name as a fallback.
+        /// </summary>
+        public string PaletteName
+        {
+            get
+            {
+                if (Palette is GimpPalette)
+                    return ((GimpPalette)Palette).Name;
+                else if (!string.IsNullOrWhiteSpace(FileName))
+                    return Path.GetFileNameWithoutExtension(FileName);
+                else
+                    return string.Empty;
+            }
+        }
 
         /// <summary>
         /// This event is fired whenever the result is changed as a
@@ -68,7 +85,7 @@ namespace Colours.App
         /// </summary>
         public void New()
         {
-            NewFromPalette(new Palette());
+            NewFromPalette(new GimpPalette());
         }
 
         /// <summary>
@@ -76,7 +93,7 @@ namespace Colours.App
         /// </summary>
         /// <param name="p">The existing palette to use.</param>
         /// <param name="fileName">The name of the file.</param>
-        public void NewFromPalette(Palette p, string fileName = null)
+        public void NewFromPalette(IPalette p, string fileName = null)
         {
             Palette = p;
             FileName = fileName;
@@ -92,7 +109,7 @@ namespace Colours.App
         /// <param name="keepHistory">If undo should have been added.</param>
         /// <param name="fireEvent">If the event should fire.</param>
         /// <param name="action">If the undo is added, the action it is described as.</param>
-        public void SetPalette(Palette p, bool keepHistory = true, bool fireEvent = true, string action = null)
+        public void SetPalette(IPalette p, bool keepHistory = true, bool fireEvent = true, string action = null)
         {
             if (keepHistory && Palette != p)
                 PushUndo(action ?? "Palette Change");
@@ -125,7 +142,7 @@ namespace Colours.App
         {
             if (keepHistory)
                 PushUndo(action ?? "Add Colour"); // TODO: should we announce the colour we're acting on? same for other funcs
-            Palette = new Palette(Palette);
+            Palette = Palette.Clone();
             Palette.Colors.Add(pc);
             Dirty = true;
             if (fireEvent)
@@ -172,7 +189,7 @@ namespace Colours.App
         {
             if (keepHistory)
                 PushUndo(action ?? "Delete Colour");
-            Palette = new Palette(Palette);
+            Palette = Palette.Clone();
             Palette.Colors.Remove(pc);
             Dirty = true;
             if (fireEvent)
@@ -209,7 +226,7 @@ namespace Colours.App
         {
             if (keepHistory)
                 PushUndo(action ?? "Rename Colour");
-            Palette = new Palette(Palette);
+            Palette = Palette.Clone();
             Palette.Colors[index] =
                 new PaletteColor(Palette.Colors[index].Color, newName);
             Dirty = true;
@@ -243,7 +260,7 @@ namespace Colours.App
         {
             if (keepHistory)
                 PushUndo(action ?? "Rename Colours");
-            Palette = new Palette(Palette);
+            Palette = Palette.Clone();
             foreach (var i in newNames)
             {
                 var index = Palette.Colors.IndexOf(i.Key);
@@ -269,7 +286,7 @@ namespace Colours.App
         {
             if (keepHistory)
                 PushUndo(action ?? "Move Colour");
-            Palette = new Palette(Palette);
+            Palette = Palette.Clone();
             Palette.Colors.Remove(pc);
             Palette.Colors.Insert(newIndex, pc);
             Dirty = true;
@@ -304,7 +321,7 @@ namespace Colours.App
         {
             if (keepHistory)
                 PushUndo(action ?? "Move Colours");
-            Palette = new Palette(Palette);
+            Palette = Palette.Clone();
             Palette.Colors.RemoveAll(x => lpc.Contains(x));
             // ugly stuff to handle moves gracefully
             if (targetPC != null)
@@ -328,7 +345,7 @@ namespace Colours.App
         {
             if (keepHistory)
                 PushUndo(action ?? "Change Colour");
-            Palette = new Palette(Palette);
+            Palette = Palette.Clone();
             if (Palette.Colors.Contains(pc))
                 pc.Color = newColor;
             Dirty = true;
@@ -348,7 +365,7 @@ namespace Colours.App
         {
             if (keepHistory)
                 PushUndo(action ?? "Change Colours");
-            Palette = new Palette(Palette);
+            Palette = Palette.Clone();
             foreach (var pc in lpc)
                 if (Palette.Colors.Contains(pc))
                     pc.Color = newColor;
@@ -369,7 +386,7 @@ namespace Colours.App
         {
             if (keepHistory)
                 PushUndo(action ?? "Sort Colours");
-            Palette = new Palette(Palette);
+            Palette = Palette.Clone();
             switch (sortBy)
             {
                 case PaletteSortBy.Name:

@@ -111,7 +111,7 @@ namespace Colours
         public void UpdateUI()
         {
             Text = string.Format("{0}{1} ({2} for {3})",
-                appPal.Palette.Name, appPal.Dirty ? "*" : "",
+                appPal.PaletteName, appPal.Dirty ? "*" : "",
                 schemeBox.SelectedItem.ToString(), app.Color.ToHtml());
 
             var hasAny = appPal.Palette.Colors.Count > 0;
@@ -362,7 +362,7 @@ namespace Colours
         private void saveAsHTMLToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (String.IsNullOrEmpty(saveAsHtmlDialog.FileName))
-                saveAsHtmlDialog.FileName = appPal.Palette.Name;
+                saveAsHtmlDialog.FileName = appPal.PaletteName;
             if (saveAsHtmlDialog.ShowDialog(this) == DialogResult.OK)
             {
                 File.WriteAllText(saveAsHtmlDialog.FileName,
@@ -420,7 +420,7 @@ namespace Colours
                 // on its palette title name - the save dialog will
                 // handle the extension
                 if (appPal.FileName == null)
-                    savePaletteDialog.FileName = appPal.Palette.Name;
+                    savePaletteDialog.FileName = appPal.PaletteName;
                 // set the file name later, in case more interruptions
                 // will stop us from writing the file (user intervention,
                 // exceptions)
@@ -437,29 +437,7 @@ namespace Colours
 
             try
             {
-                if (fileName.EndsWith(".aco"))
-                {
-                    File.WriteAllBytes(fileName,
-                        AcoConverter.ToPhotoshopPalette(appPal.Palette));
-                }
-                else if (fileName.EndsWith(".ase"))
-                {
-                    File.WriteAllBytes(fileName,
-                        AseConverter.ToAse(appPal.Palette));
-                }
-                else if (fileName.EndsWith(".act"))
-                {
-                    if (appPal.Palette.Colors.Count > 256 && freshFile)
-                        MessageBox.Show(this,
-                        "There are too many colours in the palette for this format, and will be truncated to fit.",
-                        "Colours", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                    File.WriteAllBytes(fileName,
-                        ActConverter.ToTable(appPal.Palette));
-                }
-                else
-                {
-                    File.WriteAllText(fileName, appPal.Palette.ToString());
-                }
+                File.WriteAllBytes(fileName, appPal.Palette.ToFile());
                 appPal.FileName = fileName;
                 appPal.Dirty = false;
                 // update the titlebar's dirtiness
@@ -479,33 +457,29 @@ namespace Colours
             {
                 if (fileName.EndsWith(".aco"))
                 {
-                    var p = AcoConverter.FromPhotoshopPalette(
-                        File.ReadAllBytes(fileName));
-                    p.Name = Path.GetFileNameWithoutExtension(fileName);
+                    var p = new AcoPalette(File.ReadAllBytes(fileName));
                     appPal.NewFromPalette(p, fileName);
                 }
                 else if (fileName.EndsWith(".act"))
                 {
-                    var p = ActConverter.FromTable(File.ReadAllBytes(fileName));
-                    p.Name = Path.GetFileNameWithoutExtension(fileName);
+                    var p = new ActPalette(File.ReadAllBytes(fileName));
                     appPal.NewFromPalette(p, fileName);
                 }
                 else if (fileName.EndsWith(".ase"))
                 {
-                    var p = AseConverter.FromAse(File.ReadAllBytes(fileName));
-                    p.Name = Path.GetFileNameWithoutExtension(fileName);
+                    var p = new AsePalette(File.ReadAllBytes(fileName));
                     appPal.NewFromPalette(p, fileName);
                 }
                 else if (fileName.EndsWith(".acb"))
                 {
-                    var p = AcbConverter.FromAcb(File.ReadAllBytes(fileName));
-                    p.Name = Path.GetFileNameWithoutExtension(fileName);
+                    var p = new AcbPalette(File.ReadAllBytes(fileName));
                     appPal.NewFromPalette(p, fileName);
                 }
                 // implied to be GIMP palette
                 else
                 {
-                    appPal.NewFromPalette(new Palette(File.ReadAllLines(fileName)), fileName);
+                    var p = new GimpPalette(File.ReadAllLines(fileName));
+                    appPal.NewFromPalette(p, fileName);
                 }
             }
             catch (PaletteException e)
@@ -705,21 +679,23 @@ namespace Colours
 
         private void propertiesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var pd = new PalettePropertiesForm()
+            if (appPal.Palette is GimpPalette)
             {
-                PaletteTitle = appPal.Palette.Name,
-                PaletteColumns = appPal.Palette.Columns,
-                PaletteComments = appPal.Palette.Comments
-            };
-            if (pd.ShowDialog(this) == DialogResult.OK)
-            {
-                var p = new Palette(appPal.Palette)
+                var unboxed = (GimpPalette)appPal.Palette;
+                var pd = new PalettePropertiesForm()
                 {
-                    Name = pd.PaletteTitle,
-                    Columns = pd.PaletteColumns,
-                    Comments = pd.PaletteComments
+                    PaletteTitle = unboxed.Name,
+                    PaletteColumns = unboxed.Columns,
+                    PaletteComments = unboxed.Comments
                 };
-                appPal.SetPalette(p, action: "Properties Change");
+                if (pd.ShowDialog(this) == DialogResult.OK)
+                {
+                    var p = (GimpPalette)unboxed.Clone();
+                    p.Name = pd.PaletteTitle;
+                    p.Columns = pd.PaletteColumns;
+                    p.Comments = pd.PaletteComments;
+                    appPal.SetPalette(p, action: "Properties Change");
+                }
             }
         }
 

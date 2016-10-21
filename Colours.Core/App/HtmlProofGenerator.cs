@@ -79,13 +79,18 @@ namespace Colours.App
         /// The palette to use as a body.
         /// </param>
         /// <returns>The HTML page.</returns>
-        public static string GeneratePage(Palette pal)
+        public static string GeneratePage(IPalette pal)
         {
-            var comments = String.Format("<pre>{0}</pre>",
-                String.Join(Environment.NewLine, pal.Comments));
+            var hasMeta = pal is GimpPalette;
+
+            var name = hasMeta ? ((GimpPalette)pal).Name : "Palette";
+            var comments = hasMeta ? string.Format("<pre>{0}</pre>",
+                string.Join(Environment.NewLine, ((GimpPalette)pal).Comments))
+                : string.Empty;;
+            var columns = hasMeta ? ((GimpPalette)pal).Columns : 0;
 
             var tables = new StringBuilder();
-            if (pal.Columns == 0)
+            if (columns == 0)
                 foreach (var pc in pal.Colors)
                     tables.Append(GenerateTable(pc));
             else
@@ -95,7 +100,7 @@ namespace Colours.App
                 while (pal.Colors.Count > pos)
                 {
                     tables.AppendLine("<tr>");
-                    var row = pal.Colors.Skip(pos).Take(pal.Columns);
+                    var row = pal.Colors.Skip(pos).Take(columns);
                     pos += row.Count();
                     foreach (var pc in row)
                     {
@@ -108,7 +113,7 @@ namespace Colours.App
                 tables.AppendLine("</table>");
             }
 
-            return String.Format(page, pal.Name, comments + tables);
+            return String.Format(page, name, comments + tables);
         }
     }
 }

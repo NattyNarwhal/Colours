@@ -38,14 +38,14 @@ namespace Colours
                 EnableScrollBar(new HandleRef(this, Handle), 1, enable ? 0 : 3);
         }
 
-        Palette _palette;
+        IPalette _palette;
         // for button dnd
         bool isDragged = false;
         Point drag;
 
         // We can't let VS see this as it wants to serialize Palette, which it can't
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public Palette Palette
+        public IPalette Palette
         {
             get
             {
@@ -66,7 +66,7 @@ namespace Colours
         {
             InitializeComponent();
 
-            Palette = new Palette();
+            Palette = new GimpPalette();
             Resize += (o, e) => ResizeUI();
         }
 
@@ -79,8 +79,12 @@ namespace Colours
             if (Palette.Colors.Count == 0)
                 goto end; // a velociraptor eats you
 
-            int cols = Palette.Columns > 0 ? Palette.Columns :
-                (Palette.Colors.Count < 16 ? Palette.Colors.Count : 16);
+            int cols = 16;
+            if (Palette is GimpPalette)
+                cols = ((GimpPalette)Palette).Columns > 0 ?
+                    ((GimpPalette)Palette).Columns :
+                    (Palette.Colors.Count < 16 ?
+                        Palette.Colors.Count : 16);
 
             table.ColumnCount = cols;
             foreach (ColumnStyle s in table.ColumnStyles)
