@@ -133,8 +133,6 @@ namespace Colours
                     var version = sr.ReadUInt16BE();
                     ID = sr.ReadUInt16BE();
 
-                    System.Diagnostics.Debug.WriteLine("ID {0}", id);
-
                     Name = GetValue(sr.ReadStringBE(false));
                     Prefix = GetValue(sr.ReadStringBE(false));
                     Postfix = GetValue(sr.ReadStringBE(false));
