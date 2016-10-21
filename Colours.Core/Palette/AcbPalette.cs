@@ -36,7 +36,7 @@ namespace Colours
         /// own palettes.
         /// </remarks>
         [DataMember]
-        public string ID { get; set; }
+        public ushort ID { get; set; }
         /// <summary>
         /// Gets or sets the name of the palette.
         /// </summary>
