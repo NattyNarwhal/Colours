@@ -85,6 +85,11 @@ namespace Colours
                     ((GimpPalette)Palette).Columns :
                     (Palette.Colors.Count < 16 ?
                         Palette.Colors.Count : 16);
+            else if (Palette is AcbPalette)
+                cols = ((AcbPalette)Palette).ItemsPerPage > 0 ?
+                    ((AcbPalette)Palette).ItemsPerPage :
+                    (Palette.Colors.Count < 16 ?
+                        Palette.Colors.Count : 16);
 
             table.ColumnCount = cols;
             foreach (ColumnStyle s in table.ColumnStyles)

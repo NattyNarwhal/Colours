@@ -81,13 +81,23 @@ namespace Colours.App
         /// <returns>The HTML page.</returns>
         public static string GeneratePage(IPalette pal)
         {
-            var hasMeta = pal is GimpPalette;
+            string name = string.Empty;
+            string comments = string.Empty;
+            int columns = 0;
 
-            var name = hasMeta ? ((GimpPalette)pal).Name : "Palette";
-            var comments = hasMeta ? string.Format("<pre>{0}</pre>",
-                string.Join(Environment.NewLine, ((GimpPalette)pal).Comments))
-                : string.Empty;;
-            var columns = hasMeta ? ((GimpPalette)pal).Columns : 0;
+            if (pal is INamedPalette)
+                name = ((INamedPalette)pal).Name;
+
+            if (pal is AcbPalette)
+            {
+                columns = ((AcbPalette)pal).ItemsPerPage;
+                comments = ((AcbPalette)pal).Description;
+            }
+            else if (pal is GimpPalette)
+            {
+                columns = ((GimpPalette)pal).Columns;
+                comments = string.Join("<br/>", ((GimpPalette)pal).Comments);
+            }
 
             var tables = new StringBuilder();
             if (columns == 0)
