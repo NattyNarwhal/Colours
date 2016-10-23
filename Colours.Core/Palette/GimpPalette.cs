@@ -12,7 +12,7 @@ namespace Colours
     /// Represents a color palette, using the GIMP's format as the backend.
     /// </summary>
     [DataContract]
-    public class GimpPalette : INamedPalette
+    public class GimpPalette : INamedPalette, IBucketedPalette
     {
         const string magic = "GIMP Palette";
 
@@ -32,7 +32,7 @@ namespace Colours
         /// the grid's logic will choose how many columns it wants.
         /// </summary>
         [DataMember]
-        public int Columns { get; set; }
+        public int BucketSize { get; set; }
         /// <summary>
         /// Gets or sets a list of colors.
         /// </summary>
@@ -52,7 +52,7 @@ namespace Colours
             Colors = new List<PaletteColor>();
             Name = "Untitled";
             Comments = new List<string>();
-            Columns = 0;
+            BucketSize = 0;
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Colours
                     int i = 0; // a default
                     int.TryParse(Regex.Match(l,
                         columnsRegex).Groups[1].Value, out i);
-                    Columns = i;
+                    BucketSize = i;
                 }
                 else if (Regex.IsMatch(l, nameRegex))
                 {
@@ -111,7 +111,7 @@ namespace Colours
         public GimpPalette(string name, int columns, IEnumerable<RgbColor> colors)
         {
             Name = name;
-            Columns = columns;
+            BucketSize = columns;
             Colors = colors
                         .Select(c => new PaletteColor(c, "Untitled"))
                         .ToList();
@@ -140,7 +140,7 @@ namespace Colours
             // make the header
             sb.AppendLine(magic);
             sb.AppendLine(String.Format("Name: {0}", Name));
-            sb.AppendLine(String.Format("Columns: {0}", Columns));
+            sb.AppendLine(String.Format("Columns: {0}", BucketSize));
 
             if (Comments.Count > 0)
             {
@@ -177,7 +177,7 @@ namespace Colours
         {
             var p = new GimpPalette();
             p.Name = Name;
-            p.Columns = Columns;
+            p.BucketSize = BucketSize;
             p.Colors = new List<PaletteColor>();
             p.Comments = new List<string>();
             // simply copying the list doesn't make it deep but a fill

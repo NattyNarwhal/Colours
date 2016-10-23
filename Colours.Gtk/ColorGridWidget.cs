@@ -36,8 +36,8 @@ namespace Colours
 			if (Palette.Colors.Count == 0) return;
 
 			uint cols = 16;
-			if (Palette is GimpPalette)
-				cols = Convert.ToUInt32(((GimpPalette)Palette).Columns > 0 ? ((GimpPalette)Palette).Columns :
+			if (Palette is IBucketedPalette)
+				cols = Convert.ToUInt32(((IBucketedPalette)Palette).BucketSize > 0 ? ((IBucketedPalette)Palette).BucketSize :
 				    (Palette.Colors.Count < 16 ? Palette.Colors.Count : 16));
 
 			var batches = Palette.Colors.Batch(Convert.ToInt32(cols));

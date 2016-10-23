@@ -80,14 +80,9 @@ namespace Colours
                 goto end; // a velociraptor eats you
 
             int cols = 16;
-            if (Palette is GimpPalette)
-                cols = ((GimpPalette)Palette).Columns > 0 ?
-                    ((GimpPalette)Palette).Columns :
-                    (Palette.Colors.Count < 16 ?
-                        Palette.Colors.Count : 16);
-            else if (Palette is AcbPalette)
-                cols = ((AcbPalette)Palette).ItemsPerPage > 0 ?
-                    ((AcbPalette)Palette).ItemsPerPage :
+            if (Palette is IBucketedPalette)
+                cols = ((IBucketedPalette)Palette).BucketSize > 0 ?
+                    ((IBucketedPalette)Palette).BucketSize :
                     (Palette.Colors.Count < 16 ?
                         Palette.Colors.Count : 16);
 

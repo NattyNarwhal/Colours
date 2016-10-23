@@ -22,7 +22,7 @@ namespace Colours
     /// </para>
     /// </remarks>
     [DataContract]
-    public class AcbPalette : INamedPalette
+    public class AcbPalette : INamedPalette, IBucketedPalette
     {
         const string proc = "spflproc";
         const string spot = "spflspot";
@@ -64,11 +64,8 @@ namespace Colours
         /// Gets or sets how many colours will be displays per page of the
         /// book.
         /// </summary>
-        /// <remarks>
-        /// This property has similar behaviour to <see cref="GimpPalette.Columns"/>.
-        /// </remarks>
         [DataMember]
-        public ushort ItemsPerPage { get; set; }
+        public int BucketSize { get; set; }
         /// <summary>
         /// Gets or sets the index of the default selection on a page.
         /// </summary>
@@ -78,7 +75,7 @@ namespace Colours
         /// color shown for that page.
         /// </para>
         /// <para>
-        /// This must be less than or equal to <see cref="ItemsPerPage"/>.
+        /// This must be less than or equal to <see cref="BucketSize"/>.
         /// </para>
         /// </remarks>
         [DataMember]
@@ -145,7 +142,7 @@ namespace Colours
                     Description = UnescapeString(GetValue(sr.ReadStringBE(false)));
 
                     var count = sr.ReadUInt16BE();
-                    ItemsPerPage = sr.ReadUInt16BE();
+                    BucketSize = sr.ReadUInt16BE();
                     DefaultSelection = sr.ReadUInt16BE();
                     ColorSpace = (AdobeColorSpace)sr.ReadUInt16BE();
 
@@ -229,7 +226,7 @@ namespace Colours
             p.Prefix = Prefix;
             p.Postfix = Postfix;
             p.Description = Description;
-            p.ItemsPerPage = ItemsPerPage;
+            p.BucketSize = BucketSize;
             p.DefaultSelection = DefaultSelection;
             p.ColorSpace = ColorSpace;
             p.Purpose = Purpose;

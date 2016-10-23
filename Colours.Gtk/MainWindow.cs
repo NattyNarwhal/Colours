@@ -675,13 +675,13 @@ public partial class MainWindow : Gtk.Window
 			var unboxed = appPal.Palette as GimpPalette;
 			var pd = new PropertiesDialog();
 			pd.PaletteTitle = unboxed.Name;
-			pd.PaletteColumns = unboxed.Columns;
+			pd.PaletteColumns = unboxed.BucketSize;
 			pd.PaletteComments = unboxed.Comments;
 			if (pd.Run() == (int)ResponseType.Ok)
 			{
 				var p = (GimpPalette)unboxed.Clone();
 				p.Name = pd.PaletteTitle;
-				p.Columns = pd.PaletteColumns;
+				p.BucketSize = pd.PaletteColumns;
 				p.Comments = pd.PaletteComments;
 				appPal.SetPalette(p, action: "Properties Change");
 			}

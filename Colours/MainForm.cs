@@ -685,14 +685,14 @@ namespace Colours
                 var pd = new PalettePropertiesForm()
                 {
                     PaletteTitle = unboxed.Name,
-                    PaletteColumns = unboxed.Columns,
+                    PaletteColumns = unboxed.BucketSize,
                     PaletteComments = unboxed.Comments
                 };
                 if (pd.ShowDialog(this) == DialogResult.OK)
                 {
                     var p = (GimpPalette)unboxed.Clone();
                     p.Name = pd.PaletteTitle;
-                    p.Columns = pd.PaletteColumns;
+                    p.BucketSize = pd.PaletteColumns;
                     p.Comments = pd.PaletteComments;
                     appPal.SetPalette(p, action: "Properties Change");
                 }

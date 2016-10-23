@@ -45,4 +45,16 @@ namespace Colours
         /// </summary>
         string Name { get; set; }
     }
+
+    /// <summary>
+    /// Represents a color palette abstraction that has batching, such as
+    /// columns or pagination.
+    /// </summary>
+    public interface IBucketedPalette : IPalette
+    {
+        /// <summary>
+        /// Gets or sets the size of each bucket. (page, column, etc.)
+        /// </summary>
+        int BucketSize { get; set; }
+    }
 }

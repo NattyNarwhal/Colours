@@ -87,17 +87,13 @@ namespace Colours.App
 
             if (pal is INamedPalette)
                 name = ((INamedPalette)pal).Name;
+            if (pal is IBucketedPalette)
+                columns = ((IBucketedPalette)pal).BucketSize;
 
             if (pal is AcbPalette)
-            {
-                columns = ((AcbPalette)pal).ItemsPerPage;
                 comments = ((AcbPalette)pal).Description;
-            }
             else if (pal is GimpPalette)
-            {
-                columns = ((GimpPalette)pal).Columns;
                 comments = string.Join("<br/>", ((GimpPalette)pal).Comments);
-            }
 
             var tables = new StringBuilder();
             if (columns == 0)
