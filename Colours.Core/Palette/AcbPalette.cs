@@ -150,7 +150,9 @@ namespace Colours
                     {
                         var name = sr.ReadStringBE(true);
 
-                        var cid = sr.ReadBytes(6);
+                        // TODO: this needs to be associated with the PaletteColor
+                        var cid = new string(sr.ReadChars(6));
+
                         RgbColor color;
                         switch (ColorSpace)
                         {
