@@ -196,13 +196,11 @@ namespace Colours
         {
             colorDialog.Color = ((ColorButton)sender).Color.ToGdiColor();
 
-            if (paletteList.SelectedIndices.Count > 0)
-                colorDialog.CustomColors = paletteList.SelectedItems
-                    .Cast<ListViewItem>()
+            if (SelectedItems.Count() > 0)
+                colorDialog.CustomColors = SelectedItems
                     .Take(16)
                     .Select(x =>
-                        ColorTranslator.ToOle(((PaletteColor)x.Tag)
-                            .Color.ToGdiColor()))
+                        ColorTranslator.ToOle(x.Color.ToGdiColor()))
                     .ToArray();
             else
                 colorDialog.CustomColors = appPal.Palette.Colors.Take(16)
