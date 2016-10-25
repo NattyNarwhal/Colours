@@ -26,33 +26,55 @@ namespace Colours
         /// </summary>
         [DataMember]
         public string Name { get; set; }
+        /// <summary>
+        /// Gets or sets the metadata of the color.
+        /// </summary>
+        /// <remarks>
+        /// This is only used by <see cref="AcbPalette"/> for now. In that
+        /// case, it represents 6-character IDs. In other formats, the metadata
+        /// won't be used.
+        /// </remarks>
+        [DataMember]
+        public string Metadata { get; set; }
+
+        PaletteColor()
+        {
+            Color = new RgbColor();
+            Name = "Untitled";
+            Metadata = string.Empty;
+        }
 
         /// <summary>
         /// Creates a new color for use in a palette.
         /// </summary>
         /// <param name="color">The color itself.</param>
         /// <param name="name">The name of the color.</param>
-        public PaletteColor(RgbColor color, string name)
+        /// <param name="meta">
+        /// The metadata of the color. This may not be saved with some formats,
+        /// and its purpose will vary.
+        /// </param>
+        public PaletteColor(RgbColor color, string name, string meta = "")
         {
             Color = color;
             Name = name;
+            Metadata = meta;
         }
 
         /// <summary>
         /// Creates a new color for use in a palette.
         /// </summary>
         /// <param name="color">The color itself.</param>
-        public PaletteColor(RgbColor color)
+        public PaletteColor(RgbColor color) : this()
         {
             Color = color;
-            Name = "Untitled";
         }
 
         /// <summary>
         /// Creates a new color for use in a palette.
         /// </summary>
         /// <param name="l">
-        /// The color in a text based form, such as "0 0 0[tab]Untitled".
+        /// The color in a text based form, such as "0 0 0[tab]Untitled". This
+        /// format is used by <see cref="GimpPalette"/>.
         /// </param>
         public PaletteColor(string l)
         {
@@ -68,6 +90,24 @@ namespace Colours
 
             Name = String.IsNullOrEmpty(groups[4]?.Value) ?
                 "Untitled" : groups[4].Value;
+        }
+
+        /// <summary>
+        /// Creates a new colour with properties identical to the old one.
+        /// </summary>
+        /// <remarks>
+        /// This is intended for changing the properties of a colour, while
+        /// preserving the old version's properties, due to changing the
+        /// reference.
+        /// </remarks>
+        /// <returns>The new colour.</returns>
+        public PaletteColor Clone()
+        {
+            var pc = new PaletteColor();
+            pc.Name = Name;
+            pc.Color = Color;
+            pc.Metadata = Metadata;
+            return pc;
         }
 
         /// <summary>

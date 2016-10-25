@@ -227,8 +227,9 @@ namespace Colours.App
             if (keepHistory)
                 PushUndo(action ?? "Rename Colour");
             Palette = Palette.Clone();
-            Palette.Colors[index] =
-                new PaletteColor(Palette.Colors[index].Color, newName);
+            var pc = Palette.Colors[index].Clone();
+            pc.Name = newName;
+            Palette.Colors[index] = pc;
             Dirty = true;
             if (fireEvent)
                 OnPaletteChanged(new EventArgs());
@@ -265,9 +266,10 @@ namespace Colours.App
             {
                 var index = Palette.Colors.IndexOf(i.Key);
                 if (index == -1)
-                    throw new ArgumentException("The colour is not in the palette."); ;
-                Palette.Colors[index] =
-                    new PaletteColor(Palette.Colors[index].Color, i.Value);
+                    throw new ArgumentException("The colour is not in the palette.");
+                var pc = Palette.Colors[index].Clone();
+                pc.Name = i.Value;
+                Palette.Colors[index] = pc;
             }
             Dirty = true;
             if (fireEvent)
@@ -347,7 +349,12 @@ namespace Colours.App
                 PushUndo(action ?? "Change Colour");
             Palette = Palette.Clone();
             if (Palette.Colors.Contains(pc))
-                pc.Color = newColor;
+            {
+                var index = Palette.Colors.IndexOf(pc);
+                var npc = Palette.Colors[index].Clone();
+                npc.Color = newColor;
+                Palette.Colors[index] = npc;
+            }
             Dirty = true;
             if (fireEvent)
                 OnPaletteChanged(new EventArgs());
@@ -368,7 +375,12 @@ namespace Colours.App
             Palette = Palette.Clone();
             foreach (var pc in lpc)
                 if (Palette.Colors.Contains(pc))
-                    pc.Color = newColor;
+                {
+                    var index = Palette.Colors.IndexOf(pc);
+                    var npc = Palette.Colors[index].Clone();
+                    npc.Color = newColor;
+                    Palette.Colors[index] = npc;
+                }
             Dirty = true;
             if (fireEvent)
                 OnPaletteChanged(new EventArgs());

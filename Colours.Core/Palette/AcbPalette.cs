@@ -152,6 +152,10 @@ namespace Colours
 
                         // TODO: this needs to be associated with the PaletteColor
                         var cid = new string(sr.ReadChars(6));
+#if DEBUG
+                        System.Diagnostics.Debug.WriteLine("{0}{1}{2}:{3}",
+                            Prefix, name, Postfix, cid);
+#endif
 
                         RgbColor color;
                         switch (ColorSpace)
@@ -179,7 +183,7 @@ namespace Colours
                                     "Invalid colorspace. {0}", ColorSpace));
                         }
 
-                        Colors.Add(new PaletteColor(color, name));
+                        Colors.Add(new PaletteColor(color, name, cid));
                     }
 
                     if (ms.Length > ms.Position)
