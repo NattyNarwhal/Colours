@@ -448,6 +448,12 @@ public partial class MainWindow : Gtk.Window
 				File.ReadAllBytes(filename));
 			appPal.NewFromPalette(p, filename);
 		}
+		else if (filename.EndsWith(".acb"))
+		{
+			var p = new AcbPalette(
+				File.ReadAllBytes(filename));
+			appPal.NewFromPalette(p, filename);
+		}
 		else {
 			appPal.NewFromPalette(new GimpPalette(File.ReadAllText(filename)), filename);
 		}
@@ -849,7 +855,7 @@ public partial class MainWindow : Gtk.Window
 	public void ChangeMetadataSelection()
 	{
 		var pc = SelectedItems.First();
-		var rd = new RenameColorDialog(pc.Color, pc.Metadata);
+		var rd = new RenameColorDialog(pc.Color, pc.Metadata, "Change Metadata");
 		if (rd.Run() == (int)ResponseType.Ok)
 		{
 			appPal.ChangeMetadata(pc, rd.NewText);
