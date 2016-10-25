@@ -10,14 +10,19 @@ using System.Windows.Forms;
 
 namespace Colours
 {
-    public partial class RenameMultipleForm : Form
+    public partial class ColorChangeTextMultipleForm : Form
     {
-        public RenameMultipleForm()
+        public ColorChangeTextMultipleForm()
         {
             InitializeComponent();
         }
 
-        public string NewName => nameBox.Text;
+        public ColorChangeTextMultipleForm(string title, bool allowNumbered = true) : this()
+        {
+            Text = title;
+        }
+
+        public string NewText => valueBox.Text;
         public bool Numbered => numberedBox.Checked;
     }
 }

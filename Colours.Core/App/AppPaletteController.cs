@@ -277,6 +277,68 @@ namespace Colours.App
         }
 
         /// <summary>
+        /// Changes the associated metadata of a color.
+        /// </summary>
+        /// <param name="index">The location of the color.</param>
+        /// <param name="newText">The new metadat of the color.</param>
+        /// <param name="keepHistory">If undo should have been added.</param>
+        /// <param name="fireEvent">If the event should fire.</param>
+        /// <param name="action">If the undo is added, the action it is described as.</param>
+        public void ChangeMetadata(int index, string newText, bool keepHistory = true, bool fireEvent = true, string action = null)
+        {
+            if (keepHistory)
+                PushUndo(action ?? "Change Metadata");
+            Palette = Palette.Clone();
+            var pc = Palette.Colors[index].Clone();
+            pc.Metadata = newText;
+            Palette.Colors[index] = pc;
+            Dirty = true;
+            if (fireEvent)
+                OnPaletteChanged(new EventArgs());
+        }
+
+        /// <summary>
+        /// Changes the associated metadata of a color.
+        /// </summary>
+        /// <param name="pc">The color.</param>
+        /// <param name="newText">The new metadata of the color.</param>
+        /// <param name="keepHistory">If undo should have been added.</param>
+        /// <param name="fireEvent">If the event should fire.</param>
+        /// <param name="action">If the undo is added, the action it is described as.</param>
+        public void ChangeMetadata(PaletteColor pc, string newText, bool keepHistory = true, bool fireEvent = true, string action = null)
+        {
+            if (Palette.Colors.Contains(pc))
+                ChangeMetadata(Palette.Colors.IndexOf(pc), newText, keepHistory, fireEvent, action);
+            else throw new ArgumentException("The colour is not in the palette.");
+        }
+
+        /// <summary>
+        /// Changes the associated metadata of several colors.
+        /// </summary>
+        /// <param name="newText">A dictionary of the colors and their new metadata.</param>
+        /// <param name="keepHistory">If undo should have been added.</param>
+        /// <param name="fireEvent">If the event should fire.</param>
+        /// <param name="action">If the undo is added, the action it is described as.</param>
+        public void ChangeMetadata(IDictionary<PaletteColor, string> newText, bool keepHistory = true, bool fireEvent = true, string action = null)
+        {
+            if (keepHistory)
+                PushUndo(action ?? "Change Metadata");
+            Palette = Palette.Clone();
+            foreach (var i in newText)
+            {
+                var index = Palette.Colors.IndexOf(i.Key);
+                if (index == -1)
+                    throw new ArgumentException("The colour is not in the palette.");
+                var pc = Palette.Colors[index].Clone();
+                pc.Metadata = i.Value;
+                Palette.Colors[index] = pc;
+            }
+            Dirty = true;
+            if (fireEvent)
+                OnPaletteChanged(new EventArgs());
+        }
+
+        /// <summary>
         /// Moves a color's position.
         /// </summary>
         /// <param name="pc">The color to move.</param>

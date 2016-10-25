@@ -101,6 +101,7 @@ namespace Colours
                 lvi.Tag = pc;
                 lvi.ImageIndex = i++;
                 lvi.SubItems.Add(pc.Color.ToHtml());
+                lvi.ToolTipText = pc.Metadata;
                 paletteList.Items.Add(lvi);
             }
             paletteList.ResumeLayout(false);
@@ -152,6 +153,8 @@ namespace Colours
             renameSubmenuToolStripMenuItem.Enabled = selected;
             useToolStripMenuItem.Enabled = selected;
             changeToolStripMenuItem.Enabled = selected;
+            changeMetadataToolStripMenuItem.Enabled = selected;
+            changeMetadataSubmenuToolStripMenuItem.Enabled = selected;
             selectAllToolStripMenuItem.Enabled = !GridView && hasAny;
 
             UpdateUIPaletteList();
@@ -637,18 +640,18 @@ namespace Colours
                 else
                 {
                     var pc = SelectedItems.First();
-                    var rf = new RenameForm(pc);
+                    var rf = new ColorChangeTextForm("Rename", pc.Name, pc);
                     if (rf.ShowDialog(this) == DialogResult.OK)
-                        appPal.RenameColor(pc, rf.NewName);
+                        appPal.RenameColor(pc, rf.NewValue);
                 }
             }
             else if (SelectedItems.Count() > 1)
             {
                 var pc = SelectedItems.First();
-                var rf = new RenameMultipleForm();
+                var rf = new ColorChangeTextMultipleForm("Rename");
                 if (rf.ShowDialog(this) == DialogResult.OK)
                 {
-                    var names = Enumerable.Repeat(rf.NewName, SelectedItems.Count()).ToArray();
+                    var names = Enumerable.Repeat(rf.NewText, SelectedItems.Count()).ToArray();
                     if (rf.Numbered)
                     {
                         for (int i = 0; names.Count() > i; i++)
@@ -815,6 +818,36 @@ namespace Colours
             if (sf.ShowDialog(this) == DialogResult.OK)
             {
                 appPal.SortColors(sf.SortBy, sf.Ascending);
+            }
+        }
+
+        private void changeMetadataToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (SelectedItems.Count() == 1)
+            {
+                var pc = SelectedItems.First();
+                var rf = new ColorChangeTextForm("Metadata", pc.Name, pc);
+                if (rf.ShowDialog(this) == DialogResult.OK)
+                    appPal.ChangeMetadata(pc, rf.NewValue);
+            }
+            else if (SelectedItems.Count() > 1)
+            {
+                var pc = SelectedItems.First();
+                var rf = new ColorChangeTextMultipleForm("Metadata", false);
+                if (rf.ShowDialog(this) == DialogResult.OK)
+                {
+                    var names = Enumerable.Repeat(rf.NewText, SelectedItems.Count()).ToArray();
+                    if (rf.Numbered)
+                    {
+                        for (int i = 0; names.Count() > i; i++)
+                        {
+                            names[i] = string.Format("{0} ({1})", names[i], i + 1);
+                        }
+                    }
+                    appPal.ChangeMetadata(SelectedItems
+                        .Zip(names, (x, y) => new { Key = x, Value = y })
+                        .ToDictionary(x => x.Key, x => x.Value));
+                }
             }
         }
     }

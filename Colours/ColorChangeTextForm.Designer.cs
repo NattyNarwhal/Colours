@@ -1,6 +1,6 @@
 ﻿namespace Colours
 {
-    partial class RenameForm
+    partial class ColorChangeTextForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.nameBox = new System.Windows.Forms.TextBox();
+            this.valueBox = new System.Windows.Forms.TextBox();
             this.okButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
             this.colorIconBox = new System.Windows.Forms.PictureBox();
@@ -36,14 +36,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.colorIconBox)).BeginInit();
             this.SuspendLayout();
             // 
-            // nameBox
+            // valueBox
             // 
-            this.nameBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.valueBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.nameBox.Location = new System.Drawing.Point(12, 34);
-            this.nameBox.Name = "nameBox";
-            this.nameBox.Size = new System.Drawing.Size(260, 20);
-            this.nameBox.TabIndex = 1;
+            this.valueBox.Location = new System.Drawing.Point(12, 34);
+            this.valueBox.Name = "valueBox";
+            this.valueBox.Size = new System.Drawing.Size(260, 20);
+            this.valueBox.TabIndex = 1;
             // 
             // okButton
             // 
@@ -86,7 +86,7 @@
             this.colorLabel.TabIndex = 0;
             this.colorLabel.Text = "Name (#Color)";
             // 
-            // RenameForm
+            // ColorChangeTextForm
             // 
             this.AcceptButton = this.okButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -97,15 +97,14 @@
             this.Controls.Add(this.colorIconBox);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.okButton);
-            this.Controls.Add(this.nameBox);
+            this.Controls.Add(this.valueBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "RenameForm";
+            this.Name = "ColorChangeTextForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Rename";
             ((System.ComponentModel.ISupportInitialize)(this.colorIconBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -114,7 +113,7 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox nameBox;
+        private System.Windows.Forms.TextBox valueBox;
         private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.PictureBox colorIconBox;
