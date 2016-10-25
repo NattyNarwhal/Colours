@@ -54,8 +54,9 @@ namespace Colours
 					var pc = ra.ToArray()[c];
 					var cb = new GridColorButton(pc.Color.ToGdkColor());
 					cb.Tag = pc;
-					cb.TooltipMarkup = String.Format("<b>{0}</b>\r\n{1}\r\n{2}\r\n{3}",
+					cb.TooltipMarkup = String.Format("<b>{0}</b>\r\n{1}\r\n{2}\r\n{3}\r\n{4}",
 													 pc.Name,
+					                                 pc.Metadata,
 													 pc.Color.ToHtml(),
 													 pc.Color.ToHslString(),
 													 pc.Color.ToHsv());

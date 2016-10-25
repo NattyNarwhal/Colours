@@ -285,6 +285,12 @@
         <property name="StockId">gtk-sort-ascending</property>
         <signal name="Activated" handler="OnSortActionActivated" />
       </action>
+      <action id="ChangeMetadataAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Change _Metadata</property>
+        <property name="ShortLabel" translatable="yes">Change _Metadata</property>
+        <signal name="Activated" handler="OnChangeMetadataActionActivated" />
+      </action>
     </action-group>
     <property name="MemberName" />
     <property name="Title" translatable="yes">MainWindow</property>
@@ -321,6 +327,8 @@
                 <node type="Menuitem" action="AddAllAction" />
                 <node type="Menuitem" action="deleteAction" />
                 <node type="Menuitem" action="RenameAction" />
+                <node type="Menuitem" action="ChangeMetadataAction" />
+                <node type="Separator" />
                 <node type="Menuitem" action="sortAction" />
               </node>
               <node type="Menu" action="ViewAction">

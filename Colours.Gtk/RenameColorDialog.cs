@@ -8,7 +8,7 @@ namespace Colours
 			this.Build();
 		}
 
-		public RenameColorDialog(RgbColor c, string t) : this()
+		public RenameColorDialog(RgbColor c, string t, string title = "Rename") : this()
 		{
 			Gdk.Pixbuf buf = new Gdk.Pixbuf(Gdk.Colorspace.Rgb, false, 8, 16, 16);
 			buf.Fill(c.ToGdkPixel());
@@ -16,6 +16,7 @@ namespace Colours
 			colorLabel.Text = c.ToHtml();
 
 			textEntry.Text = t;
+			Title = title;
 		}
 
 		public string NewText => textEntry.Text;

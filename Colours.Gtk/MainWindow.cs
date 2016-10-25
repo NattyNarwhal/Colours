@@ -207,6 +207,8 @@ public partial class MainWindow : Gtk.Window
 		cutAction.Sensitive = selected;
 		copyAction.Sensitive = selected;
 		deleteAction.Sensitive = selected;
+		RenameAction.Sensitive = selected;
+		ChangeMetadataAction.Sensitive = selected;
 
 		saveAction.Sensitive = hasItems;
 		saveAsAction.Sensitive = hasItems;
@@ -718,7 +720,7 @@ public partial class MainWindow : Gtk.Window
 	[GLib.ConnectBefore]
 	protected void OnTreeview1ButtonPressEvent(object o, ButtonPressEventArgs args)
 	{
-		if (args.Event.Button == 3)
+		if (args.Event.Button == 3 && SelectedItems.Count() > 0)
 		{ // right mouse button
 			Menu menu = new Menu();
 
@@ -726,6 +728,7 @@ public partial class MainWindow : Gtk.Window
 			MenuItem copyPopupItem = new MenuItem("_Copy");
 			MenuItem delPopupItem = new MenuItem("_Remove");
 			MenuItem renPopupItem = new MenuItem("Re_name");
+			MenuItem metPopupItem = new MenuItem("Change _Metadata");
 			cutPopupItem.Activated += (s, a) =>
 			{
 				CopySelection();
@@ -743,10 +746,15 @@ public partial class MainWindow : Gtk.Window
 			{
 				RenameSelected();
 			};
+			metPopupItem.Activated += (s, a) =>
+			{
+				ChangeMetadataSelection();
+			};
 			menu.Add(cutPopupItem);
 			menu.Add(copyPopupItem);
 			menu.Add(delPopupItem);
 			menu.Add(renPopupItem);
+			menu.Add(metPopupItem);
 			menu.ShowAll();
 			menu.Popup();
 		}
@@ -836,5 +844,21 @@ public partial class MainWindow : Gtk.Window
 			appPal.SortColors(sd.SortBy, sd.Ascending);
 		}
 		sd.Destroy();
+	}
+
+	public void ChangeMetadataSelection()
+	{
+		var pc = SelectedItems.First();
+		var rd = new RenameColorDialog(pc.Color, pc.Metadata);
+		if (rd.Run() == (int)ResponseType.Ok)
+		{
+			appPal.ChangeMetadata(pc, rd.NewText);
+		}
+		rd.Destroy();
+	}
+
+	protected void OnChangeMetadataActionActivated(object sender, EventArgs e)
+	{
+		ChangeMetadataSelection();
 	}
 }

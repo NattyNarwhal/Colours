@@ -87,6 +87,8 @@ public partial class MainWindow
 
 	private global::Gtk.Action sortAction;
 
+	private global::Gtk.Action ChangeMetadataAction;
+
 	private global::Gtk.VBox mainVbox;
 
 	private global::Gtk.MenuBar menubar1;
@@ -238,6 +240,9 @@ public partial class MainWindow
 		this.sortAction = new global::Gtk.Action("sortAction", global::Mono.Unix.Catalog.GetString("S_ort"), null, "gtk-sort-ascending");
 		this.sortAction.ShortLabel = global::Mono.Unix.Catalog.GetString("S_ort");
 		w1.Add(this.sortAction, null);
+		this.ChangeMetadataAction = new global::Gtk.Action("ChangeMetadataAction", global::Mono.Unix.Catalog.GetString("Change _Metadata"), null, null);
+		this.ChangeMetadataAction.ShortLabel = global::Mono.Unix.Catalog.GetString("Change _Metadata");
+		w1.Add(this.ChangeMetadataAction, null);
 		this.UIManager.InsertActionGroup(w1, 0);
 		this.AddAccelGroup(this.UIManager.AccelGroup);
 		this.Name = "MainWindow";
@@ -259,24 +264,25 @@ public partial class MainWindow
 				"\'copyAction\'/><menuitem name=\'pasteAction\' action=\'pasteAction\'/><separator/><me" +
 				"nuitem name=\'addAction\' action=\'addAction\'/><menuitem name=\'AddAllAction\' action" +
 				"=\'AddAllAction\'/><menuitem name=\'deleteAction\' action=\'deleteAction\'/><menuitem " +
-				"name=\'RenameAction\' action=\'RenameAction\'/><menuitem name=\'sortAction\' action=\'s" +
-				"ortAction\'/></menu><menu name=\'ViewAction\' action=\'ViewAction\'><menuitem name=\'L" +
-				"istAction\' action=\'ListAction\'/><menuitem name=\'GridAction\' action=\'GridAction\'/" +
-				"></menu><menu name=\'AcquireAction\' action=\'AcquireAction\'><menuitem name=\'PasteA" +
-				"cquireAction\' action=\'PasteAcquireAction\'/><menuitem name=\'refreshAction\' action" +
-				"=\'refreshAction\'/><separator/><menuitem name=\'BlendAction\' action=\'BlendAction\'/" +
-				"></menu><menu name=\'ColorAction\' action=\'ColorAction\'><menuitem name=\'goBackActi" +
-				"on\' action=\'goBackAction\'/><menuitem name=\'goForwardAction\' action=\'goForwardAct" +
-				"ion\'/><separator/><menuitem name=\'CopyHexColorAction\' action=\'CopyHexColorAction" +
-				"\'/><menuitem name=\'CopyHSLColorAction\' action=\'CopyHSLColorAction\'/><menuitem na" +
-				"me=\'CopyHSVColorAction\' action=\'CopyHSVColorAction\'/><menuitem name=\'SaveAsHTMLC" +
-				"olorAction\' action=\'SaveAsHTMLColorAction\'/><separator/><menuitem name=\'Brighten" +
-				"Action\' action=\'BrightenAction\'/><menuitem name=\'DarkenAction\' action=\'DarkenAct" +
-				"ion\'/><separator/><menuitem name=\'SaturateAction\' action=\'SaturateAction\'/><menu" +
-				"item name=\'DesaturateAction\' action=\'DesaturateAction\'/><separator/><menuitem na" +
-				"me=\'InvertAction\' action=\'InvertAction\'/></menu><menu name=\'HelpAction\' action=\'" +
-				"HelpAction\'><menuitem name=\'aboutAction\' action=\'aboutAction\'/></menu></menubar>" +
-				"</ui>");
+				"name=\'RenameAction\' action=\'RenameAction\'/><menuitem name=\'ChangeMetadataAction\'" +
+				" action=\'ChangeMetadataAction\'/><separator/><menuitem name=\'sortAction\' action=\'" +
+				"sortAction\'/></menu><menu name=\'ViewAction\' action=\'ViewAction\'><menuitem name=\'" +
+				"ListAction\' action=\'ListAction\'/><menuitem name=\'GridAction\' action=\'GridAction\'" +
+				"/></menu><menu name=\'AcquireAction\' action=\'AcquireAction\'><menuitem name=\'Paste" +
+				"AcquireAction\' action=\'PasteAcquireAction\'/><menuitem name=\'refreshAction\' actio" +
+				"n=\'refreshAction\'/><separator/><menuitem name=\'BlendAction\' action=\'BlendAction\'" +
+				"/></menu><menu name=\'ColorAction\' action=\'ColorAction\'><menuitem name=\'goBackAct" +
+				"ion\' action=\'goBackAction\'/><menuitem name=\'goForwardAction\' action=\'goForwardAc" +
+				"tion\'/><separator/><menuitem name=\'CopyHexColorAction\' action=\'CopyHexColorActio" +
+				"n\'/><menuitem name=\'CopyHSLColorAction\' action=\'CopyHSLColorAction\'/><menuitem n" +
+				"ame=\'CopyHSVColorAction\' action=\'CopyHSVColorAction\'/><menuitem name=\'SaveAsHTML" +
+				"ColorAction\' action=\'SaveAsHTMLColorAction\'/><separator/><menuitem name=\'Brighte" +
+				"nAction\' action=\'BrightenAction\'/><menuitem name=\'DarkenAction\' action=\'DarkenAc" +
+				"tion\'/><separator/><menuitem name=\'SaturateAction\' action=\'SaturateAction\'/><men" +
+				"uitem name=\'DesaturateAction\' action=\'DesaturateAction\'/><separator/><menuitem n" +
+				"ame=\'InvertAction\' action=\'InvertAction\'/></menu><menu name=\'HelpAction\' action=" +
+				"\'HelpAction\'><menuitem name=\'aboutAction\' action=\'aboutAction\'/></menu></menubar" +
+				"></ui>");
 		this.menubar1 = ((global::Gtk.MenuBar)(this.UIManager.GetWidget("/menubar1")));
 		this.menubar1.Name = "menubar1";
 		this.mainVbox.Add(this.menubar1);
@@ -384,6 +390,7 @@ public partial class MainWindow
 		this.ListAction.Toggled += new global::System.EventHandler(this.OnListActionToggled);
 		this.RenameAction.Activated += new global::System.EventHandler(this.OnRenameActionActivated);
 		this.sortAction.Activated += new global::System.EventHandler(this.OnSortActionActivated);
+		this.ChangeMetadataAction.Activated += new global::System.EventHandler(this.OnChangeMetadataActionActivated);
 		this.schemeBox.Changed += new global::System.EventHandler(this.OnSchemeBoxChanged);
 		this.treeview1.RowActivated += new global::Gtk.RowActivatedHandler(this.OnTreeview1RowActivated);
 		this.treeview1.DragEnd += new global::Gtk.DragEndHandler(this.OnTreeview1DragEnd);
