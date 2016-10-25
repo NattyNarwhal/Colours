@@ -824,7 +824,7 @@ namespace Colours
             if (SelectedItems.Count() == 1)
             {
                 var pc = SelectedItems.First();
-                var rf = new ColorChangeTextForm("Metadata", pc.Name, pc);
+                var rf = new ColorChangeTextForm("Metadata", pc.Metadata, pc);
                 if (rf.ShowDialog(this) == DialogResult.OK)
                     appPal.ChangeMetadata(pc, rf.NewValue);
             }
