@@ -56,6 +56,20 @@ namespace Colours
         }
 
         /// <summary>
+        /// Creates a new palette from an existing one.
+        /// </summary>
+        /// <param name="p">The palette to convert from.</param>
+        public GimpPalette(IPalette p) : this()
+        {
+            foreach (var pc in p.Colors)
+                Colors.Add(pc);
+            if (p is INamedPalette)
+                Name = ((INamedPalette)p).Name;
+            if (p is IBucketedPalette)
+                BucketSize = ((IBucketedPalette)p).BucketSize;
+        }
+
+        /// <summary>
         /// Creates a new color palette from a GIMP palette file.
         /// </summary>
         /// <param name="file">The file itself.</param>

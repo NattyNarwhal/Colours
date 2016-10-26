@@ -207,6 +207,20 @@ namespace Colours
         }
 
         /// <summary>
+        /// Creates a new palette from an existing one.
+        /// </summary>
+        /// <param name="p">The palette to convert from.</param>
+        public AcbPalette(IPalette p) : this()
+        {
+            foreach (var pc in p.Colors)
+                Colors.Add(pc);
+            if (p is INamedPalette)
+                Name = ((INamedPalette)p).Name;
+            if (p is IBucketedPalette)
+                BucketSize = ((IBucketedPalette)p).BucketSize;
+        }
+
+        /// <summary>
         /// Outputs a byte array representing the file that can be written to.
         /// </summary>
         /// <returns>The palette as a writeable byte array.</returns>

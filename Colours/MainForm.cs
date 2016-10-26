@@ -438,6 +438,7 @@ namespace Colours
 
             try
             {
+                appPal.ConvertPalette(Path.GetExtension(fileName));
                 File.WriteAllBytes(fileName, appPal.Palette.ToFile());
                 appPal.FileName = fileName;
                 appPal.Dirty = false;

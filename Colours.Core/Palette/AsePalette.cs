@@ -101,7 +101,17 @@ namespace Colours
                 }
             }
         }
-        
+
+        /// <summary>
+        /// Creates a new palette from an existing one.
+        /// </summary>
+        /// <param name="p">The palette to convert from.</param>
+        public AsePalette(IPalette p) : this()
+        {
+            foreach (var pc in p.Colors)
+                Colors.Add(pc);
+        }
+
         /// <summary>
         /// Creates an Adobe Swatch Exchange file from a palette.
         /// </summary>

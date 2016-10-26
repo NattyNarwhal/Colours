@@ -149,6 +149,16 @@ namespace Colours
             Colors = pal1.Count > pal2.Count ? pal1 : pal2;
         }
 
+        /// <summary>
+        /// Creates a new palette from an existing one.
+        /// </summary>
+        /// <param name="p">The palette to convert from.</param>
+        public AcoPalette(IPalette p) : this()
+        {
+            foreach (var pc in p.Colors)
+                Colors.Add(pc);
+        }
+
         static void ToPhotoshopColorV1(BinaryWriter bw, PaletteColor pc)
         {
             // 10 bytes: 1 ushort for type, 4 ushorts for channels

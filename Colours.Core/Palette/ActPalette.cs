@@ -70,6 +70,16 @@ namespace Colours
         }
 
         /// <summary>
+        /// Creates a new palette from an existing one.
+        /// </summary>
+        /// <param name="p">The palette to convert from.</param>
+        public ActPalette(IPalette p) : this()
+        {
+            foreach (var pc in p.Colors)
+                Colors.Add(pc);
+        }
+
+        /// <summary>
         /// Creates a colour table from a palette.
         /// </summary>
         /// <returns>The colour table, as a byte stream.</returns>
