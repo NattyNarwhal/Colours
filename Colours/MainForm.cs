@@ -117,8 +117,8 @@ namespace Colours
 
             var hasAny = appPal.Palette.Colors.Count > 0;
             var selected = SelectedItems.Count() > 0;
-            var supportsMetadata = string.IsNullOrEmpty(appPal.FileName)
-                || appPal.FileName.EndsWith(".gpl");
+            var supportsMetadata = appPal.Palette is GimpPalette ||
+                appPal.Palette is AcbPalette;
 
             // GIMP palettes are the only supported format with metadata
             propertiesToolStripMenuItem.Enabled = supportsMetadata;
