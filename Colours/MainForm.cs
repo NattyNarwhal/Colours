@@ -119,10 +119,16 @@ namespace Colours
             var selected = SelectedItems.Count() > 0;
             var supportsMetadata = appPal.Palette is GimpPalette ||
                 appPal.Palette is AcbPalette;
+            var supportsColourMetadata = appPal.Palette is AcbPalette;
 
-            // GIMP palettes are the only supported format with metadata
             propertiesToolStripMenuItem.Enabled = supportsMetadata;
             propertiesToolStripMenuItem.ToolTipText = supportsMetadata ?
+                "" : "This file format doesn't support metadata.";
+            changeMetadataToolStripMenuItem.Enabled = supportsColourMetadata;
+            changeMetadataSubmenuToolStripMenuItem.Enabled = supportsColourMetadata;
+            changeMetadataToolStripMenuItem.ToolTipText = supportsMetadata ?
+                "" : "This file format doesn't support metadata.";
+            changeMetadataSubmenuToolStripMenuItem.ToolTipText = supportsMetadata ?
                 "" : "This file format doesn't support metadata.";
 
             saveToolStripMenuItem.Enabled = appPal.Dirty;
