@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Colours
@@ -101,16 +102,20 @@ namespace Colours
         [DataMember]
         public AcbPurpose Purpose { get; set; }
 
-        /// <summary>
-        /// Strings can have escape sequences for IP markings.
-        /// </summary>
-        /// <param name="raw">The string to unescape.</param>
-        /// <returns>The unescaped string.</returns>
+        // strings use literal ^C/^R as an escaped form of the copyright and
+        // registered symbols
         static string UnescapeString(string raw)
         {
-            return raw.Replace('\u00ae', '®').Replace('\u00a9', '©');
+            return Regex.Replace(raw, "[CR]", m => m.Value == "^R" ? "®" : "©");
         }
 
+        static string Escape(string raw)
+        {
+            return Regex.Replace(raw, "[®©]", m => m.Value == "®" ? "^R" : "^C");
+        }
+
+        // color books have some metadata inside of the metadata, but it can be
+        // harmlessly truncated
         static string GetValue(string raw)
         {
             return raw.Split('=')[1];
