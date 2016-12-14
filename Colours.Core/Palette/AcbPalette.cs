@@ -106,10 +106,10 @@ namespace Colours
         // registered symbols
         static string UnescapeString(string raw)
         {
-            return Regex.Replace(raw, "[CR]", m => m.Value == "^R" ? "®" : "©");
+            return Regex.Replace(raw, "\\^[CR]", m => m.Value == "^R" ? "®" : "©");
         }
 
-        static string Escape(string raw)
+        static string EscapeString(string raw)
         {
             return Regex.Replace(raw, "[®©]", m => m.Value == "®" ? "^R" : "^C");
         }
@@ -141,7 +141,7 @@ namespace Colours
                     var version = sr.ReadUInt16BE();
                     ID = sr.ReadUInt16BE();
 
-                    Name = GetValue(sr.ReadStringBE(false));
+                    Name = UnescapeString(GetValue(sr.ReadStringBE(false)));
                     Prefix = GetValue(sr.ReadStringBE(false));
                     Postfix = GetValue(sr.ReadStringBE(false));
                     Description = UnescapeString(GetValue(sr.ReadStringBE(false)));
