@@ -694,23 +694,36 @@ namespace Colours
 
         private void propertiesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (appPal.Palette is GimpPalette)
+            var pd = new PalettePropertiesForm(appPal.Palette);
+            if (pd.ShowDialog(this) == DialogResult.OK)
             {
-                var unboxed = (GimpPalette)appPal.Palette;
-                var pd = new PalettePropertiesForm()
+                var p = appPal.Palette.Clone();
+                if (p is IBucketedPalette)
                 {
-                    PaletteTitle = unboxed.Name,
-                    PaletteColumns = unboxed.BucketSize,
-                    PaletteComments = unboxed.Comments
-                };
-                if (pd.ShowDialog(this) == DialogResult.OK)
-                {
-                    var p = (GimpPalette)unboxed.Clone();
-                    p.Name = pd.PaletteTitle;
-                    p.BucketSize = pd.PaletteColumns;
-                    p.Comments = pd.PaletteComments;
-                    appPal.SetPalette(p, action: "Properties Change");
+                    ((IBucketedPalette)p).BucketSize = pd.PaletteBucket;
                 }
+                if (p is INamedPalette)
+                {
+                    ((INamedPalette)p).Name = pd.PaletteTitle;
+                }
+                if (p is GimpPalette)
+                {
+                    ((GimpPalette)p).Comments = pd.GimpPaletteComments;
+                }
+                if (p is AcbPalette)
+                {
+                    // the ref stays the same
+                    var acb = (AcbPalette)p;
+
+                    acb.ID = pd.AcbId;
+                    acb.DefaultSelection = pd.AcbDefaultColor;
+                    acb.Prefix = pd.AcbPrefix;
+                    acb.Postfix = pd.AcbPostfix;
+                    acb.Description = pd.AcbDescription;
+                    acb.ColorSpace = pd.AcbColorSpace;
+                    acb.Purpose = pd.AcbSpotProcess;
+                }
+                appPal.SetPalette(p, action: "Properties Change");
             }
         }
 

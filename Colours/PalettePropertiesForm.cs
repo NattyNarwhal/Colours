@@ -24,7 +24,7 @@ namespace Colours
             }
         }
 
-        public int PaletteColumns
+        public int PaletteBucket
         {
             get
             {
@@ -36,7 +36,7 @@ namespace Colours
             }
         }
 
-        public List<string> PaletteComments
+        public List<string> GimpPaletteComments
         {
             get
             {
@@ -48,9 +48,130 @@ namespace Colours
             }
         }
 
+        public ushort AcbId
+        {
+            get
+            {
+                return Convert.ToUInt16(idBox.Value);
+            }
+            set
+            {
+                idBox.Value = value;
+            }
+        }
+
+        public ushort AcbDefaultColor
+        {
+            get
+            {
+                return Convert.ToUInt16(defaultColorBox.Value);
+            }
+            set
+            {
+                defaultColorBox.Value = value;
+            }
+        }
+
+        public string AcbPrefix
+        {
+            get
+            {
+                return prefixBox.Text;
+            }
+            set
+            {
+                prefixBox.Text = value;
+            }
+        }
+
+        public string AcbPostfix
+        {
+            get
+            {
+                return postfixBox.Text;
+            }
+            set
+            {
+                postfixBox.Text = value;
+            }
+        }
+
+        public string AcbDescription
+        {
+            get
+            {
+                return descriptionBox.Text;
+            }
+            set
+            {
+                descriptionBox.Text = value;
+            }
+        }
+
+        public AdobeColorSpace AcbColorSpace
+        {
+            get
+            {
+                return (AdobeColorSpace)colorspaceBox.SelectedItem;
+            }
+            set
+            {
+                colorspaceBox.SelectedItem = value;
+            }
+        }
+
+        public AcbPurpose AcbSpotProcess
+        {
+            get
+            {
+                return (AcbPurpose)spotProcessBox.SelectedItem;
+            }
+            set
+            {
+                spotProcessBox.SelectedItem = value;
+            }
+        }
+
         public PalettePropertiesForm()
         {
             InitializeComponent();
+            colorspaceBox.Items.Add(AdobeColorSpace.Rgb);
+            colorspaceBox.Items.Add(AdobeColorSpace.Lab);
+            colorspaceBox.Items.Add(AdobeColorSpace.Cmyk);
+            // HACK: AddRange is shitty, Enum.GetValues is shitty
+            foreach (var p in Enum.GetValues(typeof(AcbPurpose)))
+                spotProcessBox.Items.Add(p);
+        }
+
+        public PalettePropertiesForm(IPalette initial) : this()
+        {
+            if (initial is IBucketedPalette)
+            {
+                PaletteBucket = ((IBucketedPalette)initial).BucketSize;
+            }
+            if (initial is INamedPalette)
+            {
+                PaletteTitle = ((INamedPalette)initial).Name;
+            }
+            if (initial is GimpPalette)
+            {
+                tabControl1.TabPages.Remove(acbTab);
+
+                GimpPaletteComments = ((GimpPalette)initial).Comments;
+            }
+            if (initial is AcbPalette)
+            {
+                tabControl1.TabPages.Remove(gimpTab);
+                var unboxed = (AcbPalette)initial;
+
+                AcbId = unboxed.ID;
+                AcbDefaultColor = unboxed.DefaultSelection;
+                AcbPrefix = unboxed.Prefix;
+                AcbPostfix = unboxed.Postfix;
+                AcbDescription = unboxed.Description;
+                AcbColorSpace = unboxed.ColorSpace;
+                AcbSpotProcess = unboxed.Purpose;
+            }
         }
     }
 }
