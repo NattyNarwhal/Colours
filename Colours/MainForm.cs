@@ -182,7 +182,14 @@ namespace Colours
             {
                 if (GridView)
                 {
-                    return new List<PaletteColor>() { colorGrid1.FocusedColor };
+                    if (colorGrid1.FocusedColor != null)
+                    {
+                        return new List<PaletteColor>() { colorGrid1.FocusedColor };
+                    }
+                    else
+                    {
+                        return new List<PaletteColor>();
+                    }
                 }
                 else
                 {
