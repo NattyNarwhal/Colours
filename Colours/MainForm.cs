@@ -126,9 +126,9 @@ namespace Colours
                 "" : "This file format doesn't support metadata.";
             changeMetadataToolStripMenuItem.Enabled = supportsColourMetadata;
             changeMetadataSubmenuToolStripMenuItem.Enabled = supportsColourMetadata;
-            changeMetadataToolStripMenuItem.ToolTipText = supportsMetadata ?
+            changeMetadataToolStripMenuItem.ToolTipText = supportsColourMetadata ?
                 "" : "This file format doesn't support metadata.";
-            changeMetadataSubmenuToolStripMenuItem.ToolTipText = supportsMetadata ?
+            changeMetadataSubmenuToolStripMenuItem.ToolTipText = supportsColourMetadata ?
                 "" : "This file format doesn't support metadata.";
 
             saveToolStripMenuItem.Enabled = appPal.Dirty;
