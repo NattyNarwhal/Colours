@@ -13,6 +13,7 @@ namespace Colours
     /// (like Gdk.Color, NSColor, etc.) to an RgbColor/HsvColor.
     /// </summary>
     [DataContract]
+    [Serializable]
     public class RgbColor
     {
         /// <summary>

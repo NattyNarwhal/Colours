@@ -320,21 +320,15 @@ namespace Colours
         {
             try
             {
-                if (Clipboard.ContainsText())
+                if (Clipboard.ContainsData("LPC"))
+                {
+                    var o = (List<PaletteColor>)Clipboard.GetData("LPC");
+                    app.SetColor(o.First().Color);
+                }
+                else if (Clipboard.ContainsText())
                 {
                     var clip = Clipboard.GetText();
-                    if (clip.StartsWith("pc"))
-                    {
-                        foreach (var pc in Regex.Split(clip, Environment.NewLine))
-                        {
-                            if (pc == "pc" || String.IsNullOrWhiteSpace(pc))
-                                continue;
-                            app.SetColor(new PaletteColor(pc).Color);
-                            break;
-                        }
-                    }
-                    else
-                        app.SetColor(ColorUtils.FromString(Clipboard.GetText()));
+                    app.SetColor(ColorUtils.FromString(Clipboard.GetText()));
                 }
             }
             catch (ArgumentException) // these are harmless
@@ -587,22 +581,15 @@ namespace Colours
         {
             try
             {
-                if (Clipboard.ContainsText())
+                if (Clipboard.ContainsData("LPC"))
+                {
+                    var o = (List<PaletteColor>)Clipboard.GetData("LPC");
+                    appPal.AppendColors(o, action: "Paste Colors");
+                }
+                else if (Clipboard.ContainsText())
                 {
                     var clip = Clipboard.GetText();
-                    if (clip.StartsWith("pc"))
-                    {
-                        var toAdd = new List<PaletteColor>();
-                        foreach (var pc in Regex.Split(clip, "\r?\n"))
-                        {
-                            if (pc == "pc" || String.IsNullOrWhiteSpace(pc))
-                                continue;
-                            toAdd.Add(new PaletteColor(pc));
-                        }
-                        appPal.AppendColors(toAdd);
-                    }
-                    else
-                        appPal.AppendColor(ColorUtils.FromString(clip).ToRgb());
+                    appPal.AppendColor(ColorUtils.FromString(clip).ToRgb(), action: "Paste Color");
                 }
             }
             catch (ArgumentException) // these are harmless
@@ -613,16 +600,7 @@ namespace Colours
 
         public void CopyPaletteColor()
         {
-            // HACK: ideally, we'd just send a PaletteColor or List of
-            // those, except that won't work. ContainsData(type) says
-            // true, GetData(type) says null.
-            var sb = new StringBuilder("pc" + Environment.NewLine);
-            if (SelectedItems.Count() > 0)
-            {
-                foreach (var pc in SelectedItems)
-                    sb.AppendLine(pc.ToString());
-                Clipboard.SetText(sb.ToString());
-            }
+            Clipboard.SetData("LPC", SelectedItems.ToList());
         }
 
         private void copyPCToolStripMenuItem_Click(object sender, EventArgs e)

@@ -34,8 +34,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="App\AppArgParser.cs" />
     <Compile Include="App\AppController.cs" />
     <Compile Include="App\AppPaletteController.cs" />
@@ -66,6 +64,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\RgbColor.cs" />
     <Compile Include="Mixing\Schemer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Shim, Version=2.0.1.0, Culture=neutral, PublicKeyToken=c55ec16d10c4b366, processorArchitecture=MSIL">
+      <HintPath>..\packages\shim.2.0.1\lib\portable-net45+netcore45+wpa81\Shim.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

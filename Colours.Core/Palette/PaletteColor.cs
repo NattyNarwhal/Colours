@@ -10,6 +10,7 @@ namespace Colours
     /// Represents a color in a color palette.
     /// </summary>
     [DataContract]
+    [Serializable]
     public class PaletteColor
     {
         // note that this has difficulties without a name on the end,
