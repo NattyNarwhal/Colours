@@ -117,6 +117,8 @@ namespace Colours
 
             var hasAny = appPal.Palette.Colors.Count > 0;
             var selected = SelectedItems.Count() > 0;
+            var canPaste = Clipboard.ContainsData("LPC") ||
+                Clipboard.ContainsText();
             var supportsMetadata = appPal.Palette is GimpPalette ||
                 appPal.Palette is AcbPalette;
             var supportsColourMetadata = appPal.Palette is AcbPalette;
@@ -162,6 +164,9 @@ namespace Colours
             changeMetadataToolStripMenuItem.Enabled = selected;
             changeMetadataSubmenuToolStripMenuItem.Enabled = selected;
             selectAllToolStripMenuItem.Enabled = !GridView && hasAny;
+
+            pasteAcquireToolStripMenuItem.Enabled = canPaste;
+            pasteToolStripMenuItem.Enabled = canPaste;
 
             UpdateUIPaletteList();
         }
