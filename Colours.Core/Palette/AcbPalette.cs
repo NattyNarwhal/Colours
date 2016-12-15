@@ -119,12 +119,16 @@ namespace Colours
         // harmlessly truncated
         static string GetValue(string raw)
         {
-            return raw.Split('=')[1];
+            return raw.StartsWith("$$$/colorbook/") ? raw.Split('=')[1] : raw;
         }
 
         AcbPalette()
         {
             Colors = new List<PaletteColor>();
+            Name = string.Empty;
+            Prefix = string.Empty;
+            Postfix = string.Empty;
+            Description = string.Empty;
         }
 
         /// <summary>
@@ -242,9 +246,13 @@ namespace Colours
 
                     sw.WriteUInt16BE(ID);
 
+                    sw.WriteUInt32BE(Convert.ToUInt32(Name.Length));
                     sw.WriteStringBE(Name);
+                    sw.WriteUInt32BE(Convert.ToUInt32(Prefix.Length));
                     sw.WriteStringBE(Prefix);
+                    sw.WriteUInt32BE(Convert.ToUInt32(Postfix.Length));
                     sw.WriteStringBE(Postfix);
+                    sw.WriteUInt32BE(Convert.ToUInt32(Description.Length));
                     sw.WriteStringBE(Description);
 
                     sw.WriteUInt16BE(Convert.ToUInt16(Colors.Count));
@@ -254,6 +262,7 @@ namespace Colours
 
                     foreach (var pc in Colors)
                     {
+                        sw.WriteUInt32BE(Convert.ToUInt32(pc.Name.Length));
                         sw.WriteStringBE(pc.Name);
                         // name needs to be exactly 6 chars, so pad if less,
                         // truncate if more

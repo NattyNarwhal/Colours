@@ -105,39 +105,49 @@ namespace Colours.App
         /// <summary>
         /// Sets the color palette, with the following parameters.
         /// </summary>
-        /// <param name="extension">
-        /// The type of palette to convert to. The dot preceding the extension
-        /// should be present.
+        /// <param name="newFileName">
+        /// The new file name of the file to convert, including extension.
         /// </param>
         /// <param name="keepHistory">If undo should have been added.</param>
         /// <param name="fireEvent">If the event should fire.</param>
         /// <param name="action">If the undo is added, the action it is described as.</param>
-        public void ConvertPalette(string extension, bool keepHistory = true, bool fireEvent = true, string action = null)
+        public void ConvertPalette(string newFileName, bool keepHistory = true, bool fireEvent = true, string action = null)
         {
             action = action ?? "Palette Conversion";
+
+            var extension = Path.GetExtension(newFileName);
+
+            IPalette newPal = null;
             switch (extension)
             {
                 case ".gpl":
                     if (!(Palette is GimpPalette))
-                        SetPalette(new GimpPalette(Palette), keepHistory, fireEvent, action);
+                        newPal = new GimpPalette(Palette);
                     break;
                 case ".aco":
                     if (!(Palette is AcoPalette))
-                        SetPalette(new AcoPalette(Palette), keepHistory, fireEvent, action);
+                        newPal = new AcoPalette(Palette);
                     break;
                 case ".ase":
                     if (!(Palette is AsePalette))
-                        SetPalette(new AsePalette(Palette), keepHistory, fireEvent, action);
+                        newPal = new AsePalette(Palette);
                     break;
                 case ".act":
                     if (!(Palette is ActPalette))
-                        SetPalette(new ActPalette(Palette), keepHistory, fireEvent, action);
+                        newPal = new ActPalette(Palette);
                     break;
                 case ".acb":
                     if (!(Palette is AcbPalette))
-                        SetPalette(new AcbPalette(Palette), keepHistory, fireEvent, action);
+                        newPal = new AcbPalette(Palette);
                     break;
             }
+
+            // in case we convert from a non INamed to an INamed, give it a name at least
+            if (newPal is INamedPalette && string.IsNullOrEmpty(((INamedPalette)newPal).Name))
+                ((INamedPalette)newPal).Name = Path.GetFileNameWithoutExtension(newFileName);
+
+            if (newPal != null)
+                SetPalette(newPal, keepHistory, fireEvent, action);
         }
 
         /// <summary>

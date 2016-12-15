@@ -66,6 +66,8 @@
             this.addAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.changeMetadataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.sortToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.listToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -105,15 +107,13 @@
             this.copyPCSubmenuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteSubmenuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.renameSubmenuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.changeMetadataSubmenuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.paletteList = new System.Windows.Forms.ListView();
             this.nameHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colorHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.paletteListImages = new System.Windows.Forms.ImageList(this.components);
             this.savePaletteDialog = new System.Windows.Forms.SaveFileDialog();
             this.openPaletteDialog = new System.Windows.Forms.OpenFileDialog();
-            this.changeMetadataSubmenuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.changeMetadataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.colorContextMenu.SuspendLayout();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -447,6 +447,18 @@
             this.renameToolStripMenuItem.Text = "Re&name";
             this.renameToolStripMenuItem.Click += new System.EventHandler(this.renameToolStripMenuItem_Click);
             // 
+            // changeMetadataToolStripMenuItem
+            // 
+            this.changeMetadataToolStripMenuItem.Name = "changeMetadataToolStripMenuItem";
+            this.changeMetadataToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.changeMetadataToolStripMenuItem.Text = "Change &Metadata";
+            this.changeMetadataToolStripMenuItem.Click += new System.EventHandler(this.changeMetadataToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(165, 6);
+            // 
             // sortToolStripMenuItem
             // 
             this.sortToolStripMenuItem.Image = global::Colours.Properties.Resources.Sort;
@@ -743,7 +755,7 @@
             this.renameSubmenuToolStripMenuItem,
             this.changeMetadataSubmenuToolStripMenuItem});
             this.paletteContextMenu.Name = "paletteContextMenu";
-            this.paletteContextMenu.Size = new System.Drawing.Size(169, 186);
+            this.paletteContextMenu.Size = new System.Drawing.Size(169, 164);
             // 
             // useToolStripMenuItem
             // 
@@ -796,6 +808,13 @@
             this.renameSubmenuToolStripMenuItem.Text = "&Rename";
             this.renameSubmenuToolStripMenuItem.Click += new System.EventHandler(this.renameToolStripMenuItem_Click);
             // 
+            // changeMetadataSubmenuToolStripMenuItem
+            // 
+            this.changeMetadataSubmenuToolStripMenuItem.Name = "changeMetadataSubmenuToolStripMenuItem";
+            this.changeMetadataSubmenuToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.changeMetadataSubmenuToolStripMenuItem.Text = "Change &Metadata";
+            this.changeMetadataSubmenuToolStripMenuItem.Click += new System.EventHandler(this.changeMetadataToolStripMenuItem_Click);
+            // 
             // paletteList
             // 
             this.paletteList.AllowDrop = true;
@@ -843,8 +862,9 @@
             // savePaletteDialog
             // 
             this.savePaletteDialog.DefaultExt = "gpl";
-            this.savePaletteDialog.Filter = "All Supported Palettes|*.gpl;*.aco;*.act;*.ase|GIMP Palette|*.gpl|Adobe Swatch Ex" +
-    "change|*.ase|Adobe Photoshop Swatch|*.aco|Adobe Photoshop Colour Table|*.act";
+            this.savePaletteDialog.Filter = "All Supported Palettes|*.gpl;*.aco;*.act;*.ase;*.acb|GIMP Palette|*.gpl|Adobe Swa" +
+    "tch Exchange|*.ase|Adobe Photoshop Swatch|*.aco|Adobe Photoshop Colour Table|*.a" +
+    "ct|Adobe Photoshop Color Book|*.acb";
             this.savePaletteDialog.Title = "Save";
             // 
             // openPaletteDialog
@@ -854,25 +874,6 @@
     "tch Exchange|*.ase|Adobe Photoshop Swatch|*.aco|Adobe Photoshop Colour Table|*.a" +
     "ct|Adobe Photoshop Color Book|*.acb";
             this.openPaletteDialog.Title = "Open";
-            // 
-            // changeMetadataSubmenuToolStripMenuItem
-            // 
-            this.changeMetadataSubmenuToolStripMenuItem.Name = "changeMetadataSubmenuToolStripMenuItem";
-            this.changeMetadataSubmenuToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
-            this.changeMetadataSubmenuToolStripMenuItem.Text = "Change &Metadata";
-            this.changeMetadataSubmenuToolStripMenuItem.Click += new System.EventHandler(this.changeMetadataToolStripMenuItem_Click);
-            // 
-            // changeMetadataToolStripMenuItem
-            // 
-            this.changeMetadataToolStripMenuItem.Name = "changeMetadataToolStripMenuItem";
-            this.changeMetadataToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
-            this.changeMetadataToolStripMenuItem.Text = "Change &Metadata";
-            this.changeMetadataToolStripMenuItem.Click += new System.EventHandler(this.changeMetadataToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(165, 6);
             // 
             // MainForm
             // 

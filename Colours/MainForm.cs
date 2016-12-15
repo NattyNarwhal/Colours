@@ -443,14 +443,14 @@ namespace Colours
             }
 
             // warn if the format doesn't support metadata
-            if (!fileName.EndsWith(".gpl"))
+            if (!(fileName.EndsWith(".gpl") || fileName.EndsWith(".acb")))
                 MessageBox.Show(this,
                     "This format doesn't support metadata like comments. Metadata will be lost when the file is reloaded.",
                     "Colours", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
             try
             {
-                appPal.ConvertPalette(Path.GetExtension(fileName));
+                appPal.ConvertPalette(fileName);
                 File.WriteAllBytes(fileName, appPal.Palette.ToFile());
                 appPal.FileName = fileName;
                 appPal.Dirty = false;

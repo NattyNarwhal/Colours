@@ -495,7 +495,7 @@ public partial class MainWindow : Gtk.Window
 			}
 		}
 
-		appPal.ConvertPalette(System.IO.Path.GetExtension(fileName));
+		appPal.ConvertPalette(fileName);
 		File.WriteAllBytes(fileName, appPal.Palette.ToFile());
 
 		appPal.Dirty = false;
