@@ -25,6 +25,7 @@ namespace Colours
     [DataContract]
     public class AcbPalette : INamedPalette, IBucketedPalette
     {
+        const string magic = "8BCB";
         const string proc = "spflproc";
         const string spot = "spflspot";
 
@@ -136,7 +137,7 @@ namespace Colours
             {
                 using (var sr = new BinaryReader(ms))
                 {
-                    if (new string(sr.ReadChars(4)) != "8BCB")
+                    if (new string(sr.ReadChars(4)) != magic)
                         throw new PaletteException("Not a valid color book.");
                     var version = sr.ReadUInt16BE();
                     ID = sr.ReadUInt16BE();
@@ -170,14 +171,15 @@ namespace Colours
                                     sr.ReadByte(), sr.ReadByte());
                                 break;
                             // For lab and cmyk, should we add 0.5?
+                            // (seems to be not a good idea)
                             case AdobeColorSpace.Lab:
-                                var l = sr.ReadByte() / 2.55d + 0.5d;
+                                var l = sr.ReadByte() / 2.55d;
                                 var a = sr.ReadByte() - 128;
                                 var b = sr.ReadByte() - 128;
                                 color = new LabColor(l, a, b).ToXyz().ToRgb();
                                 break;
                             case AdobeColorSpace.Cmyk:
-                                var c = 1 - (sr.ReadByte() / 255d);
+                                var c = 1 - sr.ReadByte() / 255d;
                                 var m = 1 - sr.ReadByte() / 255d;
                                 var y = 1 - sr.ReadByte() / 255d;
                                 var k = 1 - sr.ReadByte() / 255d;
@@ -231,7 +233,87 @@ namespace Colours
         /// <returns>The palette as a writeable byte array.</returns>
         public byte[] ToFile()
         {
-            throw new NotImplementedException();
+            using (var s = new MemoryStream())
+            {
+                using (var sw = new BinaryWriter(s))
+                {
+                    sw.Write(magic.ToCharArray());
+                    sw.WriteUInt16BE(1); // version
+
+                    sw.WriteUInt16BE(ID);
+
+                    sw.WriteStringBE(Name);
+                    sw.WriteStringBE(Prefix);
+                    sw.WriteStringBE(Postfix);
+                    sw.WriteStringBE(Description);
+
+                    sw.WriteUInt16BE(Convert.ToUInt16(Colors.Count));
+                    sw.WriteUInt16BE(Convert.ToUInt16(BucketSize));
+                    sw.WriteUInt16BE(DefaultSelection);
+                    sw.WriteUInt16BE((ushort)ColorSpace);
+
+                    foreach (var pc in Colors)
+                    {
+                        sw.WriteStringBE(pc.Name);
+                        // name needs to be exactly 6 chars, so pad if less,
+                        // truncate if more
+                        if (pc.Metadata.Length == 6)
+                        {
+                            sw.Write(pc.Metadata.ToCharArray());
+                        }
+                        else if (pc.Metadata.Length > 6)
+                        {
+                            sw.Write(pc.Metadata.Substring(0, 6).ToCharArray());
+                        }
+                        else if (pc.Metadata.Length < 6)
+                        {
+                            sw.Write(pc.Metadata.PadLeft(6 - pc.Metadata.Length).ToCharArray());
+                        }
+
+                        switch (ColorSpace)
+                        {
+                            case AdobeColorSpace.Rgb:
+                                sw.Write(pc.Color.R8);
+                                sw.Write(pc.Color.G8);
+                                sw.Write(pc.Color.B8);
+                                break;
+                            case AdobeColorSpace.Lab:
+                                var lab = pc.Color.ToXyz().ToLab();
+                                sw.Write(Convert.ToByte(lab.L * 2.55d));
+                                sw.Write(Convert.ToByte(lab.A + 128));
+                                sw.Write(Convert.ToByte(lab.B + 128));
+                                break;
+                            case AdobeColorSpace.Cmyk:
+                                var cmyk = pc.Color.ToCmyk();
+                                sw.Write(Convert.ToByte(255 - (cmyk.Cyan * 255d)));
+                                sw.Write(Convert.ToByte(255 - (cmyk.Magenta * 255d)));
+                                sw.Write(Convert.ToByte(255 - (cmyk.Yellow * 255d)));
+                                sw.Write(Convert.ToByte(255 - (cmyk.Key * 255d)));
+                                break;
+                            default:
+                                throw new PaletteException(string.Format(
+                                    "Invalid colorspace. {0}", ColorSpace));
+                        }
+                    }
+
+                    switch (Purpose)
+                    {
+                        case AcbPurpose.Process:
+                            sw.Write(proc.ToCharArray());
+                            break;
+                        case AcbPurpose.Spot:
+                            sw.Write(spot.ToCharArray());
+                            break;
+                        default: break;
+                    }
+
+                    s.Position = 0;
+                    using (var sr = new BinaryReader(s))
+                    {
+                        return sr.ReadBytes((int)s.Length);
+                    }
+                }
+            }
         }
 
         /// <summary>
