@@ -484,6 +484,10 @@ public partial class MainWindow : Gtk.Window
 			ffAse.Name = "Adobe Swatch Exchange";
 			ffAse.AddPattern("*.ase");
 			fd.AddFilter(ffAse);
+			FileFilter ffAcb = new FileFilter();
+			ffAcb.Name = "Adobe Color Book";
+			ffAcb.AddPattern("*.acb");
+			fd.AddFilter(ffAcb);
 			if (fd.Run() == (int)ResponseType.Ok)
 			{
 				fileName = fd.Filename;
