@@ -348,14 +348,14 @@ public partial class MainWindow : Gtk.Window
 		{
 			try
 			{
-				if (s.StartsWith("pc"))
+				if (s.StartsWith("<?"))
 				{
-					foreach (var pc in Regex.Split(s, Environment.NewLine))
+					using (var sr = new StringReader(s))
 					{
-						if (pc == "pc" || String.IsNullOrWhiteSpace(pc))
-							continue;
-						app.SetColor(new PaletteColor(pc).Color);
-						return;
+						var xs = new System.Xml.Serialization.XmlSerializer(typeof(List<PaletteColor>));
+						var lpc = (List<PaletteColor>)xs.Deserialize(sr);
+						if (lpc.Count > 0)
+							app.SetColor(lpc.First().Color);
 					}
 				}
 				else
@@ -613,15 +613,11 @@ public partial class MainWindow : Gtk.Window
 
 	public void CopySelection()
 	{
-		// HACK: ideally, we'd just send a PaletteColor or List of
-		// those, except that won't work. ContainsData(type) says
-		// true, GetData(type) says null.
-		var sb = new StringBuilder("pc" + Environment.NewLine);
-		if (treeview1.Selection.CountSelectedRows() > 0)
+		var xs = new System.Xml.Serialization.XmlSerializer(typeof(List<PaletteColor>));
+		using (var sw = new StringWriter())
 		{
-			foreach (var pc in SelectedItems)
-				sb.AppendLine(pc.ToString());
-			clipboard.Text = sb.ToString();
+			xs.Serialize(sw, SelectedItems.ToList());
+			clipboard.Text = sw.ToString();
 		}
 	}
 
@@ -642,16 +638,14 @@ public partial class MainWindow : Gtk.Window
 		{
 			try
 			{
-				if (s.StartsWith("pc"))
+				if (s.StartsWith("<?"))
 				{
-					var toAdd = new List<PaletteColor>();
-					foreach (var pc in Regex.Split(s, Environment.NewLine))
+					using (var sr = new StringReader(s))
 					{
-						if (pc == "pc" || String.IsNullOrWhiteSpace(pc))
-							continue;
-						toAdd.Add(new PaletteColor(pc));
+						var xs = new System.Xml.Serialization.XmlSerializer(typeof(List<PaletteColor>));
+						var lpc = (List<PaletteColor>)xs.Deserialize(sr);
+						appPal.AppendColors(lpc);
 					}
-					appPal.AppendColors(toAdd);
 				}
 				else
 					appPal.AppendColor(ColorUtils.FromString(s).ToRgb());
