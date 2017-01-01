@@ -7,6 +7,34 @@ using System.Threading.Tasks;
 namespace Colours
 {
     /// <summary>
+    /// The color space values that <see cref="AcbPalette"/> uses.
+    /// </summary>
+    public enum AdobeColorSpaceAcbSubset
+    {
+        /// <summary>
+        /// Represents a color in the Red/Green/Blue space.
+        /// </summary>
+        /// <remarks>
+        /// Uses 3 channels.
+        /// </remarks>
+        Rgb = 0,
+        /// <summary>
+        /// Represents a color in the Cyan/Yellow/Magenta space.
+        /// </summary>
+        /// <remarks>
+        /// Uses 4 channels.
+        /// </remarks>
+        Cmyk = 2,
+        /// <summary>
+        /// Represents a color in the Lightness/A Chroma/B Chroma space.
+        /// </summary>
+        /// <remarks>
+        /// Uses 3 channels.
+        /// </remarks>
+        Lab = 7,
+    }
+
+    /// <summary>
     /// The color space values that Adobe file formats use.
     /// </summary>
     public enum AdobeColorSpace

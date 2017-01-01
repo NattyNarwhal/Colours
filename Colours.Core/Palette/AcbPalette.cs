@@ -85,13 +85,8 @@ namespace Colours
         /// <summary>
         /// Gets or sets the color space of the palette.
         /// </summary>
-        /// <remarks>
-        /// Only <see cref="AdobeColorSpace.Cmyk"/>,
-        /// <see cref="AdobeColorSpace.Lab"/>, and
-        /// <see cref="AdobeColorSpace.Rgb"/> are allowed.
-        /// </remarks>
         [DataMember]
-        public AdobeColorSpace ColorSpace { get; set; }
+        public AdobeColorSpaceAcbSubset ColorSpace { get; set; }
         /// <summary>
         /// Gets or sets a list of colors.
         /// </summary>
@@ -154,7 +149,7 @@ namespace Colours
                     var count = sr.ReadUInt16BE();
                     BucketSize = sr.ReadUInt16BE();
                     DefaultSelection = sr.ReadUInt16BE();
-                    ColorSpace = (AdobeColorSpace)sr.ReadUInt16BE();
+                    ColorSpace = (AdobeColorSpaceAcbSubset)sr.ReadUInt16BE();
 
                     for (int i = 0; i < count; i++)
                     {
@@ -170,19 +165,19 @@ namespace Colours
                         RgbColor color;
                         switch (ColorSpace)
                         {
-                            case AdobeColorSpace.Rgb:
+                            case AdobeColorSpaceAcbSubset.Rgb:
                                 color = new RgbColor(sr.ReadByte(),
                                     sr.ReadByte(), sr.ReadByte());
                                 break;
                             // For lab and cmyk, should we add 0.5?
                             // (seems to be not a good idea)
-                            case AdobeColorSpace.Lab:
+                            case AdobeColorSpaceAcbSubset.Lab:
                                 var l = sr.ReadByte() / 2.55d;
                                 var a = sr.ReadByte() - 128;
                                 var b = sr.ReadByte() - 128;
                                 color = new LabColor(l, a, b).ToXyz().ToRgb();
                                 break;
-                            case AdobeColorSpace.Cmyk:
+                            case AdobeColorSpaceAcbSubset.Cmyk:
                                 var c = 1 - sr.ReadByte() / 255d;
                                 var m = 1 - sr.ReadByte() / 255d;
                                 var y = 1 - sr.ReadByte() / 255d;
@@ -281,18 +276,18 @@ namespace Colours
 
                         switch (ColorSpace)
                         {
-                            case AdobeColorSpace.Rgb:
+                            case AdobeColorSpaceAcbSubset.Rgb:
                                 sw.Write(pc.Color.R8);
                                 sw.Write(pc.Color.G8);
                                 sw.Write(pc.Color.B8);
                                 break;
-                            case AdobeColorSpace.Lab:
+                            case AdobeColorSpaceAcbSubset.Lab:
                                 var lab = pc.Color.ToXyz().ToLab();
                                 sw.Write(Convert.ToByte(lab.L * 2.55d));
                                 sw.Write(Convert.ToByte(lab.A + 128));
                                 sw.Write(Convert.ToByte(lab.B + 128));
                                 break;
-                            case AdobeColorSpace.Cmyk:
+                            case AdobeColorSpaceAcbSubset.Cmyk:
                                 var cmyk = pc.Color.ToCmyk();
                                 sw.Write(Convert.ToByte(255 - (cmyk.Cyan * 255d)));
                                 sw.Write(Convert.ToByte(255 - (cmyk.Magenta * 255d)));

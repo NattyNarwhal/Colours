@@ -108,11 +108,11 @@ namespace Colours
             }
         }
 
-        public AdobeColorSpace AcbColorSpace
+        public AdobeColorSpaceAcbSubset AcbColorSpace
         {
             get
             {
-                return (AdobeColorSpace)colorspaceBox.SelectedItem;
+                return (AdobeColorSpaceAcbSubset)colorspaceBox.SelectedItem;
             }
             set
             {
@@ -135,10 +135,9 @@ namespace Colours
         public PalettePropertiesForm()
         {
             InitializeComponent();
-            colorspaceBox.Items.Add(AdobeColorSpace.Rgb);
-            colorspaceBox.Items.Add(AdobeColorSpace.Lab);
-            colorspaceBox.Items.Add(AdobeColorSpace.Cmyk);
             // HACK: AddRange is shitty, Enum.GetValues is shitty
+            foreach (var s in Enum.GetValues(typeof(AdobeColorSpaceAcbSubset)))
+                colorspaceBox.Items.Add(s);
             foreach (var p in Enum.GetValues(typeof(AcbPurpose)))
                 spotProcessBox.Items.Add(p);
         }
