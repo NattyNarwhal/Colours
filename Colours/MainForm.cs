@@ -126,8 +126,8 @@ namespace Colours
             propertiesToolStripMenuItem.Enabled = supportsMetadata;
             propertiesToolStripMenuItem.ToolTipText = supportsMetadata ?
                 "" : "This file format doesn't support metadata.";
-            changeMetadataToolStripMenuItem.Enabled = supportsColourMetadata;
-            changeMetadataSubmenuToolStripMenuItem.Enabled = supportsColourMetadata;
+            changeMetadataToolStripMenuItem.Enabled = selected && supportsColourMetadata;
+            changeMetadataSubmenuToolStripMenuItem.Enabled = selected && supportsColourMetadata;
             changeMetadataToolStripMenuItem.ToolTipText = supportsColourMetadata ?
                 "" : "This file format doesn't support metadata.";
             changeMetadataSubmenuToolStripMenuItem.ToolTipText = supportsColourMetadata ?
@@ -161,8 +161,6 @@ namespace Colours
             renameSubmenuToolStripMenuItem.Enabled = selected;
             useToolStripMenuItem.Enabled = selected;
             changeToolStripMenuItem.Enabled = selected;
-            changeMetadataToolStripMenuItem.Enabled = selected;
-            changeMetadataSubmenuToolStripMenuItem.Enabled = selected;
             selectAllToolStripMenuItem.Enabled = !GridView && hasAny;
 
             pasteAcquireToolStripMenuItem.Enabled = canPaste;
