@@ -25,7 +25,11 @@ namespace Colours
         [DataMember]
         public List<PaletteColor> Colors { get; set; }
 
-        // TODO: Transparency index support
+        /// <summary>
+        /// Gets or sets the index of the colour to use for transparency.
+        /// </summary>
+        [DataMember]
+        public ushort? TransparentIndex { get; set; }
 
         ActPalette()
         {
@@ -63,7 +67,11 @@ namespace Colours
 
                         Colors = Colors.Take(truncateTo).ToList();
 
-                        // we don't support transparency indices
+                        // Because the transparency index is also included by
+                        // count of colours, use that to validate that index
+                        var index = sr.ReadUInt16BE();
+                        if (index <= truncateTo)
+                            TransparentIndex = index;
                     }
                 }
             }
@@ -114,14 +122,13 @@ namespace Colours
                     }
 
                     // if there's less than 256, truncate
-                    if (l.Length != 256)
+                    // or if there's a transparency index
+                    if (TransparentIndex != null || l.Length != 256)
                     {
                         sw.WriteUInt16BE(Convert.ToUInt16(l.Length));
 
-                        // we also need to worry about transparency, so give
-                        // it the last one?
-                        sw.Write(defaultChannel);
-                        sw.Write(defaultChannel);
+                        // fallback to a clearly bogus value
+                        sw.WriteUInt16BE(TransparentIndex ?? ushort.MaxValue);
                     }
 
                     s.Position = 0;

@@ -132,6 +132,21 @@ namespace Colours
             }
         }
 
+        public ushort? ActTransparencyIndex
+        {
+            get
+            {
+                return transparencyEnabledBox.Checked ?
+                    (ushort?)Convert.ToUInt16(transparencyIndexBox.Value) : null;
+            }
+            set
+            {
+                transparencyEnabledBox.Checked = value != null;
+                if (value != null)
+                    transparencyIndexBox.Value = (ushort)value;
+            }
+        }
+
         public PalettePropertiesForm()
         {
             InitializeComponent();
@@ -170,6 +185,19 @@ namespace Colours
                 AcbDescription = unboxed.Description;
                 AcbColorSpace = unboxed.ColorSpace;
                 AcbSpotProcess = unboxed.Purpose;
+            }
+            if (initial is ActPalette)
+            {
+                tabControl1.TabPages.Remove(commonTab);
+                tabControl1.TabPages.Remove(gimpTab);
+                tabControl1.TabPages.Remove(acbTab);
+
+                transparencyEnabledBox.CheckedChanged += (o, e) =>
+                {
+                    transparencyIndexBox.Enabled = transparencyEnabledBox.Checked;
+                };
+
+                ActTransparencyIndex = ((ActPalette)initial).TransparentIndex;
             }
         }
     }

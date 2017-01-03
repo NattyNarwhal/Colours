@@ -120,7 +120,7 @@ namespace Colours
             var canPaste = Clipboard.ContainsData("LPC") ||
                 Clipboard.ContainsText();
             var supportsMetadata = appPal.Palette is GimpPalette ||
-                appPal.Palette is AcbPalette;
+                appPal.Palette is AcbPalette || appPal.Palette is ActPalette;
             var supportsColourMetadata = appPal.Palette is AcbPalette;
 
             propertiesToolStripMenuItem.Enabled = supportsMetadata;
@@ -703,6 +703,12 @@ namespace Colours
                     acb.Description = pd.AcbDescription;
                     acb.ColorSpace = pd.AcbColorSpace;
                     acb.Purpose = pd.AcbSpotProcess;
+                }
+                if (p is ActPalette)
+                {
+                    var act = (ActPalette)p;
+
+                    act.TransparentIndex = pd.ActTransparencyIndex;
                 }
                 appPal.SetPalette(p, action: "Properties Change");
             }
