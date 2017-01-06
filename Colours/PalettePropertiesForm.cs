@@ -170,12 +170,15 @@ namespace Colours
             if (initial is GimpPalette)
             {
                 tabControl1.TabPages.Remove(acbTab);
+                tabControl1.TabPages.Remove(actTab);
 
                 GimpPaletteComments = ((GimpPalette)initial).Comments;
             }
             if (initial is AcbPalette)
             {
                 tabControl1.TabPages.Remove(gimpTab);
+                tabControl1.TabPages.Remove(actTab);
+
                 var unboxed = (AcbPalette)initial;
 
                 AcbId = unboxed.ID;
