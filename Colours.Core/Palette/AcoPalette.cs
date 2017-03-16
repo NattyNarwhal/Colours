@@ -48,7 +48,7 @@ namespace Colours
                     var a = br.ReadInt16BE() / 100;
                     var b = br.ReadInt16BE() / 100;
                     br.ReadUInt16BE(); // nop channel
-                    return new LabColor(l, a, b).ToXyz();
+                    return new LabColor(l, a, b);
                 case AdobeColorSpace.Cmyk:
                     var cyan = 1d - br.ReadUInt16BE() / 65535d;
                     var magenta = 1d - br.ReadUInt16BE() / 65535d;
@@ -56,7 +56,7 @@ namespace Colours
                     var key = 1d - br.ReadUInt16BE() / 65535d;
                     return new CmykColor(cyan, magenta, yellow, key);
                 case AdobeColorSpace.Hsv:
-                    // don't ask how I came up with this constant
+                    // HACK: don't ask how I came up with this constant
                     var hue = br.ReadUInt16BE() / 182.0399d;
                     var saturation = br.ReadUInt16BE() / 65535d;
                     var value = br.ReadUInt16BE() / 65535d;
@@ -164,16 +164,40 @@ namespace Colours
         {
             // 10 bytes: 1 ushort for type, 4 ushorts for channels
 
-            // type
-            bw.WriteUInt16BE((ushort)AdobeColorSpace.Rgb);
-            // red channel
-            bw.WriteUInt16BE(pc.Color.ToRgb().R);
-            // green channel
-            bw.WriteUInt16BE(pc.Color.ToRgb().G);
-            // blue channel
-            bw.WriteUInt16BE(pc.Color.ToRgb().B);
-            // no need for fourth channel, so write 0
-            bw.WriteUInt16BE(0);
+            if (pc.Color is LabColor)
+            {
+                var lab = (LabColor)pc.Color;
+                bw.WriteUInt16BE((ushort)AdobeColorSpace.Lab);
+                bw.WriteUInt16BE(Convert.ToUInt16(lab.L * 100));
+                bw.WriteInt16BE(Convert.ToInt16(lab.A * 100));
+                bw.WriteInt16BE(Convert.ToInt16(lab.B * 100));
+                bw.WriteUInt16BE(0); //nop 4th
+            }
+            if (pc.Color is CmykColor)
+            {
+                var cmyk = (CmykColor)pc.Color;
+                bw.WriteUInt16BE((ushort)AdobeColorSpace.Lab);
+                bw.WriteUInt16BE(Convert.ToUInt16(cmyk.Cyan * ushort.MaxValue));
+                bw.WriteUInt16BE(Convert.ToUInt16(cmyk.Magenta * ushort.MaxValue));
+                bw.WriteUInt16BE(Convert.ToUInt16(cmyk.Yellow * ushort.MaxValue));
+                bw.WriteUInt16BE(Convert.ToUInt16(cmyk.Key * ushort.MaxValue));
+            }
+            // HSV looks to be a cluster of magic values, see the HACK above
+            else
+            {
+                // we can fall back to RGB easily, especially if it's already
+                var rgb = pc.Color.ToRgb();
+                // type
+                bw.WriteUInt16BE((ushort)AdobeColorSpace.Rgb);
+                // red channel
+                bw.WriteUInt16BE(rgb.R);
+                // green channel
+                bw.WriteUInt16BE(rgb.G);
+                // blue channel
+                bw.WriteUInt16BE(rgb.B);
+                // no need for fourth channel, so write 0
+                bw.WriteUInt16BE(0);
+            }
         }
 
         static void ToPhotoshopColorV2(BinaryWriter bw, PaletteColor pc)

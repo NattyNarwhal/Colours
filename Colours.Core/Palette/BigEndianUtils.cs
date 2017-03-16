@@ -117,6 +117,20 @@ namespace Colours
         // be explicit with write types
 
         /// <summary>
+        /// Writes a signed 16-bit integer to the stream, guaranteeing big
+        /// endian format.
+        /// </summary>
+        /// <param name="bw">The <see cref="BinaryWriter"/> to write to.</param>
+        /// <param name="i16">The short to write as big endian.</param>
+        public static void WriteInt16BE(this BinaryWriter bw, short i16)
+        {
+            var b = BitConverter.GetBytes(i16);
+            if (BitConverter.IsLittleEndian)
+                Array.Reverse(b);
+            bw.Write(b);
+        }
+
+        /// <summary>
         /// Writes an unsigned 16-bit integer to the stream, guaranteeing big
         /// endian format.
         /// </summary>

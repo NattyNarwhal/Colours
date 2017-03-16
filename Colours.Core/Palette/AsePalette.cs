@@ -151,16 +151,29 @@ namespace Colours
                                 csw.WriteUInt16BE(Convert.ToUInt16(name.Length));
                                 csw.WriteStringBE(name);
 
+                                // I've only seen RGB and LAB
+                                if (pc.Color is LabColor)
+                                {
+                                    var lab = (LabColor)pc.Color;
+                                    csw.Write(new char[] { 'L', 'A', 'B', ' ' });
+                                    // hopefully, just do the inverse of reading
+                                    csw.WriteSingleBE(Convert.ToSingle(lab.L / 100f));
+                                    csw.WriteSingleBE(Convert.ToSingle(lab.A));
+                                    csw.WriteSingleBE(Convert.ToSingle(lab.B));
+                                }
+                                else
+                                {
+                                    var rgb = pc.Color.ToRgb();
+                                    // write RGB color
+                                    csw.Write(new char[] { 'R', 'G', 'B', ' ' });
+                                    // the FP precision seems to be different than
+                                    // Adobe's, but for 8-bit values it generates
+                                    // close enough to be the same
+                                    csw.WriteSingleBE(rgb.R / 65535f);
+                                    csw.WriteSingleBE(rgb.G / 65535f);
+                                    csw.WriteSingleBE(rgb.B / 65535f);
+                                }
                                 // TODO: Write based on type
-                                // write RGB color
-                                csw.Write(new char[] { 'R', 'G', 'B', ' ' });
-                                var rgb = pc.Color.ToRgb();
-                                // the FP precision seems to be different than
-                                // Adobe's, but for 8-bit values it generates
-                                // close enough to be the same
-                                csw.WriteSingleBE(rgb.R / 65535f);
-                                csw.WriteSingleBE(rgb.G / 65535f);
-                                csw.WriteSingleBE(rgb.B / 65535f);
 
                                 // write length then chunk
                                 long len = cms.Length;
