@@ -9,7 +9,7 @@ namespace Colours
     /// <summary>
     /// Represents a colour in the L*a*b* colour space.
     /// </summary>
-    public class LabColor
+    public class LabColor : IColor
     {
         /// <summary>
         /// The luminance of the colour.
@@ -69,6 +69,15 @@ namespace Colours
                     delta * delta) * XyzColor.D65.Z
                 );
 
+        }
+
+        /// <summary>
+        /// Converts the colour into an RGB representation.
+        /// </summary>
+        /// <returns>The RGB representation of the colour.</returns>
+        public RgbColor ToRgb()
+        {
+            return ToXyz().ToRgb();
         }
     }
 }

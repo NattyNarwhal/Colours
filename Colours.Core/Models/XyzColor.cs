@@ -11,7 +11,7 @@ namespace Colours
     /// Represents a colour in the CIEXYZ colour space.
     /// </summary>
     [DataContract]
-    public class XyzColor
+    public class XyzColor : IColor
     {
         /// <summary>
         /// The D65 (white) colour.

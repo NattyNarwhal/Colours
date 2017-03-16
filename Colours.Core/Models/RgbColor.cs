@@ -14,7 +14,7 @@ namespace Colours
     /// </summary>
     [DataContract]
     [Serializable]
-    public class RgbColor
+    public class RgbColor : IColor
     {
         /// <summary>
         /// The red channel of the color. Values from 0-65535.
@@ -314,6 +314,16 @@ namespace Colours
                 return new CmykColor((c - k) / (1 - k), (m - k) / (1 - k), (y - k) / (1 - k), k);
             }
 
+        }
+
+        /// <summary>
+        /// This function does nothing meaniningful. It's intended for
+        /// compatibility with <see cref="IColor"/>.
+        /// </summary>
+        /// <returns>The same object.</returns>
+        public RgbColor ToRgb()
+        {
+            return this;
         }
     }
 }

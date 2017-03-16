@@ -174,7 +174,7 @@ namespace Colours.App
         /// <param name="keepHistory">If undo should have been added.</param>
         /// <param name="fireEvent">If the event should fire.</param>
         /// <param name="action">If the undo is added, the action it is described as.</param>
-        public void AppendColor(RgbColor c, bool keepHistory = true, bool fireEvent = true, string action = null)
+        public void AppendColor(IColor c, bool keepHistory = true, bool fireEvent = true, string action = null)
         {
             AppendColor(new PaletteColor(c), keepHistory, fireEvent, action);
         }
@@ -204,7 +204,7 @@ namespace Colours.App
         /// <param name="keepHistory">If undo should have been added.</param>
         /// <param name="fireEvent">If the event should fire.</param>
         /// <param name="action">If the undo is added, the action it is described as.</param>
-        public void AppendColors(IEnumerable<RgbColor> lc, bool keepHistory = true, bool fireEvent = true, string action = null)
+        public void AppendColors(IEnumerable<IColor> lc, bool keepHistory = true, bool fireEvent = true, string action = null)
         {
             AppendColors(lc.Select(x => new PaletteColor(x)), keepHistory, fireEvent, action);
         }
@@ -453,7 +453,7 @@ namespace Colours.App
         /// <param name="keepHistory">If undo should have been added.</param>
         /// <param name="fireEvent">If the event should fire.</param>
         /// <param name="action">If the undo is added, the action it is described as.</param>
-        public void ChangeColor(PaletteColor pc, RgbColor newColor, bool keepHistory = true, bool fireEvent = true, string action = null)
+        public void ChangeColor(PaletteColor pc, IColor newColor, bool keepHistory = true, bool fireEvent = true, string action = null)
         {
             if (keepHistory)
                 PushUndo(action ?? "Change Colour");
@@ -478,7 +478,7 @@ namespace Colours.App
         /// <param name="keepHistory">If undo should have been added.</param>
         /// <param name="fireEvent">If the event should fire.</param>
         /// <param name="action">If the undo is added, the action it is described as.</param>
-        public void ChangeColors(IEnumerable<PaletteColor> lpc, RgbColor newColor, bool keepHistory = true, bool fireEvent = true, string action = null)
+        public void ChangeColors(IEnumerable<PaletteColor> lpc, IColor newColor, bool keepHistory = true, bool fireEvent = true, string action = null)
         {
             if (keepHistory)
                 PushUndo(action ?? "Change Colours");
@@ -516,16 +516,16 @@ namespace Colours.App
                         : Palette.Colors.OrderByDescending(x => x.Name).ToList();
                     break;
                 case PaletteSortBy.Hue:
-                    Palette.Colors = ascending ? Palette.Colors.OrderBy(x => x.Color.ToHsv().Hue).ToList()
-                        : Palette.Colors.OrderByDescending(x => x.Color.ToHsv().Hue).ToList();
+                    Palette.Colors = ascending ? Palette.Colors.OrderBy(x => x.Color.ToRgb().ToHsv().Hue).ToList()
+                        : Palette.Colors.OrderByDescending(x => x.Color.ToRgb().ToHsv().Hue).ToList();
                     break;
                 case PaletteSortBy.Saturation:
-                    Palette.Colors = ascending ? Palette.Colors.OrderBy(x => x.Color.ToHsv().Saturation).ToList()
-                        : Palette.Colors.OrderByDescending(x => x.Color.ToHsv().Saturation).ToList();
+                    Palette.Colors = ascending ? Palette.Colors.OrderBy(x => x.Color.ToRgb().ToHsv().Saturation).ToList()
+                        : Palette.Colors.OrderByDescending(x => x.Color.ToRgb().ToHsv().Saturation).ToList();
                     break;
                 case PaletteSortBy.Brightness:
-                    Palette.Colors = ascending ? Palette.Colors.OrderBy(x => x.Color.ToHsv().Value).ToList()
-                        : Palette.Colors.OrderByDescending(x => x.Color.ToHsv().Value).ToList();
+                    Palette.Colors = ascending ? Palette.Colors.OrderBy(x => x.Color.ToRgb().ToHsv().Value).ToList()
+                        : Palette.Colors.OrderByDescending(x => x.Color.ToRgb().ToHsv().Value).ToList();
                     break;
             }
             Dirty = true;

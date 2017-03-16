@@ -21,7 +21,7 @@ namespace Colours
         /// Gets or sets the color itself.
         /// </summary>
         [DataMember]
-        public RgbColor Color { get; set; }
+        public IColor Color { get; set; }
         /// <summary>
         /// Gets or sets the name of the color.
         /// </summary>
@@ -54,7 +54,7 @@ namespace Colours
         /// The metadata of the color. This may not be saved with some formats,
         /// and its purpose will vary.
         /// </param>
-        public PaletteColor(RgbColor color, string name, string meta = "")
+        public PaletteColor(IColor color, string name, string meta = "")
         {
             Color = color;
             Name = name;
@@ -65,7 +65,7 @@ namespace Colours
         /// Creates a new color for use in a palette.
         /// </summary>
         /// <param name="color">The color itself.</param>
-        public PaletteColor(RgbColor color) : this()
+        public PaletteColor(IColor color) : this()
         {
             Color = color;
         }
@@ -117,7 +117,8 @@ namespace Colours
         /// <returns>The color in a "R G B[tab]Name" form.</returns>
         public override string ToString()
         {
-            return string.Format("{0} {1} {2}\t{3}", Color.R8, Color.G8, Color.B8, Name);
+            var rgb = Color.ToRgb();
+            return string.Format("{0} {1} {2}\t{3}", rgb.R8, rgb.G8, rgb.B8, Name);
         }
 
         /// <summary>

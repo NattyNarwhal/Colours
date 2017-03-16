@@ -58,7 +58,7 @@ namespace Colours
                             var name = sr.ReadStringBE(nameLen, true);
 
                             var colorSpace = new string(sr.ReadChars(4));
-                            RgbColor color;
+                            IColor color;
 
                             switch (colorSpace)
                             {
@@ -81,7 +81,7 @@ namespace Colours
                                     var a = sr.ReadSingleBE();
                                     var b = sr.ReadSingleBE();
 
-                                    color = new LabColor(l, a, b).ToXyz().ToRgb();
+                                    color = new LabColor(l, a, b);
                                     break;
                                 default:
                                     throw new PaletteException(
@@ -151,14 +151,16 @@ namespace Colours
                                 csw.WriteUInt16BE(Convert.ToUInt16(name.Length));
                                 csw.WriteStringBE(name);
 
+                                // TODO: Write based on type
                                 // write RGB color
                                 csw.Write(new char[] { 'R', 'G', 'B', ' ' });
+                                var rgb = pc.Color.ToRgb();
                                 // the FP precision seems to be different than
                                 // Adobe's, but for 8-bit values it generates
                                 // close enough to be the same
-                                csw.WriteSingleBE(pc.Color.R / 65535f);
-                                csw.WriteSingleBE(pc.Color.G / 65535f);
-                                csw.WriteSingleBE(pc.Color.B / 65535f);
+                                csw.WriteSingleBE(rgb.R / 65535f);
+                                csw.WriteSingleBE(rgb.G / 65535f);
+                                csw.WriteSingleBE(rgb.B / 65535f);
 
                                 // write length then chunk
                                 long len = cms.Length;

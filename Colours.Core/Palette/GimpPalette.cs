@@ -122,7 +122,7 @@ namespace Colours
         /// <param name="name">The name of the palette.</param>
         /// <param name="columns">The amount of columns.</param>
         /// <param name="colors">The list of colors.</param>
-        public GimpPalette(string name, int columns, IEnumerable<RgbColor> colors)
+        public GimpPalette(string name, int columns, IEnumerable<IColor> colors)
         {
             Name = name;
             BucketSize = columns;
@@ -138,7 +138,7 @@ namespace Colours
         /// <param name="columns">The amount of columns.</param>
         /// <param name="comments">The list of comments.</param>
         /// <param name="colors">The list of colors.</param>
-        public GimpPalette(string name, int columns, IEnumerable<string> comments, IEnumerable<RgbColor> colors)
+        public GimpPalette(string name, int columns, IEnumerable<string> comments, IEnumerable<IColor> colors)
             : this(name, columns, colors)
         {
             Comments = comments.ToList();

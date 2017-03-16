@@ -29,7 +29,7 @@ namespace Colours
             Version, Count1, Count2, Color1, Color2, Ending
         }
 
-        static RgbColor FromPhotoshopColorV1(BinaryReader br)
+        static IColor FromPhotoshopColorV1(BinaryReader br)
         {
             var space = (AdobeColorSpace)br.ReadUInt16BE();
             
@@ -48,20 +48,20 @@ namespace Colours
                     var a = br.ReadInt16BE() / 100;
                     var b = br.ReadInt16BE() / 100;
                     br.ReadUInt16BE(); // nop channel
-                    return new LabColor(l, a, b).ToXyz().ToRgb();
+                    return new LabColor(l, a, b).ToXyz();
                 case AdobeColorSpace.Cmyk:
                     var cyan = 1d - br.ReadUInt16BE() / 65535d;
                     var magenta = 1d - br.ReadUInt16BE() / 65535d;
                     var yellow = 1d - br.ReadUInt16BE() / 65535d;
                     var key = 1d - br.ReadUInt16BE() / 65535d;
-                    return new CmykColor(cyan, magenta, yellow, key).ToRgb();
+                    return new CmykColor(cyan, magenta, yellow, key);
                 case AdobeColorSpace.Hsv:
                     // don't ask how I came up with this constant
                     var hue = br.ReadUInt16BE() / 182.0399d;
                     var saturation = br.ReadUInt16BE() / 65535d;
                     var value = br.ReadUInt16BE() / 65535d;
                     br.ReadUInt16BE();
-                    return new HsvColor(hue, saturation, value).ToRgb();
+                    return new HsvColor(hue, saturation, value);
                 default:
                     throw new PaletteException(
                         string.Format("The colourspace ({0}) is unsupported.", space));
@@ -159,6 +159,7 @@ namespace Colours
                 Colors.Add(pc);
         }
 
+        // TODO: Write based on colorspace
         static void ToPhotoshopColorV1(BinaryWriter bw, PaletteColor pc)
         {
             // 10 bytes: 1 ushort for type, 4 ushorts for channels
@@ -166,11 +167,11 @@ namespace Colours
             // type
             bw.WriteUInt16BE((ushort)AdobeColorSpace.Rgb);
             // red channel
-            bw.WriteUInt16BE(pc.Color.R);
+            bw.WriteUInt16BE(pc.Color.ToRgb().R);
             // green channel
-            bw.WriteUInt16BE(pc.Color.G);
+            bw.WriteUInt16BE(pc.Color.ToRgb().G);
             // blue channel
-            bw.WriteUInt16BE(pc.Color.B);
+            bw.WriteUInt16BE(pc.Color.ToRgb().B);
             // no need for fourth channel, so write 0
             bw.WriteUInt16BE(0);
         }

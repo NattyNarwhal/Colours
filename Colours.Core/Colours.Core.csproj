@@ -46,6 +46,7 @@
     <Compile Include="Models\ColorUtils.cs" />
     <Compile Include="Models\HsvColor.cs" />
     <Compile Include="App\HtmlProofGenerator.cs" />
+    <Compile Include="Models\IColor.cs" />
     <Compile Include="Models\LabColor.cs" />
     <Compile Include="Models\MathUtils.cs" />
     <Compile Include="Models\XyzColor.cs" />

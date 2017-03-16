@@ -31,11 +31,12 @@ namespace Colours.App
         /// <returns>The HTML tables.</returns>
         public static string GenerateTable(PaletteColor pc)
         {
+            // TODO: This could also use ToString in a general manner
             return String.Format("<h1>{0}</h1>{1}", pc.Name,
                 String.Format(table,
-                    pc.Color.ToHtml(),
-                    pc.Color.ToHslString(),
-                    pc.Color.ToHsv().ToString()
+                    pc.Color.ToRgb().ToHtml(),
+                    pc.Color.ToRgb().ToHslString(),
+                    pc.Color.ToRgb().ToHsv().ToString()
                 )
             );
         }

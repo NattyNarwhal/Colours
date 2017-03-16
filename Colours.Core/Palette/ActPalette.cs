@@ -115,9 +115,9 @@ namespace Colours
                         }
                         else
                         {
-                            sw.Write(l[i].R8);
-                            sw.Write(l[i].G8);
-                            sw.Write(l[i].B8);
+                            sw.Write(l[i].ToRgb().R8);
+                            sw.Write(l[i].ToRgb().G8);
+                            sw.Write(l[i].ToRgb().B8);
                         }
                     }
 

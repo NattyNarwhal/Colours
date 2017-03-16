@@ -8,7 +8,7 @@ namespace Colours
     /// Represents a color in the Hue/Saturation/Value form.
     /// </summary>
     [DataContract]
-    public class HsvColor
+    public class HsvColor : IColor
     {
         private double _hue;
 

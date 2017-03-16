@@ -97,10 +97,11 @@ namespace Colours
             foreach (PaletteColor pc in appPal.Palette.Colors)
             {
                 var lvi = new ListViewItem(pc.Name);
-                paletteListImages.Images.Add(RenderColorIcon.RenderIcon(pc.Color));
+                paletteListImages.Images.Add(RenderColorIcon.RenderIcon(pc.Color.ToRgb()));
                 lvi.Tag = pc;
                 lvi.ImageIndex = i++;
-                lvi.SubItems.Add(pc.Color.ToHtml());
+                // TODO: could this better as a ToString on the raw obj?
+                lvi.SubItems.Add(pc.Color.ToRgb().ToHtml());
                 lvi.ToolTipText = pc.Metadata;
                 paletteList.Items.Add(lvi);
             }
@@ -216,11 +217,11 @@ namespace Colours
                 colorDialog.CustomColors = SelectedItems
                     .Take(16)
                     .Select(x =>
-                        ColorTranslator.ToOle(x.Color.ToGdiColor()))
+                        ColorTranslator.ToOle(x.Color.ToRgb().ToGdiColor()))
                     .ToArray();
             else
                 colorDialog.CustomColors = appPal.Palette.Colors.Take(16)
-                    .Select(x => ColorTranslator.ToOle(x.Color.ToGdiColor()))
+                    .Select(x => ColorTranslator.ToOle(x.Color.ToRgb().ToGdiColor()))
                     .ToArray();
 
             if (colorDialog.ShowDialog(this) == DialogResult.OK)
@@ -326,7 +327,7 @@ namespace Colours
                 if (Clipboard.ContainsData("LPC"))
                 {
                     var o = (List<PaletteColor>)Clipboard.GetData("LPC");
-                    app.SetColor(o.First().Color);
+                    app.SetColor(o.First().Color.ToRgb());
                 }
                 else if (Clipboard.ContainsText())
                 {
@@ -524,7 +525,7 @@ namespace Colours
         private void paletteList_ItemActivate(object sender, EventArgs e)
         {
             if (paletteList.SelectedIndices.Count > 0)
-                app.SetColor(appPal.Palette.Colors[paletteList.SelectedIndices[0]].Color);
+                app.SetColor(appPal.Palette.Colors[paletteList.SelectedIndices[0]].Color.ToRgb());
         }
 
         private void paletteList_AfterLabelEdit(object sender, LabelEditEventArgs e)
@@ -729,7 +730,7 @@ namespace Colours
         {
             BlendForm f = new BlendForm(app.Color, 
                 paletteList.SelectedIndices.Count > 0 ?
-                ((PaletteColor)paletteList.SelectedItems[0].Tag).Color : app.Color);
+                ((PaletteColor)paletteList.SelectedItems[0].Tag).Color.ToRgb() : app.Color);
             if (f.ShowDialog(this) == DialogResult.OK)
                 appPal.AppendColors(f.SelectedItems);
         }
@@ -796,14 +797,14 @@ namespace Colours
         private void useToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (SelectedItems.Count() > 0)
-                app.SetColor(SelectedItems.FirstOrDefault().Color);
+                app.SetColor(SelectedItems.FirstOrDefault().Color.ToRgb());
         }
 
         private void changeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (SelectedItems.Count() > 0)
             {
-                colorDialog.Color = SelectedItems.FirstOrDefault().Color.ToGdiColor();
+                colorDialog.Color = SelectedItems.FirstOrDefault().Color.ToRgb().ToGdiColor();
                 if (colorDialog.ShowDialog(this) == DialogResult.OK)
                 {
                     appPal.ChangeColors(SelectedItems, colorDialog.Color.ToRgbColor());

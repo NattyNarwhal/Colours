@@ -162,7 +162,7 @@ namespace Colours
                             Prefix, name, Postfix, cid);
 #endif
 
-                        RgbColor color;
+                        IColor color;
                         switch (ColorSpace)
                         {
                             case AdobeColorSpaceAcbSubset.Rgb:
@@ -175,14 +175,14 @@ namespace Colours
                                 var l = sr.ReadByte() / 2.55d;
                                 var a = sr.ReadByte() - 128;
                                 var b = sr.ReadByte() - 128;
-                                color = new LabColor(l, a, b).ToXyz().ToRgb();
+                                color = new LabColor(l, a, b).ToXyz();
                                 break;
                             case AdobeColorSpaceAcbSubset.Cmyk:
                                 var c = 1 - sr.ReadByte() / 255d;
                                 var m = 1 - sr.ReadByte() / 255d;
                                 var y = 1 - sr.ReadByte() / 255d;
                                 var k = 1 - sr.ReadByte() / 255d;
-                                color = new CmykColor(c, m, y, k).ToRgb();
+                                color = new CmykColor(c, m, y, k);
                                 break;
                             default:
                                 throw new PaletteException(string.Format(
@@ -277,18 +277,22 @@ namespace Colours
                         switch (ColorSpace)
                         {
                             case AdobeColorSpaceAcbSubset.Rgb:
-                                sw.Write(pc.Color.R8);
-                                sw.Write(pc.Color.G8);
-                                sw.Write(pc.Color.B8);
+                                var rgb = pc.Color is RgbColor ?
+                                    (RgbColor)pc.Color : pc.Color.ToRgb();
+                                sw.Write(rgb.R8);
+                                sw.Write(rgb.G8);
+                                sw.Write(rgb.B8);
                                 break;
                             case AdobeColorSpaceAcbSubset.Lab:
-                                var lab = pc.Color.ToXyz().ToLab();
+                                var lab = pc.Color is LabColor ?
+                                    (LabColor)pc.Color : pc.Color.ToRgb().ToXyz().ToLab();
                                 sw.Write(Convert.ToByte(lab.L * 2.55d));
                                 sw.Write(Convert.ToByte(lab.A + 128));
                                 sw.Write(Convert.ToByte(lab.B + 128));
                                 break;
                             case AdobeColorSpaceAcbSubset.Cmyk:
-                                var cmyk = pc.Color.ToCmyk();
+                                var cmyk = pc.Color is CmykColor ?
+                                    (CmykColor)pc.Color : pc.Color.ToRgb().ToCmyk();
                                 sw.Write(Convert.ToByte(255 - (cmyk.Cyan * 255d)));
                                 sw.Write(Convert.ToByte(255 - (cmyk.Magenta * 255d)));
                                 sw.Write(Convert.ToByte(255 - (cmyk.Yellow * 255d)));
