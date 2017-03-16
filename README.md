@@ -1,5 +1,7 @@
 # Colours
 
+![Screenshot](http://i.imgur.com/Al3Dykh.png)
+
 This is a small program to create colour schemes and palette. There's a `System.Windows.Forms` version as well as a GTK version, intended for Linux/BSD systems. The backend is portable to create a frontend on any .NET platform.
 
 ## Features
