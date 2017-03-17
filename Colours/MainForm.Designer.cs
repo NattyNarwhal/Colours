@@ -100,8 +100,8 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.colorGrid1 = new Colours.ColorGrid();
             this.paletteContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.useToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.changeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.useSubmenuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.changeSubmenuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem8 = new System.Windows.Forms.ToolStripSeparator();
             this.cutSubmenuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyPCSubmenuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -114,6 +114,9 @@
             this.paletteListImages = new System.Windows.Forms.ImageList(this.components);
             this.savePaletteDialog = new System.Windows.Forms.SaveFileDialog();
             this.openPaletteDialog = new System.Windows.Forms.OpenFileDialog();
+            this.changeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.useToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.colorContextMenu.SuspendLayout();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -336,6 +339,8 @@
             this.toolStripMenuItem7,
             this.addToolStripMenuItem,
             this.addAllToolStripMenuItem,
+            this.toolStripSeparator4,
+            this.changeToolStripMenuItem,
             this.deleteToolStripMenuItem,
             this.renameToolStripMenuItem,
             this.changeMetadataToolStripMenuItem,
@@ -496,6 +501,7 @@
             // acquireToolStripMenuItem
             // 
             this.acquireToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.useToolStripMenuItem,
             this.eyedropperToolStripMenuItem,
             this.randomToolStripMenuItem,
             this.pasteAcquireToolStripMenuItem,
@@ -746,8 +752,8 @@
             // paletteContextMenu
             // 
             this.paletteContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.useToolStripMenuItem,
-            this.changeToolStripMenuItem,
+            this.useSubmenuToolStripMenuItem,
+            this.changeSubmenuToolStripMenuItem,
             this.toolStripMenuItem8,
             this.cutSubmenuToolStripMenuItem,
             this.copyPCSubmenuToolStripMenuItem,
@@ -757,19 +763,19 @@
             this.paletteContextMenu.Name = "paletteContextMenu";
             this.paletteContextMenu.Size = new System.Drawing.Size(169, 164);
             // 
-            // useToolStripMenuItem
+            // useSubmenuToolStripMenuItem
             // 
-            this.useToolStripMenuItem.Name = "useToolStripMenuItem";
-            this.useToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
-            this.useToolStripMenuItem.Text = "&Use";
-            this.useToolStripMenuItem.Click += new System.EventHandler(this.useToolStripMenuItem_Click);
+            this.useSubmenuToolStripMenuItem.Name = "useSubmenuToolStripMenuItem";
+            this.useSubmenuToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.useSubmenuToolStripMenuItem.Text = "&Use";
+            this.useSubmenuToolStripMenuItem.Click += new System.EventHandler(this.useToolStripMenuItem_Click);
             // 
-            // changeToolStripMenuItem
+            // changeSubmenuToolStripMenuItem
             // 
-            this.changeToolStripMenuItem.Name = "changeToolStripMenuItem";
-            this.changeToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
-            this.changeToolStripMenuItem.Text = "C&hange";
-            this.changeToolStripMenuItem.Click += new System.EventHandler(this.changeToolStripMenuItem_Click);
+            this.changeSubmenuToolStripMenuItem.Name = "changeSubmenuToolStripMenuItem";
+            this.changeSubmenuToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.changeSubmenuToolStripMenuItem.Text = "C&hange";
+            this.changeSubmenuToolStripMenuItem.Click += new System.EventHandler(this.changeToolStripMenuItem_Click);
             // 
             // toolStripMenuItem8
             // 
@@ -875,6 +881,25 @@
     "ct|Adobe Photoshop Color Book|*.acb";
             this.openPaletteDialog.Title = "Open";
             // 
+            // changeToolStripMenuItem
+            // 
+            this.changeToolStripMenuItem.Name = "changeToolStripMenuItem";
+            this.changeToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.changeToolStripMenuItem.Text = "C&hange";
+            this.changeToolStripMenuItem.Click += new System.EventHandler(this.changeToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(165, 6);
+            // 
+            // useToolStripMenuItem
+            // 
+            this.useToolStripMenuItem.Name = "useToolStripMenuItem";
+            this.useToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
+            this.useToolStripMenuItem.Text = "From &Selection";
+            this.useToolStripMenuItem.Click += new System.EventHandler(this.useToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -961,7 +986,7 @@
         private System.Windows.Forms.ToolStripMenuItem copyPCToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem7;
         private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem useToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem useSubmenuToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem8;
         private System.Windows.Forms.ToolStripMenuItem cutSubmenuToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem copyPCSubmenuToolStripMenuItem;
@@ -981,11 +1006,14 @@
         private System.Windows.Forms.ToolStripMenuItem listToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem gridToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem renameSubmenuToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem changeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem changeSubmenuToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sortToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem changeMetadataToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem changeMetadataSubmenuToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripMenuItem changeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem useToolStripMenuItem;
     }
 }
 
