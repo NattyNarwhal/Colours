@@ -86,7 +86,7 @@ namespace Colours
         /// <returns>The color, in a "LabColor [L=0, A=0, B=0]" format."</returns>
         public override string ToString()
         {
-            return string.Format("LabColor [L={0}, A={1}, B={2}]", L, A, B);
+            return string.Format("LabColor [L={0:N}, A={1:N}, B={2:N}]", L, A, B);
         }
     }
 }

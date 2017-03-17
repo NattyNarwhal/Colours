@@ -137,7 +137,7 @@ namespace Colours
         /// <returns>The color, in a "XyzColor [X=0, Y=0, Z=0]" format."</returns>
         public override string ToString()
         {
-            return string.Format("XyzColor [X={0}, Y={1}, Z={2}]", X, Y, Z);
+            return string.Format("XyzColor [X={0:N}, Y={1:N}, Z={2:N}]", X, Y, Z);
         }
     }
 }

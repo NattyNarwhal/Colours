@@ -94,7 +94,7 @@ namespace Colours
         /// <returns>The color, in a "HsvColor [H=0, S=0, V=0]" format."</returns>
         public override string ToString()
         {
-            return string.Format("HsvColor [H={0}, S={1}, V={2}]", Hue, Saturation, Value);
+            return string.Format("HsvColor [H={0:N}, S={1:N}, V={2:N}]", Hue, Saturation, Value);
         }
 
         /// <summary>
