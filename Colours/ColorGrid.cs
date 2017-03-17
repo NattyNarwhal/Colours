@@ -39,6 +39,7 @@ namespace Colours
         }
 
         IPalette _palette;
+        bool initializing = true;
         // for button dnd
         bool isDragged = false;
         Point drag;
@@ -56,7 +57,8 @@ namespace Colours
                 _palette = value;
 
                 // onto the gridification
-                UpdateGrid();
+                if (!initializing)
+                    UpdateGrid();
             }
         }
 
@@ -68,6 +70,9 @@ namespace Colours
 
             Palette = new GimpPalette();
             Resize += (o, e) => ResizeUI();
+
+            // HACK: the designer runs into issues... often with this control, due to init.
+            initializing = false;
         }
 
         void UpdateGrid()
