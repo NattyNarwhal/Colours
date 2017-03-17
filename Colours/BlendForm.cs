@@ -40,8 +40,7 @@ namespace Colours
         {
             get
             {
-                return listView1.CheckedItems.Cast<ListViewItem>()
-                    .Select(x => (RgbColor)x.Tag);
+                return colorListView1.CheckedColors.Cast<RgbColor>();
             }
         }
 
@@ -59,21 +58,12 @@ namespace Colours
 
         public void UpdateUI()
         {
-            listView1.Items.Clear();
-            paletteListImages.Images.Clear();
+            colorListView1.ClearColors();
 
             // TODO: refactor this form to support multiple colours being blended at once?
-            int i = 0; // image index
             foreach (var c in Blend.BlendColours(Color1, Color2, Steps))
             {
-                ListViewItem lvi = new ListViewItem();
-                lvi.Tag = c;
-                lvi.Text = c.ToHtml();
-
-                paletteListImages.Images.Add(RenderColorIcon.RenderIcon(c));
-                lvi.ImageIndex = i++;
-
-                listView1.Items.Add(lvi);
+                colorListView1.AddColor(c);
             }
         }
 

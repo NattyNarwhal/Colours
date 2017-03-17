@@ -77,6 +77,9 @@
     <Compile Include="ColorGrid.Designer.cs">
       <DependentUpon>ColorGrid.cs</DependentUpon>
     </Compile>
+    <Compile Include="ColorListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="EyedropperForm.cs">
       <SubType>Form</SubType>
     </Compile>
