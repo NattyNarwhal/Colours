@@ -175,7 +175,7 @@ namespace Colours
                                 var l = sr.ReadByte() / 2.55d;
                                 var a = sr.ReadByte() - 128;
                                 var b = sr.ReadByte() - 128;
-                                color = new LabColor(l, a, b).ToXyz();
+                                color = new LabColor(l, a, b);
                                 break;
                             case AdobeColorSpaceAcbSubset.Cmyk:
                                 var c = 1 - sr.ReadByte() / 255d;
