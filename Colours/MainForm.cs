@@ -100,8 +100,8 @@ namespace Colours
                 paletteListImages.Images.Add(RenderColorIcon.RenderIcon(pc.Color.ToRgb()));
                 lvi.Tag = pc;
                 lvi.ImageIndex = i++;
-                // TODO: could this better as a ToString on the raw obj?
-                lvi.SubItems.Add(pc.Color.ToRgb().ToHtml());
+                lvi.SubItems.Add(NativeFormat ?
+                    pc.Color.ToString() : pc.Color.ToRgb().ToHtml());
                 lvi.ToolTipText = pc.Metadata;
                 paletteList.Items.Add(lvi);
             }
@@ -184,6 +184,7 @@ namespace Colours
         }
 
         public bool GridView => colorGrid1.Visible;
+        public bool NativeFormat => nativeFormatToolStripMenuItem.Checked;
 
         // if you need to get the LVIs, use it directly
         public IEnumerable<PaletteColor> SelectedItems
@@ -862,6 +863,13 @@ namespace Colours
                         .ToDictionary(x => x.Key, x => x.Value));
                 }
             }
+        }
+
+        private void nativeFormatToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // TODO: This is an expensive operation, consider putting this into
+            // UpdateUIPaletteList instead?
+            SyncAppPalState(nativeFormatToolStripMenuItem, e);
         }
     }
 }
