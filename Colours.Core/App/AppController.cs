@@ -17,7 +17,7 @@ namespace Colours.App
         public HsvColor HsvColor { get; private set; }
         /// <summary>
         /// The current color, in RGB form. Use
-        /// <see cref="AppController.SetColor(RgbColor, bool, bool)"/>
+        /// <see cref="AppController.SetColor(IColor, bool, bool)"/>
         /// to change the color.
         /// </summary>
         public RgbColor Color
