@@ -117,6 +117,7 @@ namespace Colours
                 schemeBox.SelectedItem.ToString(), app.Color.ToHtml());
 
             var hasAny = appPal.Palette.Colors.Count > 0;
+            var hasMultiple = appPal.Palette.Colors.Count > 1;
             var selected = SelectedItems.Count() > 0;
             var canPaste = Clipboard.ContainsData("LPC") ||
                 Clipboard.ContainsText();
@@ -165,6 +166,7 @@ namespace Colours
             changeToolStripMenuItem.Enabled = selected;
             changeSubmenuToolStripMenuItem.Enabled = selected;
             selectAllToolStripMenuItem.Enabled = !GridView && hasAny;
+            sortToolStripMenuItem.Enabled = hasMultiple;
 
             pasteAcquireToolStripMenuItem.Enabled = canPaste;
             pasteToolStripMenuItem.Enabled = canPaste;
