@@ -34,13 +34,12 @@
             this.color1Label = new System.Windows.Forms.Label();
             this.stepsBox = new System.Windows.Forms.NumericUpDown();
             this.color2Label = new System.Windows.Forms.Label();
-            this.paletteListImages = new System.Windows.Forms.ImageList(this.components);
             this.okButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.colorListView1 = new Colours.ColorListView();
             this.colorButton1 = new Colours.ColorButton();
             this.colorButton2 = new Colours.ColorButton();
-            this.colorListView1 = new Colours.ColorListView();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.stepsBox)).BeginInit();
             this.SuspendLayout();
@@ -116,12 +115,6 @@
             this.color2Label.TabIndex = 5;
             this.color2Label.Text = "S&econd colour";
             // 
-            // paletteListImages
-            // 
-            this.paletteListImages.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
-            this.paletteListImages.ImageSize = new System.Drawing.Size(16, 16);
-            this.paletteListImages.TransparentColor = System.Drawing.Color.Transparent;
-            // 
             // okButton
             // 
             this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -151,6 +144,20 @@
             this.colorDialog1.AnyColor = true;
             this.colorDialog1.FullOpen = true;
             // 
+            // colorListView1
+            // 
+            this.colorListView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.colorListView1.CheckBoxes = true;
+            this.colorListView1.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.colorListView1.Location = new System.Drawing.Point(12, 59);
+            this.colorListView1.Name = "colorListView1";
+            this.colorListView1.Size = new System.Drawing.Size(260, 161);
+            this.colorListView1.TabIndex = 4;
+            this.colorListView1.UseCompatibleStateImageBehavior = false;
+            this.colorListView1.View = System.Windows.Forms.View.Details;
+            // 
             // colorButton1
             // 
             this.colorButton1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
@@ -176,20 +183,6 @@
             this.colorButton2.TabIndex = 6;
             this.colorButton2.UseVisualStyleBackColor = false;
             this.colorButton2.Click += new System.EventHandler(this.colorButton2_Click);
-            // 
-            // colorListView1
-            // 
-            this.colorListView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.colorListView1.CheckBoxes = true;
-            this.colorListView1.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            this.colorListView1.Location = new System.Drawing.Point(12, 59);
-            this.colorListView1.Name = "colorListView1";
-            this.colorListView1.Size = new System.Drawing.Size(260, 161);
-            this.colorListView1.TabIndex = 4;
-            this.colorListView1.UseCompatibleStateImageBehavior = false;
-            this.colorListView1.View = System.Windows.Forms.View.Details;
             // 
             // BlendForm
             // 
@@ -226,7 +219,6 @@
         private System.Windows.Forms.NumericUpDown stepsBox;
         private System.Windows.Forms.Label color2Label;
         private ColorButton colorButton2;
-        private System.Windows.Forms.ImageList paletteListImages;
         private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.ColorDialog colorDialog1;
