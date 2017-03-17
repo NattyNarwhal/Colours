@@ -67,17 +67,17 @@
     <Compile Include="BlendForm.Designer.cs">
       <DependentUpon>BlendForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ColorButton.cs">
+    <Compile Include="Controls\ColorButton.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ColorDragEventArgs.cs" />
-    <Compile Include="ColorGrid.cs">
+    <Compile Include="Controls\ColorDragEventArgs.cs" />
+    <Compile Include="Controls\ColorGrid.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ColorGrid.Designer.cs">
+    <Compile Include="Controls\ColorGrid.Designer.cs">
       <DependentUpon>ColorGrid.cs</DependentUpon>
     </Compile>
-    <Compile Include="ColorListView.cs">
+    <Compile Include="Controls\ColorListView.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="EyedropperForm.cs">
@@ -126,7 +126,7 @@
     <EmbeddedResource Include="BlendForm.resx">
       <DependentUpon>BlendForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ColorGrid.resx">
+    <EmbeddedResource Include="Controls\ColorGrid.resx">
       <DependentUpon>ColorGrid.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EyedropperForm.resx">
