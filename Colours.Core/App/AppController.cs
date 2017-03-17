@@ -121,7 +121,7 @@ namespace Colours.App
         }
 
         /// <summary>
-        /// Set the current colour (in RGB form) and generate the Results in the
+        /// Set the current colour and generate the Results in the
         /// Results property, and fire an event.
         /// </summary>
         /// <param name="c">The new colour.</param>
@@ -132,9 +132,9 @@ namespace Colours.App
         /// <param name="fireEvent">
         /// If you want to fire the event.
         /// </param>
-        public void SetColor(RgbColor c, bool keepHistory = true, bool fireEvent = true)
+        public void SetColor(IColor c, bool keepHistory = true, bool fireEvent = true)
         {
-            SetColor(c.ToHsv(), keepHistory, fireEvent);
+            SetColor(c.ToRgb().ToHsv(), keepHistory, fireEvent);
         }
 
         /// <summary>

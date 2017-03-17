@@ -104,5 +104,15 @@ namespace Colours
 
             return new RgbColor(red, green, blue, 16);
         }
+
+        /// <summary>
+        /// Prints a representation of the color.
+        /// </summary>
+        /// <returns>The color, in a "CmykColor [C=0, M=0, Y=0, K=0]" format."</returns>
+        public override string ToString()
+        {
+            return string.Format("CmykColor [C={0}, M={1}, Y={2}, K={3}]",
+                Cyan, Magenta, Yellow, Key);
+        }
     }
 }

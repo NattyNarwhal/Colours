@@ -89,10 +89,19 @@ namespace Colours
         }
 
         /// <summary>
-        /// Outputs a string representation of the color.
+        /// Prints a representation of the color.
+        /// </summary>
+        /// <returns>The color, in a "HsvColor [H=0, S=0, V=0]" format."</returns>
+        public override string ToString()
+        {
+            return string.Format("HsvColor [H={0}, S={1}, V={2}]", Hue, Saturation, Value);
+        }
+
+        /// <summary>
+        /// Outputs a string representation of the color, in CSS form.
         /// </summary>
         /// <returns>A string in "hsv(0, 0%, 0%)" format.</returns>
-        public override string ToString()
+        public string ToCssString()
         {
             CultureInfo cssCulture = new CultureInfo(CultureInfo.InvariantCulture.Name);
             cssCulture.NumberFormat.PercentDecimalDigits = 0;

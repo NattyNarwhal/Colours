@@ -162,7 +162,7 @@ namespace Colours
                     // HACK: This also could be better post-IColor
                     toolTip1.SetToolTip(cb, string.Format("{0}\r\n{1}\r\n{2}\r\n{3}",
                         pc.Name, pc.Metadata, pc.Color.ToRgb().ToHtml(),
-                        (pc.Color is HsvColor ? pc.Color : pc.Color.ToRgb().ToHsv()).ToString()));
+                        (pc.Color is HsvColor ? (HsvColor)pc.Color : pc.Color.ToRgb().ToHsv()).ToCssString()));
                     table.Controls.Add(cb);
                     table.SetCellPosition(cb, new TableLayoutPanelCellPosition(c, r));
                 }

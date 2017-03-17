@@ -36,7 +36,7 @@ namespace Colours.App
                 String.Format(table,
                     pc.Color.ToRgb().ToHtml(),
                     pc.Color.ToRgb().ToHslString(),
-                    pc.Color.ToRgb().ToHsv().ToString()
+                    pc.Color.ToRgb().ToHsv().ToCssString()
                 )
             );
         }
@@ -53,7 +53,7 @@ namespace Colours.App
                 String.Format(table,
                     c.ToRgb().ToHtml(),
                     c.ToRgb().ToHslString(),
-                    c.ToString()
+                    c.ToCssString()
                     )
                 )
             );

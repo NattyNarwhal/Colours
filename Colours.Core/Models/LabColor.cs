@@ -79,5 +79,14 @@ namespace Colours
         {
             return ToXyz().ToRgb();
         }
+
+        /// <summary>
+        /// Prints a representation of the color.
+        /// </summary>
+        /// <returns>The color, in a "LabColor [L=0, A=0, B=0]" format."</returns>
+        public override string ToString()
+        {
+            return string.Format("LabColor [L={0}, A={1}, B={2}]", L, A, B);
+        }
     }
 }

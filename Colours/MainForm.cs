@@ -73,9 +73,9 @@ namespace Colours
                 if (app.HsvColor == next)
                     cb.Font = new Font(cb.Font, FontStyle.Bold);
                 cb.Text = String.Format("{0}\r\n{1}",
-                    next.ToRgb().ToHtml(), next.ToString());
+                    next.ToRgb().ToHtml(), next.ToCssString());
                 toolTip.SetToolTip(cb, String.Format("{0}\r\n{1}\r\n{2}",
-                    next.ToRgb().ToHtml(), next.ToRgb().ToHslString(), next.ToString()));
+                    next.ToRgb().ToHtml(), next.ToRgb().ToHslString(), next.ToCssString()));
                 cb.ContextMenuStrip = colorContextMenu;
                 cb.Dock = DockStyle.Fill;
                 cb.Click += SchemeColor_Click;
@@ -250,7 +250,7 @@ namespace Colours
         private void copyHsvContextToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ColorButton cb = (ColorButton)colorContextMenu.SourceControl;
-            Clipboard.SetText(cb.Color.ToHsv().ToString());
+            Clipboard.SetText(cb.Color.ToHsv().ToCssString());
         }
 
         /// <summary>
@@ -353,7 +353,7 @@ namespace Colours
 
         private void copySubmenuHsvToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText(app.HsvColor.ToString());
+            Clipboard.SetText(app.HsvColor.ToCssString());
         }
 
         private void invertToolStripMenuItem_Click(object sender, EventArgs e)
