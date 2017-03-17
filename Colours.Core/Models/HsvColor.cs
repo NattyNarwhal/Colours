@@ -10,7 +10,7 @@ namespace Colours
     [DataContract]
     public class HsvColor : IColor
     {
-        private double _hue;
+        private double _hue, _saturation, _value;
 
         /// <summary>
         /// The hue of the colour, on a wheel from 0 to 360 degrees.
@@ -36,12 +36,32 @@ namespace Colours
         /// The saturation of the colour, from 0 to 1.
         /// </summary>
         [DataMember]
-        public double Saturation { get; set; }
+        public double Saturation
+        {
+            get
+            {
+                return _saturation;
+            }
+            set
+            {
+                _saturation = value.Clamp(0.0, 1.0);
+            }
+        }
         /// <summary>
         /// The brightness of the colour, from 0 to 1.
         /// </summary>
         [DataMember]
-        public double Value { get; set; }
+        public double Value
+        {
+            get
+            {
+                return _value;
+            }
+            set
+            {
+                _value = value.Clamp(0.0, 1.0);
+            }
+        }
 
         // Functions adapted from:
         // http://stackoverflow.com/questions/359612/how-to-change-rgb-color-to-hsv/1626175#1626175
