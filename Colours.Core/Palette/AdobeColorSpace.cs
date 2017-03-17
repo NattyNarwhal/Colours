@@ -50,7 +50,7 @@ namespace Colours
         /// Represents a color in the Hue/Saturation/Value space.
         /// </summary>
         /// <remarks>
-        /// Uses 4 channels.
+        /// Uses 3 channels.
         /// </remarks>
         Hsv = 1,
         /// <summary>
@@ -61,7 +61,7 @@ namespace Colours
         /// </remarks>
         Cmyk = 2,
         /// <summary>
-        /// Represents a color in the Pantone custom space.. Undocumented.
+        /// Represents a color in the Pantone custom space. Undocumented.
         /// </summary>
         Pantone = 3,
         /// <summary>
@@ -69,11 +69,11 @@ namespace Colours
         /// </summary>
         Focoltone = 4,
         /// <summary>
-        /// Represents a color in the Trumatch custom space.. Undocumented.
+        /// Represents a color in the Trumatch custom space. Undocumented.
         /// </summary>
         Trumatch = 5,
         /// <summary>
-        /// Represents a color in the Toyo 88 Colorfinder 1050 custom space.. Undocumented.
+        /// Represents a color in the Toyo 88 Colorfinder 1050 custom space. Undocumented.
         /// </summary>
         Toyo88Colorfinder1050 = 6,
         /// <summary>
@@ -91,7 +91,7 @@ namespace Colours
         /// </remarks>
         Grey = 8,
         /// <summary>
-        /// Represents a color in the Pantone custom space. Undocumented.
+        /// Represents a color in the HKS custom space. Undocumented.
         /// </summary>
         HKS = 10
     }
