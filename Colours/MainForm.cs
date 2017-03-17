@@ -167,6 +167,8 @@ namespace Colours
             pasteAcquireToolStripMenuItem.Enabled = canPaste;
             pasteToolStripMenuItem.Enabled = canPaste;
 
+            nativeFormatToolStripMenuItem.Enabled = !GridView;
+
             UpdateUIPaletteList();
         }
 
