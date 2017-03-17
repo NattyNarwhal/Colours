@@ -160,7 +160,9 @@ namespace Colours
             deleteToolStripMenuItem.Enabled = selected;
             renameToolStripMenuItem.Enabled = selected;
             renameSubmenuToolStripMenuItem.Enabled = selected;
+            useToolStripMenuItem.Enabled = selected;
             useSubmenuToolStripMenuItem.Enabled = selected;
+            changeToolStripMenuItem.Enabled = selected;
             changeSubmenuToolStripMenuItem.Enabled = selected;
             selectAllToolStripMenuItem.Enabled = !GridView && hasAny;
 
