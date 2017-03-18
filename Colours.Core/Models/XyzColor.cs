@@ -11,6 +11,7 @@ namespace Colours
     /// Represents a colour in the CIEXYZ colour space.
     /// </summary>
     [DataContract]
+    [Serializable]
     public class XyzColor : IColor
     {
         /// <summary>

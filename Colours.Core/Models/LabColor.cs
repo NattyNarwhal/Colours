@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,6 +10,8 @@ namespace Colours
     /// <summary>
     /// Represents a colour in the L*a*b* colour space.
     /// </summary>
+    [DataContract]
+    [Serializable]
     public class LabColor : IColor
     {
         /// <summary>
@@ -19,14 +22,17 @@ namespace Colours
         /// this as a value from 0 to 1, however. In these cases, you can
         /// simply multiply by 100.
         /// </remarks>
+        [DataMember]
         public double L { get; set; }
         /// <summary>
         /// The red/green colour-opponent dimension.
         /// </summary>
+        [DataMember]
         public double A { get; set; }
         /// <summary>
         /// The yellow/blue colour-opponent dimension.
         /// </summary>
+        [DataMember]
         public double B { get; set; }
 
         /// <summary>

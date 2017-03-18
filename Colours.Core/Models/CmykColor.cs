@@ -11,6 +11,7 @@ namespace Colours
     /// A color in Cyan/Magenta/Yellow/Key (black) form.
     /// </summary>
     [DataContract]
+    [Serializable]
     public class CmykColor : IColor
     {
         double _c, _m, _y, _k;
