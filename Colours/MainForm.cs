@@ -495,6 +495,11 @@ namespace Colours
                     var p = new AcbPalette(File.ReadAllBytes(fileName));
                     appPal.NewFromPalette(p, fileName);
                 }
+                else if (fileName.EndsWith(".pal"))
+                {
+                    var p = new MsRiffPalette(File.ReadAllBytes(fileName));
+                    appPal.NewFromPalette(p, fileName);
+                }
                 // implied to be GIMP palette
                 else
                 {

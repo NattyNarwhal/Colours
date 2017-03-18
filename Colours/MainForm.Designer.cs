@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.schemeBox = new System.Windows.Forms.ComboBox();
             this.resultsTable = new System.Windows.Forms.TableLayoutPanel();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
@@ -74,6 +75,8 @@
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.listToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem10 = new System.Windows.Forms.ToolStripSeparator();
+            this.nativeFormatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.acquireToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.useToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.eyedropperToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -117,8 +120,6 @@
             this.paletteListImages = new System.Windows.Forms.ImageList(this.components);
             this.savePaletteDialog = new System.Windows.Forms.SaveFileDialog();
             this.openPaletteDialog = new System.Windows.Forms.OpenFileDialog();
-            this.toolStripMenuItem10 = new System.Windows.Forms.ToolStripSeparator();
-            this.nativeFormatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.colorContextMenu.SuspendLayout();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -503,16 +504,29 @@
             this.listToolStripMenuItem.Checked = true;
             this.listToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.listToolStripMenuItem.Name = "listToolStripMenuItem";
-            this.listToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.listToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.listToolStripMenuItem.Text = "&List";
             this.listToolStripMenuItem.Click += new System.EventHandler(this.listToolStripMenuItem_Click);
             // 
             // gridToolStripMenuItem
             // 
             this.gridToolStripMenuItem.Name = "gridToolStripMenuItem";
-            this.gridToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.gridToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.gridToolStripMenuItem.Text = "&Grid";
             this.gridToolStripMenuItem.Click += new System.EventHandler(this.gridToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem10
+            // 
+            this.toolStripMenuItem10.Name = "toolStripMenuItem10";
+            this.toolStripMenuItem10.Size = new System.Drawing.Size(146, 6);
+            // 
+            // nativeFormatToolStripMenuItem
+            // 
+            this.nativeFormatToolStripMenuItem.CheckOnClick = true;
+            this.nativeFormatToolStripMenuItem.Name = "nativeFormatToolStripMenuItem";
+            this.nativeFormatToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.nativeFormatToolStripMenuItem.Text = "&Native Format";
+            this.nativeFormatToolStripMenuItem.Click += new System.EventHandler(this.nativeFormatToolStripMenuItem_Click);
             // 
             // acquireToolStripMenuItem
             // 
@@ -899,23 +913,8 @@
             // openPaletteDialog
             // 
             this.openPaletteDialog.DefaultExt = "gpl";
-            this.openPaletteDialog.Filter = "All Supported Palettes|*.gpl;*.aco;*.act;*.ase;*.acb|GIMP Palette|*.gpl|Adobe Swa" +
-    "tch Exchange|*.ase|Adobe Photoshop Swatch|*.aco|Adobe Photoshop Colour Table|*.a" +
-    "ct|Adobe Photoshop Color Book|*.acb";
+            this.openPaletteDialog.Filter = resources.GetString("openPaletteDialog.Filter");
             this.openPaletteDialog.Title = "Open";
-            // 
-            // toolStripMenuItem10
-            // 
-            this.toolStripMenuItem10.Name = "toolStripMenuItem10";
-            this.toolStripMenuItem10.Size = new System.Drawing.Size(149, 6);
-            // 
-            // nativeFormatToolStripMenuItem
-            // 
-            this.nativeFormatToolStripMenuItem.CheckOnClick = true;
-            this.nativeFormatToolStripMenuItem.Name = "nativeFormatToolStripMenuItem";
-            this.nativeFormatToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.nativeFormatToolStripMenuItem.Text = "&Native Format";
-            this.nativeFormatToolStripMenuItem.Click += new System.EventHandler(this.nativeFormatToolStripMenuItem_Click);
             // 
             // MainForm
             // 

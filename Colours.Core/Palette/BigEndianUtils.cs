@@ -13,6 +13,21 @@ namespace Colours
     public static class BigEndianUtils
     {
         /// <summary>
+        /// Reads 4 bytes in little endian and returns an unsigned 32-bit integer.
+        /// </summary>
+        /// <param name="br">
+        /// A <see cref="BinaryReader"/> that has a uint in little endian to read.
+        /// </param>
+        /// <returns>An unsigned 32-bit integer.</returns>
+        public static uint ReadUInt32LE(this BinaryReader br)
+        {
+            var b = br.ReadBytes(4);
+            if (!BitConverter.IsLittleEndian)
+                Array.Reverse(b);
+            return BitConverter.ToUInt32(b, 0);
+        }
+
+        /// <summary>
         /// Reads 4 bytes in big endian and returns an unsigned 32-bit integer.
         /// </summary>
         /// <param name="br">
@@ -25,6 +40,21 @@ namespace Colours
             if (BitConverter.IsLittleEndian)
                 Array.Reverse(b);
             return BitConverter.ToUInt32(b, 0);
+        }
+
+        /// <summary>
+        /// Reads 2 bytes in little endian and returns an unsigned 16-bit integer.
+        /// </summary>
+        /// <param name="br">
+        /// A <see cref="BinaryReader"/> that has a ushort in little endian to read.
+        /// </param>
+        /// <returns>An unsigned 16-bit integer.</returns>
+        public static ushort ReadUInt16LE(this BinaryReader br)
+        {
+            var b = br.ReadBytes(2);
+            if (!BitConverter.IsLittleEndian)
+                Array.Reverse(b);
+            return BitConverter.ToUInt16(b, 0);
         }
 
         /// <summary>
