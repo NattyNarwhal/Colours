@@ -114,8 +114,8 @@ namespace Colours
                     }
                     
                     // now overwrite the null sizes we put w/ real ones
-                    chunkSize = s.Position - 8;
-                    subChunkSize = s.Position - 20;
+                    chunkSize = s.Length - 8;
+                    subChunkSize = s.Length - 20;
                     s.Position = chunkSizePos;
                     sw.WriteUInt32LE(Convert.ToUInt32(chunkSize));
                     s.Position = subChunkSizePos;
