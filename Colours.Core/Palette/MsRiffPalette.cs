@@ -101,7 +101,7 @@ namespace Colours
                     subChunkSizePos = s.Position;
                     sw.WriteUInt32LE(0);
                     // structure version
-                    sw.WriteUInt16LE(3);
+                    sw.WriteUInt16LE(768);
                     // count
                     sw.WriteUInt16LE(Convert.ToUInt16(Colors.Count));
 
@@ -110,7 +110,7 @@ namespace Colours
                         sw.Write(pc.Color.ToRgb().R8);
                         sw.Write(pc.Color.ToRgb().G8);
                         sw.Write(pc.Color.ToRgb().B8);
-                        sw.Write(0);
+                        sw.Write((byte)0);
                     }
                     
                     // now overwrite the null sizes we put w/ real ones
