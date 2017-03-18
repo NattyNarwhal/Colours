@@ -12,6 +12,7 @@ namespace Colours
     {
         public ColorComboBox()
         {
+            DropDownStyle = ComboBoxStyle.DropDownList;
             DrawMode = DrawMode.OwnerDrawFixed;
             ItemHeight = 21; // seems reasonable
             DrawItem += ColorComboBox_DrawItem;
@@ -37,6 +38,16 @@ namespace Colours
 
                 e.Graphics.DrawImage(RenderColorIcon.RenderIcon(pc.Color.ToRgb()), rectangle);
                 e.Graphics.DrawString(pc.Name,
+                    e.Font, new SolidBrush(e.ForeColor),
+                    new RectangleF(e.Bounds.X + rectangle.Width + 4,
+                        e.Bounds.Y + 4, e.Bounds.Width, e.Font.Height));
+            }
+            else if (e.Index > -1 && Items[e.Index] is IColor)
+            {
+                var c = (IColor)Items[e.Index];
+
+                e.Graphics.DrawImage(RenderColorIcon.RenderIcon(c.ToRgb()), rectangle);
+                e.Graphics.DrawString(c.ToString(),
                     e.Font, new SolidBrush(e.ForeColor),
                     new RectangleF(e.Bounds.X + rectangle.Width + 4,
                         e.Bounds.Y + 4, e.Bounds.Width, e.Font.Height));
