@@ -70,6 +70,9 @@
     <Compile Include="Controls\ColorButton.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\ColorComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\ColorDragEventArgs.cs" />
     <Compile Include="Controls\ColorGrid.cs">
       <SubType>UserControl</SubType>
