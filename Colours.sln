@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Colours.Windows", "Colours\Colours.Windows.csproj", "{6BAA5820-7C8C-46F3-A485-176AE7AD804A}"
 EndProject
@@ -11,6 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Colours.Gtk", "Colours.Gtk\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{28BA6589-0F6C-43E7-AA6B-2D3C7DE0135B}"
 	ProjectSection(SolutionItems) = preProject
+		FORMAT_RESOURCES.md = FORMAT_RESOURCES.md
 		LICENSE.txt = LICENSE.txt
 		README.md = README.md
 	EndProjectSection
