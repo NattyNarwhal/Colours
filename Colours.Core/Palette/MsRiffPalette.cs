@@ -20,14 +20,17 @@ namespace Colours
         [DataMember]
         public List<PaletteColor> Colors { get; set; }
 
+        MsRiffPalette()
+        {
+            Colors = new List<PaletteColor>();
+        }
+
         /// <summary>
         /// Creates a RIFF palette from a file.
         /// </summary>
         /// <param name="file">The file to convert from.</param>
-        public MsRiffPalette(byte[] file)
+        public MsRiffPalette(byte[] file) : this()
         {
-            Colors = new List<PaletteColor>();
-
             using (var ms = new MemoryStream(file))
             {
                 using (var sr = new BinaryReader(ms))
@@ -85,7 +88,11 @@ namespace Colours
         /// <returns>The new palette.</returns>
         public IPalette Clone()
         {
-            throw new NotImplementedException();
+            var p = new MsRiffPalette();
+            p.Colors = new List<PaletteColor>();
+            foreach (var c in Colors)
+                p.Colors.Add(c);
+            return p;
         }
     }
 }
