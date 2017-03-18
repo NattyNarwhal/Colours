@@ -55,8 +55,8 @@
             this.idBox = new System.Windows.Forms.NumericUpDown();
             this.idLabel = new System.Windows.Forms.Label();
             this.actTab = new System.Windows.Forms.TabPage();
-            this.transparencyEnabledBox = new System.Windows.Forms.CheckBox();
             this.transparencyIndexBox = new System.Windows.Forms.NumericUpDown();
+            this.transparencyEnabledBox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.columnsBox)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.commonTab.SuspendLayout();
@@ -122,7 +122,7 @@
             this.commentsBox.Multiline = true;
             this.commentsBox.Name = "commentsBox";
             this.commentsBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.commentsBox.Size = new System.Drawing.Size(269, 149);
+            this.commentsBox.Size = new System.Drawing.Size(269, 182);
             this.commentsBox.TabIndex = 5;
             // 
             // okButton
@@ -367,17 +367,6 @@
             this.actTab.Text = "Color Table Specific";
             this.actTab.UseVisualStyleBackColor = true;
             // 
-            // transparencyEnabledBox
-            // 
-            this.transparencyEnabledBox.AutoSize = true;
-            this.transparencyEnabledBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.transparencyEnabledBox.Location = new System.Drawing.Point(6, 6);
-            this.transparencyEnabledBox.Name = "transparencyEnabledBox";
-            this.transparencyEnabledBox.Size = new System.Drawing.Size(121, 18);
-            this.transparencyEnabledBox.TabIndex = 0;
-            this.transparencyEnabledBox.Text = "&Transparent colour";
-            this.transparencyEnabledBox.UseVisualStyleBackColor = true;
-            // 
             // transparencyIndexBox
             // 
             this.transparencyIndexBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -392,6 +381,17 @@
             this.transparencyIndexBox.Name = "transparencyIndexBox";
             this.transparencyIndexBox.Size = new System.Drawing.Size(197, 20);
             this.transparencyIndexBox.TabIndex = 1;
+            // 
+            // transparencyEnabledBox
+            // 
+            this.transparencyEnabledBox.AutoSize = true;
+            this.transparencyEnabledBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.transparencyEnabledBox.Location = new System.Drawing.Point(6, 6);
+            this.transparencyEnabledBox.Name = "transparencyEnabledBox";
+            this.transparencyEnabledBox.Size = new System.Drawing.Size(121, 18);
+            this.transparencyEnabledBox.TabIndex = 0;
+            this.transparencyEnabledBox.Text = "&Transparent colour";
+            this.transparencyEnabledBox.UseVisualStyleBackColor = true;
             // 
             // PalettePropertiesForm
             // 
