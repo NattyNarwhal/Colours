@@ -60,6 +60,7 @@
     <Compile Include="Palette\GimpPalette.cs" />
     <Compile Include="Palette\IPalette.cs" />
     <Compile Include="Palette\MsRiffPalette.cs" />
+    <Compile Include="Palette\NativePalette.cs" />
     <Compile Include="Palette\PaletteColor.cs" />
     <Compile Include="Palette\PaletteException.cs" />
     <Compile Include="Palette\XResources.cs" />

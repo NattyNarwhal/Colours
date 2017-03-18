@@ -202,6 +202,12 @@ namespace Colours
 
                 ActTransparencyIndex = ((ActPalette)initial).TransparentIndex;
             }
+            if (initial is NativePalette)
+            {
+                tabControl1.TabPages.Remove(gimpTab);
+                tabControl1.TabPages.Remove(acbTab);
+                tabControl1.TabPages.Remove(actTab);
+            }
         }
     }
 }

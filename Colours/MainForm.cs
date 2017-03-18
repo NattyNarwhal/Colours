@@ -122,8 +122,10 @@ namespace Colours
             var canPaste = Clipboard.ContainsData("LPC") ||
                 Clipboard.ContainsText();
             var supportsMetadata = appPal.Palette is GimpPalette ||
-                appPal.Palette is AcbPalette || appPal.Palette is ActPalette;
-            var supportsColourMetadata = appPal.Palette is AcbPalette;
+                appPal.Palette is AcbPalette || appPal.Palette is ActPalette ||
+                appPal.Palette is NativePalette;
+            var supportsColourMetadata = appPal.Palette is AcbPalette ||
+                appPal.Palette is NativePalette;
 
             propertiesToolStripMenuItem.Enabled = supportsMetadata;
             propertiesToolStripMenuItem.ToolTipText = supportsMetadata ?
@@ -449,7 +451,8 @@ namespace Colours
             }
 
             // warn if the format doesn't support metadata
-            if (!(fileName.EndsWith(".gpl") || fileName.EndsWith(".acb")))
+            if (!(fileName.EndsWith(".gpl") || fileName.EndsWith(".colors")
+                || fileName.EndsWith(".acb")))
                 MessageBox.Show(this,
                     "This format doesn't support metadata like comments. Metadata will be lost when the file is reloaded.",
                     "Colours", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -500,10 +503,15 @@ namespace Colours
                     var p = new MsRiffPalette(File.ReadAllBytes(fileName));
                     appPal.NewFromPalette(p, fileName);
                 }
-                // implied to be GIMP palette
-                else
+                else if (fileName.EndsWith(".pal"))
                 {
                     var p = new GimpPalette(File.ReadAllLines(fileName));
+                    appPal.NewFromPalette(p, fileName);
+                }
+                // implied to be native palette
+                else
+                {
+                    var p = NativePalette.CreateFromFile(File.ReadAllText(fileName));
                     appPal.NewFromPalette(p, fileName);
                 }
             }

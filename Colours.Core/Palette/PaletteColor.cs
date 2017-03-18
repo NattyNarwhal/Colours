@@ -11,6 +11,12 @@ namespace Colours
     /// </summary>
     [DataContract]
     [Serializable]
+    // HACK: this needs to be aware of IColor's children, reflection is dumb
+    [KnownType(typeof(RgbColor))]
+    [KnownType(typeof(HsvColor))]
+    [KnownType(typeof(LabColor))]
+    [KnownType(typeof(XyzColor))]
+    [KnownType(typeof(CmykColor))]
     public class PaletteColor
     {
         // note that this has difficulties without a name on the end,

@@ -85,7 +85,7 @@ namespace Colours.App
         /// </summary>
         public void New()
         {
-            NewFromPalette(new GimpPalette());
+            NewFromPalette(new NativePalette());
         }
 
         /// <summary>
@@ -120,6 +120,10 @@ namespace Colours.App
             IPalette newPal = null;
             switch (extension)
             {
+                case ".colors":
+                    if (!(Palette is NativePalette))
+                        newPal = new NativePalette(Palette);
+                    break;
                 case ".gpl":
                     if (!(Palette is GimpPalette))
                         newPal = new GimpPalette(Palette);
