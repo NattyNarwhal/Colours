@@ -218,7 +218,7 @@ namespace Colours
         public byte[] ToFile()
         {
             if (Colors.Count > ushort.MaxValue)
-                throw new ArgumentOutOfRangeException("There are too many colors in the palette.");
+                throw new PaletteException("There are too many colors in the palette for this format.");
 
             using (var s = new MemoryStream())
             {

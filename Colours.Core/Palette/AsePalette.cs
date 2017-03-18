@@ -118,6 +118,9 @@ namespace Colours
         /// <returns>The ASE file, as a byte array.</returns>
         public byte[] ToFile()
         {
+            if (Colors.LongCount() > uint.MaxValue)
+                throw new PaletteException("There are too many colors in the palette for this format.");
+
             using (var ms = new MemoryStream())
             {
                 using (var sw = new BinaryWriter(ms))

@@ -84,6 +84,9 @@ namespace Colours
         /// <returns>The RIFF palette file.</returns>
         public byte[] ToFile()
         {
+            if (Colors.Count > ushort.MaxValue)
+                throw new PaletteException("There are too many colors in the palette for this format.");
+
             long chunkSizePos, subChunkSizePos, chunkSize, subChunkSize;
 
             using (var s = new MemoryStream())
