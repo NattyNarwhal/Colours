@@ -26,6 +26,16 @@ namespace Colours
         }
 
         /// <summary>
+        /// Creates a RIFF palette from an existing palette.
+        /// </summary>
+        /// <param name="p">The palette to convert from.</param>
+        public MsRiffPalette(IPalette p) : this()
+        {
+            foreach (var pc in p.Colors)
+                Colors.Add(pc);
+        }
+
+        /// <summary>
         /// Creates a RIFF palette from a file.
         /// </summary>
         /// <param name="file">The file to convert from.</param>
@@ -74,7 +84,50 @@ namespace Colours
         /// <returns>The RIFF palette file.</returns>
         public byte[] ToFile()
         {
-            throw new NotImplementedException();
+            long chunkSizePos, subChunkSizePos, chunkSize, subChunkSize;
+
+            using (var s = new MemoryStream())
+            {
+                using (var sw = new BinaryWriter(s))
+                {
+                    // magic + size
+                    sw.Write("RIFF".ToCharArray());
+                    // we put 0 in here for now, we'll put the real sizes later
+                    chunkSizePos = s.Position;
+                    sw.WriteUInt32LE(0);
+                    // subchunk magic + size (same type of placeholder as
+                    // the chunk size before)
+                    sw.Write("PAL data".ToCharArray());
+                    subChunkSizePos = s.Position;
+                    sw.WriteUInt32LE(0);
+                    // structure version
+                    sw.WriteUInt16LE(3);
+                    // count
+                    sw.WriteUInt16LE(Convert.ToUInt16(Colors.Count));
+
+                    foreach (var pc in Colors)
+                    {
+                        sw.Write(pc.Color.ToRgb().R8);
+                        sw.Write(pc.Color.ToRgb().G8);
+                        sw.Write(pc.Color.ToRgb().B8);
+                        sw.Write(0);
+                    }
+                    
+                    // now overwrite the null sizes we put w/ real ones
+                    chunkSize = s.Position - 8;
+                    subChunkSize = s.Position - 20;
+                    s.Position = chunkSizePos;
+                    sw.WriteUInt32LE(Convert.ToUInt32(chunkSize));
+                    s.Position = subChunkSizePos;
+                    sw.WriteUInt32LE(Convert.ToUInt32(subChunkSize));
+
+                    s.Position = 0;
+                    using (var sr = new BinaryReader(s))
+                    {
+                        return sr.ReadBytes((int)s.Length);
+                    }
+                }
+            }
         }
 
         /// <summary>

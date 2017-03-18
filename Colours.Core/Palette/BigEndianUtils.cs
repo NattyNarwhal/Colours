@@ -161,6 +161,20 @@ namespace Colours
         }
 
         /// <summary>
+        /// Writes an unsigned 16-bit integer to the stream, guaranteeing
+        /// little endian format.
+        /// </summary>
+        /// <param name="bw">The <see cref="BinaryWriter"/> to write to.</param>
+        /// <param name="u16">The ushort to write as big little.</param>
+        public static void WriteUInt16LE(this BinaryWriter bw, ushort u16)
+        {
+            var b = BitConverter.GetBytes(u16);
+            if (!BitConverter.IsLittleEndian)
+                Array.Reverse(b);
+            bw.Write(b);
+        }
+
+        /// <summary>
         /// Writes an unsigned 16-bit integer to the stream, guaranteeing big
         /// endian format.
         /// </summary>
@@ -170,6 +184,20 @@ namespace Colours
         {
             var b = BitConverter.GetBytes(u16);
             if (BitConverter.IsLittleEndian)
+                Array.Reverse(b);
+            bw.Write(b);
+        }
+
+        /// <summary>
+        /// Writes an unsigned 32-bit integer to the stream, guaranteeing
+        /// little endian format.
+        /// </summary>
+        /// <param name="bw">The <see cref="BinaryWriter"/> to write to.</param>
+        /// <param name="u32">The uint to write as little endian.</param>
+        public static void WriteUInt32LE(this BinaryWriter bw, uint u32)
+        {
+            var b = BitConverter.GetBytes(u32);
+            if (!BitConverter.IsLittleEndian)
                 Array.Reverse(b);
             bw.Write(b);
         }

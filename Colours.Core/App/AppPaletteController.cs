@@ -140,6 +140,10 @@ namespace Colours.App
                     if (!(Palette is AcbPalette))
                         newPal = new AcbPalette(Palette);
                     break;
+                case ".pal":
+                    if (!(Palette is MsRiffPalette))
+                        newPal = new MsRiffPalette(Palette);
+                    break;
             }
 
             // in case we convert from a non INamed to an INamed, give it a name at least
