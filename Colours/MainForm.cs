@@ -20,7 +20,9 @@ namespace Colours
         public MainForm()
         {
             InitializeComponent();
-            
+            // designer doesnt want to pick from resx
+            Icon = Properties.Resources.Colours;
+
             schemeBox.Items.AddRange(Scheme.GetSchemes().ToArray());
 
             // don't init the app with this func; init with AppState

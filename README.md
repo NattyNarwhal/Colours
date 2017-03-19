@@ -38,7 +38,7 @@ I won't deny inspiration ;)
  * [ ] I'm not entirely happy with the UI though.
 * [ ] DPI awareness in SWF version: Does this even work?
 * [ ] Rebrand? - Colours is a generic name.
- * [ ] To go with this, maybe an icon.
+ * [X] To go with this, maybe an icon.
 * [ ] A colour wheel would be impressive. Kuler does this.
 * [ ] Alternative colour wheels for different blending beyond RGB would be nice.
 * [ ] Improved colour picker in Windows Forms.
