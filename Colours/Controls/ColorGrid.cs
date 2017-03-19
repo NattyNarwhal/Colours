@@ -120,7 +120,7 @@ namespace Colours
                         //Height = 32,
                         Dock = DockStyle.Fill,
                         Margin = new Padding(1),
-                        Color = pc.Color.ToRgb(),
+                        Color = pc.Color,
                         Tag = pc,
                         ContextMenuStrip = ColorContextMenuStrip
                     };

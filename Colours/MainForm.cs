@@ -220,7 +220,8 @@ namespace Colours
 
         private void SchemeColor_Click(object sender, EventArgs e)
         {
-            colorDialog.Color = ((ColorButton)sender).Color.ToGdiColor();
+            // TODO: This needs to handle
+            colorDialog.Color = ((ColorButton)sender).Color.ToRgb().ToGdiColor();
 
             if (SelectedItems.Count() > 0)
                 colorDialog.CustomColors = SelectedItems
@@ -247,19 +248,20 @@ namespace Colours
         private void copyHexContextToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ColorButton cb = (ColorButton)colorContextMenu.SourceControl;
-            Clipboard.SetText(cb.Color.ToHtml());
+            Clipboard.SetText(cb.Color.ToRgb().ToHtml());
         }
 
         private void copyHslContextToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ColorButton cb = (ColorButton)colorContextMenu.SourceControl;
-            Clipboard.SetText(cb.Color.ToHslString());
+            Clipboard.SetText(cb.Color.ToRgb().ToHslString());
         }
 
         private void copyHsvContextToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ColorButton cb = (ColorButton)colorContextMenu.SourceControl;
-            Clipboard.SetText(cb.Color.ToHsv().ToCssString());
+            Clipboard.SetText((cb.Color is HsvColor ?
+                (HsvColor)cb.Color : cb.Color.ToRgb().ToHsv()).ToCssString());
         }
 
         /// <summary>
@@ -640,7 +642,7 @@ namespace Colours
 
         private void addToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            appPal.AppendColor(app.Color);
+            appPal.AppendColor(app.HsvColor);
         }
 
         private void renameToolStripMenuItem_Click(object sender, EventArgs e)
@@ -743,7 +745,7 @@ namespace Colours
 
         private void addAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            appPal.AppendColors(app.Results.Select(x => x.ToRgb()));
+            appPal.AppendColors(app.Results);
         }
 
         private void blendToolStripMenuItem_Click(object sender, EventArgs e)

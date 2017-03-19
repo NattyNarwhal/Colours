@@ -16,7 +16,7 @@ namespace Colours
         {
             get
             {
-                return colorButton1.Color;
+                return colorButton1.Color.ToRgb();
             }
         }
 
@@ -24,7 +24,7 @@ namespace Colours
         {
             get
             {
-                return colorButton2.Color;
+                return colorButton2.Color.ToRgb();
             }
         }
 

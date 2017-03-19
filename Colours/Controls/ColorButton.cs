@@ -16,21 +16,21 @@ namespace Colours
     /// </summary>
     public class ColorButton : Button
     {
-        private RgbColor _color;
+        private IColor _color;
 
         /// <summary>
         /// Represents the color of the ColorButton.
         /// </summary>
         // HACK: Visual Studio tries to serialize an RgbColor and it ends badly
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public RgbColor Color
+        public IColor Color
         {
             get { return _color; }
             set
             {
                 _color = value;
-                BackColor = _color.ToGdiColor();
-                ForeColor = _color.GetBrightness() > 0.5
+                BackColor = _color.ToRgb().ToGdiColor();
+                ForeColor = _color.ToRgb().GetBrightness() > 0.5
                     ? GdiColor.Black : GdiColor.White;
             }
         }
@@ -41,14 +41,9 @@ namespace Colours
             Color = SystemColors.ButtonFace.ToRgbColor();
         }
 
-        public ColorButton(RgbColor c) : this()
+        public ColorButton(IColor c) : this()
         {
             Color = c;
-        }
-
-        public ColorButton(HsvColor c) : this()
-        {
-            Color = c.ToRgb();
         }
     }
 }
