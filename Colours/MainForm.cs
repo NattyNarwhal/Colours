@@ -507,7 +507,7 @@ namespace Colours
                     var p = new MsRiffPalette(File.ReadAllBytes(fileName));
                     appPal.NewFromPalette(p, fileName);
                 }
-                else if (fileName.EndsWith(".pal"))
+                else if (fileName.EndsWith(".gpl"))
                 {
                     var p = new GimpPalette(File.ReadAllLines(fileName));
                     appPal.NewFromPalette(p, fileName);
