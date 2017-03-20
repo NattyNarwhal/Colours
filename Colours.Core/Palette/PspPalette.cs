@@ -15,7 +15,7 @@ namespace Colours
     public class PspPalette : IPalette
     {
         const string magic = "JASC-PAL";
-        const string itemRegex = @"(\d)\s(\d)\s(\d)";
+        const string itemRegex = @"(\d{1,3})\s(\d{1,3})\s(\d{1,3})";
 
         /// <summary>
         /// Gets or sets a list of colors.
@@ -32,7 +32,7 @@ namespace Colours
         /// Creates a new Paint Shop Pro palette from a file.
         /// </summary>
         /// <param name="file">The file, split up into lines.</param>
-        public PspPalette(string[] file)
+        public PspPalette(string[] file) : this()
         {
             if (file[0] != magic && file[1] != "0100")
                 throw new PaletteException("Palette is not in a valid format.");
@@ -58,6 +58,16 @@ namespace Colours
         public PspPalette(string file) :
             this(Regex.Split(file, "\r?\n"))
         { }
+
+        /// <summary>
+        /// Creates a new Paint Shop Pro palette from an existing palette.
+        /// </summary>
+        /// <param name="p">The palette to convert.</param>
+        public PspPalette(IPalette p) : this()
+        {
+            foreach (var pc in Colors)
+                p.Colors.Add(pc);
+        }
 
         /// <summary>
         /// Creates a new palette with properties identical to the old one.

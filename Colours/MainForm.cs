@@ -482,34 +482,39 @@ namespace Colours
         {
             try
             {
-                if (fileName.EndsWith(".aco"))
+                if (fileName.ToLower().EndsWith(".aco"))
                 {
                     var p = new AcoPalette(File.ReadAllBytes(fileName));
                     appPal.NewFromPalette(p, fileName);
                 }
-                else if (fileName.EndsWith(".act"))
+                else if (fileName.ToLower().EndsWith(".act"))
                 {
                     var p = new ActPalette(File.ReadAllBytes(fileName));
                     appPal.NewFromPalette(p, fileName);
                 }
-                else if (fileName.EndsWith(".ase"))
+                else if (fileName.ToLower().EndsWith(".ase"))
                 {
                     var p = new AsePalette(File.ReadAllBytes(fileName));
                     appPal.NewFromPalette(p, fileName);
                 }
-                else if (fileName.EndsWith(".acb"))
+                else if (fileName.ToLower().EndsWith(".acb"))
                 {
                     var p = new AcbPalette(File.ReadAllBytes(fileName));
                     appPal.NewFromPalette(p, fileName);
                 }
-                else if (fileName.EndsWith(".pal"))
+                else if (fileName.ToLower().EndsWith(".pal"))
                 {
                     var p = new MsRiffPalette(File.ReadAllBytes(fileName));
                     appPal.NewFromPalette(p, fileName);
                 }
-                else if (fileName.EndsWith(".gpl"))
+                else if (fileName.ToLower().EndsWith(".gpl"))
                 {
                     var p = new GimpPalette(File.ReadAllLines(fileName));
+                    appPal.NewFromPalette(p, fileName);
+                }
+                else if (fileName.ToLower().EndsWith(".psppalette"))
+                {
+                    var p = new PspPalette(File.ReadAllLines(fileName));
                     appPal.NewFromPalette(p, fileName);
                 }
                 // implied to be native palette

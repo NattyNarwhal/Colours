@@ -128,6 +128,10 @@ namespace Colours.App
                     if (!(Palette is GimpPalette))
                         newPal = new GimpPalette(Palette);
                     break;
+                case ".psppalette":
+                    if (!(Palette is PspPalette))
+                        newPal = new PspPalette(Palette);
+                    break;
                 case ".aco":
                     if (!(Palette is AcoPalette))
                         newPal = new AcoPalette(Palette);
