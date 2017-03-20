@@ -290,7 +290,8 @@
             // 
             this.propertiesToolStripMenuItem.Image = global::Colours.Properties.Resources.Properties;
             this.propertiesToolStripMenuItem.Name = "propertiesToolStripMenuItem";
-            this.propertiesToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.propertiesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
+            this.propertiesToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
             this.propertiesToolStripMenuItem.Text = "P&roperties...";
             this.propertiesToolStripMenuItem.Click += new System.EventHandler(this.propertiesToolStripMenuItem_Click);
             // 
@@ -445,7 +446,8 @@
             // changeToolStripMenuItem
             // 
             this.changeToolStripMenuItem.Name = "changeToolStripMenuItem";
-            this.changeToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.changeToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
+            this.changeToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
             this.changeToolStripMenuItem.Text = "C&hange";
             this.changeToolStripMenuItem.Click += new System.EventHandler(this.changeToolStripMenuItem_Click);
             // 
@@ -470,7 +472,8 @@
             // changeMetadataToolStripMenuItem
             // 
             this.changeMetadataToolStripMenuItem.Name = "changeMetadataToolStripMenuItem";
-            this.changeMetadataToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.changeMetadataToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.M)));
+            this.changeMetadataToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
             this.changeMetadataToolStripMenuItem.Text = "Change &Metadata";
             this.changeMetadataToolStripMenuItem.Click += new System.EventHandler(this.changeMetadataToolStripMenuItem_Click);
             // 
