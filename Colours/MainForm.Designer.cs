@@ -104,7 +104,6 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsHtmlDialog = new System.Windows.Forms.SaveFileDialog();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.colorGrid1 = new Colours.ColorGrid();
             this.paletteContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.useSubmenuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changeSubmenuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -120,6 +119,7 @@
             this.paletteListImages = new System.Windows.Forms.ImageList(this.components);
             this.savePaletteDialog = new System.Windows.Forms.SaveFileDialog();
             this.openPaletteDialog = new System.Windows.Forms.OpenFileDialog();
+            this.colorGrid1 = new Colours.ColorGrid();
             this.colorContextMenu.SuspendLayout();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -505,7 +505,7 @@
             this.listToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.listToolStripMenuItem.Image = global::Colours.Properties.Resources.ListView;
             this.listToolStripMenuItem.Name = "listToolStripMenuItem";
-            this.listToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.listToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.listToolStripMenuItem.Text = "&List";
             this.listToolStripMenuItem.Click += new System.EventHandler(this.listToolStripMenuItem_Click);
             // 
@@ -513,20 +513,20 @@
             // 
             this.gridToolStripMenuItem.Image = global::Colours.Properties.Resources.GridView;
             this.gridToolStripMenuItem.Name = "gridToolStripMenuItem";
-            this.gridToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.gridToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.gridToolStripMenuItem.Text = "&Grid";
             this.gridToolStripMenuItem.Click += new System.EventHandler(this.gridToolStripMenuItem_Click);
             // 
             // toolStripMenuItem10
             // 
             this.toolStripMenuItem10.Name = "toolStripMenuItem10";
-            this.toolStripMenuItem10.Size = new System.Drawing.Size(149, 6);
+            this.toolStripMenuItem10.Size = new System.Drawing.Size(146, 6);
             // 
             // nativeFormatToolStripMenuItem
             // 
             this.nativeFormatToolStripMenuItem.CheckOnClick = true;
             this.nativeFormatToolStripMenuItem.Name = "nativeFormatToolStripMenuItem";
-            this.nativeFormatToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.nativeFormatToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.nativeFormatToolStripMenuItem.Text = "&Native Format";
             this.nativeFormatToolStripMenuItem.Click += new System.EventHandler(this.nativeFormatToolStripMenuItem_Click);
             // 
@@ -554,7 +554,8 @@
             // 
             this.eyedropperToolStripMenuItem.Image = global::Colours.Properties.Resources.Eyedropper;
             this.eyedropperToolStripMenuItem.Name = "eyedropperToolStripMenuItem";
-            this.eyedropperToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
+            this.eyedropperToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.E)));
             this.eyedropperToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
             this.eyedropperToolStripMenuItem.Text = "From Scr&een...";
             this.eyedropperToolStripMenuItem.Click += new System.EventHandler(this.eyedropperToolStripMenuItem_Click);
@@ -573,7 +574,8 @@
             // 
             this.randomToolStripMenuItem.Image = global::Colours.Properties.Resources.Random;
             this.randomToolStripMenuItem.Name = "randomToolStripMenuItem";
-            this.randomToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
+            this.randomToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.R)));
             this.randomToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
             this.randomToolStripMenuItem.Text = "&Random";
             this.randomToolStripMenuItem.Click += new System.EventHandler(this.randomButton_Click);
@@ -615,7 +617,7 @@
             this.backToolStripMenuItem.Name = "backToolStripMenuItem";
             this.backToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.Z)));
-            this.backToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.backToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
             this.backToolStripMenuItem.Text = "&Back";
             this.backToolStripMenuItem.Click += new System.EventHandler(this.backToolStripMenuItem_Click);
             // 
@@ -625,14 +627,14 @@
             this.forwardToolStripMenuItem.Name = "forwardToolStripMenuItem";
             this.forwardToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.Y)));
-            this.forwardToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.forwardToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
             this.forwardToolStripMenuItem.Text = "&Forward";
             this.forwardToolStripMenuItem.Click += new System.EventHandler(this.forwardToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(187, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(202, 6);
             // 
             // copyToolStripMenuItem
             // 
@@ -642,7 +644,7 @@
             this.copySubmenuHsvToolStripMenuItem});
             this.copyToolStripMenuItem.Image = global::Colours.Properties.Resources.Copy;
             this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
-            this.copyToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
             this.copyToolStripMenuItem.Text = "&Copy";
             // 
             // copySubmenuHexToolStripMenuItem
@@ -672,21 +674,22 @@
             // 
             this.saveAsHTMLProofToolStripMenuItem.Image = global::Colours.Properties.Resources.Save_as_HTML;
             this.saveAsHTMLProofToolStripMenuItem.Name = "saveAsHTMLProofToolStripMenuItem";
-            this.saveAsHTMLProofToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.saveAsHTMLProofToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
             this.saveAsHTMLProofToolStripMenuItem.Text = "&Export to HTML...";
             this.saveAsHTMLProofToolStripMenuItem.Click += new System.EventHandler(this.saveAsHTMLProofToolStripMenuItem_Click);
             // 
             // toolStripMenuItem6
             // 
             this.toolStripMenuItem6.Name = "toolStripMenuItem6";
-            this.toolStripMenuItem6.Size = new System.Drawing.Size(187, 6);
+            this.toolStripMenuItem6.Size = new System.Drawing.Size(202, 6);
             // 
             // brightenToolStripMenuItem
             // 
             this.brightenToolStripMenuItem.Image = global::Colours.Properties.Resources.Brighten;
             this.brightenToolStripMenuItem.Name = "brightenToolStripMenuItem";
-            this.brightenToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.K)));
-            this.brightenToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.brightenToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.K)));
+            this.brightenToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
             this.brightenToolStripMenuItem.Text = "B&righten";
             this.brightenToolStripMenuItem.Click += new System.EventHandler(this.brightenToolStripMenuItem_Click);
             // 
@@ -694,8 +697,9 @@
             // 
             this.darkenToolStripMenuItem.Image = global::Colours.Properties.Resources.Darken;
             this.darkenToolStripMenuItem.Name = "darkenToolStripMenuItem";
-            this.darkenToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.J)));
-            this.darkenToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.darkenToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.J)));
+            this.darkenToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
             this.darkenToolStripMenuItem.Text = "Dar&ken";
             this.darkenToolStripMenuItem.Click += new System.EventHandler(this.darkenToolStripMenuItem_Click);
             // 
@@ -703,8 +707,9 @@
             // 
             this.saturateToolStripMenuItem.Image = global::Colours.Properties.Resources.Saturate;
             this.saturateToolStripMenuItem.Name = "saturateToolStripMenuItem";
-            this.saturateToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
-            this.saturateToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.saturateToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.L)));
+            this.saturateToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
             this.saturateToolStripMenuItem.Text = "&Saturate";
             this.saturateToolStripMenuItem.Click += new System.EventHandler(this.saturateToolStripMenuItem_Click);
             // 
@@ -712,20 +717,21 @@
             // 
             this.desaturateToolStripMenuItem.Image = global::Colours.Properties.Resources.Desaturate;
             this.desaturateToolStripMenuItem.Name = "desaturateToolStripMenuItem";
-            this.desaturateToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H)));
-            this.desaturateToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.desaturateToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.H)));
+            this.desaturateToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
             this.desaturateToolStripMenuItem.Text = "&Desaturate";
             this.desaturateToolStripMenuItem.Click += new System.EventHandler(this.desaturateToolStripMenuItem_Click);
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(187, 6);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(202, 6);
             // 
             // invertToolStripMenuItem
             // 
             this.invertToolStripMenuItem.Name = "invertToolStripMenuItem";
-            this.invertToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.invertToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
             this.invertToolStripMenuItem.Text = "&Invert";
             this.invertToolStripMenuItem.Click += new System.EventHandler(this.invertToolStripMenuItem_Click);
             // 
@@ -769,24 +775,6 @@
             this.splitContainer1.Size = new System.Drawing.Size(384, 287);
             this.splitContainer1.SplitterDistance = 155;
             this.splitContainer1.TabIndex = 6;
-            // 
-            // colorGrid1
-            // 
-            this.colorGrid1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.colorGrid1.AutoScroll = true;
-            this.colorGrid1.ColorContextMenuStrip = this.paletteContextMenu;
-            this.colorGrid1.Enabled = false;
-            this.colorGrid1.FocusedColor = null;
-            this.colorGrid1.Location = new System.Drawing.Point(3, 3);
-            this.colorGrid1.Name = "colorGrid1";
-            this.colorGrid1.Size = new System.Drawing.Size(210, 272);
-            this.colorGrid1.TabIndex = 1;
-            this.colorGrid1.Visible = false;
-            this.colorGrid1.FocusedColorChange += new System.EventHandler<System.EventArgs>(this.colorGrid1_FocusedColorChange);
-            this.colorGrid1.ColorClick += new System.EventHandler<System.EventArgs>(this.colorGrid1_ColorClick);
-            this.colorGrid1.ColorDrag += new System.EventHandler<Colours.ColorDragEventArgs>(this.colorGrid1_ColorDrag);
             // 
             // paletteContextMenu
             // 
@@ -915,6 +903,24 @@
             this.openPaletteDialog.DefaultExt = "colors";
             this.openPaletteDialog.Filter = resources.GetString("openPaletteDialog.Filter");
             this.openPaletteDialog.Title = "Open";
+            // 
+            // colorGrid1
+            // 
+            this.colorGrid1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.colorGrid1.AutoScroll = true;
+            this.colorGrid1.ColorContextMenuStrip = this.paletteContextMenu;
+            this.colorGrid1.Enabled = false;
+            this.colorGrid1.FocusedColor = null;
+            this.colorGrid1.Location = new System.Drawing.Point(3, 3);
+            this.colorGrid1.Name = "colorGrid1";
+            this.colorGrid1.Size = new System.Drawing.Size(210, 272);
+            this.colorGrid1.TabIndex = 1;
+            this.colorGrid1.Visible = false;
+            this.colorGrid1.FocusedColorChange += new System.EventHandler<System.EventArgs>(this.colorGrid1_FocusedColorChange);
+            this.colorGrid1.ColorClick += new System.EventHandler<System.EventArgs>(this.colorGrid1_ColorClick);
+            this.colorGrid1.ColorDrag += new System.EventHandler<Colours.ColorDragEventArgs>(this.colorGrid1_ColorDrag);
             // 
             // MainForm
             // 
