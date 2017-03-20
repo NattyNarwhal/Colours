@@ -14,6 +14,28 @@ namespace Colours
 {
     public partial class ColorGrid : UserControl
     {
+        class ColorGridButton : ColorButton
+        {
+            protected override bool IsInputKey(Keys keyData)
+            {
+                // we only need to handle up/down, we're fine with stock l/r
+                switch (keyData)
+                {
+                    //case Keys.Right:
+                    //case Keys.Left:
+                    case Keys.Up:
+                    case Keys.Down:
+                        return true;
+                    //case Keys.Shift | Keys.Right:
+                    //case Keys.Shift | Keys.Left:
+                    case Keys.Shift | Keys.Up:
+                    case Keys.Shift | Keys.Down:
+                        return true;
+                }
+                return base.IsInputKey(keyData);
+            }
+        }
+
         // forcing the scrollbar makes the layout far more predictable
         // looks kinda ugly though, and causes weird scrollbars at times
         protected override CreateParams CreateParams
@@ -114,7 +136,7 @@ namespace Colours
                 for (int c = 0; c < ra.Count(); c++)
                 {
                     var pc = ra.ToArray()[c];
-                    var cb = new ColorButton()
+                    var cb = new ColorGridButton()
                     {
                         //Width = 32,
                         //Height = 32,
@@ -159,6 +181,34 @@ namespace Colours
                             }
                         }
                         isDragged = false;
+                    };
+                    cb.KeyDown += (o, e) =>
+                    {
+                        // we do this because up/down in the table just goes left/right
+                        if (e.KeyCode == Keys.Up)
+                        {
+                            var button = (ColorButton)o;
+                            var pos = table.GetPositionFromControl(button);
+                            if (pos.Row > 0)
+                                table.GetControlFromPosition(pos.Column, pos.Row - 1).Focus();
+
+                            e.Handled = true;
+                        }
+                        if (e.KeyCode == Keys.Down)
+                        {
+                            var button = (ColorButton)o;
+                            var pos = table.GetPositionFromControl(button);
+                            if (pos.Row < table.RowCount - 1)
+                            {
+                                var lastControlPos = table.GetPositionFromControl(table.Controls[table.Controls.Count - 1]);
+                                var newCol = pos.Row + 1 == table.RowCount - 1 &&
+                                    lastControlPos.Column < pos.Column ?
+                                        lastControlPos.Column : pos.Column;
+                                table.GetControlFromPosition(newCol, pos.Row + 1).Focus();
+                            }
+
+                            e.Handled = true;
+                        }
                     };
 
                     if (cols > 1 && c == ra.Count() - 1 && c == cols - 1)
