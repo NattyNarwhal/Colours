@@ -63,6 +63,7 @@
     <Compile Include="Palette\NativePalette.cs" />
     <Compile Include="Palette\PaletteColor.cs" />
     <Compile Include="Palette\PaletteException.cs" />
+    <Compile Include="Palette\PspPalette.cs" />
     <Compile Include="Palette\XResources.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\RgbColor.cs" />
