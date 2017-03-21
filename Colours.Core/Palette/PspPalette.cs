@@ -65,7 +65,7 @@ namespace Colours
         /// <param name="p">The palette to convert.</param>
         public PspPalette(IPalette p) : this()
         {
-            foreach (var pc in Colors)
+            foreach (var pc in p.Colors)
                 p.Colors.Add(pc);
         }
 
