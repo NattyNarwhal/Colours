@@ -99,7 +99,7 @@ namespace Colours
             foreach (var pc in Colors)
             {
                 var rgb = pc.Color.ToRgb();
-                sb.AppendFormat("{0} {1} {3}{4}",
+                sb.AppendFormat("{0} {1} {2}{3}",
                     rgb.R8, rgb.G8, rgb.B8, Environment.NewLine);
             }
             return Encoding.UTF8.GetBytes(sb.ToString());
