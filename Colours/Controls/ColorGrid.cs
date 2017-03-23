@@ -103,7 +103,7 @@ namespace Colours
             table.Controls.Clear();
 
             // nothing to do
-            if (Palette.Colors.Count == 0)
+            if (Palette?.Colors == null || Palette.Colors.Count == 0)
                 goto end; // a velociraptor eats you
 
             int cols = 16;
