@@ -16,6 +16,12 @@ namespace Colours
     {
         class ColorGridButton : ColorButton
         {
+            public ColorGridButton() : base()
+            {
+                Dock = DockStyle.Fill;
+                Margin = new Padding(1);
+            }
+
             protected override bool IsInputKey(Keys keyData)
             {
                 // we only need to handle up/down, we're fine with stock l/r
@@ -138,10 +144,6 @@ namespace Colours
                     var pc = ra.ToArray()[c];
                     var cb = new ColorGridButton()
                     {
-                        //Width = 32,
-                        //Height = 32,
-                        Dock = DockStyle.Fill,
-                        Margin = new Padding(1),
                         Color = pc.Color,
                         Tag = pc,
                         ContextMenuStrip = ColorContextMenuStrip
