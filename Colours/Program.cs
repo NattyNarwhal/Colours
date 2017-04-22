@@ -23,8 +23,10 @@ namespace Colours
                 Properties.Settings.Default.LastColor.ToRgbColor().ToHsv(),
                 Properties.Settings.Default.SchemeType);
             if (Environment.OSVersion.Platform == PlatformID.Win32NT &&
-                Environment.OSVersion.Version == new Version(6,2))
+                Environment.OSVersion.Version >= new Version(6, 3))
+            {
                 SetProcessDpiAwareness(1);
+            }
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm(state));
