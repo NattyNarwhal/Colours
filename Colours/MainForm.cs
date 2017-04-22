@@ -663,7 +663,9 @@ namespace Colours
                 else
                 {
                     var pc = SelectedItems.First();
-                    var rf = new ColorChangeTextForm("Rename", pc.Name, pc);
+                    var rf = new ColorChangeTextForm(
+                        string.Format("Rename \"{0}\" ({1}", pc.Name, pc.Color.ToRgb().ToHtml()),
+                        pc.Name, pc);
                     if (rf.ShowDialog(this) == DialogResult.OK)
                         appPal.RenameColor(pc, rf.NewValue);
                 }
@@ -868,7 +870,9 @@ namespace Colours
             if (SelectedItems.Count() == 1)
             {
                 var pc = SelectedItems.First();
-                var rf = new ColorChangeTextForm("Metadata", pc.Metadata, pc);
+                var rf = new ColorChangeTextForm(
+                    string.Format("Metadata for \"{0}\" ({1}", pc.Name, pc.Color.ToRgb().ToHtml()),
+                    pc.Metadata, pc);
                 if (rf.ShowDialog(this) == DialogResult.OK)
                     appPal.ChangeMetadata(pc, rf.NewValue);
             }
