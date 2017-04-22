@@ -36,7 +36,7 @@ namespace Colours
             {
                 var pc = (PaletteColor)Items[e.Index];
 
-                e.Graphics.DrawImage(RenderColorIcon.RenderIcon(pc.Color.ToRgb()), rectangle);
+                e.Graphics.DrawImage(RenderColorIcon.RenderBitmap(pc.Color.ToRgb()), rectangle);
                 e.Graphics.DrawString(pc.Name,
                     e.Font, new SolidBrush(e.ForeColor),
                     new RectangleF(e.Bounds.X + rectangle.Width + 4,
@@ -46,7 +46,7 @@ namespace Colours
             {
                 var c = (IColor)Items[e.Index];
 
-                e.Graphics.DrawImage(RenderColorIcon.RenderIcon(c.ToRgb()), rectangle);
+                e.Graphics.DrawImage(RenderColorIcon.RenderBitmap(c.ToRgb()), rectangle);
                 e.Graphics.DrawString(c.ToString(),
                     e.Font, new SolidBrush(e.ForeColor),
                     new RectangleF(e.Bounds.X + rectangle.Width + 4,

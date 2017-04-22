@@ -99,7 +99,7 @@ namespace Colours
             foreach (PaletteColor pc in appPal.Palette.Colors)
             {
                 var lvi = new ListViewItem(pc.Name);
-                paletteListImages.Images.Add(RenderColorIcon.RenderIcon(pc.Color.ToRgb()));
+                paletteListImages.Images.Add(RenderColorIcon.RenderBitmap(pc.Color.ToRgb()));
                 lvi.Tag = pc;
                 lvi.ImageIndex = i++;
                 lvi.SubItems.Add(NativeFormat ?

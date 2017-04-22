@@ -67,7 +67,7 @@ namespace Colours
             // TODO: make this configurable
             lvi.Text = c.ToRgb().ToHtml();
 
-            il.Images.Add(c.GetHashCode().ToString(), RenderColorIcon.RenderIcon(c.ToRgb()));
+            il.Images.Add(c.GetHashCode().ToString(), RenderColorIcon.RenderBitmap(c.ToRgb()));
             lvi.ImageKey = c.GetHashCode().ToString();
 
             Items.Add(lvi);

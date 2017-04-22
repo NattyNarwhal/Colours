@@ -21,8 +21,7 @@ namespace Colours
         {
             Text = title;
             valueBox.Text = text;
-            //var icon = RenderColorIcon.RenderIcon(pc.Color.ToRgb()).GetHbitmap();
-            //Icon = Icon.FromHandle(icon);
+            Icon = RenderColorIcon.RenderIcon(pc.Color.ToRgb());
         }
 
         public string NewValue => valueBox.Text;
