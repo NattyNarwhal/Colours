@@ -12,6 +12,8 @@ namespace Colours
 {
     public partial class PalettePropertiesForm : Form
     {
+        private IPalette _palette;
+
         public string PaletteTitle
         {
             get
@@ -159,6 +161,7 @@ namespace Colours
 
         public PalettePropertiesForm(IPalette initial) : this()
         {
+            _palette = initial;
             if (initial is IBucketedPalette)
             {
                 PaletteBucket = ((IBucketedPalette)initial).BucketSize;
@@ -198,15 +201,44 @@ namespace Colours
                 transparencyEnabledBox.CheckedChanged += (o, e) =>
                 {
                     transparencyIndexBox.Enabled = transparencyEnabledBox.Checked;
+                    UpdateTransparencyIndex();
                 };
 
                 ActTransparencyIndex = ((ActPalette)initial).TransparentIndex;
+                UpdateTransparencyIndex();
             }
             if (initial is NativePalette)
             {
                 tabControl1.TabPages.Remove(gimpTab);
                 tabControl1.TabPages.Remove(acbTab);
                 tabControl1.TabPages.Remove(actTab);
+            }
+        }
+
+        private void transparencyIndexBox_ValueChanged(object sender, EventArgs e)
+        {
+            UpdateTransparencyIndex();
+        }
+
+        public void UpdateTransparencyIndex()
+        {
+            var color = _palette?.Colors.Skip((int)transparencyIndexBox.Value).FirstOrDefault();
+            // that's a bit too much, should cut down
+            if (_palette != null &&
+                _palette is ActPalette &&
+                ((ActPalette)_palette).TransparentIndex != null
+                && color != null)
+            {
+                transparencyRenderBox.Image = RenderColorIcon.RenderBitmap(color.Color.ToRgb(),
+                    transparencyRenderBox.Width,
+                    transparencyRenderBox.Width);
+                transparencyRenderLabel.Text = string.Format("{0} ({1})",
+                    color.Name, color.Color.ToRgb().ToHtml());
+            }
+            else
+            {
+                transparencyRenderBox.Image = null;
+                transparencyRenderLabel.Text = string.Empty;
             }
         }
     }

@@ -57,6 +57,8 @@
             this.actTab = new System.Windows.Forms.TabPage();
             this.transparencyIndexBox = new System.Windows.Forms.NumericUpDown();
             this.transparencyEnabledBox = new System.Windows.Forms.CheckBox();
+            this.transparencyRenderBox = new System.Windows.Forms.PictureBox();
+            this.transparencyRenderLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.columnsBox)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.commonTab.SuspendLayout();
@@ -66,6 +68,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.idBox)).BeginInit();
             this.actTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.transparencyIndexBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.transparencyRenderBox)).BeginInit();
             this.SuspendLayout();
             // 
             // titleLabel
@@ -357,6 +360,8 @@
             // 
             // actTab
             // 
+            this.actTab.Controls.Add(this.transparencyRenderLabel);
+            this.actTab.Controls.Add(this.transparencyRenderBox);
             this.actTab.Controls.Add(this.transparencyIndexBox);
             this.actTab.Controls.Add(this.transparencyEnabledBox);
             this.actTab.Location = new System.Drawing.Point(4, 22);
@@ -381,6 +386,7 @@
             this.transparencyIndexBox.Name = "transparencyIndexBox";
             this.transparencyIndexBox.Size = new System.Drawing.Size(197, 20);
             this.transparencyIndexBox.TabIndex = 1;
+            this.transparencyIndexBox.ValueChanged += new System.EventHandler(this.transparencyIndexBox_ValueChanged);
             // 
             // transparencyEnabledBox
             // 
@@ -392,6 +398,25 @@
             this.transparencyEnabledBox.TabIndex = 0;
             this.transparencyEnabledBox.Text = "&Transparent colour";
             this.transparencyEnabledBox.UseVisualStyleBackColor = true;
+            // 
+            // transparencyRenderBox
+            // 
+            this.transparencyRenderBox.Location = new System.Drawing.Point(133, 32);
+            this.transparencyRenderBox.Name = "transparencyRenderBox";
+            this.transparencyRenderBox.Size = new System.Drawing.Size(16, 16);
+            this.transparencyRenderBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.transparencyRenderBox.TabIndex = 2;
+            this.transparencyRenderBox.TabStop = false;
+            // 
+            // transparencyRenderLabel
+            // 
+            this.transparencyRenderLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.transparencyRenderLabel.AutoEllipsis = true;
+            this.transparencyRenderLabel.Location = new System.Drawing.Point(155, 32);
+            this.transparencyRenderLabel.Name = "transparencyRenderLabel";
+            this.transparencyRenderLabel.Size = new System.Drawing.Size(175, 16);
+            this.transparencyRenderLabel.TabIndex = 3;
             // 
             // PalettePropertiesForm
             // 
@@ -424,6 +449,7 @@
             this.actTab.ResumeLayout(false);
             this.actTab.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.transparencyIndexBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.transparencyRenderBox)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -459,5 +485,7 @@
         private System.Windows.Forms.TabPage actTab;
         private System.Windows.Forms.NumericUpDown transparencyIndexBox;
         private System.Windows.Forms.CheckBox transparencyEnabledBox;
+        private System.Windows.Forms.Label transparencyRenderLabel;
+        private System.Windows.Forms.PictureBox transparencyRenderBox;
     }
 }
