@@ -25,5 +25,13 @@ namespace Colours
             else if (val.CompareTo(max) > 0) return max;
             else return val;
         }
+
+        /// <summary>
+        /// Returns the modulo of a number, but always in a positive form.
+        /// </summary>
+        /// <param name="x">The dividend.</param>
+        /// <param name="y">The divisor.</param>
+        /// <returns>The positive remainder.</returns>
+        public static double PositiveModulo(this double x, double y) => (x % y + y) % y;
     }
 }

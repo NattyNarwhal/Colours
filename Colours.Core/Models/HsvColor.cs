@@ -25,12 +25,7 @@ namespace Colours
             }
             set
             {
-                if (value > 360)
-                    _hue = value - 360;
-                else if (value < 0)
-                    _hue = value + 360;
-                else
-                    _hue = value;
+                _hue = value.PositiveModulo(360);
             }
         }
         /// <summary>
